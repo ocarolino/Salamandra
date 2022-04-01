@@ -9,7 +9,7 @@ namespace Salamandra.Engine.Services
 {
     public class SoundEngine
     {
-        private WaveOutEvent waveOutEvent;
+        private WaveOutEvent outputDevice;
         private AudioFileReader audioFileReader;
 
         public SoundEngine()
@@ -18,9 +18,25 @@ namespace Salamandra.Engine.Services
 
         public void PlayAudioFile(string filename)
         {
+            if (this.outputDevice == null)
+            {
+                this.outputDevice = new WaveOutEvent();
+                this.outputDevice.PlaybackStopped += WaveOutEvent_PlaybackStopped;
+            }
 
+            if (this.audioFileReader == null)
+            {
+                this.audioFileReader = new AudioFileReader(filename);
+                this.outputDevice.Init(this.audioFileReader);
+            }
+
+            this.outputDevice.Play();
         }
 
+        private void WaveOutEvent_PlaybackStopped(object? sender, StoppedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
         public void Stop()
         {

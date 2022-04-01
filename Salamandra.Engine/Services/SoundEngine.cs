@@ -1,5 +1,6 @@
 ﻿using NAudio.Wave;
 using Salamandra.Engine.Domain;
+using Salamandra.Engine.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,8 @@ namespace Salamandra.Engine.Services
             this.outputDevice = null;
             this.audioFileReader.Dispose();
             this.audioFileReader = null;
+
+            SoundStopped?.Invoke(this, new SoundStoppedEventArgs() { PlaybackStopType = this.playbackStopType });
         }
 
         public void Stop()
@@ -50,5 +53,9 @@ namespace Salamandra.Engine.Services
             this.playbackStopType = PlaybackStopType.StoppedByRequest;
             this.outputDevice?.Stop();
         }
+
+        public event OnSoundStopped SoundStopped;
     }
+
+    public delegate void OnSoundStopped(object? sender, SoundStoppedEventArgs e);
 }

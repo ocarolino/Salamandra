@@ -35,7 +35,10 @@ namespace Salamandra.Engine.Services
 
         private void WaveOutEvent_PlaybackStopped(object? sender, StoppedEventArgs e)
         {
-            throw new NotImplementedException();
+            this.outputDevice.Dispose();
+            this.outputDevice = null;
+            this.audioFileReader.Dispose();
+            this.audioFileReader = null;
         }
 
         public void Stop()

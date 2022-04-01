@@ -40,7 +40,7 @@ namespace Salamandra.Engine.Services
 
         public void Stop()
         {
-
+            this.outputDevice?.Stop();
         }
     }
 }

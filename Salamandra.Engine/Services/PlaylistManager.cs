@@ -59,11 +59,24 @@ namespace Salamandra.Engine.Services
             }
         }
 
-        public void AddTrack(SoundFileTrack soundFileTrack)
+        public void AddTracks(List<SoundFileTrack> tracks)
         {
-            this.Tracks.Add(soundFileTrack);
+            foreach (var item in tracks)
+                this.Tracks.Add(item);
+
+            if (this.CurrentTrack == null)
+                UpdateNextTrack();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        public void RemoveTracks(List<SoundFileTrack> tracks)
+        {
+            foreach (var item in tracks)
+                this.Tracks.Remove(item);
+
+            if (!this.Tracks.Contains(this.NextTrack))
+                UpdateNextTrack();
+        }
     }
 }

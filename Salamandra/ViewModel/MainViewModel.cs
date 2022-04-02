@@ -46,6 +46,9 @@ namespace Salamandra.ViewModel
                     SoundFileTrack soundFileTrack = new SoundFileTrack(item, Path.GetFileNameWithoutExtension(item));
                     this.PlaylistManager.AddTrack(soundFileTrack);
                 }
+
+                if (this.PlaylistManager.CurrentTrack == null)
+                    this.PlaylistManager.UpdateNextTrack();
             }
         }
 

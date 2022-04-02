@@ -9,10 +9,12 @@ namespace Salamandra.Engine.Domain
     public class SoundFileTrack
     {
         public string Filename { get; private set; }
+        public string FriendlyName { get; private set; }
 
-        public SoundFileTrack(string filename)
+        public SoundFileTrack(string filename, string friendlyName)
         {
             this.Filename = filename;
+            this.FriendlyName = friendlyName;
         }
     }
 }

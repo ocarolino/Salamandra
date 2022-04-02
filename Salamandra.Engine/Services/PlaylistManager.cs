@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Salamandra.Engine.Services
 {
-    public class PlaylistManager
+    public class PlaylistManager : INotifyPropertyChanged
     {
         public PlaylistMode PlaylistMode { get; set; }
         public ObservableCollection<SoundFileTrack> Tracks { get; set; }
@@ -62,5 +63,7 @@ namespace Salamandra.Engine.Services
         {
             this.Tracks.Add(soundFileTrack);
         }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }

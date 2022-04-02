@@ -15,6 +15,8 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Playlist">
                 <MenuItem Header="Adicionar arquivos de áudio..." Command="{Binding AddFilesToPlaylistCommand}"/>
+                <Separator/>
+                <MenuItem Header="Remover selecionadas" Command="{Binding RemoveTracksFromPlaylistCommand}" CommandParameter="{Binding SelectedItems, ElementName=playlist}"/>
             </MenuItem>
         </Menu>
 
@@ -33,7 +35,8 @@
             </Button>
         </Grid>
 
-        <ListView ItemsSource="{Binding PlaylistManager.Tracks}">
+        <ListView ItemsSource="{Binding PlaylistManager.Tracks}" SelectedItem="{Binding SelectedTrack}"
+                  Name="playlist" SelectionMode="Extended">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>

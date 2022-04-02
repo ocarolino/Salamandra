@@ -52,11 +52,7 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Style.Triggers>
-                        <!--
-                        <Trigger Property="{Binding , Converter={StaticResource SameTrackConverter}, ConverterParameter={Binding PlaylistManager.NextTrack, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}}" Value="True">
-                            <Setter Property="Background" Value="ForestGreen"/>
-                        </Trigger>
-                        -->
+                        <!-- Style for Next Track -->
                         <DataTrigger Value="True">
                             <DataTrigger.Binding>
                                 <MultiBinding Mode="OneWay" NotifyOnSourceUpdated="True" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource SameObjectToBoolConverter}">
@@ -67,6 +63,21 @@
 
                             <DataTrigger.Setters>
                                 <Setter Property="Background" Value="ForestGreen"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+
+                        <!-- Style for Current Track -->
+                        <DataTrigger Value="True">
+                            <DataTrigger.Binding>
+                                <MultiBinding Mode="OneWay" NotifyOnSourceUpdated="True" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource SameObjectToBoolConverter}">
+                                    <Binding Path="DataContext.PlaylistManager.CurrentTrack" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListView}"  />
+                                    <Binding Path="."></Binding>
+                                </MultiBinding>
+                            </DataTrigger.Binding>
+
+                            <DataTrigger.Setters>
+                                <Setter Property="Background" Value="Red"/>
                                 <Setter Property="Foreground" Value="White"/>
                             </DataTrigger.Setters>
                         </DataTrigger>

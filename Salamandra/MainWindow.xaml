@@ -84,6 +84,12 @@
                     </Style.Triggers>
                 </Style>
             </ListView.ItemContainerStyle>
+
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Marcar como próxima" Command="{Binding SelectedAsNextTrackCommand}"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
         </ListView>
     </DockPanel>
 </Window>

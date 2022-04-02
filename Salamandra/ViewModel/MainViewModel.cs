@@ -19,6 +19,8 @@ namespace Salamandra.ViewModel
         public SoundEngine SoundEngine { get; set; }
         public PlaylistManager PlaylistManager { get; set; }
 
+        public PlaybackState PlaybackState { get; set; }
+
         public SoundFileTrack? SelectedTrack { get; set; }
 
         public ICommand? AddFilesToPlaylistCommand { get; set; }

@@ -87,6 +87,7 @@
 
             <ListView.ContextMenu>
                 <ContextMenu>
+                    <MenuItem Header="Tocar faixa selecionada" Command="{Binding PlaySelectedTrackCommand}"/>
                     <MenuItem Header="Marcar como próxima" Command="{Binding SelectedAsNextTrackCommand}"/>
                 </ContextMenu>
             </ListView.ContextMenu>

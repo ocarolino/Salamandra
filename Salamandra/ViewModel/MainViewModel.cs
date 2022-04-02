@@ -27,6 +27,7 @@ namespace Salamandra.ViewModel
         public ICommand? RemoveTracksFromPlaylistCommand { get; set; }
         public ICommand? StartPlaybackCommand { get; set; }
         public ICommand? StopPlaybackCommand { get; set; }
+        public ICommand? PlaySelectedTrackCommand { get; set; }
         public ICommand? SelectedAsNextTrackCommand { get; set; }
 
         public MainViewModel()
@@ -54,6 +55,7 @@ namespace Salamandra.ViewModel
             this.StartPlaybackCommand = new RelayCommand(p => StartPlayback(), p => this.PlaybackState == PlaybackState.Stopped);
             this.StopPlaybackCommand = new RelayCommand(p => StopPlayback(), p => this.PlaybackState == PlaybackState.Playing);
 
+            this.PlaySelectedTrackCommand = new RelayCommand(p => PlaySelectedTrack(), p => this.SelectedTrack != null);
             this.SelectedAsNextTrackCommand = new RelayCommand(p => SetSelectedAsNextTrack(), p => this.SelectedTrack != null);
         }
 
@@ -111,6 +113,19 @@ namespace Salamandra.ViewModel
             this.SoundEngine.Stop();
 
             this.PlaylistManager.CurrentTrack = null;
+        }
+
+        private void PlaySelectedTrack()
+        {
+            if (this.SelectedTrack == null)
+                return;
+
+            this.PlaylistManager.NextTrack = this.SelectedTrack;
+
+            if (this.PlaybackState == PlaybackState.Playing)
+                this.SoundEngine.Stop();
+            else
+                this.StartPlayback();
         }
 
         private void SetSelectedAsNextTrack()

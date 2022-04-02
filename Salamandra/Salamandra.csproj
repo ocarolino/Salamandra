@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Salamandra.Engine\Salamandra.Engine.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Images\Icons\Player\play.png" />
     <Resource Include="Images\Icons\Player\stop.png" />
   </ItemGroup>

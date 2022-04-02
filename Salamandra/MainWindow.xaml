@@ -10,7 +10,7 @@
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Playlist">
-                <MenuItem Header="Adicionar arquivos de áudio..."/>
+                <MenuItem Header="Adicionar arquivos de áudio..." Command="{Binding AddFilesToPlaylistCommand}"/>
             </MenuItem>
         </Menu>
 
@@ -29,8 +29,18 @@
             </Button>
         </Grid>
 
-        <ListView>
-            
+        <ListView ItemsSource="{Binding PlaylistManager.Tracks}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="{Binding Path=FriendlyName, Mode=OneWay}"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
     </DockPanel>
 </Window>

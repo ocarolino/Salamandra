@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Salamandra.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,14 @@ namespace Salamandra
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainViewModel mainViewModel;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            this.mainViewModel = new MainViewModel();
+            this.DataContext = this.mainViewModel;
         }
     }
 }

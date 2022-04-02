@@ -30,7 +30,7 @@ namespace Salamandra.Engine.Services
             {
                 this.NextTrack = null;
                 return;
-            }    
+            }
 
             int nextTrackIndex = this.Tracks.IndexOf(this.CurrentTrack) + 1;
 
@@ -56,6 +56,11 @@ namespace Salamandra.Engine.Services
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        public void AddTrack(SoundFileTrack soundFileTrack)
+        {
+            this.Tracks.Add(soundFileTrack);
         }
     }
 }

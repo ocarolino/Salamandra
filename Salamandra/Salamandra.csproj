@@ -11,4 +11,9 @@
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Resource Include="Images\Icons\Player\play.png" />
+    <Resource Include="Images\Icons\Player\stop.png" />
+  </ItemGroup>
+
 </Project>

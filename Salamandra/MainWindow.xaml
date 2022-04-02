@@ -5,8 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Salamandra"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
+    <DockPanel LastChildFill="True">
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Playlist">
+                <MenuItem Header="Adicionar arquivos de áudio..."/>
+            </MenuItem>
+        </Menu>
 
-    </Grid>
+        <Grid DockPanel.Dock="Bottom" Height="30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Margin="3">
+                <Image Source="/Images/Icons/Player/play.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Button>
+
+            <Button Grid.Column="1" Margin="3">
+                <Image Source="/Images/Icons/Player/stop.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Button>
+        </Grid>
+
+        <ListView>
+            
+        </ListView>
+    </DockPanel>
 </Window>

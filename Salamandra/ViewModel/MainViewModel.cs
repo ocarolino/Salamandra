@@ -91,9 +91,14 @@ namespace Salamandra.ViewModel
 
             this.PlaybackState = PlaybackState.Playing;
 
+            PlayTrack(this.PlaylistManager.NextTrack);
+        }
+
+        private void PlayTrack(SoundFileTrack soundFileTrack)
+        {
             // ToDo: Tratamento de erros...
-            this.SoundEngine.PlayAudioFile(this.PlaylistManager.NextTrack.Filename);
-            this.PlaylistManager.CurrentTrack = this.PlaylistManager.NextTrack;
+            this.SoundEngine.PlayAudioFile(soundFileTrack.Filename);
+            this.PlaylistManager.CurrentTrack = soundFileTrack;
             this.PlaylistManager.UpdateNextTrack();
         }
 
@@ -107,6 +112,15 @@ namespace Salamandra.ViewModel
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)
         {
+            Debug.WriteLine("SoundEngine_SoundStopped");
+
+            if (this.PlaybackState == PlaybackState.Playing)
+            {
+                if (this.PlaylistManager.NextTrack != null)
+                    PlayTrack(this.PlaylistManager.NextTrack);
+                else
+                    StopPlayback();
+            }
             /*if (this.play)
 
             throw new NotImplementedException();*/

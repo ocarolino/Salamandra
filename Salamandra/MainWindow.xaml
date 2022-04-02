@@ -4,9 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Salamandra"
+        xmlns:converters="clr-namespace:Salamandra.Converters"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <converters:SameObjectToBoolConverter x:Key="SameObjectToBoolConverter"/>
+    </Window.Resources>
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Playlist">
@@ -41,6 +45,31 @@
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Style.Triggers>
+                        <!--
+                        <Trigger Property="{Binding , Converter={StaticResource SameTrackConverter}, ConverterParameter={Binding PlaylistManager.NextTrack, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}}" Value="True">
+                            <Setter Property="Background" Value="ForestGreen"/>
+                        </Trigger>
+                        -->
+                        <DataTrigger Value="True">
+                            <DataTrigger.Binding>
+                                <MultiBinding Mode="OneWay" NotifyOnSourceUpdated="True" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource SameObjectToBoolConverter}">
+                                    <Binding Path="DataContext.PlaylistManager.NextTrack" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListView}"  />
+                                    <Binding Path="."></Binding>
+                                </MultiBinding>
+                            </DataTrigger.Binding>
+
+                            <DataTrigger.Setters>
+                                <Setter Property="Background" Value="ForestGreen"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
     </DockPanel>
 </Window>

@@ -10,6 +10,6 @@ namespace Salamandra.Engine.Domain
     {
         Default = 0,
         Repeat = 1,
-        Shuffle = 2,
+        Random = 2,
     }
 }

@@ -19,6 +19,8 @@ namespace Salamandra.Engine.Services
 
         public PlaylistManager()
         {
+            this.PlaylistMode = PlaylistMode.Default;
+
             this.Tracks = new ObservableCollection<SoundFileTrack>();
 
             this.CurrentTrack = null;
@@ -49,7 +51,7 @@ namespace Salamandra.Engine.Services
                     else
                         this.NextTrack = this.Tracks[nextTrackIndex];
                     break;
-                case PlaylistMode.Shuffle:
+                case PlaylistMode.Random:
                     Random random = new Random(); // ToDo: Random singleton.
 
                     this.NextTrack = this.Tracks[random.Next(0, this.Tracks.Count)];

@@ -30,5 +30,10 @@ namespace Salamandra
             this.mainViewModel = new MainViewModel();
             this.DataContext = this.mainViewModel;
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.mainViewModel.Closing();
+        }
     }
 }

@@ -7,7 +7,7 @@
         xmlns:converters="clr-namespace:Salamandra.Converters"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Window.Resources>
         <converters:SameObjectToBoolConverter x:Key="SameObjectToBoolConverter"/>
     </Window.Resources>
@@ -26,11 +26,11 @@
                 <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Margin="3">
+            <Button Grid.Column="0" Margin="3" Command="{Binding StartPlaybackCommand}">
                 <Image Source="/Images/Icons/Player/play.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Button>
 
-            <Button Grid.Column="1" Margin="3">
+            <Button Grid.Column="1" Margin="3" Command="{Binding StopPlaybackCommand}">
                 <Image Source="/Images/Icons/Player/stop.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Button>
         </Grid>

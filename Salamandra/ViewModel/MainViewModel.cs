@@ -25,19 +25,32 @@ namespace Salamandra.ViewModel
 
         public ICommand? AddFilesToPlaylistCommand { get; set; }
         public ICommand? RemoveTracksFromPlaylistCommand { get; set; }
+        public ICommand? StartPlaybackCommand { get; set; }
+        public ICommand? StopPlaybackCommand { get; set; }
 
         public MainViewModel()
         {
             this.SoundEngine = new SoundEngine();
+            this.SoundEngine.SoundStopped += SoundEngine_SoundStopped;
             this.PlaylistManager = new PlaylistManager();
 
+            this.PlaybackState = PlaybackState.Stopped;
+
             LoadCommands();
+        }
+
+        public void Closing()
+        {
+            this.StopPlayback();
         }
 
         private void LoadCommands()
         {
             this.AddFilesToPlaylistCommand = new RelayCommand(p => AddFilesToPlaylist(), p => true);
             this.RemoveTracksFromPlaylistCommand = new RelayCommand(p => RemoveTracksFromPlaylist(p), p => true);
+
+            this.StartPlaybackCommand = new RelayCommand(p => StartPlayback(), p => this.PlaybackState == PlaybackState.Stopped);
+            this.StopPlaybackCommand = new RelayCommand(p => StopPlayback(), p => this.PlaybackState == PlaybackState.Playing);
         }
 
         private void AddFilesToPlaylist()
@@ -68,6 +81,32 @@ namespace Salamandra.ViewModel
             List<SoundFileTrack> tracks = ((System.Collections.IList)items).Cast<SoundFileTrack>().ToList();
 
             this.PlaylistManager.RemoveTracks(tracks);
+        }
+
+        private void StartPlayback()
+        {
+            if (this.PlaylistManager.NextTrack == null)
+                return;
+
+            this.PlaybackState = PlaybackState.Playing;
+
+            // ToDo: Tratamento de erros...
+            this.SoundEngine.PlayAudioFile(this.PlaylistManager.NextTrack.Filename);
+            this.PlaylistManager.CurrentTrack = this.PlaylistManager.CurrentTrack;
+            this.PlaylistManager.UpdateNextTrack();
+        }
+
+        private void StopPlayback()
+        {
+            this.PlaybackState = PlaybackState.Stopped;
+            this.SoundEngine.Stop();
+        }
+
+        private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)
+        {
+            /*if (this.play)
+
+            throw new NotImplementedException();*/
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

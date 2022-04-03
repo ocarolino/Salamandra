@@ -136,7 +136,7 @@ namespace Salamandra.ViewModel
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)
         {
-            Debug.WriteLine("SoundEngine_SoundStopped");
+            Debug.WriteLine("MainViewModel: Start SoundEngine_SoundStopped");
 
             if (this.PlaybackState == PlaybackState.Playing)
             {
@@ -145,9 +145,8 @@ namespace Salamandra.ViewModel
                 else
                     StopPlayback();
             }
-            /*if (this.play)
 
-            throw new NotImplementedException();*/
+            Debug.WriteLine("MainViewModel: End SoundEngine_SoundStopped");
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

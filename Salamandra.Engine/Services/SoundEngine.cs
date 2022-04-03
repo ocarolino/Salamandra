@@ -3,6 +3,7 @@ using Salamandra.Engine.Domain;
 using Salamandra.Engine.Events;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,12 +41,14 @@ namespace Salamandra.Engine.Services
 
         private void WaveOutEvent_PlaybackStopped(object? sender, StoppedEventArgs e)
         {
+            Debug.WriteLine("SoundEngine: Start WaveOutEvent_PlaybackStopped");
             this.outputDevice.Dispose();
             this.outputDevice = null;
             this.audioFileReader.Dispose();
             this.audioFileReader = null;
 
             SoundStopped?.Invoke(this, new SoundStoppedEventArgs() { PlaybackStopType = this.playbackStopType });
+            Debug.WriteLine("SoundEngine: End WaveOutEvent_PlaybackStopped");
         }
 
         public void Stop()

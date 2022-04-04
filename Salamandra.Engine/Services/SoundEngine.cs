@@ -39,7 +39,7 @@ namespace Salamandra.Engine.Services
             this.OutputDevice = 0;
         }
 
-        public void PlayAudioFile(string filename)
+        public void PlayAudioFile(string filename, float volume = 1)
         {
             if (this.outputDevice == null)
             {
@@ -49,7 +49,7 @@ namespace Salamandra.Engine.Services
 
             if (this.audioFileReader == null)
             {
-                this.audioFileReader = new AudioFileReader(filename);
+                this.audioFileReader = new AudioFileReader(filename) { Volume = volume };
                 this.outputDevice.Init(this.audioFileReader);
             }
 

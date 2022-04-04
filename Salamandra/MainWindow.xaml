@@ -35,6 +35,21 @@
             </Button>
         </Grid>
 
+        <Grid DockPanel.Dock="Bottom" Margin="0 8 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Column="2" Source="/Images/Icons/Player/volume_up.png"/>
+            <Slider Grid.Column="3" Minimum="0" Maximum="100" Value="{Binding CurrentVolume}"
+                    Margin="8 0 0 0"  VerticalAlignment="Center">
+
+            </Slider>
+        </Grid>
+
         <ListView ItemsSource="{Binding PlaylistManager.Tracks}" SelectedItem="{Binding SelectedTrack}"
                   Name="playlist" SelectionMode="Extended">
             <ListView.ItemTemplate>

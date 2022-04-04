@@ -1,31 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Images\Icons\Player\volume_up.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="Images\Icons\Player\volume_up.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Salamandra.Engine\Salamandra.Engine.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Salamandra.Engine\Salamandra.Engine.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Images\Icons\Player\play.png" />
-    <Resource Include="Images\Icons\Player\stop.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<Resource Include="Images\Icons\Player\play.png" />
+		<Resource Include="Images\Icons\Player\stop.png" />
+		<Resource Include="Images\Icons\Player\volume_up.png" />
+	</ItemGroup>
 
 </Project>

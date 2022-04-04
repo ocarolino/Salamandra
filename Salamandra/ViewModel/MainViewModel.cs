@@ -20,6 +20,7 @@ namespace Salamandra.ViewModel
         public PlaylistManager PlaylistManager { get; set; }
 
         public PlaybackState PlaybackState { get; set; }
+        public double CurrentVolume { get; set; }
 
         public SoundFileTrack? SelectedTrack { get; set; }
 
@@ -38,6 +39,8 @@ namespace Salamandra.ViewModel
             this.PlaylistManager.PlaylistMode = PlaylistMode.Random;
 
             this.PlaybackState = PlaybackState.Stopped;
+
+            this.CurrentVolume = 100;
 
             LoadCommands();
         }

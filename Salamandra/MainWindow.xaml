@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:Salamandra"
         xmlns:converters="clr-namespace:Salamandra.Converters"
         mc:Ignorable="d"
@@ -45,8 +46,12 @@
 
             <Image Grid.Column="2" Source="/Images/Icons/Player/volume_up.png"/>
             <Slider Grid.Column="3" Minimum="0" Maximum="100" Value="{Binding CurrentVolume}"
-                    Margin="8 0 0 0"  VerticalAlignment="Center">
-
+                    Margin="8 0 0 0"  VerticalAlignment="Center" Name="VolumeControl">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="ValueChanged">
+                        <i:InvokeCommandAction Command="{Binding VolumeControlValueChangedCommand}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Slider>
         </Grid>
 

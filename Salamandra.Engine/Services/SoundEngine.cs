@@ -12,20 +12,23 @@ namespace Salamandra.Engine.Services
 {
     public class SoundEngine
     {
-        private WaveOutEvent outputDevice;
-        private AudioFileReader audioFileReader;
+        private WaveOutEvent? outputDevice;
+        private AudioFileReader? audioFileReader;
 
         private PlaybackStopType playbackStopType;
 
+        public int OutputDevice { get; set; }
+
         public SoundEngine()
         {
+            this.OutputDevice = 0;
         }
 
         public void PlayAudioFile(string filename)
         {
             if (this.outputDevice == null)
             {
-                this.outputDevice = new WaveOutEvent();
+                this.outputDevice = new WaveOutEvent() { DeviceNumber = 0 };
                 this.outputDevice.PlaybackStopped += WaveOutEvent_PlaybackStopped;
             }
 
@@ -47,6 +50,11 @@ namespace Salamandra.Engine.Services
             this.audioFileReader.Dispose();
             this.audioFileReader = null;
 
+            if (e.Exception != null)
+            {
+                throw e.Exception;
+            }
+
             SoundStopped?.Invoke(this, new SoundStoppedEventArgs() { PlaybackStopType = this.playbackStopType });
             Debug.WriteLine("SoundEngine: End WaveOutEvent_PlaybackStopped");
         }
@@ -57,7 +65,7 @@ namespace Salamandra.Engine.Services
             this.outputDevice?.Stop();
         }
 
-        public event OnSoundStopped SoundStopped;
+        public event OnSoundStopped? SoundStopped;
     }
 
     public delegate void OnSoundStopped(object? sender, SoundStoppedEventArgs e);

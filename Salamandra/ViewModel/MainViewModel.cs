@@ -141,7 +141,8 @@ namespace Salamandra.ViewModel
 
         private void VolumeControlValueChanged()
         {
-            Debug.WriteLine("Volume: " + this.CurrentVolume.ToString());
+            if (this.PlaybackState == PlaybackState.Playing)
+                this.SoundEngine.Volume = this.CurrentVolume / 100;
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

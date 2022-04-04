@@ -41,7 +41,7 @@ namespace Salamandra.ViewModel
 
             this.PlaybackState = PlaybackState.Stopped;
 
-            this.CurrentVolume = 100;
+            this.CurrentVolume = 1; // ToDo: Min e Max via SoundEngine
 
             LoadCommands();
         }
@@ -107,7 +107,7 @@ namespace Salamandra.ViewModel
         private void PlayTrack(SoundFileTrack soundFileTrack)
         {
             // ToDo: Tratamento de erros...
-            this.SoundEngine.PlayAudioFile(soundFileTrack.Filename);
+            this.SoundEngine.PlayAudioFile(soundFileTrack.Filename, this.CurrentVolume);
             this.PlaylistManager.CurrentTrack = soundFileTrack;
             this.PlaylistManager.UpdateNextTrack();
         }
@@ -142,7 +142,7 @@ namespace Salamandra.ViewModel
         private void VolumeControlValueChanged()
         {
             if (this.PlaybackState == PlaybackState.Playing)
-                this.SoundEngine.Volume = this.CurrentVolume / 100;
+                this.SoundEngine.Volume = this.CurrentVolume;
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

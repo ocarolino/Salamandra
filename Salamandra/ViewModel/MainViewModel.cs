@@ -19,7 +19,8 @@ namespace Salamandra.ViewModel
         public SoundEngine SoundEngine { get; set; }
         public PlaylistManager PlaylistManager { get; set; }
 
-        public PlaybackState PlaybackState { get; set; }
+        //public PlaybackState PlaybackState { get; set; }
+        public bool IsPlaying { get; set; }
         public float CurrentVolume { get; set; }
 
         public SoundFileTrack? SelectedTrack { get; set; }
@@ -39,7 +40,8 @@ namespace Salamandra.ViewModel
             this.PlaylistManager = new PlaylistManager();
             this.PlaylistManager.PlaylistMode = PlaylistMode.Random;
 
-            this.PlaybackState = PlaybackState.Stopped;
+            this.IsPlaying = false;
+            //this.PlaybackState = PlaybackState.Stopped;
 
             this.CurrentVolume = 1; // ToDo: Min e Max via SoundEngine
 
@@ -56,8 +58,8 @@ namespace Salamandra.ViewModel
             this.AddFilesToPlaylistCommand = new RelayCommand(p => AddFilesToPlaylist(), p => true);
             this.RemoveTracksFromPlaylistCommand = new RelayCommand(p => RemoveTracksFromPlaylist(p), p => true);
 
-            this.StartPlaybackCommand = new RelayCommand(p => StartPlayback(), p => this.PlaybackState == PlaybackState.Stopped);
-            this.StopPlaybackCommand = new RelayCommand(p => StopPlayback(), p => this.PlaybackState == PlaybackState.Playing);
+            this.StartPlaybackCommand = new RelayCommand(p => StartPlayback(), p => !this.IsPlaying);
+            this.StopPlaybackCommand = new RelayCommand(p => StopPlayback(), p => this.IsPlaying);
 
             this.PlaySelectedTrackCommand = new RelayCommand(p => PlaySelectedTrack(), p => this.SelectedTrack != null);
             this.SelectedAsNextTrackCommand = new RelayCommand(p => SetSelectedAsNextTrack(), p => this.SelectedTrack != null);
@@ -99,7 +101,8 @@ namespace Salamandra.ViewModel
             if (this.PlaylistManager.NextTrack == null)
                 return;
 
-            this.PlaybackState = PlaybackState.Playing;
+            this.IsPlaying = true;
+            //this.PlaybackState = PlaybackState.Playing;
 
             PlayTrack(this.PlaylistManager.NextTrack);
         }
@@ -114,7 +117,8 @@ namespace Salamandra.ViewModel
 
         private void StopPlayback()
         {
-            this.PlaybackState = PlaybackState.Stopped;
+            this.IsPlaying = false;
+            //this.PlaybackState = PlaybackState.Stopped;
             this.SoundEngine.Stop();
 
             this.PlaylistManager.CurrentTrack = null;
@@ -127,7 +131,7 @@ namespace Salamandra.ViewModel
 
             this.PlaylistManager.NextTrack = this.SelectedTrack;
 
-            if (this.PlaybackState == PlaybackState.Playing)
+            if (this.IsPlaying)
                 this.SoundEngine.Stop();
             else
                 this.StartPlayback();
@@ -141,7 +145,7 @@ namespace Salamandra.ViewModel
 
         private void VolumeControlValueChanged()
         {
-            if (this.PlaybackState == PlaybackState.Playing)
+            if (this.IsPlaying)
                 this.SoundEngine.Volume = this.CurrentVolume;
         }
 
@@ -149,7 +153,7 @@ namespace Salamandra.ViewModel
         {
             Debug.WriteLine("MainViewModel: Start SoundEngine_SoundStopped");
 
-            if (this.PlaybackState == PlaybackState.Playing)
+            if (this.IsPlaying)
             {
                 if (this.PlaylistManager.NextTrack != null)
                     PlayTrack(this.PlaylistManager.NextTrack);

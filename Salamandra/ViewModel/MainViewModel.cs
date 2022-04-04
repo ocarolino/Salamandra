@@ -19,7 +19,7 @@ namespace Salamandra.ViewModel
         public SoundEngine SoundEngine { get; set; }
         public PlaylistManager PlaylistManager { get; set; }
 
-        //public PlaybackState PlaybackState { get; set; }
+        public PlaybackState PlaybackState { get; set; }
         public bool IsPlaying { get; set; }
         public float CurrentVolume { get; set; }
 
@@ -41,7 +41,7 @@ namespace Salamandra.ViewModel
             this.PlaylistManager.PlaylistMode = PlaylistMode.Random;
 
             this.IsPlaying = false;
-            //this.PlaybackState = PlaybackState.Stopped;
+            this.PlaybackState = PlaybackState.Stopped;
 
             this.CurrentVolume = 1; // ToDo: Min e Max via SoundEngine
 
@@ -102,7 +102,7 @@ namespace Salamandra.ViewModel
                 return;
 
             this.IsPlaying = true;
-            //this.PlaybackState = PlaybackState.Playing;
+            this.PlaybackState = PlaybackState.PlayingPlaylistTrack;
 
             PlayTrack(this.PlaylistManager.NextTrack);
         }
@@ -118,7 +118,7 @@ namespace Salamandra.ViewModel
         private void StopPlayback()
         {
             this.IsPlaying = false;
-            //this.PlaybackState = PlaybackState.Stopped;
+            this.PlaybackState = PlaybackState.Stopped;
             this.SoundEngine.Stop();
 
             this.PlaylistManager.CurrentTrack = null;

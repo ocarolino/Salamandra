@@ -18,6 +18,21 @@ namespace Salamandra.Engine.Services
         private PlaybackStopType playbackStopType;
 
         public int OutputDevice { get; set; }
+        public float Volume
+        {
+            get
+            {
+                if (this.audioFileReader != null)
+                    return this.audioFileReader.Volume;
+
+                return 1;
+            }
+            set
+            {
+                if (this.audioFileReader != null)
+                    this.audioFileReader.Volume = value;
+            }
+        }
 
         public SoundEngine()
         {

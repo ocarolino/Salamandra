@@ -20,7 +20,7 @@ namespace Salamandra.ViewModel
         public PlaylistManager PlaylistManager { get; set; }
 
         public PlaybackState PlaybackState { get; set; }
-        public double CurrentVolume { get; set; }
+        public float CurrentVolume { get; set; }
 
         public SoundFileTrack? SelectedTrack { get; set; }
 
@@ -30,6 +30,7 @@ namespace Salamandra.ViewModel
         public ICommand? StopPlaybackCommand { get; set; }
         public ICommand? PlaySelectedTrackCommand { get; set; }
         public ICommand? SelectedAsNextTrackCommand { get; set; }
+        public ICommand? VolumeControlValueChangedCommand { get; set; }
 
         public MainViewModel()
         {
@@ -60,6 +61,7 @@ namespace Salamandra.ViewModel
 
             this.PlaySelectedTrackCommand = new RelayCommand(p => PlaySelectedTrack(), p => this.SelectedTrack != null);
             this.SelectedAsNextTrackCommand = new RelayCommand(p => SetSelectedAsNextTrack(), p => this.SelectedTrack != null);
+            this.VolumeControlValueChangedCommand = new RelayCommand(p => VolumeControlValueChanged(), p => true);
         }
 
         private void AddFilesToPlaylist()
@@ -135,6 +137,11 @@ namespace Salamandra.ViewModel
         {
             if (this.SelectedTrack != null)
                 this.PlaylistManager.NextTrack = this.SelectedTrack;
+        }
+
+        private void VolumeControlValueChanged()
+        {
+            Debug.WriteLine("Volume: " + this.CurrentVolume.ToString());
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

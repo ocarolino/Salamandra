@@ -25,6 +25,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" Margin="3" Command="{Binding StartPlaybackCommand}">
@@ -34,6 +35,10 @@
             <Button Grid.Column="1" Margin="3" Command="{Binding StopPlaybackCommand}">
                 <Image Source="/Images/Icons/Player/stop.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Button>
+
+            <ToggleButton Grid.Column="2" Margin="3" Command="{Binding TogglePlayPauseCommand}" IsChecked="{Binding IsPaused}">
+                <Image Source="/Images/Icons/Player/pause.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </ToggleButton>
         </Grid>
 
         <Grid DockPanel.Dock="Bottom" Margin="0 8 0 0">

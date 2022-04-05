@@ -23,6 +23,8 @@ namespace Salamandra.ViewModel
         public bool IsPlaying { get; set; }
         public bool IsPaused { get; set; }
         public float CurrentVolume { get; set; }
+        public double TrackLengthInSeconds { get; set; }
+        public double TrackPositionInSeconds { get; set; }
 
         public SoundFileTrack? SelectedTrack { get; set; }
 
@@ -46,6 +48,9 @@ namespace Salamandra.ViewModel
             this.PlaybackState = PlaybackState.Stopped;
 
             this.CurrentVolume = 1; // ToDo: Min e Max via SoundEngine
+
+            this.TrackLengthInSeconds = 0;
+            this.TrackPositionInSeconds = 0;
 
             LoadCommands();
         }
@@ -120,6 +125,9 @@ namespace Salamandra.ViewModel
 
             this.PlaylistManager.CurrentTrack = soundFileTrack;
             this.PlaylistManager.UpdateNextTrack();
+
+            this.TrackLengthInSeconds = this.SoundEngine.TotalLengthInSeconds;
+            this.TrackPositionInSeconds = 0;
         }
 
         private void StopPlayback()
@@ -130,6 +138,8 @@ namespace Salamandra.ViewModel
             this.SoundEngine.Stop();
 
             this.PlaylistManager.CurrentTrack = null;
+            this.TrackLengthInSeconds = 0;
+            this.TrackPositionInSeconds = 0;
         }
 
         private void PlaySelectedTrack()

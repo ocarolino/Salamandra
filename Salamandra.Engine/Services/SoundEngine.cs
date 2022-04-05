@@ -34,6 +34,20 @@ namespace Salamandra.Engine.Services
                     this.audioFileReader.Volume = value;
             }
         }
+        public double PositionInSeconds
+        {
+            get => this.audioFileReader != null ? this.audioFileReader.CurrentTime.TotalSeconds : 0;
+
+            set
+            {
+                if (this.audioFileReader != null)
+                    this.audioFileReader.CurrentTime = TimeSpan.FromSeconds(value);
+            }
+        }
+        public double TotalLengthInSeconds
+        {
+            get => this.audioFileReader != null ? this.audioFileReader.TotalTime.TotalSeconds : 0;
+        }
 
         public SoundEngine()
         {

@@ -60,6 +60,17 @@ namespace Salamandra.Engine.Services
             this.outputDevice.Play();
         }
 
+        public void TogglePlayPause()
+        {
+            if (this.State == SoundEngineState.Stopped)
+                return;
+
+            if (this.State == SoundEngineState.Playing)
+                this.outputDevice.Pause();
+            else
+                this.outputDevice.Play();
+        }
+
         private void WaveOutEvent_PlaybackStopped(object? sender, StoppedEventArgs e)
         {
             this.outputDevice.Dispose();

@@ -49,6 +49,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
+            <Slider Grid.Column="0" Minimum="0" Maximum="{Binding TrackLengthInSeconds, Mode=OneWay}" Value="{Binding TrackPositionInSeconds}" VerticalAlignment="Center"/>
+
             <Image Grid.Column="2" Source="/Images/Icons/Player/volume_up.png"/>
             <Slider Grid.Column="3" Minimum="0" Maximum="1" Value="{Binding CurrentVolume}" LargeChange="0.2" SmallChange="0.05"
                     Margin="8 0 0 0"  VerticalAlignment="Center" Name="VolumeControl">

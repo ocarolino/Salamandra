@@ -21,6 +21,7 @@ namespace Salamandra.ViewModel
 
         public PlaybackState PlaybackState { get; set; }
         public bool IsPlaying { get; set; }
+        public bool IsPaused { get; set; }
         public float CurrentVolume { get; set; }
 
         public SoundFileTrack? SelectedTrack { get; set; }
@@ -32,6 +33,7 @@ namespace Salamandra.ViewModel
         public ICommand? PlaySelectedTrackCommand { get; set; }
         public ICommand? SelectedAsNextTrackCommand { get; set; }
         public ICommand? VolumeControlValueChangedCommand { get; set; }
+        public ICommand? TogglePlayPauseCommand { get; set; }
 
         public MainViewModel()
         {
@@ -64,6 +66,8 @@ namespace Salamandra.ViewModel
             this.PlaySelectedTrackCommand = new RelayCommand(p => PlaySelectedTrack(), p => this.SelectedTrack != null);
             this.SelectedAsNextTrackCommand = new RelayCommand(p => SetSelectedAsNextTrack(), p => this.SelectedTrack != null);
             this.VolumeControlValueChangedCommand = new RelayCommand(p => VolumeControlValueChanged(), p => true);
+
+            this.TogglePlayPauseCommand = new RelayCommand(p => TogglePlayPause(), p => this.IsPlaying);
         }
 
         private void AddFilesToPlaylist()
@@ -111,6 +115,9 @@ namespace Salamandra.ViewModel
         {
             // ToDo: Tratamento de erros...
             this.SoundEngine.PlayAudioFile(soundFileTrack.Filename, this.CurrentVolume);
+
+            this.IsPaused = false;
+
             this.PlaylistManager.CurrentTrack = soundFileTrack;
             this.PlaylistManager.UpdateNextTrack();
         }
@@ -147,6 +154,13 @@ namespace Salamandra.ViewModel
         {
             if (this.IsPlaying)
                 this.SoundEngine.Volume = this.CurrentVolume;
+        }
+
+        private void TogglePlayPause()
+        {
+            this.SoundEngine.TogglePlayPause();
+
+            this.IsPaused = (this.SoundEngine.State == SoundEngineState.Paused);
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

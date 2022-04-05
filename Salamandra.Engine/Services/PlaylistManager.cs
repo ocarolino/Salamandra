@@ -66,7 +66,7 @@ namespace Salamandra.Engine.Services
             foreach (var item in tracks)
                 this.Tracks.Add(item);
 
-            if (this.CurrentTrack == null)
+            if (this.NextTrack == null)
                 UpdateNextTrack();
         }
 

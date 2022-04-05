@@ -66,9 +66,15 @@ namespace Salamandra.Engine.Services
                 return;
 
             if (this.State == SoundEngineState.Playing)
+            {
                 this.outputDevice.Pause();
+                this.State = SoundEngineState.Paused;
+            }
             else
+            {
                 this.outputDevice.Play();
+                this.State = SoundEngineState.Playing;
+            }
         }
 
         private void WaveOutEvent_PlaybackStopped(object? sender, StoppedEventArgs e)

@@ -125,6 +125,7 @@ namespace Salamandra.ViewModel
         private void StopPlayback()
         {
             this.IsPlaying = false;
+            this.IsPaused = false;
             this.PlaybackState = PlaybackState.Stopped;
             this.SoundEngine.Stop();
 

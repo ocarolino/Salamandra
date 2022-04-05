@@ -18,6 +18,7 @@ namespace Salamandra.Engine.Services
         private PlaybackStopType playbackStopType;
 
         public int OutputDevice { get; set; }
+        public SoundEngineState State { get; set; }
         public float Volume
         {
             get
@@ -37,6 +38,7 @@ namespace Salamandra.Engine.Services
         public SoundEngine()
         {
             this.OutputDevice = 0;
+            this.State = SoundEngineState.Stopped;
         }
 
         public void PlayAudioFile(string filename, float volume = 1)
@@ -54,24 +56,20 @@ namespace Salamandra.Engine.Services
             }
 
             this.playbackStopType = PlaybackStopType.ReachedEndOfFile;
+            this.State = SoundEngineState.Playing;
             this.outputDevice.Play();
         }
 
         private void WaveOutEvent_PlaybackStopped(object? sender, StoppedEventArgs e)
         {
-            Debug.WriteLine("SoundEngine: Start WaveOutEvent_PlaybackStopped");
             this.outputDevice.Dispose();
             this.outputDevice = null;
             this.audioFileReader.Dispose();
             this.audioFileReader = null;
 
-            if (e.Exception != null)
-            {
-                throw e.Exception;
-            }
+            this.State = SoundEngineState.Stopped;
 
             SoundStopped?.Invoke(this, new SoundStoppedEventArgs() { PlaybackStopType = this.playbackStopType });
-            Debug.WriteLine("SoundEngine: End WaveOutEvent_PlaybackStopped");
         }
 
         public void Stop()

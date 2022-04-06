@@ -39,6 +39,8 @@ namespace Salamandra.ViewModel
         public ICommand? SelectedAsNextTrackCommand { get; set; }
         public ICommand? VolumeControlValueChangedCommand { get; set; }
         public ICommand? TogglePlayPauseCommand { get; set; }
+        public ICommand? SeekBarDragStartedCommand { get; set; }
+        public ICommand? SeekBarDragCompletedCommand { get; set; }
 
         public MainViewModel()
         {
@@ -68,8 +70,8 @@ namespace Salamandra.ViewModel
             if (!this.IsPlaying)
                 return;
 
-            if (this.SoundEngine.State == SoundEngineState.Playing)
-                this.TrackPositionInSeconds = this.SoundEngine.PositionInSeconds;
+            /*if (this.SoundEngine.State == SoundEngineState.Playing)
+                this.TrackPositionInSeconds = this.SoundEngine.PositionInSeconds;*/
         }
 
         public void Closing()
@@ -87,9 +89,13 @@ namespace Salamandra.ViewModel
 
             this.PlaySelectedTrackCommand = new RelayCommand(p => PlaySelectedTrack(), p => this.SelectedTrack != null);
             this.SelectedAsNextTrackCommand = new RelayCommand(p => SetSelectedAsNextTrack(), p => this.SelectedTrack != null);
+
             this.VolumeControlValueChangedCommand = new RelayCommand(p => VolumeControlValueChanged(), p => true);
 
             this.TogglePlayPauseCommand = new RelayCommand(p => TogglePlayPause(), p => this.IsPlaying);
+
+            this.SeekBarDragStartedCommand = new RelayCommand(p => SeekBarDragStarted(), p => this.IsPlaying);
+            this.SeekBarDragCompletedCommand = new RelayCommand(p => SeekBarDragCompleted(), p => this.IsPlaying);
         }
 
         private void AddFilesToPlaylist()
@@ -189,6 +195,16 @@ namespace Salamandra.ViewModel
             this.SoundEngine.TogglePlayPause();
 
             this.IsPaused = (this.SoundEngine.State == SoundEngineState.Paused);
+        }
+
+        private void SeekBarDragCompleted()
+        {
+            Debug.WriteLine("SeekBarDragCompleted - Value: " + this.TrackPositionInSeconds.ToString());
+        }
+
+        private void SeekBarDragStarted()
+        {
+            Debug.WriteLine("SeekBarDragStarted - Value: " + this.TrackPositionInSeconds.ToString());
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

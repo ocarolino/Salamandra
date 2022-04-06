@@ -6,6 +6,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:Salamandra"
         xmlns:converters="clr-namespace:Salamandra.Converters"
+        xmlns:behaviors="clr-namespace:Salamandra.Behaviors"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing">
@@ -49,7 +50,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Slider Grid.Column="0" Minimum="0" Maximum="{Binding TrackLengthInSeconds, Mode=OneWay}" Value="{Binding TrackPositionInSeconds}" VerticalAlignment="Center"/>
+            <Slider Grid.Column="0" Minimum="0" Maximum="{Binding TrackLengthInSeconds, Mode=OneWay}" Value="{Binding TrackPositionInSeconds}" VerticalAlignment="Center"
+                    behaviors:SliderDragBehavior.DragStartedCommand="{Binding SeekBarDragStartedCommand}"
+                    behaviors:SliderDragBehavior.DragCompletedCommand="{Binding SeekBarDragCompletedCommand}"/>
 
             <Image Grid.Column="2" Source="/Images/Icons/Player/volume_up.png"/>
             <Slider Grid.Column="3" Minimum="0" Maximum="1" Value="{Binding CurrentVolume}" LargeChange="0.2" SmallChange="0.05"

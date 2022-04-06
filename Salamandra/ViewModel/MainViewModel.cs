@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace Salamandra.ViewModel
 {
@@ -27,6 +28,8 @@ namespace Salamandra.ViewModel
         public double TrackPositionInSeconds { get; set; }
 
         public SoundFileTrack? SelectedTrack { get; set; }
+
+        public DispatcherTimer MainTimer { get; set; }
 
         public ICommand? AddFilesToPlaylistCommand { get; set; }
         public ICommand? RemoveTracksFromPlaylistCommand { get; set; }
@@ -52,7 +55,21 @@ namespace Salamandra.ViewModel
             this.TrackLengthInSeconds = 0;
             this.TrackPositionInSeconds = 0;
 
+            this.MainTimer = new DispatcherTimer();
+            this.MainTimer.Interval = TimeSpan.FromMilliseconds(250);
+            this.MainTimer.Tick += MainTimer_Tick;
+            this.MainTimer.Start();
+
             LoadCommands();
+        }
+
+        private void MainTimer_Tick(object? sender, EventArgs e)
+        {
+            if (!this.IsPlaying)
+                return;
+
+            if (this.SoundEngine.State == SoundEngineState.Playing)
+                this.TrackPositionInSeconds = this.SoundEngine.PositionInSeconds;
         }
 
         public void Closing()

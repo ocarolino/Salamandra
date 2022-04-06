@@ -24,6 +24,8 @@ namespace Salamandra.ViewModel
         public bool IsPlaying { get; set; }
         public bool IsPaused { get; set; }
         public float CurrentVolume { get; set; }
+
+        private bool isDraggingTrackPosition;
         public double TrackLengthInSeconds { get; set; }
         public double TrackPositionInSeconds { get; set; }
 
@@ -54,6 +56,7 @@ namespace Salamandra.ViewModel
 
             this.CurrentVolume = 1; // ToDo: Min e Max via SoundEngine
 
+            this.isDraggingTrackPosition = false;
             this.TrackLengthInSeconds = 0;
             this.TrackPositionInSeconds = 0;
 
@@ -70,8 +73,8 @@ namespace Salamandra.ViewModel
             if (!this.IsPlaying)
                 return;
 
-            /*if (this.SoundEngine.State == SoundEngineState.Playing)
-                this.TrackPositionInSeconds = this.SoundEngine.PositionInSeconds;*/
+            if (this.SoundEngine.State == SoundEngineState.Playing && !this.isDraggingTrackPosition)
+                this.TrackPositionInSeconds = this.SoundEngine.PositionInSeconds;
         }
 
         public void Closing()
@@ -200,11 +203,16 @@ namespace Salamandra.ViewModel
         private void SeekBarDragCompleted()
         {
             Debug.WriteLine("SeekBarDragCompleted - Value: " + this.TrackPositionInSeconds.ToString());
+
+            this.SoundEngine.PositionInSeconds = this.TrackPositionInSeconds;
+            this.isDraggingTrackPosition = false;
         }
 
         private void SeekBarDragStarted()
         {
             Debug.WriteLine("SeekBarDragStarted - Value: " + this.TrackPositionInSeconds.ToString());
+
+            this.isDraggingTrackPosition = true;
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

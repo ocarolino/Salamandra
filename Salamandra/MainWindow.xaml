@@ -27,6 +27,7 @@
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" Margin="3" Command="{Binding StartPlaybackCommand}">
@@ -40,6 +41,10 @@
             <ToggleButton Grid.Column="2" Margin="3" Command="{Binding TogglePlayPauseCommand}" IsChecked="{Binding IsPaused}">
                 <Image Source="/Images/Icons/Player/pause.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </ToggleButton>
+
+            <TextBlock Grid.Column="3" VerticalAlignment="Center">
+                <Run Text="{Binding TrackPositionTime, StringFormat=hh\\:mm\\:ss, Mode=OneWay}"/> / <Run Text="{Binding TrackLengthTime, StringFormat=hh\\:mm\\:ss, Mode=OneWay}"/>
+            </TextBlock>
         </Grid>
 
         <Grid DockPanel.Dock="Bottom" Margin="0 8 0 0">
@@ -55,6 +60,7 @@
                     behaviors:SliderDragBehavior.DragCompletedCommand="{Binding SeekBarDragCompletedCommand}"/>
 
             <Image Grid.Column="2" Source="/Images/Icons/Player/volume_up.png"/>
+
             <Slider Grid.Column="3" Minimum="0" Maximum="1" Value="{Binding CurrentVolume}" LargeChange="0.2" SmallChange="0.05"
                     Margin="8 0 0 0"  VerticalAlignment="Center" Name="VolumeControl">
                 <i:Interaction.Triggers>

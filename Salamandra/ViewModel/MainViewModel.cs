@@ -28,6 +28,8 @@ namespace Salamandra.ViewModel
         private bool isDraggingTrackPosition;
         public double TrackLengthInSeconds { get; set; }
         public double TrackPositionInSeconds { get; set; }
+        public TimeSpan TrackPositionTime { get => TimeSpan.FromSeconds(this.TrackPositionInSeconds); }
+        public TimeSpan TrackLengthTime { get => TimeSpan.FromSeconds(this.TrackLengthInSeconds); }
 
         public SoundFileTrack? SelectedTrack { get; set; }
 

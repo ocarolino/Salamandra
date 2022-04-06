@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Salamandra.Engine.Domain
+namespace Salamandra.Engine.Domain.Enums
 {
-    public enum PlaylistMode
+    public enum SoundEngineErrorType
     {
-        Default = 0,
-        Repeat = 1,
-        Random = 2,
+        FileError = 0,
+        DeviceError = 1,
     }
 }

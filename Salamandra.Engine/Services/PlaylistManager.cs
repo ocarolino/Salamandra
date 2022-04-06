@@ -1,4 +1,5 @@
 ﻿using Salamandra.Engine.Domain;
+using Salamandra.Engine.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

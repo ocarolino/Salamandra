@@ -1,5 +1,6 @@
 ﻿using NAudio.Wave;
 using Salamandra.Engine.Domain;
+using Salamandra.Engine.Domain.Enums;
 using Salamandra.Engine.Events;
 using System;
 using System.Collections.Generic;

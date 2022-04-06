@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using Salamandra.Commands;
 using Salamandra.Engine.Domain;
+using Salamandra.Engine.Domain.Enums;
 using Salamandra.Engine.Services;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Salamandra.ViewModel
         public SoundEngine SoundEngine { get; set; }
         public PlaylistManager PlaylistManager { get; set; }
 
-        public PlaybackState PlaybackState { get; set; }
+        public PlaylistState PlaybackState { get; set; }
         public bool IsPlaying { get; set; }
         public bool IsPaused { get; set; }
         public float CurrentVolume { get; set; }
@@ -54,7 +55,7 @@ namespace Salamandra.ViewModel
             this.PlaylistManager.PlaylistMode = PlaylistMode.Random;
 
             this.IsPlaying = false;
-            this.PlaybackState = PlaybackState.Stopped;
+            this.PlaybackState = PlaylistState.Stopped;
 
             this.CurrentVolume = 1; // ToDo: Min e Max via SoundEngine
 
@@ -141,7 +142,7 @@ namespace Salamandra.ViewModel
                 return;
 
             this.IsPlaying = true;
-            this.PlaybackState = PlaybackState.PlayingPlaylistTrack;
+            this.PlaybackState = PlaylistState.PlayingPlaylistTrack;
 
             PlayTrack(this.PlaylistManager.NextTrack);
         }
@@ -164,7 +165,7 @@ namespace Salamandra.ViewModel
         {
             this.IsPlaying = false;
             this.IsPaused = false;
-            this.PlaybackState = PlaybackState.Stopped;
+            this.PlaybackState = PlaylistState.Stopped;
             this.SoundEngine.Stop();
 
             this.PlaylistManager.CurrentTrack = null;

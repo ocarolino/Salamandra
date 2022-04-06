@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Salamandra.Engine.Domain
+namespace Salamandra.Engine.Domain.Enums
 {
-    public enum SoundEngineErrorType
+    public enum SoundEngineState
     {
-        FileError = 0,
-        DeviceError = 1,
+        Playing = 0,
+        Paused = 1,
+        Stopped = 2,
     }
 }

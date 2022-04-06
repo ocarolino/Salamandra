@@ -55,6 +55,15 @@ namespace Salamandra.Engine.Services
             this.State = SoundEngineState.Stopped;
         }
 
+        public void EnumerateDevices()
+        {
+            for (int n = -1; n < WaveOut.DeviceCount; n++)
+            {
+                var caps = WaveOut.GetCapabilities(n);
+                Debug.WriteLine($"{n}: {caps.ProductName}");
+            }
+        }
+
         public void PlayAudioFile(string filename, float volume = 1)
         {
             if (this.outputDevice == null)

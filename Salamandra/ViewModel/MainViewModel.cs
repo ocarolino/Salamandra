@@ -68,6 +68,8 @@ namespace Salamandra.ViewModel
             this.MainTimer.Start();
 
             LoadCommands();
+
+            this.SoundEngine.EnumerateDevices();
         }
 
         private void MainTimer_Tick(object? sender, EventArgs e)

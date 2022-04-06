@@ -91,21 +91,21 @@ namespace Salamandra.Engine.Services
 
             if (this.State == SoundEngineState.Playing)
             {
-                this.outputDevice.Pause();
+                this.outputDevice?.Pause();
                 this.State = SoundEngineState.Paused;
             }
             else
             {
-                this.outputDevice.Play();
+                this.outputDevice?.Play();
                 this.State = SoundEngineState.Playing;
             }
         }
 
         private void WaveOutEvent_PlaybackStopped(object? sender, StoppedEventArgs e)
         {
-            this.outputDevice.Dispose();
+            this.outputDevice?.Dispose();
             this.outputDevice = null;
-            this.audioFileReader.Dispose();
+            this.audioFileReader?.Dispose();
             this.audioFileReader = null;
 
             this.State = SoundEngineState.Stopped;

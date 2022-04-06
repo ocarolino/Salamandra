@@ -15,8 +15,8 @@ namespace Salamandra.Engine.Services
         public PlaylistMode PlaylistMode { get; set; }
         public ObservableCollection<SoundFileTrack> Tracks { get; set; }
 
-        public SoundFileTrack CurrentTrack { get; set; }
-        public SoundFileTrack NextTrack { get; set; }
+        public SoundFileTrack? CurrentTrack { get; set; }
+        public SoundFileTrack? NextTrack { get; set; }
 
         public PlaylistManager()
         {

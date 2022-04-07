@@ -48,6 +48,8 @@ namespace Salamandra.ViewModel
         public ICommand? TogglePlayPauseCommand { get; set; }
         public ICommand? SeekBarDragStartedCommand { get; set; }
         public ICommand? SeekBarDragCompletedCommand { get; set; }
+        public ICommand? NextTrackCommand { get; set; }
+        public ICommand? StopAfterCurrentCommand { get; set; }
 
         public MainViewModel()
         {
@@ -110,6 +112,9 @@ namespace Salamandra.ViewModel
 
             this.SeekBarDragStartedCommand = new RelayCommand(p => SeekBarDragStarted(), p => this.IsPlaying);
             this.SeekBarDragCompletedCommand = new RelayCommand(p => SeekBarDragCompleted(), p => this.IsPlaying);
+
+            this.NextTrackCommand = new RelayCommand(p => NextTrack(), p => this.IsPlaying && this.PlaylistManager.NextTrack != null);
+            this.StopAfterCurrentCommand = new RelayCommand(p => StopAfterCurrent(), p => this.IsPlaying);
         }
 
         private void AddFilesToPlaylist()
@@ -260,6 +265,18 @@ namespace Salamandra.ViewModel
             Debug.WriteLine("SeekBarDragStarted - Value: " + this.TrackPositionInSeconds.ToString());
 
             this.isDraggingTrackPosition = true;
+        }
+
+        private void NextTrack()
+        {
+            if (this.IsPlaying)
+                this.SoundEngine.Stop();
+        }
+
+        private void StopAfterCurrent()
+        {
+            if (this.IsPlaying)
+                this.PlaylistManager.NextTrack = null;
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

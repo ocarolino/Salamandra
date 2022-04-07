@@ -27,6 +27,8 @@
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -42,7 +44,15 @@
                 <Image Source="/Images/Icons/Player/pause.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </ToggleButton>
 
-            <TextBlock Grid.Column="3" VerticalAlignment="Center">
+            <ToggleButton Grid.Column="3" Margin="3" Command="{Binding NextTrackCommand}" IsChecked="{Binding IsPaused}">
+                <Image Source="/Images/Icons/Player/next.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </ToggleButton>
+
+            <ToggleButton Grid.Column="4" Margin="3" Command="{Binding StopAfterCurrentCommand}" IsChecked="{Binding IsPaused}">
+                <Image Source="/Images/Icons/Player/stop-next.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </ToggleButton>
+
+            <TextBlock Grid.Column="5" VerticalAlignment="Center">
                 <Run Text="{Binding TrackPositionTime, StringFormat=hh\\:mm\\:ss, Mode=OneWay}"/> / <Run Text="{Binding TrackLengthTime, StringFormat=hh\\:mm\\:ss, Mode=OneWay}"/>
             </TextBlock>
         </Grid>
@@ -54,12 +64,7 @@
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
-            <!--
-            <Slider Grid.Column="0" Minimum="0" Maximum="{Binding TrackLengthInSeconds, Mode=OneWay}" Value="{Binding TrackPositionInSeconds}" VerticalAlignment="Center"
-                    behaviors:SliderDragBehavior.DragStartedCommand="{Binding SeekBarDragStartedCommand}"
-                    behaviors:SliderDragBehavior.DragCompletedCommand="{Binding SeekBarDragCompletedCommand}"/>
-            -->
+            
             <controls:ExtendedSlider Grid.Column="0" Minimum="0" x:Name="SeekBar" VerticalAlignment="Center"
                                      Maximum="{Binding TrackLengthInSeconds, Mode=OneWay}" Value="{Binding TrackPositionInSeconds}"
                                      TickFrequency="1" IsSnapToTickEnabled="True" LargeChange="20" SmallChange="5"

@@ -22,8 +22,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Resource Include="Images\Icons\Player\next.png" />
 		<Resource Include="Images\Icons\Player\pause.png" />
 		<Resource Include="Images\Icons\Player\play.png" />
+		<Resource Include="Images\Icons\Player\stop-next.png" />
 		<Resource Include="Images\Icons\Player\stop.png" />
 		<Resource Include="Images\Icons\Player\volume_up.png" />
 	</ItemGroup>

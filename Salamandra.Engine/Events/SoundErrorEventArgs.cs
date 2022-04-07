@@ -9,6 +9,6 @@ namespace Salamandra.Engine.Events
 {
     public class SoundErrorEventArgs
     {
-        public PlaybackErrorType PlaybackErrorType { get; set; }
+        public Exception SoundErrorException { get; set; }
     }
 }

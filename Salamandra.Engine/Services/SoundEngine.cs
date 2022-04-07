@@ -100,6 +100,10 @@ namespace Salamandra.Engine.Services
             {
                 throw new SoundEngineFileException(ex.Message);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public void TogglePlayPause()
@@ -128,7 +132,17 @@ namespace Salamandra.Engine.Services
 
             this.State = SoundEngineState.Stopped;
 
-            SoundStopped?.Invoke(this, new SoundStoppedEventArgs() { PlaybackStopType = this.playbackStopType });
+            if (e.Exception == null)
+                SoundStopped?.Invoke(this, new SoundStoppedEventArgs() { PlaybackStopType = this.playbackStopType });
+            else
+            {
+                if (e.Exception is IOException fileException)
+                    SoundError?.Invoke(this, new SoundErrorEventArgs() { SoundErrorException = new SoundEngineFileException(fileException.Message) });
+                else if (e.Exception is MmException deviceException)
+                    SoundError?.Invoke(this, new SoundErrorEventArgs() { SoundErrorException = new SoundEngineDeviceException(deviceException.Message) });
+                else
+                    SoundError?.Invoke(this, new SoundErrorEventArgs() { SoundErrorException = e.Exception });
+            }
         }
 
         public void Stop()

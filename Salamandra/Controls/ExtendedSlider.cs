@@ -52,11 +52,12 @@ namespace Salamandra.Controls
 
         public string CustomToolTipContent
         {
-            get => (string)GetValue(CustomToolTipContenttProperty);
-            set => SetValue(CustomToolTipContenttProperty, value);
+            get => (string)GetValue(CustomToolTipContentProperty);
+            set => SetValue(CustomToolTipContentProperty, value);
         }
 
-        public static readonly DependencyProperty CustomToolTipContenttProperty = DependencyProperty.Register(nameof(CustomToolTipContent), typeof(string), typeof(ExtendedSlider), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty CustomToolTipContentProperty = DependencyProperty.Register(
+            nameof(CustomToolTipContent), typeof(string), typeof(ExtendedSlider), new PropertyMetadata(default(string)));
         #endregion
 
         private void FormatAutoToolTipContent()

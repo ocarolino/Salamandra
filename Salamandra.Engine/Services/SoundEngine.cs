@@ -94,14 +94,20 @@ namespace Salamandra.Engine.Services
             }
             catch (MmException ex)
             {
+                UnloadSoundDevices();
+
                 throw new SoundEngineDeviceException(ex.Message);
             }
             catch (IOException ex)
             {
+                UnloadSoundDevices();
+
                 throw new SoundEngineFileException(ex.Message);
             }
             catch (Exception ex)
             {
+                UnloadSoundDevices();
+
                 throw new Exception(ex.Message);
             }
         }
@@ -125,12 +131,7 @@ namespace Salamandra.Engine.Services
 
         private void WaveOutEvent_PlaybackStopped(object? sender, StoppedEventArgs e)
         {
-            this.outputDevice?.Dispose();
-            this.outputDevice = null;
-            this.audioFileReader?.Dispose();
-            this.audioFileReader = null;
-
-            this.State = SoundEngineState.Stopped;
+            UnloadSoundDevices();
 
             if (e.Exception == null)
                 SoundStopped?.Invoke(this, new SoundStoppedEventArgs() { PlaybackStopType = this.playbackStopType });
@@ -143,6 +144,16 @@ namespace Salamandra.Engine.Services
                 else
                     SoundError?.Invoke(this, new SoundErrorEventArgs() { SoundErrorException = e.Exception });
             }
+        }
+
+        private void UnloadSoundDevices()
+        {
+            this.outputDevice?.Dispose();
+            this.outputDevice = null;
+            this.audioFileReader?.Dispose();
+            this.audioFileReader = null;
+
+            this.State = SoundEngineState.Stopped;
         }
 
         public void Stop()

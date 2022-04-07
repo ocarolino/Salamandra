@@ -2,6 +2,7 @@
 using Salamandra.Commands;
 using Salamandra.Engine.Domain;
 using Salamandra.Engine.Domain.Enums;
+using Salamandra.Engine.Exceptions;
 using Salamandra.Engine.Services;
 using System;
 using System.Collections.Generic;
@@ -155,10 +156,29 @@ namespace Salamandra.ViewModel
             this.PlaylistManager.UpdateNextTrack();
 
             // ToDo: Tratamento de erros...
-            this.SoundEngine.PlayAudioFile(soundFileTrack.Filename, this.CurrentVolume);
+            try
+            {
+                this.SoundEngine.PlayAudioFile(soundFileTrack.Filename, this.CurrentVolume);
 
-            this.TrackLengthInSeconds = this.SoundEngine.TotalLengthInSeconds;
-            this.TrackPositionInSeconds = 0;
+                this.TrackLengthInSeconds = this.SoundEngine.TotalLengthInSeconds;
+                this.TrackPositionInSeconds = 0;
+            }
+            catch (SoundEngineFileException)
+            {
+                this.PlaybackState = PlaylistState.WaitingNextTrack;
+            }
+            catch (SoundEngineDeviceException ex)
+            {
+                // ToDo: Mensagem!
+
+                this.StopPlayback();
+            }
+            catch (Exception ex)
+            {
+                // ToDo: Mensagem!
+
+                this.StopPlayback();
+            }
         }
 
         private void StopPlayback()

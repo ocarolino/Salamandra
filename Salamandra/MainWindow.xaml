@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:Salamandra"
         xmlns:converters="clr-namespace:Salamandra.Converters"
         xmlns:behaviors="clr-namespace:Salamandra.Behaviors"
+        xmlns:controls="clr-namespace:Salamandra.Controls"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing">
@@ -55,9 +56,14 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
+            <!--
             <Slider Grid.Column="0" Minimum="0" Maximum="{Binding TrackLengthInSeconds, Mode=OneWay}" Value="{Binding TrackPositionInSeconds}" VerticalAlignment="Center"
                     behaviors:SliderDragBehavior.DragStartedCommand="{Binding SeekBarDragStartedCommand}"
                     behaviors:SliderDragBehavior.DragCompletedCommand="{Binding SeekBarDragCompletedCommand}"/>
+            -->
+            <controls:ExtendedSlider Grid.Column="0" Minimum="0" x:Name="seekBar" VerticalAlignment="Center"
+                                     Maximum="{Binding TrackLengthInSeconds, Mode=OneWay}" Value="{Binding TrackPositionInSeconds}"
+                                     DragStartedCommand="{Binding SeekBarDragStartedCommand}" DragCompletedCommand="{Binding SeekBarDragCompletedCommand}"/>
 
             <Image Grid.Column="2" Source="/Images/Icons/Player/volume_up.png"/>
 

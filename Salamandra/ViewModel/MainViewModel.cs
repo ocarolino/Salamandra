@@ -209,6 +209,9 @@ namespace Salamandra.ViewModel
             this.PlaylistManager.CurrentTrack = null;
             this.TrackLengthInSeconds = 0;
             this.TrackPositionInSeconds = 0;
+
+            if (this.PlaylistManager.NextTrack == null)
+                this.PlaylistManager.UpdateNextTrack(); // ToDo: Quando houver manual.
         }
 
         private void StopPlaybackWithError(Exception ex)

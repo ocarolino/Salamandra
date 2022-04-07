@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -54,7 +55,7 @@ namespace Salamandra.ViewModel
             this.SoundEngine.SoundStopped += SoundEngine_SoundStopped;
             this.SoundEngine.SoundError += SoundEngine_SoundError;
             this.PlaylistManager = new PlaylistManager();
-            this.PlaylistManager.PlaylistMode = PlaylistMode.Repeat;
+            this.PlaylistManager.PlaylistMode = PlaylistMode.Random;
 
             this.IsPlaying = false;
             this.PlaybackState = PlaylistState.Stopped;
@@ -175,13 +176,13 @@ namespace Salamandra.ViewModel
             {
                 // ToDo: Mensagem!
 
-                this.StopPlayback();
+                this.StopPlaybackWithError(ex);
             }
             catch (Exception ex)
             {
                 // ToDo: Mensagem!
 
-                this.StopPlayback();
+                this.StopPlaybackWithError(ex);
             }
         }
 
@@ -203,6 +204,15 @@ namespace Salamandra.ViewModel
             this.PlaylistManager.CurrentTrack = null;
             this.TrackLengthInSeconds = 0;
             this.TrackPositionInSeconds = 0;
+        }
+
+        private void StopPlaybackWithError(Exception ex)
+        {
+            this.StopPlayback();
+
+            MessageBox.Show(
+                String.Format("Houve um erro no dispositivo de áudio que forçou a parada da reprodução.\n\nErro: {0}", ex.Message),
+                "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private void PlaySelectedTrack()
@@ -263,9 +273,7 @@ namespace Salamandra.ViewModel
             if (e.SoundErrorException is SoundEngineFileException)
                 this.PlaybackState = PlaylistState.WaitingNextTrack;
             else
-            {
-                this.StopPlayback(); // ToDo: StopPlaybackWithError!
-            }
+                this.StopPlaybackWithError(e.SoundErrorException);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

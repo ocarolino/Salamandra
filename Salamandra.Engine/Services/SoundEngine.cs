@@ -67,6 +67,11 @@ namespace Salamandra.Engine.Services
 
         public void PlayAudioFile(string filename, float volume = 1)
         {
+            if (!File.Exists())
+            {
+                SoundError?.Invoke(this, new SoundErrorEventArgs() { PlaybackErrorType = PlaybackErrorType.FileError });
+            }
+
             if (this.outputDevice == null)
             {
                 this.outputDevice = new WaveOutEvent() { DeviceNumber = 0 };
@@ -120,7 +125,11 @@ namespace Salamandra.Engine.Services
         }
 
         public event OnSoundStopped? SoundStopped;
+
+        public event OnSoundError? SoundError;
     }
 
     public delegate void OnSoundStopped(object? sender, SoundStoppedEventArgs e);
+
+    public delegate void OnSoundError(object? sender, SoundErrorEventArgs e);
 }

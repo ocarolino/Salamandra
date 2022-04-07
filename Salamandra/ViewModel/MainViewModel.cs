@@ -52,6 +52,7 @@ namespace Salamandra.ViewModel
         {
             this.SoundEngine = new SoundEngine();
             this.SoundEngine.SoundStopped += SoundEngine_SoundStopped;
+            this.SoundEngine.SoundError += SoundEngine_SoundError;
             this.PlaylistManager = new PlaylistManager();
             this.PlaylistManager.PlaylistMode = PlaylistMode.Random;
 
@@ -78,6 +79,9 @@ namespace Salamandra.ViewModel
         {
             if (!this.IsPlaying)
                 return;
+
+            if (this.PlaybackState == PlaylistState.WaitingNextTrack)
+                PlayNextTrackOrStop();
 
             if (this.SoundEngine.State == SoundEngineState.Playing && !this.isDraggingTrackPosition)
                 this.TrackPositionInSeconds = this.SoundEngine.PositionInSeconds;
@@ -181,6 +185,14 @@ namespace Salamandra.ViewModel
             }
         }
 
+        private void PlayNextTrackOrStop()
+        {
+            if (this.PlaylistManager.NextTrack != null)
+                PlayTrack(this.PlaylistManager.NextTrack);
+            else
+                StopPlayback();
+        }
+
         private void StopPlayback()
         {
             this.IsPlaying = false;
@@ -243,11 +255,16 @@ namespace Salamandra.ViewModel
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)
         {
             if (this.IsPlaying)
+                PlayNextTrackOrStop();
+        }
+
+        private void SoundEngine_SoundError(object? sender, Engine.Events.SoundErrorEventArgs e)
+        {
+            if (e.SoundErrorException is SoundEngineFileException)
+                this.PlaybackState = PlaylistState.WaitingNextTrack;
+            else
             {
-                if (this.PlaylistManager.NextTrack != null)
-                    PlayTrack(this.PlaylistManager.NextTrack);
-                else
-                    StopPlayback();
+                this.StopPlayback(); // ToDo: StopPlaybackWithError!
             }
         }
 

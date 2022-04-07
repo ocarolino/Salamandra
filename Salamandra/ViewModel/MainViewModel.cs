@@ -149,13 +149,13 @@ namespace Salamandra.ViewModel
 
         private void PlayTrack(SoundFileTrack soundFileTrack)
         {
-            // ToDo: Tratamento de erros...
-            this.SoundEngine.PlayAudioFile(soundFileTrack.Filename, this.CurrentVolume);
-
             this.IsPaused = false;
 
             this.PlaylistManager.CurrentTrack = soundFileTrack;
             this.PlaylistManager.UpdateNextTrack();
+
+            // ToDo: Tratamento de erros...
+            this.SoundEngine.PlayAudioFile(soundFileTrack.Filename, this.CurrentVolume);
 
             this.TrackLengthInSeconds = this.SoundEngine.TotalLengthInSeconds;
             this.TrackPositionInSeconds = 0;

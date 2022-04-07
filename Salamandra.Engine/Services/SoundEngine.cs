@@ -1,7 +1,9 @@
-﻿using NAudio.Wave;
+﻿using NAudio;
+using NAudio.Wave;
 using Salamandra.Engine.Domain;
 using Salamandra.Engine.Domain.Enums;
 using Salamandra.Engine.Events;
+using Salamandra.Engine.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -67,9 +69,9 @@ namespace Salamandra.Engine.Services
 
         public void PlayAudioFile(string filename, float volume = 1)
         {
-            if (!File.Exists())
+            if (!File.Exists(filename))
             {
-                SoundError?.Invoke(this, new SoundErrorEventArgs() { PlaybackErrorType = PlaybackErrorType.FileError });
+                throw new SoundEngineFileException("File not found.");
             }
 
             if (this.outputDevice == null)
@@ -78,15 +80,26 @@ namespace Salamandra.Engine.Services
                 this.outputDevice.PlaybackStopped += WaveOutEvent_PlaybackStopped;
             }
 
-            if (this.audioFileReader == null)
+            try
             {
-                this.audioFileReader = new AudioFileReader(filename) { Volume = volume };
-                this.outputDevice.Init(this.audioFileReader);
-            }
+                if (this.audioFileReader == null)
+                {
+                    this.audioFileReader = new AudioFileReader(filename) { Volume = volume };
+                    this.outputDevice.Init(this.audioFileReader);
+                }
 
-            this.playbackStopType = PlaybackStopType.ReachedEndOfFile;
-            this.State = SoundEngineState.Playing;
-            this.outputDevice.Play();
+                this.playbackStopType = PlaybackStopType.ReachedEndOfFile;
+                this.State = SoundEngineState.Playing;
+                this.outputDevice.Play();
+            }
+            catch (MmException ex)
+            {
+                throw new SoundEngineDeviceException(ex.Message);
+            }
+            catch (IOException ex)
+            {
+                throw new SoundEngineFileException(ex.Message);
+            }
         }
 
         public void TogglePlayPause()

@@ -6,7 +6,6 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:Salamandra"
         xmlns:converters="clr-namespace:Salamandra.Converters"
-        xmlns:behaviors="clr-namespace:Salamandra.Behaviors"
         xmlns:controls="clr-namespace:Salamandra.Controls"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
@@ -61,20 +60,24 @@
                     behaviors:SliderDragBehavior.DragStartedCommand="{Binding SeekBarDragStartedCommand}"
                     behaviors:SliderDragBehavior.DragCompletedCommand="{Binding SeekBarDragCompletedCommand}"/>
             -->
-            <controls:ExtendedSlider Grid.Column="0" Minimum="0" x:Name="seekBar" VerticalAlignment="Center"
+            <controls:ExtendedSlider Grid.Column="0" Minimum="0" x:Name="SeekBar" VerticalAlignment="Center"
                                      Maximum="{Binding TrackLengthInSeconds, Mode=OneWay}" Value="{Binding TrackPositionInSeconds}"
-                                     DragStartedCommand="{Binding SeekBarDragStartedCommand}" DragCompletedCommand="{Binding SeekBarDragCompletedCommand}"/>
+                                     TickFrequency="1" IsSnapToTickEnabled="True" LargeChange="20" SmallChange="5"
+                                     DragStartedCommand="{Binding SeekBarDragStartedCommand}" DragCompletedCommand="{Binding SeekBarDragCompletedCommand}"
+                                     AutoToolTipPlacement="TopLeft" CustomToolTipContent="{Binding TrackPositionTime, Mode=OneWay, StringFormat={}{0:hh':'mm':'ss}, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Image Grid.Column="2" Source="/Images/Icons/Player/volume_up.png"/>
 
-            <Slider Grid.Column="3" Minimum="0" Maximum="1" Value="{Binding CurrentVolume}" LargeChange="0.2" SmallChange="0.05"
-                    Margin="8 0 0 0"  VerticalAlignment="Center" Name="VolumeControl">
+            <controls:ExtendedSlider Grid.Column="3" Value="{Binding CurrentVolume}" x:Name="VolumeControl"
+                                     Minimum="0" Maximum="1" TickFrequency="0.01" IsSnapToTickEnabled="True"
+                                     LargeChange="0.2" SmallChange="0.05" Margin="8 0 0 0" VerticalAlignment="Center" 
+                                     AutoToolTipPlacement="TopLeft" CustomToolTipContent="{Binding CurrentVolume, Mode=OneWay, StringFormat={}{0:P0}, UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="ValueChanged">
                         <i:InvokeCommandAction Command="{Binding VolumeControlValueChangedCommand}"></i:InvokeCommandAction>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-            </Slider>
+            </controls:ExtendedSlider>
         </Grid>
 
         <ListView ItemsSource="{Binding PlaylistManager.Tracks}" SelectedItem="{Binding SelectedTrack}"

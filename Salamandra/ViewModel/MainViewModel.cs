@@ -54,7 +54,7 @@ namespace Salamandra.ViewModel
             this.SoundEngine.SoundStopped += SoundEngine_SoundStopped;
             this.SoundEngine.SoundError += SoundEngine_SoundError;
             this.PlaylistManager = new PlaylistManager();
-            this.PlaylistManager.PlaylistMode = PlaylistMode.Random;
+            this.PlaylistManager.PlaylistMode = PlaylistMode.Repeat;
 
             this.IsPlaying = false;
             this.PlaybackState = PlaylistState.Stopped;
@@ -147,7 +147,6 @@ namespace Salamandra.ViewModel
                 return;
 
             this.IsPlaying = true;
-            this.PlaybackState = PlaylistState.PlayingPlaylistTrack;
 
             PlayTrack(this.PlaylistManager.NextTrack);
         }
@@ -164,6 +163,7 @@ namespace Salamandra.ViewModel
             {
                 this.SoundEngine.PlayAudioFile(soundFileTrack.Filename, this.CurrentVolume);
 
+                this.PlaybackState = PlaylistState.PlayingPlaylistTrack; // ToDo: Refatorar quando for evento!
                 this.TrackLengthInSeconds = this.SoundEngine.TotalLengthInSeconds;
                 this.TrackPositionInSeconds = 0;
             }

@@ -296,9 +296,11 @@ namespace Salamandra.ViewModel
             if (e.SoundErrorException is SoundEngineFileException)
                 this.PlaybackState = PlaylistState.WaitingNextTrack;
             else
-                this.StopPlaybackWithError(e.SoundErrorException);
+                this.StopPlaybackWithError(e.SoundErrorException!);
         }
 
+#pragma warning disable 67
         public event PropertyChangedEventHandler? PropertyChanged;
+#pragma warning restore 67
     }
 }

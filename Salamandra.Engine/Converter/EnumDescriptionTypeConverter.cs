@@ -22,7 +22,7 @@ namespace Salamandra.Engine.Converter
             {
                 if (value != null)
                 {
-                    FieldInfo? fi = value?.GetType().GetField(value.ToString());
+                    FieldInfo? fi = value?.GetType().GetField(value.ToString()!);
 
                     if (fi != null)
                     {

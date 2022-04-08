@@ -36,7 +36,7 @@ namespace Salamandra.Engine.Services
                 return;
             }
 
-            int nextTrackIndex = this.Tracks.IndexOf(this.CurrentTrack) + 1;
+            int nextTrackIndex = this.Tracks.IndexOf(this.CurrentTrack!) + 1;
 
             switch (this.PlaylistMode)
             {
@@ -71,14 +71,16 @@ namespace Salamandra.Engine.Services
                 UpdateNextTrack();
         }
 
+#pragma warning disable 67
         public event PropertyChangedEventHandler? PropertyChanged;
+#pragma warning restore 67
 
         public void RemoveTracks(List<SoundFileTrack> tracks)
         {
             foreach (var item in tracks)
                 this.Tracks.Remove(item);
 
-            if (!this.Tracks.Contains(this.NextTrack))
+            if (!this.Tracks.Contains(this.NextTrack!))
                 UpdateNextTrack();
         }
     }

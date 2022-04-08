@@ -35,8 +35,8 @@ namespace Salamandra.Controls
         #endregion
 
         #region Tooltip Properties
-        private ToolTip _autoToolTip;
-        private ToolTip AutoToolTip
+        private ToolTip? _autoToolTip;
+        private ToolTip? AutoToolTip
         {
             get
             {
@@ -63,7 +63,7 @@ namespace Salamandra.Controls
         private void FormatAutoToolTipContent()
         {
             if (!string.IsNullOrEmpty(CustomToolTipContent))
-                AutoToolTip.Content = CustomToolTipContent;
+                AutoToolTip!.Content = CustomToolTipContent;
         }
 
         protected override void OnThumbDragStarted(DragStartedEventArgs e)

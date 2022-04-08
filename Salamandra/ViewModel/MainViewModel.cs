@@ -50,6 +50,7 @@ namespace Salamandra.ViewModel
         public ICommand? SeekBarDragCompletedCommand { get; set; }
         public ICommand? NextTrackCommand { get; set; }
         public ICommand? StopAfterCurrentCommand { get; set; }
+        public ICommand? UpdateNextTrackCommand { get; set; }
 
         public MainViewModel()
         {
@@ -115,6 +116,8 @@ namespace Salamandra.ViewModel
 
             this.NextTrackCommand = new RelayCommand(p => NextTrack(), p => this.IsPlaying && this.PlaylistManager.NextTrack != null);
             this.StopAfterCurrentCommand = new RelayCommand(p => StopAfterCurrent(), p => this.IsPlaying);
+
+            this.UpdateNextTrackCommand = new RelayCommand(p => this.PlaylistManager.UpdateNextTrack(), p => true);
         }
 
         private void AddFilesToPlaylist()

@@ -7,6 +7,8 @@
         xmlns:local="clr-namespace:Salamandra"
         xmlns:converters="clr-namespace:Salamandra.Converters"
         xmlns:controls="clr-namespace:Salamandra.Controls"
+        xmlns:extensions="clr-namespace:Salamandra.Extensions"
+        xmlns:enums="clr-namespace:Salamandra.Engine.Domain.Enums;assembly=Salamandra.Engine"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing">
@@ -29,6 +31,7 @@
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -52,9 +55,19 @@
                 <Image Source="/Images/Icons/Player/stop-next.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </ToggleButton>
 
-            <TextBlock Grid.Column="5" VerticalAlignment="Center">
+            <TextBlock Grid.Column="6" VerticalAlignment="Center">
                 <Run Text="{Binding TrackPositionTime, StringFormat=hh\\:mm\\:ss, Mode=OneWay}"/> / <Run Text="{Binding TrackLengthTime, StringFormat=hh\\:mm\\:ss, Mode=OneWay}"/>
             </TextBlock>
+
+            <ComboBox Grid.Column="5" SelectedItem="{Binding PlaylistManager.PlaylistMode}"
+                      ItemsSource="{Binding Source={extensions:EnumBindingSource {x:Type enums:PlaylistMode}}}"
+                      HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="150">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding UpdateNextTrackCommand}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
         </Grid>
 
         <Grid DockPanel.Dock="Bottom" Margin="0 8 0 0">
@@ -64,7 +77,7 @@
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+
             <controls:ExtendedSlider Grid.Column="0" Minimum="0" x:Name="SeekBar" VerticalAlignment="Center"
                                      Maximum="{Binding TrackLengthInSeconds, Mode=OneWay}" Value="{Binding TrackPositionInSeconds}"
                                      TickFrequency="1" IsSnapToTickEnabled="True" LargeChange="20" SmallChange="5"

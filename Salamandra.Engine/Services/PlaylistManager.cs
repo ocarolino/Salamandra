@@ -71,13 +71,17 @@ namespace Salamandra.Engine.Services
                 UpdateNextTrack();
         }
 
-        public void AddFiles(List<string> filenames)
+        public async Task AddFiles(List<string> filenames)
         {
             List<SoundFileTrack> tracks = new List<SoundFileTrack>();
 
             foreach (var item in filenames)
             {
                 SoundFileTrack soundFileTrack = new SoundFileTrack(item, Path.GetFileNameWithoutExtension(item));
+
+                var duration = await Task.Run(() => GetAudioFileDuration(item));
+                soundFileTrack.Duration = duration;
+
                 tracks.Add(soundFileTrack);
             }
 
@@ -91,6 +95,19 @@ namespace Salamandra.Engine.Services
 
             if (!this.Tracks.Contains(this.NextTrack!))
                 UpdateNextTrack();
+        }
+
+        public TimeSpan? GetAudioFileDuration(string filename)
+        {
+            try
+            {
+                TagLib.File file = TagLib.File.Create(filename);
+                return file.Properties.Duration;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
 #pragma warning disable 67

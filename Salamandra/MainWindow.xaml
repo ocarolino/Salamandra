@@ -109,7 +109,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="{Binding Path=FriendlyName, Mode=OneWay}"></TextBlock>
-                        <TextBlock Grid.Column="1" Text="{Binding Duration, Mode=OneWay, TargetNullValue='--:--:--'}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Duration, StringFormat=hh\\:mm\\:ss, Mode=OneWay, TargetNullValue='--:--:--'}"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

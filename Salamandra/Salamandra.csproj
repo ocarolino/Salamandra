@@ -5,11 +5,11 @@
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
-		<ApplicationIcon>salamander.ico</ApplicationIcon>
+		<ApplicationIcon>lizard.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Content Include="salamander.ico" />
+		<Content Include="lizard.ico" />
 	</ItemGroup>
 
 	<ItemGroup>

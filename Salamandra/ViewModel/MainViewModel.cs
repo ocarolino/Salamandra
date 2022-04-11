@@ -110,7 +110,7 @@ namespace Salamandra.ViewModel
 
         private void LoadCommands()
         {
-            this.AddFilesToPlaylistCommand = new RelayCommand(p => AddFilesToPlaylist(), p => true);
+            this.AddFilesToPlaylistCommand = new RelayCommandAsync(AddFilesToPlaylist, p => true, null); //new RelayCommand(p => AddFilesToPlaylist(), p => true);
             this.RemoveTracksFromPlaylistCommand = new RelayCommand(p => RemoveTracksFromPlaylist(p), p => true);
 
             this.StartPlaybackCommand = new RelayCommand(p => StartPlayback(), p => !this.IsPlaying);
@@ -132,14 +132,14 @@ namespace Salamandra.ViewModel
             this.UpdateNextTrackCommand = new RelayCommand(p => this.PlaylistManager.UpdateNextTrack(), p => true);
         }
 
-        private void AddFilesToPlaylist()
+        private async Task AddFilesToPlaylist()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Arquivos de áudio (*.wav, *.mp3, *.wma, *.ogg, *.flac) | *.wav; *.mp3; *.wma; *.ogg; *.flac";
             openFileDialog.Multiselect = true;
 
             if (openFileDialog.ShowDialog() == true)
-                this.PlaylistManager.AddFiles(openFileDialog.FileNames.ToList());
+                await this.PlaylistManager.AddFiles(openFileDialog.FileNames.ToList());
         }
 
         private void RemoveTracksFromPlaylist(object? items)

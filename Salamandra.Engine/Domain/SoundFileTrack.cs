@@ -10,7 +10,7 @@ namespace Salamandra.Engine.Domain
     {
         public string Filename { get; private set; }
         public string FriendlyName { get; private set; }
-        public TimeSpan? Duration { get; private set; }
+        public TimeSpan? Duration { get; set; }
 
         public SoundFileTrack(string filename, string friendlyName)
         {

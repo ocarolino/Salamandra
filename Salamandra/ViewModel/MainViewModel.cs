@@ -28,6 +28,8 @@ namespace Salamandra.ViewModel
         public bool IsPaused { get; set; }
         public float CurrentVolume { get; set; }
 
+        public bool AllowSeekDrag { get; set; }
+
         private bool isDraggingTrackPosition;
         public double TrackLengthInSeconds { get; set; }
         public double TrackPositionInSeconds { get; set; }
@@ -38,6 +40,7 @@ namespace Salamandra.ViewModel
 
         public DispatcherTimer MainTimer { get; set; }
 
+        #region Commands Properties
         public ICommand? AddFilesToPlaylistCommand { get; set; }
         public ICommand? RemoveTracksFromPlaylistCommand { get; set; }
         public ICommand? StartPlaybackCommand { get; set; }
@@ -51,6 +54,7 @@ namespace Salamandra.ViewModel
         public ICommand? NextTrackCommand { get; set; }
         public ICommand? StopAfterCurrentCommand { get; set; }
         public ICommand? UpdateNextTrackCommand { get; set; }
+        #endregion
 
         public MainViewModel()
         {
@@ -175,6 +179,7 @@ namespace Salamandra.ViewModel
                 this.PlaybackState = PlaylistState.PlayingPlaylistTrack; // ToDo: Refatorar quando for evento!
                 this.TrackLengthInSeconds = this.SoundEngine.TotalLengthInSeconds;
                 this.TrackPositionInSeconds = 0;
+                this.AllowSeekDrag = true;
             }
             catch (SoundEngineFileException)
             {
@@ -212,6 +217,7 @@ namespace Salamandra.ViewModel
             this.PlaylistManager.CurrentTrack = null;
             this.TrackLengthInSeconds = 0;
             this.TrackPositionInSeconds = 0;
+            this.AllowSeekDrag = false;
 
             if (this.PlaylistManager.NextTrack == null)
                 this.PlaylistManager.UpdateNextTrack(); // ToDo: Quando houver manual.

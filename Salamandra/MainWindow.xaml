@@ -78,7 +78,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <controls:ExtendedSlider Grid.Column="0" Minimum="0" x:Name="SeekBar" VerticalAlignment="Center"
+            <controls:ExtendedSlider Grid.Column="0" Minimum="0" x:Name="SeekBar" VerticalAlignment="Center" IsEnabled="{Binding AllowSeekDrag}"
                                      Maximum="{Binding TrackLengthInSeconds, Mode=OneWay}" Value="{Binding TrackPositionInSeconds}"
                                      TickFrequency="1" IsSnapToTickEnabled="True" LargeChange="20" SmallChange="5"
                                      DragStartedCommand="{Binding SeekBarDragStartedCommand}" DragCompletedCommand="{Binding SeekBarDragCompletedCommand}"

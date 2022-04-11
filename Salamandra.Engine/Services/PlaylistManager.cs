@@ -71,9 +71,18 @@ namespace Salamandra.Engine.Services
                 UpdateNextTrack();
         }
 
-#pragma warning disable 67
-        public event PropertyChangedEventHandler? PropertyChanged;
-#pragma warning restore 67
+        public void AddFiles(List<string> filenames)
+        {
+            List<SoundFileTrack> tracks = new List<SoundFileTrack>();
+
+            foreach (var item in filenames)
+            {
+                SoundFileTrack soundFileTrack = new SoundFileTrack(item, Path.GetFileNameWithoutExtension(item));
+                tracks.Add(soundFileTrack);
+            }
+
+            AddTracks(tracks);
+        }
 
         public void RemoveTracks(List<SoundFileTrack> tracks)
         {
@@ -83,5 +92,10 @@ namespace Salamandra.Engine.Services
             if (!this.Tracks.Contains(this.NextTrack!))
                 UpdateNextTrack();
         }
+
+#pragma warning disable 67
+        public event PropertyChangedEventHandler? PropertyChanged;
+#pragma warning restore 67
+
     }
 }

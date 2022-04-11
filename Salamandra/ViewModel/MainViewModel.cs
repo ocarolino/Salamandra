@@ -139,17 +139,7 @@ namespace Salamandra.ViewModel
             openFileDialog.Multiselect = true;
 
             if (openFileDialog.ShowDialog() == true)
-            {
-                List<SoundFileTrack> tracks = new List<SoundFileTrack>();
-
-                foreach (var item in openFileDialog.FileNames)
-                {
-                    SoundFileTrack soundFileTrack = new SoundFileTrack(item, Path.GetFileNameWithoutExtension(item));
-                    tracks.Add(soundFileTrack);
-                }
-
-                this.PlaylistManager.AddTracks(tracks);
-            }
+                this.PlaylistManager.AddFiles(openFileDialog.FileNames.ToList());
         }
 
         private void RemoveTracksFromPlaylist(object? items)

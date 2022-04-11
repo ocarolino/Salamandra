@@ -99,15 +99,17 @@
         </Grid>
 
         <ListView ItemsSource="{Binding PlaylistManager.Tracks}" SelectedItem="{Binding SelectedTrack}"
-                  Name="playlist" SelectionMode="Extended">
+                  Name="playlist" SelectionMode="Extended" HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="{Binding Path=FriendlyName, Mode=OneWay}"></TextBlock>
+                        <TextBlock Grid.Column="1" Text="{Binding Duration, Mode=OneWay, TargetNullValue='--:--:--'}"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

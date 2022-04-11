@@ -33,7 +33,7 @@ namespace Salamandra
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            this.mainViewModel.Closing();
+            e.Cancel = !this.mainViewModel.Closing();
         }
     }
 }

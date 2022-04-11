@@ -95,9 +95,17 @@ namespace Salamandra.ViewModel
                 this.TrackPositionInSeconds = this.SoundEngine.PositionInSeconds;
         }
 
-        public void Closing()
+        public bool Closing()
         {
+            if (this.IsPlaying)
+            {
+                if (MessageBox.Show("A playlist ainda está tocando. Tem certeza que deseja fechar?", "Salamandra", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+                    return false;
+            }
+
             this.StopPlayback();
+
+            return true;
         }
 
         private void LoadCommands()

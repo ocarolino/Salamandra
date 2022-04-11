@@ -177,6 +177,10 @@ namespace Salamandra.ViewModel
                 this.PlaybackState = PlaylistState.PlayingPlaylistTrack; // ToDo: Refatorar quando for evento!
                 this.TrackLengthInSeconds = this.SoundEngine.TotalLengthInSeconds;
                 this.TrackPositionInSeconds = 0;
+
+                if (soundFileTrack.Duration == null) // ToDo: Refatorar para garantir que isso seja necessário!
+                    soundFileTrack.Duration = TimeSpan.FromSeconds(this.SoundEngine.TotalLengthInSeconds);
+
                 this.AllowSeekDrag = true;
             }
             catch (SoundEngineFileException)

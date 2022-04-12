@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Salamandra.Engine.Domain
 {
-    public class PlaylistTrackInfo
+    public class PlaylistEntryInfo
     {
         public string? Filename { get; set; }
         public string? FriendlyName { get; set; }
-        public double? Duration { get; set; }
+        public TimeSpan? Duration { get; set; }
     }
 }

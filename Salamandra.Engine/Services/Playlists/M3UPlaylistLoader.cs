@@ -78,5 +78,21 @@ namespace Salamandra.Engine.Services.Playlists
 
             return entries;
         }
+
+        public void Save(string filename, List<PlaylistEntryInfo> entries)
+        {
+            using (var writer = new StreamWriter(filename))
+            {
+                writer.WriteLine("#EXTM3U");
+
+                foreach (var entry in entries)
+                {
+                    var duration = entry.Duration != null ? entry.Duration?.TotalSeconds : 0;
+
+                    writer.WriteLine("#EXTINF:{0},{1}", duration, entry.FriendlyName);
+                    writer.WriteLine(entry.Filename);
+                }
+            }
+        }
     }
 }

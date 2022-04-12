@@ -16,9 +16,11 @@ namespace Salamandra.Engine.Services.Playlists
         {
             List<PlaylistEntryInfo> entries = new List<PlaylistEntryInfo>();
 
-            using (StreamReader reader = new StreamReader(filename))
+            // ToDo: Encoding provisória...
+            using (StreamReader reader = new StreamReader(filename, Encoding.GetEncoding("iso-8859-1"), true))
             {
-                var workingUri = new Uri(Path.GetDirectoryName(filename)!);
+                // ToDo: Extension method para adicionar o separador
+                var workingUri = new Uri(Path.GetDirectoryName(filename.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar)!);
 
                 string? line;
                 var lineCount = 0;
@@ -46,7 +48,10 @@ namespace Salamandra.Engine.Services.Playlists
 
                         var title = split[1];
 
-                        var duration = TimeSpan.FromSeconds(seconds);
+                        TimeSpan? duration = null;
+
+                        if (seconds > 0)
+                            duration = TimeSpan.FromSeconds(seconds);
 
                         entry = new PlaylistEntryInfo() { Duration = duration, FriendlyName = title };
                     }
@@ -57,10 +62,10 @@ namespace Salamandra.Engine.Services.Playlists
                         if (!Uri.TryCreate(line, UriKind.RelativeOrAbsolute, out path))
                             throw new PlaylistLoaderException("Invalid entry path.");
 
-                        if (path.IsFile)
-                            path = path.MakeAbsoluteUri(workingUri);
+                        if (!path.IsAbsoluteUri)
+                            path = workingUri.MakeAbsoluteUri(path);
 
-                        entry.Filename = path.ToString();
+                        entry.Filename = path.LocalPath;
 
                         entries.Add(entry);
 

@@ -10,7 +10,7 @@ namespace Salamandra.Engine.Domain
     public class SoundFileTrack : INotifyPropertyChanged
     {
         public string Filename { get; private set; }
-        public string FriendlyName { get; private set; }
+        public string FriendlyName { get; set; }
         public TimeSpan? Duration { get; set; }
 
         public SoundFileTrack(string filename, string friendlyName)

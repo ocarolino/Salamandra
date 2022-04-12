@@ -17,6 +17,10 @@
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Arquivo">
+                <MenuItem Header="Abrir..." Command="{Binding OpenPlaylistCommand}" />
+            </MenuItem>
+
             <MenuItem Header="Playlist">
                 <MenuItem Header="Adicionar arquivos de áudio..." Command="{Binding AddFilesToPlaylistCommand}"/>
                 <Separator/>

@@ -54,6 +54,7 @@ namespace Salamandra.ViewModel
         public ICommand? NextTrackCommand { get; set; }
         public ICommand? StopAfterCurrentCommand { get; set; }
         public ICommand? UpdateNextTrackCommand { get; set; }
+        public ICommand? OpenPlaylistCommand { get; set; }
         #endregion
 
         public MainViewModel()
@@ -130,6 +131,8 @@ namespace Salamandra.ViewModel
             this.StopAfterCurrentCommand = new RelayCommand(p => StopAfterCurrent(), p => this.IsPlaying);
 
             this.UpdateNextTrackCommand = new RelayCommand(p => this.PlaylistManager.UpdateNextTrack(), p => true);
+
+            this.OpenPlaylistCommand = new RelayCommandAsync(OpenPlaylist, p => true, null);
         }
 
         private async Task AddFilesToPlaylist()
@@ -291,6 +294,24 @@ namespace Salamandra.ViewModel
         {
             if (this.IsPlaying)
                 this.PlaylistManager.NextTrack = null;
+        }
+
+        private async Task OpenPlaylist()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Playlist M3U (*.m3u) | *.m3u";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    await this.PlaylistManager.LoadPlaylist(openFileDialog.FileName);
+                }
+                catch (PlaylistLoaderException ex)
+                {
+                    MessageBox.Show("Houve um erro ao abrir a playlist.\n\n" + ex.Message, "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

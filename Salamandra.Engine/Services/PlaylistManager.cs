@@ -1,5 +1,7 @@
 ﻿using Salamandra.Engine.Domain;
 using Salamandra.Engine.Domain.Enums;
+using Salamandra.Engine.Exceptions;
+using Salamandra.Engine.Services.Playlists;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -62,6 +64,7 @@ namespace Salamandra.Engine.Services
             }
         }
 
+        #region Add and Remove Tracks
         public void AddTracks(List<SoundFileTrack> tracks)
         {
             foreach (var item in tracks)
@@ -108,6 +111,37 @@ namespace Salamandra.Engine.Services
             {
                 return null;
             }
+        }
+        #endregion
+
+
+        public async Task LoadPlaylist(string filename)
+        {
+            M3UPlaylistLoader playlistLoader = new M3UPlaylistLoader();
+
+            List<PlaylistEntryInfo> entries = playlistLoader.Load(filename);
+            List<SoundFileTrack> tracks = new List<SoundFileTrack>();
+
+            foreach (var item in entries)
+            {
+                // ToDo: Construtor desnecessário...
+                var track = new SoundFileTrack(item.Filename, item.FriendlyName);
+
+                if (String.IsNullOrEmpty(track.FriendlyName))
+                    track.FriendlyName = Path.GetFileNameWithoutExtension(track.Filename);
+
+                if (track.Duration == null)
+                {
+                    var duration = await Task.Run(() => GetAudioFileDuration(track.Filename));
+                    track.Duration = duration;
+                }
+
+                tracks.Add(track);
+            }
+
+            this.Tracks = new ObservableCollection<SoundFileTrack>(tracks);
+
+            this.UpdateNextTrack();
         }
 
 #pragma warning disable 67

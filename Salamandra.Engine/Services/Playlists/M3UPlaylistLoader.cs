@@ -81,13 +81,13 @@ namespace Salamandra.Engine.Services.Playlists
 
         public void Save(string filename, List<PlaylistEntryInfo> entries)
         {
-            using (var writer = new StreamWriter(filename))
+            using (var writer = new StreamWriter(filename, false, Encoding.GetEncoding("iso-8859-1")))
             {
                 writer.WriteLine("#EXTM3U");
 
                 foreach (var entry in entries)
                 {
-                    var duration = entry.Duration != null ? entry.Duration?.TotalSeconds : 0;
+                    var duration = entry.Duration != null ? (int)entry.Duration?.TotalSeconds! : 0;
 
                     writer.WriteLine("#EXTINF:{0},{1}", duration, entry.FriendlyName);
                     writer.WriteLine(entry.Filename);

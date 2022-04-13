@@ -10,7 +10,7 @@
         xmlns:extensions="clr-namespace:Salamandra.Extensions"
         xmlns:enums="clr-namespace:Salamandra.Engine.Domain.Enums;assembly=Salamandra.Engine"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="{Binding WindowTitle}" Height="450" Width="800"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Window.Resources>
         <converters:SameObjectToBoolConverter x:Key="SameObjectToBoolConverter"/>

@@ -40,6 +40,8 @@ namespace Salamandra.ViewModel
 
         public DispatcherTimer MainTimer { get; set; }
 
+        public string WindowTitle { get; set; }
+
         #region Commands Properties
         public ICommand? AddFilesToPlaylistCommand { get; set; }
         public ICommand? RemoveTracksFromPlaylistCommand { get; set; }
@@ -81,6 +83,7 @@ namespace Salamandra.ViewModel
             this.MainTimer.Tick += MainTimer_Tick;
             this.MainTimer.Start();
 
+            UpdateWindowTitle();
             LoadCommands();
 
             this.SoundEngine.EnumerateDevices();
@@ -318,6 +321,8 @@ namespace Salamandra.ViewModel
                 {
                     MessageBox.Show("Houve um erro ao abrir a playlist.\n\n" + ex.Message, "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+
+                UpdateWindowTitle();
             }
         }
 
@@ -337,6 +342,8 @@ namespace Salamandra.ViewModel
             }
 
             this.PlaylistManager.SavePlaylist(filename);
+
+            UpdateWindowTitle();
         }
 
         private void NewPlaylist()
@@ -358,6 +365,21 @@ namespace Salamandra.ViewModel
             }
 
             return true;
+        }
+
+        private void UpdateWindowTitle()
+        {
+            string title = "Sem título";
+
+            if (!String.IsNullOrEmpty(this.PlaylistManager.Filename))
+                title = Path.GetFileName(this.PlaylistManager.Filename);
+
+            if (!String.IsNullOrEmpty(title))
+                title = title + " - ";
+
+            title = title + "Salamandra";
+
+            this.WindowTitle = title;
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

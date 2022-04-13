@@ -10,7 +10,7 @@
         xmlns:extensions="clr-namespace:Salamandra.Extensions"
         xmlns:enums="clr-namespace:Salamandra.Engine.Domain.Enums;assembly=Salamandra.Engine"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="450" Width="800"
+        Title="{Binding WindowTitle}" Height="540" Width="960"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Window.Resources>
         <converters:SameObjectToBoolConverter x:Key="SameObjectToBoolConverter"/>
@@ -85,69 +85,66 @@
             </StackPanel>
         </Grid>
 
-        <Grid DockPanel.Dock="Bottom" Height="30">
+        <controls:ExtendedSlider DockPanel.Dock="Bottom" Minimum="0" x:Name="SeekBar" VerticalAlignment="Center" IsEnabled="{Binding AllowSeekDrag}"                            
+                                 Maximum="{Binding TrackLengthInSeconds, Mode=OneWay}" Value="{Binding TrackPositionInSeconds}"                                     
+                                 TickFrequency="1" IsSnapToTickEnabled="True" LargeChange="20" SmallChange="5"                                     
+                                 DragStartedCommand="{Binding SeekBarDragStartedCommand}" DragCompletedCommand="{Binding SeekBarDragCompletedCommand}"
+                                 AutoToolTipPlacement="TopLeft" CustomToolTipContent="{Binding TrackPositionTime, Mode=OneWay, StringFormat={}{0:hh':'mm':'ss}, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="8 8 8 8"/>
+
+        <Grid DockPanel.Dock="Bottom" Margin="8 8 8 0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Margin="3" Command="{Binding StartPlaybackCommand}">
+            <Button Grid.Column="0" Width="30" Height="30" Command="{Binding StartPlaybackCommand}">
                 <Image Source="/Images/Icons/Player/play.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Button>
 
-            <Button Grid.Column="1" Margin="3" Command="{Binding StopPlaybackCommand}">
+            <Button Grid.Column="1" Margin="8 0 0 0" Width="30" Height="30" Command="{Binding StopPlaybackCommand}">
                 <Image Source="/Images/Icons/Player/stop.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Button>
 
-            <ToggleButton Grid.Column="2" Margin="3" Command="{Binding TogglePlayPauseCommand}" IsChecked="{Binding IsPaused}">
+            <ToggleButton Grid.Column="2" Margin="8 0 0 0" Width="30" Height="30" Command="{Binding TogglePlayPauseCommand}" IsChecked="{Binding IsPaused}">
                 <Image Source="/Images/Icons/Player/pause.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </ToggleButton>
 
-            <ToggleButton Grid.Column="3" Margin="3" Command="{Binding NextTrackCommand}" IsChecked="{Binding IsPaused}">
+            <Button Grid.Column="3" Margin="8 0 0 0" Width="30" Height="30" Command="{Binding NextTrackCommand}">
                 <Image Source="/Images/Icons/Player/next.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </ToggleButton>
+            </Button>
 
-            <ToggleButton Grid.Column="4" Margin="3" Command="{Binding StopAfterCurrentCommand}" IsChecked="{Binding IsPaused}">
+            <Button Grid.Column="4" Margin="8 0 0 0" Width="30" Height="30" Command="{Binding StopAfterCurrentCommand}">
                 <Image Source="/Images/Icons/Player/stop-next.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </ToggleButton>
-
-            <TextBlock Grid.Column="6" VerticalAlignment="Center">
-                <Run Text="{Binding TrackPositionTime, StringFormat=hh\\:mm\\:ss, Mode=OneWay}"/> / <Run Text="{Binding TrackLengthTime, StringFormat=hh\\:mm\\:ss, Mode=OneWay}"/>
-            </TextBlock>
+            </Button>
 
             <ComboBox Grid.Column="5" SelectedItem="{Binding PlaylistManager.PlaylistMode}"
                       ItemsSource="{Binding Source={extensions:EnumBindingSource {x:Type enums:PlaylistMode}}}"
-                      HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="150">
+                      HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Margin="8 0 0 0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <i:InvokeCommandAction Command="{Binding UpdateNextTrackCommand}"></i:InvokeCommandAction>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ComboBox>
-        </Grid>
 
-        <Grid DockPanel.Dock="Bottom" Margin="0 8 0 0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="7">
+                <TextBlock Text="{Binding TrackPositionTime, StringFormat=mm\\:ss, Mode=OneWay}" 
+                           FontSize="16" FontWeight="Bold" HorizontalAlignment="Right"/>
+                <TextBlock Text="{Binding TrackLengthTime, StringFormat=mm\\:ss, Mode=OneWay}"
+                           FontWeight="Bold" HorizontalAlignment="Right"/>
+            </StackPanel>
 
-            <controls:ExtendedSlider Grid.Column="0" Minimum="0" x:Name="SeekBar" VerticalAlignment="Center" IsEnabled="{Binding AllowSeekDrag}"
-                                     Maximum="{Binding TrackLengthInSeconds, Mode=OneWay}" Value="{Binding TrackPositionInSeconds}"
-                                     TickFrequency="1" IsSnapToTickEnabled="True" LargeChange="20" SmallChange="5"
-                                     DragStartedCommand="{Binding SeekBarDragStartedCommand}" DragCompletedCommand="{Binding SeekBarDragCompletedCommand}"
-                                     AutoToolTipPlacement="TopLeft" CustomToolTipContent="{Binding TrackPositionTime, Mode=OneWay, StringFormat={}{0:hh':'mm':'ss}, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
 
         <ListView ItemsSource="{Binding PlaylistManager.Tracks}" SelectedItem="{Binding SelectedTrack}"
-                  Name="playlist" SelectionMode="Extended" HorizontalContentAlignment="Stretch">
+                  Name="playlist" SelectionMode="Extended" HorizontalContentAlignment="Stretch"
+                  Margin="8 0 8 0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>

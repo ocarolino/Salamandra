@@ -55,6 +55,7 @@ namespace Salamandra.ViewModel
         public ICommand? StopAfterCurrentCommand { get; set; }
         public ICommand? UpdateNextTrackCommand { get; set; }
         public ICommand? OpenPlaylistCommand { get; set; }
+        public ICommand? SavePlaylistCommand { get; set; }
         #endregion
 
         public MainViewModel()
@@ -133,6 +134,7 @@ namespace Salamandra.ViewModel
             this.UpdateNextTrackCommand = new RelayCommand(p => this.PlaylistManager.UpdateNextTrack(), p => true);
 
             this.OpenPlaylistCommand = new RelayCommandAsync(OpenPlaylist, p => true, null);
+            this.SavePlaylistCommand = new RelayCommand(p => SavePlaylist(), p => true);
         }
 
         private async Task AddFilesToPlaylist()
@@ -311,6 +313,18 @@ namespace Salamandra.ViewModel
                 {
                     MessageBox.Show("Houve um erro ao abrir a playlist.\n\n" + ex.Message, "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }
+        }
+
+        private void SavePlaylist()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Playlist M3U (*.m3u) | *.m3u";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                // ToDo: Tratamento de erros!
+                this.PlaylistManager.SavePlaylist(saveFileDialog.FileName);
             }
         }
 

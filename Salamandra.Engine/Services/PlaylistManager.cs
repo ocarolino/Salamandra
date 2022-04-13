@@ -144,6 +144,21 @@ namespace Salamandra.Engine.Services
             this.UpdateNextTrack();
         }
 
+        public void SavePlaylist(string filename)
+        {
+            M3UPlaylistLoader playlistLoader = new M3UPlaylistLoader();
+
+            List<PlaylistEntryInfo> entries = new List<PlaylistEntryInfo>();
+
+            foreach (var item in this.Tracks)
+            {
+                PlaylistEntryInfo entry = new PlaylistEntryInfo() { Filename = item.Filename, FriendlyName = item.FriendlyName, Duration = item.Duration };
+                entries.Add(entry);
+            }
+
+            playlistLoader.Save(filename, entries);
+        }
+
 #pragma warning disable 67
         public event PropertyChangedEventHandler? PropertyChanged;
 #pragma warning restore 67

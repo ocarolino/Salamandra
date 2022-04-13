@@ -123,6 +123,14 @@ namespace Salamandra.Engine.Services
             }
         }
         #endregion
+        public void ClearPlaylist()
+        {
+            this.Tracks = new ObservableCollection<SoundFileTrack>();
+            this.NextTrack = null;
+
+            this.Filename = string.Empty;
+            this.Modified = false;
+        }
 
         public async Task LoadPlaylist(string filename)
         {

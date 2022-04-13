@@ -11,7 +11,8 @@
         xmlns:enums="clr-namespace:Salamandra.Engine.Domain.Enums;assembly=Salamandra.Engine"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Height="540" Width="960"
-        WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+        WindowStartupLocation="CenterScreen" Closing="Window_Closing"
+        UseLayoutRounding="True">
     <Window.Resources>
         <converters:SameObjectToBoolConverter x:Key="SameObjectToBoolConverter"/>
     </Window.Resources>
@@ -104,23 +105,28 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" Width="30" Height="30" Command="{Binding StartPlaybackCommand}">
-                <Image Source="/Images/Icons/Player/play.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Image Source="/Images/Icons/Player/play.png" VerticalAlignment="Center" HorizontalAlignment="Center"
+                       RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
             </Button>
 
             <Button Grid.Column="1" Margin="8 0 0 0" Width="30" Height="30" Command="{Binding StopPlaybackCommand}">
-                <Image Source="/Images/Icons/Player/stop.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Image Source="/Images/Icons/Player/stop.png" VerticalAlignment="Center" HorizontalAlignment="Center"
+                       RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
             </Button>
 
             <ToggleButton Grid.Column="2" Margin="8 0 0 0" Width="30" Height="30" Command="{Binding TogglePlayPauseCommand}" IsChecked="{Binding IsPaused}">
-                <Image Source="/Images/Icons/Player/pause.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Image Source="/Images/Icons/Player/pause.png" VerticalAlignment="Center" HorizontalAlignment="Center"
+                       RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
             </ToggleButton>
 
             <Button Grid.Column="3" Margin="8 0 0 0" Width="30" Height="30" Command="{Binding NextTrackCommand}">
-                <Image Source="/Images/Icons/Player/next.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Image Source="/Images/Icons/Player/next.png" VerticalAlignment="Center" HorizontalAlignment="Center"
+                       RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
             </Button>
 
             <Button Grid.Column="4" Margin="8 0 0 0" Width="30" Height="30" Command="{Binding StopAfterCurrentCommand}">
-                <Image Source="/Images/Icons/Player/stop-next.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Image Source="/Images/Icons/Player/stop-next.png" VerticalAlignment="Center" HorizontalAlignment="Center"
+                       RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
             </Button>
 
             <ComboBox Grid.Column="5" SelectedItem="{Binding PlaylistManager.PlaylistMode}"

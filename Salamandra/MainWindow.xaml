@@ -36,14 +36,44 @@
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0">
-                <TextBlock Text="Reproduzindo agora"/>
-                <Border  Height="64" Margin="0 4 0 0"
-                    BorderBrush="Black" BorderThickness="1">
-                    <TextBlock Text="{Binding PlaylistManager.CurrentTrack.FriendlyName}" 
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Reproduzindo agora" HorizontalAlignment="Left">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsPlaying}" Value="True">
+                                        <Setter Property="Background" Value="Red"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+                    <Border Height="64" Margin="0 4 0 0" BorderBrush="Black" BorderThickness="1">
+                        <TextBlock Text="{Binding PlaylistManager.CurrentTrack.FriendlyName}" 
                            FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
-            </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <controls:ExtendedSlider Grid.Column="1" Value="{Binding CurrentVolume}" x:Name="VolumeControl" 
+                                         Orientation="Vertical" Height="64" VerticalAlignment="Bottom" Margin="8 0 0 0"
+                                         Minimum="0" Maximum="1" LargeChange="0.2" SmallChange="0.05" 
+                                         TickFrequency="0.1" TickPlacement="Both" AutoToolTipPlacement="TopLeft" 
+                                         CustomToolTipContent="{Binding CurrentVolume, Mode=OneWay, StringFormat={}{0:P0}, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <i:InvokeCommandAction Command="{Binding VolumeControlValueChangedCommand}"></i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </controls:ExtendedSlider>
+            </Grid>
 
             <StackPanel Grid.Column="1" Margin="8 0 0 0">
                 <TextBlock Text="Próxima faixa"/>
@@ -114,19 +144,6 @@
                                      TickFrequency="1" IsSnapToTickEnabled="True" LargeChange="20" SmallChange="5"
                                      DragStartedCommand="{Binding SeekBarDragStartedCommand}" DragCompletedCommand="{Binding SeekBarDragCompletedCommand}"
                                      AutoToolTipPlacement="TopLeft" CustomToolTipContent="{Binding TrackPositionTime, Mode=OneWay, StringFormat={}{0:hh':'mm':'ss}, UpdateSourceTrigger=PropertyChanged}"/>
-
-            <Image Grid.Column="2" Source="/Images/Icons/Player/volume_up.png"/>
-
-            <controls:ExtendedSlider Grid.Column="3" Value="{Binding CurrentVolume}" x:Name="VolumeControl"
-                                     Minimum="0" Maximum="1" TickFrequency="0.01" IsSnapToTickEnabled="True"
-                                     LargeChange="0.2" SmallChange="0.05" Margin="8 0 0 0" VerticalAlignment="Center" 
-                                     AutoToolTipPlacement="TopLeft" CustomToolTipContent="{Binding CurrentVolume, Mode=OneWay, StringFormat={}{0:P0}, UpdateSourceTrigger=PropertyChanged}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="ValueChanged">
-                        <i:InvokeCommandAction Command="{Binding VolumeControlValueChangedCommand}"></i:InvokeCommandAction>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </controls:ExtendedSlider>
         </Grid>
 
         <ListView ItemsSource="{Binding PlaylistManager.Tracks}" SelectedItem="{Binding SelectedTrack}"

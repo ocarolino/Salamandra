@@ -318,14 +318,20 @@ namespace Salamandra.ViewModel
 
         private void SavePlaylist()
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Playlist M3U (*.m3u) | *.m3u";
+            string filename = this.PlaylistManager.Filename;
 
-            if (saveFileDialog.ShowDialog() == true)
+            if (String.IsNullOrEmpty(filename))
             {
-                // ToDo: Tratamento de erros!
-                this.PlaylistManager.SavePlaylist(saveFileDialog.FileName);
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Playlist M3U (*.m3u) | *.m3u";
+
+                if (saveFileDialog.ShowDialog() == true)
+                    filename = saveFileDialog.FileName;
+                else
+                    return;
             }
+
+            this.PlaylistManager.SavePlaylist(filename);
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

@@ -20,6 +20,9 @@ namespace Salamandra.Engine.Services
         public SoundFileTrack? CurrentTrack { get; set; }
         public SoundFileTrack? NextTrack { get; set; }
 
+        public bool Modified { get; set; }
+        public string Filename { get; set; }
+
         public PlaylistManager()
         {
             this.PlaylistMode = PlaylistMode.Default;
@@ -28,6 +31,9 @@ namespace Salamandra.Engine.Services
 
             this.CurrentTrack = null;
             this.NextTrack = null;
+
+            this.Modified = false;
+            this.Filename = string.Empty;
         }
 
         public void UpdateNextTrack()
@@ -72,6 +78,8 @@ namespace Salamandra.Engine.Services
 
             if (this.NextTrack == null)
                 UpdateNextTrack();
+
+            this.Modified = true;
         }
 
         public async Task AddFiles(List<string> filenames)
@@ -98,6 +106,8 @@ namespace Salamandra.Engine.Services
 
             if (!this.Tracks.Contains(this.NextTrack!))
                 UpdateNextTrack();
+
+            this.Modified = true;
         }
 
         public TimeSpan? GetAudioFileDuration(string filename)
@@ -113,7 +123,6 @@ namespace Salamandra.Engine.Services
             }
         }
         #endregion
-
 
         public async Task LoadPlaylist(string filename)
         {
@@ -142,6 +151,9 @@ namespace Salamandra.Engine.Services
             this.Tracks = new ObservableCollection<SoundFileTrack>(tracks);
 
             this.UpdateNextTrack();
+
+            this.Filename = filename;
+            this.Modified = false;
         }
 
         public void SavePlaylist(string filename)
@@ -157,6 +169,9 @@ namespace Salamandra.Engine.Services
             }
 
             playlistLoader.Save(filename, entries);
+
+            this.Filename = filename;
+            this.Modified = false;
         }
 
 #pragma warning disable 67

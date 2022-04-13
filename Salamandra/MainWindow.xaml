@@ -30,6 +30,31 @@
             </MenuItem>
         </Menu>
 
+        <Grid DockPanel.Dock="Top" Margin="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Reproduzindo agora"/>
+                <Border  Height="64" Margin="0 4 0 0"
+                    BorderBrush="Black" BorderThickness="1">
+                    <TextBlock Text="{Binding PlaylistManager.CurrentTrack.FriendlyName}" 
+                           FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="8 0 0 0">
+                <TextBlock Text="Próxima faixa"/>
+                <Border Height="64" Margin="0 4 0 0"
+                    BorderBrush="Black" BorderThickness="1">
+                    <TextBlock Text="{Binding PlaylistManager.NextTrack.FriendlyName}"
+                           FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </StackPanel>
+        </Grid>
+
         <Grid DockPanel.Dock="Bottom" Height="30">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30"/>

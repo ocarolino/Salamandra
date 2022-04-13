@@ -150,7 +150,7 @@
 
         <ListView ItemsSource="{Binding PlaylistManager.Tracks}" SelectedItem="{Binding SelectedTrack}"
                   Name="playlist" SelectionMode="Extended" HorizontalContentAlignment="Stretch"
-                  Margin="8 0 8 0">
+                  Margin="8 0 8 0" AlternationCount="2">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -168,6 +168,11 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Style.Triggers>
+                        <!-- Style for Alternation -->
+                        <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
+                            <Setter Property="Background" Value="#f0f0f0" />
+                        </Trigger>
+
                         <!-- Style for Next Track -->
                         <DataTrigger Value="True">
                             <DataTrigger.Binding>
@@ -197,6 +202,17 @@
                                 <Setter Property="Foreground" Value="White"/>
                             </DataTrigger.Setters>
                         </DataTrigger>
+
+                        <!-- Selected Style -->
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+
+                        <!-- MouseOver Style -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+
                     </Style.Triggers>
                 </Style>
             </ListView.ItemContainerStyle>

@@ -18,6 +18,7 @@
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Arquivo">
+                <MenuItem Header="Novo" Command="{Binding NewPlaylistCommand}" />
                 <MenuItem Header="Abrir..." Command="{Binding OpenPlaylistCommand}" />
                 <MenuItem Header="Salvar" Command="{Binding SavePlaylistCommand}" />
             </MenuItem>

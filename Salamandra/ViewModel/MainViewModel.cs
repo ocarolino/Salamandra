@@ -56,6 +56,7 @@ namespace Salamandra.ViewModel
         public ICommand? UpdateNextTrackCommand { get; set; }
         public ICommand? OpenPlaylistCommand { get; set; }
         public ICommand? SavePlaylistCommand { get; set; }
+        public ICommand? NewPlaylistCommand { get; set; }
         #endregion
 
         public MainViewModel()
@@ -105,6 +106,9 @@ namespace Salamandra.ViewModel
                     return false;
             }
 
+            if (!CheckPlaylistModified())
+                return false;
+
             this.StopPlayback();
 
             return true;
@@ -135,6 +139,7 @@ namespace Salamandra.ViewModel
 
             this.OpenPlaylistCommand = new RelayCommandAsync(OpenPlaylist, p => true, null);
             this.SavePlaylistCommand = new RelayCommand(p => SavePlaylist(), p => true);
+            this.NewPlaylistCommand = new RelayCommand(p => NewPlaylist(), p => true);
         }
 
         private async Task AddFilesToPlaylist()
@@ -332,6 +337,27 @@ namespace Salamandra.ViewModel
             }
 
             this.PlaylistManager.SavePlaylist(filename);
+        }
+
+        private void NewPlaylist()
+        {
+            if (CheckPlaylistModified())
+                this.PlaylistManager.ClearPlaylist();
+        }
+
+        private bool CheckPlaylistModified()
+        {
+            if (this.PlaylistManager.Modified)
+            {
+                var result = MessageBox.Show("Há modificações não salvas na playlist. Deseja salvá-las?", "Salamandra", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                    SavePlaylist();
+                else if (result == MessageBoxResult.Cancel)
+                    return false;
+            }
+
+            return true;
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

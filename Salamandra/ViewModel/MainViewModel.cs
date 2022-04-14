@@ -42,6 +42,9 @@ namespace Salamandra.ViewModel
 
         public string WindowTitle { get; set; }
 
+        public bool PlaylistLoading { get; set; }
+        public string PlaylistInfoText { get; set; }
+
         #region Commands Properties
         public ICommand? AddFilesToPlaylistCommand { get; set; }
         public ICommand? RemoveTracksFromPlaylistCommand { get; set; }
@@ -82,6 +85,9 @@ namespace Salamandra.ViewModel
             this.MainTimer.Interval = TimeSpan.FromMilliseconds(250);
             this.MainTimer.Tick += MainTimer_Tick;
             this.MainTimer.Start();
+
+            this.PlaylistLoading = false;
+            this.PlaylistInfoText = string.Empty;
 
             UpdateWindowTitle();
             LoadCommands();

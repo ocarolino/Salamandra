@@ -62,6 +62,7 @@ namespace Salamandra.ViewModel
         public ICommand? OpenPlaylistCommand { get; set; }
         public ICommand? SavePlaylistCommand { get; set; }
         public ICommand? NewPlaylistCommand { get; set; }
+        public ICommand? ShufflePlaylistCommand { get; set; }
         #endregion
 
         public MainViewModel()
@@ -149,6 +150,8 @@ namespace Salamandra.ViewModel
             this.OpenPlaylistCommand = new RelayCommandAsync(OpenPlaylist, p => !this.PlaylistLoading, null);
             this.SavePlaylistCommand = new RelayCommand(p => SavePlaylist(), p => !this.PlaylistLoading);
             this.NewPlaylistCommand = new RelayCommand(p => NewPlaylist(), p => !this.PlaylistLoading);
+
+            this.ShufflePlaylistCommand = new RelayCommand(p => this.PlaylistManager.ShufflePlaylist(), p => !this.PlaylistLoading);
         }
 
         private async Task AddFilesToPlaylist()

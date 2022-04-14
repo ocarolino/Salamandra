@@ -182,6 +182,26 @@ namespace Salamandra.Engine.Services
             this.Modified = false;
         }
 
+        public void ShufflePlaylist()
+        {
+            if (this.Tracks.Count == 0)
+                return;
+
+            Random random = new Random();
+
+            int n = this.Tracks.Count;
+
+            for (int i = 0; i < n - 1; i++)
+            {
+                int j = i + random.Next(n - i);
+
+                SoundFileTrack track = this.Tracks[j];
+
+                this.Tracks[j] = this.Tracks[i];
+                this.Tracks[i] = track;
+            }
+        }
+
 #pragma warning disable 67
         public event PropertyChangedEventHandler? PropertyChanged;
 #pragma warning restore 67

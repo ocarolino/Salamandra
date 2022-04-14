@@ -30,6 +30,8 @@
                 <MenuItem Header="Adicionar arquivos de áudio..." Command="{Binding AddFilesToPlaylistCommand}"/>
                 <Separator/>
                 <MenuItem Header="Remover selecionadas" Command="{Binding RemoveTracksFromPlaylistCommand}" CommandParameter="{Binding SelectedItems, ElementName=playlist}"/>
+                <Separator/>
+                <MenuItem Header="Embaralhar playlist" Command="{Binding ShufflePlaylistCommand}"/>
             </MenuItem>
         </Menu>
 

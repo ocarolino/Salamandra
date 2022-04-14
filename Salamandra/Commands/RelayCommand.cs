@@ -9,27 +9,24 @@ namespace Salamandra.Commands
 {
     public class RelayCommand : ICommand
     {
-        private readonly Action<object?> _execute;
-        private readonly Predicate<object?> _canExecute;
+        private readonly Action<object?> execute;
+        private readonly Predicate<object?>? canExecute;
 
-        public RelayCommand(Action<object?> execute, Predicate<object?> canExecute)
+        public RelayCommand(Action<object?> execute, Predicate<object?>? canExecute = null)
         {
-            _execute = execute;
-            _canExecute = canExecute;
+            this.execute = execute;
+            this.canExecute = canExecute;
         }
 
         public bool CanExecute(object? parameter)
         {
-            bool result = _canExecute == null ? true : _canExecute(parameter);
-            return result;
+            return canExecute == null ? true : canExecute(parameter);
         }
-
 
         public void Execute(object? parameter)
         {
-            _execute(parameter);
+            execute(parameter);
         }
-
 
         public event EventHandler? CanExecuteChanged
         {

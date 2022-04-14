@@ -59,7 +59,7 @@ namespace Salamandra.Engine.Services.Playlists
                     {
                         Uri path;
 
-                        if (!Uri.TryCreate(line, UriKind.RelativeOrAbsolute, out path))
+                        if (!Uri.TryCreate(line, UriKind.RelativeOrAbsolute, out path!))
                             throw new PlaylistLoaderException("Invalid entry path.");
 
                         if (!path.IsAbsoluteUri)

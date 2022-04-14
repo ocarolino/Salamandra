@@ -117,7 +117,7 @@ namespace Salamandra.Engine.Services
                 TagLib.File file = TagLib.File.Create(filename);
                 return file.Properties.Duration;
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }
@@ -142,7 +142,7 @@ namespace Salamandra.Engine.Services
             foreach (var item in entries)
             {
                 // ToDo: Construtor desnecessário...
-                var track = new SoundFileTrack(item.Filename, item.FriendlyName) { Duration = item.Duration };
+                var track = new SoundFileTrack(item.Filename!, item.FriendlyName!) { Duration = item.Duration };
 
                 if (String.IsNullOrEmpty(track.FriendlyName))
                     track.FriendlyName = Path.GetFileNameWithoutExtension(track.Filename);

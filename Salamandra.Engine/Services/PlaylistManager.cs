@@ -142,7 +142,7 @@ namespace Salamandra.Engine.Services
             foreach (var item in entries)
             {
                 // ToDo: Construtor desnecessário...
-                var track = new SoundFileTrack(item.Filename, item.FriendlyName);
+                var track = new SoundFileTrack(item.Filename, item.FriendlyName) { Duration = item.Duration };
 
                 if (String.IsNullOrEmpty(track.FriendlyName))
                     track.FriendlyName = Path.GetFileNameWithoutExtension(track.Filename);

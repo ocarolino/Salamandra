@@ -9,12 +9,14 @@
         xmlns:controls="clr-namespace:Salamandra.Controls"
         xmlns:extensions="clr-namespace:Salamandra.Extensions"
         xmlns:enums="clr-namespace:Salamandra.Engine.Domain.Enums;assembly=Salamandra.Engine"
+        xmlns:usercontrols="clr-namespace:Salamandra.UserControls"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Height="540" Width="960"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing"
         UseLayoutRounding="True">
     <Window.Resources>
         <converters:SameObjectToBoolConverter x:Key="SameObjectToBoolConverter"/>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
@@ -148,81 +150,89 @@
 
         </Grid>
 
-        <ListView ItemsSource="{Binding PlaylistManager.Tracks}" SelectedItem="{Binding SelectedTrack}"
+        <Grid>
+            <ListView ItemsSource="{Binding PlaylistManager.Tracks}" SelectedItem="{Binding SelectedTrack}"
                   Name="playlist" SelectionMode="Extended" HorizontalContentAlignment="Stretch"
                   Margin="8 0 8 0" AlternationCount="2">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="{Binding Path=FriendlyName, Mode=OneWay}"></TextBlock>
-                        <TextBlock Grid.Column="1" Text="{Binding Duration, StringFormat=hh\\:mm\\:ss, Mode=OneWay, TargetNullValue='--:--:--'}"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+                            <TextBlock Grid.Column="0" Text="{Binding Path=FriendlyName, Mode=OneWay}"></TextBlock>
+                            <TextBlock Grid.Column="1" Text="{Binding Duration, StringFormat=hh\\:mm\\:ss, Mode=OneWay, TargetNullValue='--:--:--'}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
 
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Style.Triggers>
-                        <!-- Style for Alternation -->
-                        <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
-                            <Setter Property="Background" Value="#f0f0f0" />
-                        </Trigger>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Style.Triggers>
+                            <!-- Style for Alternation -->
+                            <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
+                                <Setter Property="Background" Value="#f0f0f0" />
+                            </Trigger>
 
-                        <!-- Style for Next Track -->
-                        <DataTrigger Value="True">
-                            <DataTrigger.Binding>
-                                <MultiBinding Mode="OneWay" NotifyOnSourceUpdated="True" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource SameObjectToBoolConverter}">
-                                    <Binding Path="DataContext.PlaylistManager.NextTrack" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListView}"  />
-                                    <Binding Path="."></Binding>
-                                </MultiBinding>
-                            </DataTrigger.Binding>
+                            <!-- Style for Next Track -->
+                            <DataTrigger Value="True">
+                                <DataTrigger.Binding>
+                                    <MultiBinding Mode="OneWay" NotifyOnSourceUpdated="True" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource SameObjectToBoolConverter}">
+                                        <Binding Path="DataContext.PlaylistManager.NextTrack" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListView}"  />
+                                        <Binding Path="."></Binding>
+                                    </MultiBinding>
+                                </DataTrigger.Binding>
 
-                            <DataTrigger.Setters>
-                                <Setter Property="Background" Value="ForestGreen"/>
-                                <Setter Property="Foreground" Value="White"/>
-                            </DataTrigger.Setters>
-                        </DataTrigger>
+                                <DataTrigger.Setters>
+                                    <Setter Property="Background" Value="ForestGreen"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </DataTrigger.Setters>
+                            </DataTrigger>
 
-                        <!-- Style for Current Track -->
-                        <DataTrigger Value="True">
-                            <DataTrigger.Binding>
-                                <MultiBinding Mode="OneWay" NotifyOnSourceUpdated="True" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource SameObjectToBoolConverter}">
-                                    <Binding Path="DataContext.PlaylistManager.CurrentTrack" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListView}"  />
-                                    <Binding Path="."></Binding>
-                                </MultiBinding>
-                            </DataTrigger.Binding>
+                            <!-- Style for Current Track -->
+                            <DataTrigger Value="True">
+                                <DataTrigger.Binding>
+                                    <MultiBinding Mode="OneWay" NotifyOnSourceUpdated="True" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource SameObjectToBoolConverter}">
+                                        <Binding Path="DataContext.PlaylistManager.CurrentTrack" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListView}"  />
+                                        <Binding Path="."></Binding>
+                                    </MultiBinding>
+                                </DataTrigger.Binding>
 
-                            <DataTrigger.Setters>
-                                <Setter Property="Background" Value="Red"/>
-                                <Setter Property="Foreground" Value="White"/>
-                            </DataTrigger.Setters>
-                        </DataTrigger>
+                                <DataTrigger.Setters>
+                                    <Setter Property="Background" Value="Red"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </DataTrigger.Setters>
+                            </DataTrigger>
 
-                        <!-- Selected Style -->
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Foreground" Value="Black"/>
-                        </Trigger>
+                            <!-- Selected Style -->
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
 
-                        <!-- MouseOver Style -->
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="Black"/>
-                        </Trigger>
+                            <!-- MouseOver Style -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
 
-                    </Style.Triggers>
-                </Style>
-            </ListView.ItemContainerStyle>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
 
-            <ListView.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Tocar faixa selecionada" Command="{Binding PlaySelectedTrackCommand}"/>
-                    <MenuItem Header="Marcar como próxima" Command="{Binding SelectedAsNextTrackCommand}"/>
-                </ContextMenu>
-            </ListView.ContextMenu>
-        </ListView>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Tocar faixa selecionada" Command="{Binding PlaySelectedTrackCommand}"/>
+                        <MenuItem Header="Marcar como próxima" Command="{Binding SelectedAsNextTrackCommand}"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+            </ListView>
+
+            <Border Background="White" Opacity="0.75" 
+                    Visibility="{Binding PlaylistLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+            <usercontrols:LoadingSpinner LoadingText="{Binding PlaylistInfoText}"
+                                         Visibility="{Binding PlaylistLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        </Grid>
     </DockPanel>
 </Window>

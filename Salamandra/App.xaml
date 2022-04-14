@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Salamandra"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!-- Fonts -->
+        <FontFamily x:Key="FontAwesome">/Fonts/FontAwesome.otf#Font Awesome 5 Free Solid</FontFamily>
     </Application.Resources>
 </Application>

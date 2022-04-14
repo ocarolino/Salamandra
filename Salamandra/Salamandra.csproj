@@ -23,6 +23,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Resource Include="Fonts\FontAwesome.otf" />
+		<Resource Include="Images\Icons\Player\autorenew.png" />
 		<Resource Include="Images\Icons\Player\next.png" />
 		<Resource Include="Images\Icons\Player\pause.png" />
 		<Resource Include="Images\Icons\Player\play.png" />

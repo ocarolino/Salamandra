@@ -40,7 +40,7 @@ namespace Salamandra.ViewModel
 
         public DispatcherTimer MainTimer { get; set; }
 
-        public string WindowTitle { get; set; }
+        public string? WindowTitle { get; set; }
 
         public bool PlaylistLoading { get; set; }
         public string PlaylistInfoText { get; set; }
@@ -125,8 +125,8 @@ namespace Salamandra.ViewModel
 
         private void LoadCommands()
         {
-            this.AddFilesToPlaylistCommand = new RelayCommandAsync(AddFilesToPlaylist, p => true, null); //new RelayCommand(p => AddFilesToPlaylist(), p => true);
-            this.RemoveTracksFromPlaylistCommand = new RelayCommand(p => RemoveTracksFromPlaylist(p), p => true);
+            this.AddFilesToPlaylistCommand = new RelayCommandAsync(AddFilesToPlaylist, p => !this.PlaylistLoading, null);
+            this.RemoveTracksFromPlaylistCommand = new RelayCommand(p => RemoveTracksFromPlaylist(p), p => !this.PlaylistLoading);
 
             this.StartPlaybackCommand = new RelayCommand(p => StartPlayback(), p => !this.IsPlaying);
             this.StopPlaybackCommand = new RelayCommand(p => StopPlayback(), p => this.IsPlaying);
@@ -146,19 +146,25 @@ namespace Salamandra.ViewModel
 
             this.UpdateNextTrackCommand = new RelayCommand(p => this.PlaylistManager.UpdateNextTrack(), p => true);
 
-            this.OpenPlaylistCommand = new RelayCommandAsync(OpenPlaylist, p => true, null);
-            this.SavePlaylistCommand = new RelayCommand(p => SavePlaylist(), p => true);
-            this.NewPlaylistCommand = new RelayCommand(p => NewPlaylist(), p => true);
+            this.OpenPlaylistCommand = new RelayCommandAsync(OpenPlaylist, p => !this.PlaylistLoading, null);
+            this.SavePlaylistCommand = new RelayCommand(p => SavePlaylist(), p => !this.PlaylistLoading);
+            this.NewPlaylistCommand = new RelayCommand(p => NewPlaylist(), p => !this.PlaylistLoading);
         }
 
         private async Task AddFilesToPlaylist()
         {
+            this.PlaylistLoading = true;
+            this.PlaylistInfoText = "Adicionando arquivos a playlist...";
+
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Arquivos de áudio (*.wav, *.mp3, *.wma, *.ogg, *.flac) | *.wav; *.mp3; *.wma; *.ogg; *.flac";
             openFileDialog.Multiselect = true;
 
             if (openFileDialog.ShowDialog() == true)
                 await this.PlaylistManager.AddFiles(openFileDialog.FileNames.ToList());
+
+            this.PlaylistLoading = false;
+            this.PlaylistInfoText = string.Empty;
         }
 
         private void RemoveTracksFromPlaylist(object? items)
@@ -319,6 +325,9 @@ namespace Salamandra.ViewModel
 
             if (openFileDialog.ShowDialog() == true)
             {
+                this.PlaylistLoading = true;
+                this.PlaylistInfoText = "Carregando playlist...";
+
                 try
                 {
                     await this.PlaylistManager.LoadPlaylist(openFileDialog.FileName);
@@ -329,6 +338,9 @@ namespace Salamandra.ViewModel
                 }
 
                 UpdateWindowTitle();
+
+                this.PlaylistLoading = false;
+                this.PlaylistInfoText = string.Empty;
             }
         }
 

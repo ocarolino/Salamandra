@@ -20,7 +20,8 @@ namespace Salamandra.Commands
 
         public bool CanExecute(object? parameter)
         {
-            return canExecute == null ? true : canExecute(parameter);
+            bool result = canExecute == null ? true : canExecute(parameter);
+            return result;
         }
 
         public void Execute(object? parameter)

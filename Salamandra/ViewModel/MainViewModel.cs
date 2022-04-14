@@ -126,7 +126,7 @@ namespace Salamandra.ViewModel
 
         private void LoadCommands()
         {
-            this.AddFilesToPlaylistCommand = new RelayCommandAsync(AddFilesToPlaylist, p => !this.PlaylistLoading, null);
+            this.AddFilesToPlaylistCommand = new RelayCommandAsync(p => AddFilesToPlaylist(), p => !this.PlaylistLoading, null);
             this.RemoveTracksFromPlaylistCommand = new RelayCommand(p => RemoveTracksFromPlaylist(p), p => !this.PlaylistLoading);
 
             this.StartPlaybackCommand = new RelayCommand(p => StartPlayback(), p => !this.IsPlaying);
@@ -147,7 +147,7 @@ namespace Salamandra.ViewModel
 
             this.UpdateNextTrackCommand = new RelayCommand(p => this.PlaylistManager.UpdateNextTrack(), p => true);
 
-            this.OpenPlaylistCommand = new RelayCommandAsync(OpenPlaylist, p => !this.PlaylistLoading, null);
+            this.OpenPlaylistCommand = new RelayCommandAsync(p => OpenPlaylist(), p => !this.PlaylistLoading, null);
             this.SavePlaylistCommand = new RelayCommand(p => SavePlaylist(), p => !this.PlaylistLoading);
             this.NewPlaylistCommand = new RelayCommand(p => NewPlaylist(), p => !this.PlaylistLoading);
 

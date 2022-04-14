@@ -9,39 +9,36 @@ namespace Salamandra.Commands
 {
     public class RelayCommandAsync : ICommand
     {
-        private readonly Func<Task> _execute;
-        private readonly Predicate<object?> _canExecute;
-        private readonly Action<object?> _onException;
+        private readonly Func<object?, Task> execute;
+        private readonly Predicate<object?>? canExecute;
+        private readonly Action<object?>? onException;
 
-        private bool _isExecuting;
+        private bool isExecuting;
         public bool IsExecuting
         {
             get
             {
-                return _isExecuting;
+                return isExecuting;
             }
             set
             {
-                _isExecuting = value;
+                isExecuting = value;
                 CommandManager.InvalidateRequerySuggested();
             }
         }
 
-        public event EventHandler? CanExecuteChanged;
-
-        public RelayCommandAsync(Func<Task> execute, Predicate<object?> canExecute, Action<object?> onException)
+        public RelayCommandAsync(Func<object?, Task> execute, Predicate<object?>? canExecute = null, Action<object?>? onException = null)
         {
-            _execute = execute;
-            _canExecute = canExecute;
-            _onException = onException;
+            this.execute = execute;
+            this.canExecute = canExecute;
+            this.onException = onException;
         }
 
         public bool CanExecute(object? parameter)
         {
-            bool result = _canExecute == null ? true : _canExecute(parameter);
-            return this.IsExecuting ? false : result;
+            bool result = canExecute == null ? true : canExecute(parameter);
+            return IsExecuting ? false : result;
         }
-
 
         public async void Execute(object? parameter)
         {
@@ -53,15 +50,21 @@ namespace Salamandra.Commands
             }
             catch (Exception ex)
             {
-                _onException?.Invoke(ex);
+                onException?.Invoke(ex);
             }
 
             this.IsExecuting = false;
         }
 
-        public async Task ExecuteAsync(object parameter)
+        private async Task ExecuteAsync(object? parameter)
         {
-            await this._execute();
+            await execute(parameter);
+        }
+
+        public event EventHandler? CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
         }
     }
 }

@@ -61,6 +61,7 @@ namespace Salamandra.ViewModel
         public ICommand? UpdateNextTrackCommand { get; set; }
         public ICommand? OpenPlaylistCommand { get; set; }
         public ICommand? SavePlaylistCommand { get; set; }
+        public ICommand? SavePlaylistAsCommand { get; set; }
         public ICommand? NewPlaylistCommand { get; set; }
         public ICommand? ShufflePlaylistCommand { get; set; }
         #endregion
@@ -149,6 +150,7 @@ namespace Salamandra.ViewModel
 
             this.OpenPlaylistCommand = new RelayCommandAsync(p => OpenPlaylist(), p => HandlePlaylistException(p), p => !this.PlaylistLoading);
             this.SavePlaylistCommand = new RelayCommand(p => SavePlaylist(), p => !this.PlaylistLoading);
+            this.SavePlaylistAsCommand = new RelayCommand(p => SavePlaylist(true), p => !this.PlaylistLoading);
             this.NewPlaylistCommand = new RelayCommand(p => NewPlaylist(), p => !this.PlaylistLoading);
 
             this.ShufflePlaylistCommand = new RelayCommand(p => this.PlaylistManager.ShufflePlaylist(), p => !this.PlaylistLoading);
@@ -347,11 +349,11 @@ namespace Salamandra.ViewModel
             }
         }
 
-        private void SavePlaylist()
+        private void SavePlaylist(bool saveDialog = false)
         {
             string filename = this.PlaylistManager.Filename;
 
-            if (String.IsNullOrEmpty(filename))
+            if (saveDialog || String.IsNullOrEmpty(filename))
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.Filter = "Playlist M3U (*.m3u) | *.m3u";

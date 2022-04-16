@@ -24,6 +24,7 @@
                 <MenuItem Header="Novo" Command="{Binding NewPlaylistCommand}" />
                 <MenuItem Header="Abrir..." Command="{Binding OpenPlaylistCommand}" />
                 <MenuItem Header="Salvar" Command="{Binding SavePlaylistCommand}" />
+                <MenuItem Header="Salvar como..." Command="{Binding SavePlaylistAsCommand}"/>
             </MenuItem>
 
             <MenuItem Header="Playlist">

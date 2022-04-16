@@ -126,7 +126,7 @@ namespace Salamandra.ViewModel
 
         private void LoadCommands()
         {
-            this.AddFilesToPlaylistCommand = new RelayCommandAsync(p => AddFilesToPlaylist(), p => !this.PlaylistLoading, null);
+            this.AddFilesToPlaylistCommand = new RelayCommandAsync(p => AddFilesToPlaylist(), p => HandlePlaylistException(p), p => !this.PlaylistLoading);
             this.RemoveTracksFromPlaylistCommand = new RelayCommand(p => RemoveTracksFromPlaylist(p), p => !this.PlaylistLoading);
 
             this.StartPlaybackCommand = new RelayCommand(p => StartPlayback(), p => !this.IsPlaying);
@@ -147,7 +147,7 @@ namespace Salamandra.ViewModel
 
             this.UpdateNextTrackCommand = new RelayCommand(p => this.PlaylistManager.UpdateNextTrack(), p => true);
 
-            this.OpenPlaylistCommand = new RelayCommandAsync(p => OpenPlaylist(), p => !this.PlaylistLoading, null);
+            this.OpenPlaylistCommand = new RelayCommandAsync(p => OpenPlaylist(), p => HandlePlaylistException(p), p => !this.PlaylistLoading);
             this.SavePlaylistCommand = new RelayCommand(p => SavePlaylist(), p => !this.PlaylistLoading);
             this.NewPlaylistCommand = new RelayCommand(p => NewPlaylist(), p => !this.PlaylistLoading);
 
@@ -401,6 +401,12 @@ namespace Salamandra.ViewModel
             title = title + "Salamandra";
 
             this.WindowTitle = title;
+        }
+
+        private void HandlePlaylistException(Exception ex)
+        {
+            MessageBox.Show("Houve um erro ao manipular a playlist.\n\n" + ex.Message, "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+            this.PlaylistLoading = false;
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

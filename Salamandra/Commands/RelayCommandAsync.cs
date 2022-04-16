@@ -11,7 +11,7 @@ namespace Salamandra.Commands
     {
         private readonly Func<object?, Task> execute;
         private readonly Predicate<object?>? canExecute;
-        private readonly Action<object?>? onException;
+        private readonly Action<Exception> onException;
 
         private bool isExecuting;
         public bool IsExecuting
@@ -27,7 +27,7 @@ namespace Salamandra.Commands
             }
         }
 
-        public RelayCommandAsync(Func<object?, Task> execute, Predicate<object?>? canExecute = null, Action<object?>? onException = null)
+        public RelayCommandAsync(Func<object?, Task> execute, Action<Exception> onException, Predicate<object?>? canExecute = null)
         {
             this.execute = execute;
             this.canExecute = canExecute;

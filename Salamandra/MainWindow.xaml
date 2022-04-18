@@ -48,6 +48,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
+            <!-- Linha Superior -->
             <StackPanel Grid.Column="0">
                 <TextBlock Text="Reproduzindo agora" HorizontalAlignment="Left">
                     <TextBlock.Style>
@@ -76,6 +77,32 @@
                            FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
             </StackPanel>
+
+            <!-- Linha Inferior -->
+            <Grid Grid.Column="0" Grid.Row="1" Margin="0 8 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Tempo Restante"/>
+                    <Border Height="48"  BorderBrush="Black" BorderThickness="1" Margin="0 4 0 0">
+                        <TextBlock Text="{Binding RemainingTime, StringFormat='mm\\:ss', TargetNullValue='--:--', FallbackValue='00:00'}"
+                           FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Horário de Término"/>
+                    <Border Height="48"  BorderBrush="Black" BorderThickness="1" Margin="0 4 0 0">
+                        <TextBlock Text="{Binding EndingTimeOfDay, StringFormat='hh\\:mm\\:ss', TargetNullValue='--:--:--', FallbackValue='00:00:00'}"
+                           FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </StackPanel>
+
+            </Grid>
 
             <Border Height="64" Margin="8 8 0 0" Grid.Column="1" Grid.Row="1"
                     BorderBrush="Black" BorderThickness="1">

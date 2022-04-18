@@ -45,6 +45,8 @@ namespace Salamandra.ViewModel
         public bool PlaylistLoading { get; set; }
         public string PlaylistInfoText { get; set; }
 
+        public TimeSpan? RemainingTime { get; set; }
+        public TimeSpan? EndingTimeOfDay { get; set; }
         public DateTime CurrentDateTime { get; set; }
 
         #region Commands Properties
@@ -110,7 +112,10 @@ namespace Salamandra.ViewModel
                 PlayNextTrackOrStop();
 
             if (this.SoundEngine.State == SoundEngineState.Playing && !this.isDraggingTrackPosition)
+            {
                 this.TrackPositionInSeconds = this.SoundEngine.PositionInSeconds;
+                this.RemainingTime = TimeSpan.FromSeconds(this.TrackLengthInSeconds - this.TrackPositionInSeconds);
+            }
         }
 
         public bool Closing()
@@ -211,6 +216,7 @@ namespace Salamandra.ViewModel
                 this.PlaybackState = PlaylistState.PlayingPlaylistTrack; // ToDo: Refatorar quando for evento!
                 this.TrackLengthInSeconds = this.SoundEngine.TotalLengthInSeconds;
                 this.TrackPositionInSeconds = 0;
+                this.CalculateEndingTimeOfDay();
 
                 if (soundFileTrack.Duration == null) // ToDo: Refatorar para garantir que isso seja necessário!
                     soundFileTrack.Duration = TimeSpan.FromSeconds(this.SoundEngine.TotalLengthInSeconds);
@@ -253,6 +259,8 @@ namespace Salamandra.ViewModel
             this.PlaylistManager.CurrentTrack = null;
             this.TrackLengthInSeconds = 0;
             this.TrackPositionInSeconds = 0;
+            this.RemainingTime = null;
+            this.EndingTimeOfDay = null;
             this.AllowSeekDrag = false;
 
             if (this.PlaylistManager.NextTrack == null)
@@ -298,6 +306,11 @@ namespace Salamandra.ViewModel
             this.SoundEngine.TogglePlayPause();
 
             this.IsPaused = (this.SoundEngine.State == SoundEngineState.Paused);
+
+            if (this.IsPaused)
+                this.EndingTimeOfDay = null;
+            else
+                CalculateEndingTimeOfDay();
         }
 
         private void SeekBarDragCompleted()
@@ -427,6 +440,11 @@ namespace Salamandra.ViewModel
                 this.PlaybackState = PlaylistState.WaitingNextTrack;
             else
                 this.StopPlaybackWithError(e.SoundErrorException!);
+        }
+
+        private void CalculateEndingTimeOfDay()
+        {
+            this.EndingTimeOfDay = DateTime.Now.TimeOfDay + (this.RemainingTime == null ? this.TrackLengthTime : this.RemainingTime);
         }
 
 #pragma warning disable 67

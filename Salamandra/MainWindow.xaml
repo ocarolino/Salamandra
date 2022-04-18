@@ -104,15 +104,15 @@
 
             </Grid>
 
-            <Border Height="64" Margin="8 8 0 0" Grid.Column="1" Grid.Row="1"
-                    BorderBrush="Black" BorderThickness="1">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Grid.Column="1" Grid.Row="1" Margin="8 8 0 0">
+                <TextBlock Text="{Binding CurrentDateTime, StringFormat='ddd, dd\\/MM\\/yyyy'}"
+                           HorizontalAlignment="Center" FontWeight="DemiBold"/>
+                <Border Height="48" Margin="0 4 0 0"
+                        BorderBrush="Black" BorderThickness="1">
                     <TextBlock Text="{Binding CurrentDateTime, StringFormat=hh\\:mm\\:ss}"
                            FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding CurrentDateTime, StringFormat='dddd, dd MMMM yyyy'}"
-                           FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </StackPanel>
-            </Border>
+                </Border>
+            </StackPanel>
         </Grid>
 
         <!-- Seek Bar -->

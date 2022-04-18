@@ -42,6 +42,11 @@
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
             <Grid Grid.Column="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -89,6 +94,16 @@
                            FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
             </StackPanel>
+
+            <Border Height="64" Margin="8 8 0 0" Grid.Column="1" Grid.Row="1"
+                    BorderBrush="Black" BorderThickness="1">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding CurrentDateTime, StringFormat=hh\\:mm\\:ss}"
+                           FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding CurrentDateTime, StringFormat='dddd, dd MMMM yyyy'}"
+                           FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
         </Grid>
 
         <controls:ExtendedSlider DockPanel.Dock="Bottom" Minimum="0" x:Name="SeekBar" VerticalAlignment="Center" IsEnabled="{Binding AllowSeekDrag}"                            

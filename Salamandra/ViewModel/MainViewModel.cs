@@ -45,6 +45,8 @@ namespace Salamandra.ViewModel
         public bool PlaylistLoading { get; set; }
         public string PlaylistInfoText { get; set; }
 
+        public DateTime CurrentDateTime { get; set; }
+
         #region Commands Properties
         public ICommand? AddFilesToPlaylistCommand { get; set; }
         public ICommand? RemoveTracksFromPlaylistCommand { get; set; }
@@ -99,6 +101,8 @@ namespace Salamandra.ViewModel
 
         private void MainTimer_Tick(object? sender, EventArgs e)
         {
+            this.CurrentDateTime = DateTime.Now;
+
             if (!this.IsPlaying)
                 return;
 

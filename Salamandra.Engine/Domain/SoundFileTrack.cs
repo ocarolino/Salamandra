@@ -7,14 +7,10 @@ using System.Threading.Tasks;
 
 namespace Salamandra.Engine.Domain
 {
-    public class SoundFileTrack : INotifyPropertyChanged
+    public class SoundFileTrack : BaseTrack
     {
         public string? Filename { get; set; }
-        public string? FriendlyName { get; set; }
-        public TimeSpan? Duration { get; set; }
 
-#pragma warning disable 67
-        public event PropertyChangedEventHandler? PropertyChanged;
-#pragma warning restore 67
+        public override bool HasTrackFinished => true;
     }
 }

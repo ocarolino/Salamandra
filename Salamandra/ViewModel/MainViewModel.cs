@@ -216,7 +216,7 @@ namespace Salamandra.ViewModel
                 this.PlaybackState = PlaylistState.PlayingPlaylistTrack; // ToDo: Refatorar quando for evento!
                 this.TrackLengthInSeconds = this.SoundEngine.TotalLengthInSeconds;
                 this.TrackPositionInSeconds = 0;
-                this.CalculateEndingTimeOfDay();
+                this.CalculateEndingTimeOfDay(false);
 
                 if (soundFileTrack.Duration == null) // ToDo: Refatorar para garantir que isso seja necessário!
                     soundFileTrack.Duration = TimeSpan.FromSeconds(this.SoundEngine.TotalLengthInSeconds);
@@ -318,6 +318,13 @@ namespace Salamandra.ViewModel
             Debug.WriteLine("SeekBarDragCompleted - Value: " + this.TrackPositionInSeconds.ToString());
 
             this.SoundEngine.PositionInSeconds = this.TrackPositionInSeconds;
+
+            if (!this.IsPaused)
+            {
+                this.RemainingTime = TimeSpan.FromSeconds(this.TrackLengthInSeconds - this.TrackPositionInSeconds);
+                this.CalculateEndingTimeOfDay();
+            }
+
             this.isDraggingTrackPosition = false;
         }
 
@@ -442,9 +449,9 @@ namespace Salamandra.ViewModel
                 this.StopPlaybackWithError(e.SoundErrorException!);
         }
 
-        private void CalculateEndingTimeOfDay()
+        private void CalculateEndingTimeOfDay(bool useRemainingTime = true)
         {
-            this.EndingTimeOfDay = DateTime.Now.TimeOfDay + (this.RemainingTime == null ? this.TrackLengthTime : this.RemainingTime);
+            this.EndingTimeOfDay = DateTime.Now.TimeOfDay + (useRemainingTime ? this.RemainingTime : this.TrackLengthTime);
         }
 
 #pragma warning disable 67

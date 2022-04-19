@@ -36,7 +36,7 @@ namespace Salamandra.ViewModel
         public TimeSpan TrackPositionTime { get => TimeSpan.FromSeconds(this.TrackPositionInSeconds); }
         public TimeSpan TrackLengthTime { get => TimeSpan.FromSeconds(this.TrackLengthInSeconds); }
 
-        public SoundFileTrack? SelectedTrack { get; set; }
+        public AudioFileTrack? SelectedTrack { get; set; }
 
         public DispatcherTimer MainTimer { get; set; }
 
@@ -186,7 +186,7 @@ namespace Salamandra.ViewModel
             if (items == null || !(items is System.Collections.IList))
                 return;
 
-            List<SoundFileTrack> tracks = ((System.Collections.IList)items).Cast<SoundFileTrack>().ToList();
+            List<AudioFileTrack> tracks = ((System.Collections.IList)items).Cast<AudioFileTrack>().ToList();
 
             this.PlaylistManager.RemoveTracks(tracks);
         }
@@ -201,7 +201,7 @@ namespace Salamandra.ViewModel
             PlayTrack(this.PlaylistManager.NextTrack);
         }
 
-        private void PlayTrack(SoundFileTrack soundFileTrack)
+        private void PlayTrack(AudioFileTrack soundFileTrack)
         {
             this.IsPaused = false;
 

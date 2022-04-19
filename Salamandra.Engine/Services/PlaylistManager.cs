@@ -15,10 +15,10 @@ namespace Salamandra.Engine.Services
     public class PlaylistManager : INotifyPropertyChanged
     {
         public PlaylistMode PlaylistMode { get; set; }
-        public ObservableCollection<SoundFileTrack> Tracks { get; set; }
+        public ObservableCollection<AudioFileTrack> Tracks { get; set; }
 
-        public SoundFileTrack? CurrentTrack { get; set; }
-        public SoundFileTrack? NextTrack { get; set; }
+        public AudioFileTrack? CurrentTrack { get; set; }
+        public AudioFileTrack? NextTrack { get; set; }
 
         public bool Modified { get; set; }
         public string Filename { get; set; }
@@ -27,7 +27,7 @@ namespace Salamandra.Engine.Services
         {
             this.PlaylistMode = PlaylistMode.Default;
 
-            this.Tracks = new ObservableCollection<SoundFileTrack>();
+            this.Tracks = new ObservableCollection<AudioFileTrack>();
 
             this.CurrentTrack = null;
             this.NextTrack = null;
@@ -71,7 +71,7 @@ namespace Salamandra.Engine.Services
         }
 
         #region Add and Remove Tracks
-        public void AddTracks(List<SoundFileTrack> tracks)
+        public void AddTracks(List<AudioFileTrack> tracks)
         {
             foreach (var item in tracks)
                 this.Tracks.Add(item);
@@ -84,11 +84,11 @@ namespace Salamandra.Engine.Services
 
         public async Task AddFiles(List<string> filenames)
         {
-            List<SoundFileTrack> tracks = new List<SoundFileTrack>();
+            List<AudioFileTrack> tracks = new List<AudioFileTrack>();
 
             foreach (var item in filenames)
             {
-                SoundFileTrack soundFileTrack = new SoundFileTrack() { Filename = item, FriendlyName = Path.GetFileNameWithoutExtension(item) };
+                AudioFileTrack soundFileTrack = new AudioFileTrack() { Filename = item, FriendlyName = Path.GetFileNameWithoutExtension(item) };
 
                 var duration = await Task.Run(() => GetAudioFileDuration(item));
                 soundFileTrack.Duration = duration;
@@ -99,7 +99,7 @@ namespace Salamandra.Engine.Services
             AddTracks(tracks);
         }
 
-        public void RemoveTracks(List<SoundFileTrack> tracks)
+        public void RemoveTracks(List<AudioFileTrack> tracks)
         {
             foreach (var item in tracks)
                 this.Tracks.Remove(item);
@@ -125,7 +125,7 @@ namespace Salamandra.Engine.Services
         #endregion
         public void ClearPlaylist()
         {
-            this.Tracks = new ObservableCollection<SoundFileTrack>();
+            this.Tracks = new ObservableCollection<AudioFileTrack>();
             this.NextTrack = null;
 
             this.Filename = string.Empty;
@@ -137,11 +137,11 @@ namespace Salamandra.Engine.Services
             M3UPlaylistLoader playlistLoader = new M3UPlaylistLoader();
 
             List<PlaylistEntryInfo> entries = playlistLoader.Load(filename);
-            List<SoundFileTrack> tracks = new List<SoundFileTrack>();
+            List<AudioFileTrack> tracks = new List<AudioFileTrack>();
 
             foreach (var item in entries)
             {
-                var track = new SoundFileTrack() { Filename = item.Filename, FriendlyName = item.FriendlyName, Duration = item.Duration };
+                var track = new AudioFileTrack() { Filename = item.Filename, FriendlyName = item.FriendlyName, Duration = item.Duration };
 
                 if (String.IsNullOrEmpty(track.FriendlyName))
                     track.FriendlyName = Path.GetFileNameWithoutExtension(track.Filename);
@@ -155,7 +155,7 @@ namespace Salamandra.Engine.Services
                 tracks.Add(track);
             }
 
-            this.Tracks = new ObservableCollection<SoundFileTrack>(tracks);
+            this.Tracks = new ObservableCollection<AudioFileTrack>(tracks);
 
             this.UpdateNextTrack();
 
@@ -194,7 +194,7 @@ namespace Salamandra.Engine.Services
             {
                 int j = i + random.Next(n - i);
 
-                SoundFileTrack track = this.Tracks[j];
+                AudioFileTrack track = this.Tracks[j];
 
                 this.Tracks[j] = this.Tracks[i];
                 this.Tracks[i] = track;

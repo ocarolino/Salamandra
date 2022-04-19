@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Salamandra.Engine.Domain
 {
-    public class SoundFileTrack : BaseTrack
+    public class AudioFileTrack : BaseTrack
     {
         public string? Filename { get; set; }
 

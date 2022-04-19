@@ -209,10 +209,9 @@ namespace Salamandra.ViewModel
             this.PlaylistManager.CurrentTrack = soundFileTrack;
             this.PlaylistManager.UpdateNextTrack();
 
-            // ToDo: Tratamento de erros...
             try
             {
-                this.SoundEngine.PlayAudioFile(soundFileTrack.Filename, this.CurrentVolume);
+                this.SoundEngine.PlayAudioFile(soundFileTrack.Filename!, this.CurrentVolume);
 
                 this.PlaybackState = PlaylistState.PlayingPlaylistTrack; // ToDo: Refatorar quando for evento!
                 this.TrackLengthInSeconds = this.SoundEngine.TotalLengthInSeconds;
@@ -230,14 +229,10 @@ namespace Salamandra.ViewModel
             }
             catch (SoundEngineDeviceException ex)
             {
-                // ToDo: Mensagem!
-
                 this.StopPlaybackWithError(ex);
             }
             catch (Exception ex)
             {
-                // ToDo: Mensagem!
-
                 this.StopPlaybackWithError(ex);
             }
         }

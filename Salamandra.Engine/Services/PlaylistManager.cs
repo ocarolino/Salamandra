@@ -88,7 +88,7 @@ namespace Salamandra.Engine.Services
 
             foreach (var item in filenames)
             {
-                SoundFileTrack soundFileTrack = new SoundFileTrack(item, Path.GetFileNameWithoutExtension(item));
+                SoundFileTrack soundFileTrack = new SoundFileTrack() { Filename = item, FriendlyName = Path.GetFileNameWithoutExtension(item) };
 
                 var duration = await Task.Run(() => GetAudioFileDuration(item));
                 soundFileTrack.Duration = duration;
@@ -141,15 +141,14 @@ namespace Salamandra.Engine.Services
 
             foreach (var item in entries)
             {
-                // ToDo: Construtor desnecessário...
-                var track = new SoundFileTrack(item.Filename!, item.FriendlyName!) { Duration = item.Duration };
+                var track = new SoundFileTrack() { Filename = item.Filename, FriendlyName = item.FriendlyName, Duration = item.Duration };
 
                 if (String.IsNullOrEmpty(track.FriendlyName))
                     track.FriendlyName = Path.GetFileNameWithoutExtension(track.Filename);
 
                 if (track.Duration == null)
                 {
-                    var duration = await Task.Run(() => GetAudioFileDuration(track.Filename));
+                    var duration = await Task.Run(() => GetAudioFileDuration(track.Filename!));
                     track.Duration = duration;
                 }
 

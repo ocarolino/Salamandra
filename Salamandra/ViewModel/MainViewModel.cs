@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Salamandra.Engine.Domain.Tracks;
 
 namespace Salamandra.ViewModel
 {

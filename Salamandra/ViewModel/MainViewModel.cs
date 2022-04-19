@@ -37,7 +37,7 @@ namespace Salamandra.ViewModel
         public TimeSpan TrackPositionTime { get => TimeSpan.FromSeconds(this.TrackPositionInSeconds); }
         public TimeSpan TrackLengthTime { get => TimeSpan.FromSeconds(this.TrackLengthInSeconds); }
 
-        public AudioFileTrack? SelectedTrack { get; set; }
+        public BaseTrack? SelectedTrack { get; set; }
 
         public DispatcherTimer MainTimer { get; set; }
 
@@ -199,7 +199,7 @@ namespace Salamandra.ViewModel
 
             this.IsPlaying = true;
 
-            PlayTrack(this.PlaylistManager.NextTrack);
+            PlayTrack(this.PlaylistManager.NextTrack as AudioFileTrack);
         }
 
         private void PlayTrack(AudioFileTrack soundFileTrack)
@@ -240,7 +240,7 @@ namespace Salamandra.ViewModel
         private void PlayNextTrackOrStop()
         {
             if (this.PlaylistManager.NextTrack != null)
-                PlayTrack(this.PlaylistManager.NextTrack);
+                PlayTrack(this.PlaylistManager.NextTrack as AudioFileTrack);
             else
                 StopPlayback();
         }

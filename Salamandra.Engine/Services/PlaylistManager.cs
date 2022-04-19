@@ -16,10 +16,10 @@ namespace Salamandra.Engine.Services
     public class PlaylistManager : INotifyPropertyChanged
     {
         public PlaylistMode PlaylistMode { get; set; }
-        public ObservableCollection<AudioFileTrack> Tracks { get; set; }
+        public ObservableCollection<BaseTrack> Tracks { get; set; }
 
-        public AudioFileTrack? CurrentTrack { get; set; }
-        public AudioFileTrack? NextTrack { get; set; }
+        public BaseTrack? CurrentTrack { get; set; }
+        public BaseTrack? NextTrack { get; set; }
 
         public bool Modified { get; set; }
         public string Filename { get; set; }
@@ -28,7 +28,7 @@ namespace Salamandra.Engine.Services
         {
             this.PlaylistMode = PlaylistMode.Default;
 
-            this.Tracks = new ObservableCollection<AudioFileTrack>();
+            this.Tracks = new ObservableCollection<BaseTrack>();
 
             this.CurrentTrack = null;
             this.NextTrack = null;
@@ -126,7 +126,7 @@ namespace Salamandra.Engine.Services
         #endregion
         public void ClearPlaylist()
         {
-            this.Tracks = new ObservableCollection<AudioFileTrack>();
+            this.Tracks = new ObservableCollection<BaseTrack>();
             this.NextTrack = null;
 
             this.Filename = string.Empty;
@@ -156,7 +156,7 @@ namespace Salamandra.Engine.Services
                 tracks.Add(track);
             }
 
-            this.Tracks = new ObservableCollection<AudioFileTrack>(tracks);
+            this.Tracks = new ObservableCollection<BaseTrack>(tracks);
 
             this.UpdateNextTrack();
 
@@ -172,8 +172,12 @@ namespace Salamandra.Engine.Services
 
             foreach (var item in this.Tracks)
             {
-                PlaylistEntryInfo entry = new PlaylistEntryInfo() { Filename = item.Filename, FriendlyName = item.FriendlyName, Duration = item.Duration };
-                entries.Add(entry);
+                if (item is SingleFileTrack singleFileTrack)
+                {
+                    // ToDo: Alterar isso futuramente para outros tipos de tracks.
+                    PlaylistEntryInfo entry = new PlaylistEntryInfo() { Filename = singleFileTrack.Filename, FriendlyName = singleFileTrack.FriendlyName, Duration = singleFileTrack.Duration };
+                    entries.Add(entry);
+                }
             }
 
             playlistLoader.Save(filename, entries);
@@ -195,7 +199,7 @@ namespace Salamandra.Engine.Services
             {
                 int j = i + random.Next(n - i);
 
-                AudioFileTrack track = this.Tracks[j];
+                BaseTrack track = this.Tracks[j];
 
                 this.Tracks[j] = this.Tracks[i];
                 this.Tracks[i] = track;

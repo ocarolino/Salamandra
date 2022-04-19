@@ -201,27 +201,19 @@ namespace Salamandra.ViewModel
 
             this.IsPlaying = true;
 
-            PlayTrack(this.PlaylistManager.NextTrack as AudioFileTrack);
+            PlayTrack(this.PlaylistManager.NextTrack);
         }
 
-        private void PlayTrack(AudioFileTrack soundFileTrack)
+        private void PlayAudioFile(string filename)
         {
-            this.IsPaused = false;
-
-            this.PlaylistManager.CurrentTrack = soundFileTrack;
-            this.PlaylistManager.UpdateNextTrack();
-
             try
             {
-                this.SoundEngine.PlayAudioFile(soundFileTrack.Filename!, this.CurrentVolume);
+                this.SoundEngine.PlayAudioFile(filename, this.CurrentVolume);
 
                 this.PlaybackState = PlaylistState.PlayingPlaylistTrack; // ToDo: Refatorar quando for evento!
                 this.TrackLengthInSeconds = this.SoundEngine.TotalLengthInSeconds;
                 this.TrackPositionInSeconds = 0;
                 this.CalculateEndingTimeOfDay(false);
-
-                if (soundFileTrack.Duration == null) // ToDo: Refatorar para garantir que isso seja necessário!
-                    soundFileTrack.Duration = TimeSpan.FromSeconds(this.SoundEngine.TotalLengthInSeconds);
 
                 this.AllowSeekDrag = true;
             }
@@ -239,10 +231,42 @@ namespace Salamandra.ViewModel
             }
         }
 
+        private void PlayTrack(BaseTrack track)
+        {
+            this.IsPaused = false;
+
+            this.PlaylistManager.CurrentTrack = track;
+            this.PlaylistManager.UpdateNextTrack();
+
+            switch (track)
+            {
+                case AudioFileTrack audioFileTrack:
+                    PlayAudioFile(audioFileTrack.Filename!);
+
+                    if (this.PlaybackState != PlaylistState.WaitingNextTrack)
+                    {
+                        if (audioFileTrack.Duration == null)
+                            audioFileTrack.Duration = TimeSpan.FromSeconds(this.SoundEngine.TotalLengthInSeconds);
+                    }
+                    break;
+                case RotationTrack rotationTrack:
+                    string? file = rotationTrack.GetCurrentFile();
+
+                    if (!String.IsNullOrEmpty(file))
+                        PlayAudioFile(file);
+                    else
+                        this.PlaybackState = PlaylistState.PlayingPlaylistTrack;
+                    break;
+                default:
+                    throw new NotImplementedException();
+                    break;
+            }
+        }
+
         private void PlayNextTrackOrStop()
         {
             if (this.PlaylistManager.NextTrack != null)
-                PlayTrack(this.PlaylistManager.NextTrack as AudioFileTrack);
+                PlayTrack(this.PlaylistManager.NextTrack);
             else
                 StopPlayback();
         }

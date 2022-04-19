@@ -52,6 +52,7 @@ namespace Salamandra.ViewModel
 
         #region Commands Properties
         public ICommand? AddFilesToPlaylistCommand { get; set; }
+        public ICommand? AddRotationTrackCommand { get; set; }
         public ICommand? RemoveTracksFromPlaylistCommand { get; set; }
         public ICommand? StartPlaybackCommand { get; set; }
         public ICommand? StopPlaybackCommand { get; set; }
@@ -138,6 +139,7 @@ namespace Salamandra.ViewModel
         private void LoadCommands()
         {
             this.AddFilesToPlaylistCommand = new RelayCommandAsync(p => AddFilesToPlaylist(), p => HandlePlaylistException(p), p => !this.PlaylistLoading);
+            this.AddRotationTrackCommand = new RelayCommand(p => AddRotationTrack(), p => !this.PlaylistLoading);
             this.RemoveTracksFromPlaylistCommand = new RelayCommand(p => RemoveTracksFromPlaylist(p), p => !this.PlaylistLoading);
 
             this.StartPlaybackCommand = new RelayCommand(p => StartPlayback(), p => !this.IsPlaying);
@@ -429,6 +431,22 @@ namespace Salamandra.ViewModel
         {
             MessageBox.Show("Houve um erro ao manipular a playlist.\n\n" + ex.Message, "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
             this.PlaylistLoading = false;
+        }
+
+        private void AddRotationTrack()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Arquivos de áudio (*.wav, *.mp3, *.wma, *.ogg, *.flac) | *.wav; *.mp3; *.wma; *.ogg; *.flac";
+            openFileDialog.Multiselect = true;
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                RotationTrack rotationTrack = new RotationTrack();
+                rotationTrack.Filenames = new List<string>(openFileDialog.FileNames);
+                rotationTrack.FriendlyName = "Track Rotatória de Teste";
+
+                this.PlaylistManager.AddTracks(new List<BaseTrack>() { rotationTrack });
+            }
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

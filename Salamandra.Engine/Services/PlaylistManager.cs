@@ -72,7 +72,7 @@ namespace Salamandra.Engine.Services
         }
 
         #region Add and Remove Tracks
-        public void AddTracks(List<AudioFileTrack> tracks)
+        public void AddTracks(List<BaseTrack> tracks)
         {
             foreach (var item in tracks)
                 this.Tracks.Add(item);
@@ -97,7 +97,7 @@ namespace Salamandra.Engine.Services
                 tracks.Add(soundFileTrack);
             }
 
-            AddTracks(tracks);
+            AddTracks(tracks.Cast<BaseTrack>().ToList());
         }
 
         public void RemoveTracks(List<AudioFileTrack> tracks)

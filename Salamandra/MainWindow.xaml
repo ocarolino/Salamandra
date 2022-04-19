@@ -29,6 +29,7 @@
 
             <MenuItem Header="Playlist">
                 <MenuItem Header="Adicionar arquivos de áudio..." Command="{Binding AddFilesToPlaylistCommand}"/>
+                <MenuItem Header="Adicionar faixa rotatória..." Command="{Binding AddRotationTrackCommand}"/>
                 <Separator/>
                 <MenuItem Header="Remover selecionadas" Command="{Binding RemoveTracksFromPlaylistCommand}" CommandParameter="{Binding SelectedItems, ElementName=playlist}"/>
                 <Separator/>

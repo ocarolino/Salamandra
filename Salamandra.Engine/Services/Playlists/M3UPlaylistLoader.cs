@@ -20,7 +20,7 @@ namespace Salamandra.Engine.Services.Playlists
             using (StreamReader reader = new StreamReader(filename, Encoding.GetEncoding("iso-8859-1"), true))
             {
                 // ToDo: Extension method para adicionar o separador
-                var workingUri = new Uri(Path.GetDirectoryName(filename.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar)!);
+                var workingUri = new Uri(Path.GetDirectoryName(filename)!.EnsureHasDirectorySeparatorChar());
 
                 string? line;
                 var lineCount = 0;

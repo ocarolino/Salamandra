@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Salamandra.Engine.Domain.Tracks
+{
+    public class SequentialTrack : RotationTrack
+    {
+        public override bool HasTrackFinished => this.CurrentFileIndex >= this.Filenames.Count;
+    }
+}

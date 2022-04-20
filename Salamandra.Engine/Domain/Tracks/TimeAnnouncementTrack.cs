@@ -13,7 +13,7 @@ namespace Salamandra.Engine.Domain.Tracks
 
         public TimeAnnouncementTrack() : base()
         {
-            this.Filename = "command.stop";
+            this.Filename = "specialtrack.time";
             this.FriendlyName = "Locução de Horário";
         }
 

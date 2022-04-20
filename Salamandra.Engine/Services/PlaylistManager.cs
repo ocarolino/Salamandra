@@ -138,19 +138,26 @@ namespace Salamandra.Engine.Services
             M3UPlaylistLoader playlistLoader = new M3UPlaylistLoader();
 
             List<PlaylistEntryInfo> entries = playlistLoader.Load(filename);
-            List<AudioFileTrack> tracks = new List<AudioFileTrack>();
+            List<BaseTrack> tracks = new List<BaseTrack>();
 
             foreach (var item in entries)
             {
-                var track = new AudioFileTrack() { Filename = item.Filename, FriendlyName = item.FriendlyName, Duration = item.Duration };
+                BaseTrack? track = null;
 
-                if (String.IsNullOrEmpty(track.FriendlyName))
-                    track.FriendlyName = Path.GetFileNameWithoutExtension(track.Filename);
-
-                if (track.Duration == null)
+                if (item.Filename!.EndsWith(".time"))
+                    track = new TimeAnnouncementTrack();
+                else
                 {
-                    var duration = await Task.Run(() => GetAudioFileDuration(track.Filename!));
-                    track.Duration = duration;
+                    track = new AudioFileTrack() { Filename = item.Filename, FriendlyName = item.FriendlyName, Duration = item.Duration };
+
+                    if (String.IsNullOrEmpty(track.FriendlyName))
+                        track.FriendlyName = Path.GetFileNameWithoutExtension(item.Filename);
+
+                    if (track.Duration == null)
+                    {
+                        var duration = await Task.Run(() => GetAudioFileDuration(item.Filename!));
+                        track.Duration = duration;
+                    }
                 }
 
                 tracks.Add(track);

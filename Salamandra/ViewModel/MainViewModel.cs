@@ -243,7 +243,7 @@ namespace Salamandra.ViewModel
                 case AudioFileTrack audioFileTrack:
                     PlayAudioFile(audioFileTrack.Filename!);
 
-                    if (this.PlaybackState != PlaylistState.WaitingNextTrack)
+                    if (this.PlaybackState == PlaylistState.PlayingPlaylistTrack)
                     {
                         if (audioFileTrack.Duration == null)
                             audioFileTrack.Duration = TimeSpan.FromSeconds(this.SoundEngine.TotalLengthInSeconds);
@@ -255,7 +255,7 @@ namespace Salamandra.ViewModel
                     if (!String.IsNullOrEmpty(file))
                         PlayAudioFile(file);
                     else
-                        this.PlaybackState = PlaylistState.PlayingPlaylistTrack;
+                        this.PlaybackState = PlaylistState.WaitingNextTrack;
                     break;
                 default:
                     throw new NotImplementedException();

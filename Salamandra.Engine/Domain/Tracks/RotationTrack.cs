@@ -10,13 +10,17 @@ namespace Salamandra.Engine.Domain.Tracks
     {
         public override bool HasTrackFinished => true;
 
+        public RotationTrack() : base()
+        {
+        }
+
         // ToDo: Esses métodos fazem mais sentido diretamente na MultiFileTrack, porém vou pensar por hora...
-        public override string? GetCurrentFile()
+        public override string? GetNextFile()
         {
             if (this.Filenames.Count == 0)
                 return null;
 
-            if (this.CurrentFileIndex == -1)
+            /*if (this.CurrentFileIndex == -1)
                 this.CurrentFileIndex++;
 
             string file = this.Filenames[this.CurrentFileIndex];
@@ -24,17 +28,21 @@ namespace Salamandra.Engine.Domain.Tracks
             this.CurrentFileIndex++;
 
             if (this.CurrentFileIndex >= this.Filenames.Count)
+                this.CurrentFileIndex = 0;*/
+
+            this.CurrentFileIndex++;
+
+            if (this.CurrentFileIndex >= this.Filenames.Count)
                 this.CurrentFileIndex = 0;
+
+            string file = this.Filenames[this.CurrentFileIndex];
 
             return file;
         }
 
         public virtual void ResetSequence()
         {
-            if (this.Filenames.Count == 0)
-                this.CurrentFileIndex = -1;
-            else
-                this.CurrentFileIndex = 0;
+            this.CurrentFileIndex = -1;
         }
     }
 }

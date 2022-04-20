@@ -17,6 +17,6 @@ namespace Salamandra.Engine.Domain.Tracks
             this.CurrentFileIndex = -1;
         }
 
-        public abstract string? GetCurrentFile();
+        public abstract string? GetNextFile();
     }
 }

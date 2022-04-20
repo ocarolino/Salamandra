@@ -100,7 +100,7 @@ namespace Salamandra.Engine.Services
             AddTracks(tracks.Cast<BaseTrack>().ToList());
         }
 
-        public void RemoveTracks(List<AudioFileTrack> tracks)
+        public void RemoveTracks(List<BaseTrack> tracks)
         {
             foreach (var item in tracks)
                 this.Tracks.Remove(item);

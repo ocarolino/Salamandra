@@ -10,6 +10,7 @@ namespace Salamandra.Engine.Domain.Tracks
     {
         public override bool HasTrackFinished => true;
 
+        // ToDo: Esses métodos fazem mais sentido diretamente na MultiFileTrack, porém vou pensar por hora...
         public override string? GetCurrentFile()
         {
             if (this.Filenames.Count == 0)
@@ -26,6 +27,14 @@ namespace Salamandra.Engine.Domain.Tracks
                 this.CurrentFileIndex = 0;
 
             return file;
+        }
+
+        public virtual void ResetSequence()
+        {
+            if (this.Filenames.Count == 0)
+                this.CurrentFileIndex = -1;
+            else
+                this.CurrentFileIndex = 0;
         }
     }
 }

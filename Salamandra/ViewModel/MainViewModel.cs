@@ -52,7 +52,7 @@ namespace Salamandra.ViewModel
 
         #region Commands Properties
         public ICommand? AddFilesToPlaylistCommand { get; set; }
-        public ICommand? AddRotationTrackCommand { get; set; }
+        public ICommand? AddTimeAnnouncementTrackCommand { get; set; }
         public ICommand? RemoveTracksFromPlaylistCommand { get; set; }
         public ICommand? StartPlaybackCommand { get; set; }
         public ICommand? StopPlaybackCommand { get; set; }
@@ -78,7 +78,7 @@ namespace Salamandra.ViewModel
             this.SoundEngine.SoundStopped += SoundEngine_SoundStopped;
             this.SoundEngine.SoundError += SoundEngine_SoundError;
             this.PlaylistManager = new PlaylistManager();
-            this.PlaylistManager.PlaylistMode = PlaylistMode.Random;
+            this.PlaylistManager.PlaylistMode = PlaylistMode.Repeat;
 
             this.IsPlaying = false;
             this.PlaybackState = PlaylistState.Stopped;
@@ -139,7 +139,7 @@ namespace Salamandra.ViewModel
         private void LoadCommands()
         {
             this.AddFilesToPlaylistCommand = new RelayCommandAsync(p => AddFilesToPlaylist(), p => HandlePlaylistException(p), p => !this.PlaylistLoading);
-            this.AddRotationTrackCommand = new RelayCommand(p => AddRotationTrack(), p => !this.PlaylistLoading);
+            this.AddTimeAnnouncementTrackCommand = new RelayCommand(p => AddTimeAnnouncementTrack(), p => !this.PlaylistLoading);
             this.RemoveTracksFromPlaylistCommand = new RelayCommand(p => RemoveTracksFromPlaylist(p), p => !this.PlaylistLoading);
 
             this.StartPlaybackCommand = new RelayCommand(p => StartPlayback(), p => !this.IsPlaying);
@@ -189,7 +189,7 @@ namespace Salamandra.ViewModel
             if (items == null || !(items is System.Collections.IList))
                 return;
 
-            List<AudioFileTrack> tracks = ((System.Collections.IList)items).Cast<AudioFileTrack>().ToList();
+            List<BaseTrack> tracks = ((System.Collections.IList)items).Cast<BaseTrack>().ToList();
 
             this.PlaylistManager.RemoveTracks(tracks);
         }
@@ -231,12 +231,11 @@ namespace Salamandra.ViewModel
             }
         }
 
-        private void PlayTrack(BaseTrack track)
+        private void PlayTrack(BaseTrack track, bool updateNextTrack = true, bool resetSequence = true)
         {
             this.IsPaused = false;
 
             this.PlaylistManager.CurrentTrack = track;
-            this.PlaylistManager.UpdateNextTrack();
 
             switch (track)
             {
@@ -250,21 +249,40 @@ namespace Salamandra.ViewModel
                     }
                     break;
                 case RotationTrack rotationTrack:
-                    string? file = rotationTrack.GetCurrentFile();
+                    if (rotationTrack is SequentialTrack sequentialTrack && resetSequence)
+                    {
+                        if (sequentialTrack is TimeAnnouncementTrack timeAnnouncementTrack)
+                            timeAnnouncementTrack.AudioFilesDirectory = @"C:\Users\Matheus\Desktop\Pacote ZaraRadio\Pacote ZaraRadio\Horas\(ZaraRadio) Horas masculino sem efeito";
+
+                        sequentialTrack.ResetSequence();
+                    }
+
+                    string? file = rotationTrack.GetNextFile();
 
                     if (!String.IsNullOrEmpty(file))
                         PlayAudioFile(file);
                     else
+                    {
+                        updateNextTrack = true;
                         this.PlaybackState = PlaylistState.WaitingNextTrack;
+                    }
                     break;
                 default:
                     throw new NotImplementedException();
-                    break;
             }
+
+            if (updateNextTrack)
+                this.PlaylistManager.UpdateNextTrack();
         }
 
         private void PlayNextTrackOrStop()
         {
+            if (this.PlaylistManager.CurrentTrack != null && !this.PlaylistManager.CurrentTrack.HasTrackFinished)
+            {
+                PlayTrack(this.PlaylistManager.CurrentTrack, false, false);
+                return;
+            }
+
             if (this.PlaylistManager.NextTrack != null)
                 PlayTrack(this.PlaylistManager.NextTrack);
             else
@@ -457,20 +475,11 @@ namespace Salamandra.ViewModel
             this.PlaylistLoading = false;
         }
 
-        private void AddRotationTrack()
+        private void AddTimeAnnouncementTrack()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Arquivos de áudio (*.wav, *.mp3, *.wma, *.ogg, *.flac) | *.wav; *.mp3; *.wma; *.ogg; *.flac";
-            openFileDialog.Multiselect = true;
+            TimeAnnouncementTrack timeAnnouncementTrack = new TimeAnnouncementTrack();
 
-            if (openFileDialog.ShowDialog() == true)
-            {
-                RotationTrack rotationTrack = new RotationTrack();
-                rotationTrack.Filenames = new List<string>(openFileDialog.FileNames);
-                rotationTrack.FriendlyName = "Track Rotatória de Teste";
-
-                this.PlaylistManager.AddTracks(new List<BaseTrack>() { rotationTrack });
-            }
+            this.PlaylistManager.AddTracks(new List<BaseTrack>() { timeAnnouncementTrack });
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

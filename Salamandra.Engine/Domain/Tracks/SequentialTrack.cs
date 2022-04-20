@@ -8,6 +8,10 @@ namespace Salamandra.Engine.Domain.Tracks
 {
     public class SequentialTrack : RotationTrack
     {
-        public override bool HasTrackFinished => this.CurrentFileIndex >= this.Filenames.Count;
+        public override bool HasTrackFinished => (this.CurrentFileIndex == -1) || (this.CurrentFileIndex >= this.Filenames.Count - 1);
+
+        public SequentialTrack() : base()
+        {
+        }
     }
 }

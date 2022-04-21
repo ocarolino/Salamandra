@@ -103,7 +103,7 @@ namespace Salamandra.Engine.Services
 
         public void AddRandomTrack(string directoryPath)
         {
-            RandomTrack randomTrack = new RandomTrack() { Filename = directoryPath.EnsureHasDirectorySeparatorChar() };
+            RandomFileTrack randomTrack = new RandomFileTrack() { Filename = directoryPath.EnsureHasDirectorySeparatorChar() };
             randomTrack.FriendlyName = Path.GetFileName(randomTrack.Filename.TrimEnd(Path.DirectorySeparatorChar));
 
             AddTracks(new List<BaseTrack>() { randomTrack });

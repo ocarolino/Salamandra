@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Salamandra.Engine.Domain.Tracks
 {
-    public class RandomTrack : MultiFileTrack
+    public class RandomFileTrack : MultiFileTrack
     {
         public override bool HasTrackFinished => true;
 
-        public RandomTrack() : base()
+        public RandomFileTrack() : base()
         {
         }
 

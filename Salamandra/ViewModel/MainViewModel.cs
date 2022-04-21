@@ -281,7 +281,7 @@ namespace Salamandra.ViewModel
                         this.PlaybackState = PlaylistState.WaitingNextTrack;
                     }
                     break;
-                case RandomTrack randomTrack:
+                case RandomFileTrack randomTrack:
                     randomTrack.Filenames = this.DirectoryAudioScrapper.GetFilesFromDirectory(randomTrack.Filename!.EnsureHasDirectorySeparatorChar());
                     string? randomFile = randomTrack.GetFile();
 

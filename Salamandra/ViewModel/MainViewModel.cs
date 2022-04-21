@@ -237,6 +237,9 @@ namespace Salamandra.ViewModel
 
             this.PlaylistManager.CurrentTrack = track;
 
+            if (updateNextTrack)
+                this.PlaylistManager.UpdateNextTrack();
+
             switch (track)
             {
                 case AudioFileTrack audioFileTrack:
@@ -263,16 +266,17 @@ namespace Salamandra.ViewModel
                         PlayAudioFile(file);
                     else
                     {
-                        updateNextTrack = true;
+                        // Try to avoid looping an invalid track.
+                        // ToDo: Actually, I don't know if this is really necessary.
+                        if (this.PlaylistManager.NextTrack == track)
+                            this.PlaylistManager.UpdateNextTrack();
+
                         this.PlaybackState = PlaylistState.WaitingNextTrack;
                     }
                     break;
                 default:
                     throw new NotImplementedException();
             }
-
-            if (updateNextTrack)
-                this.PlaylistManager.UpdateNextTrack();
         }
 
         private void PlayNextTrackOrStop()

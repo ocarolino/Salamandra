@@ -99,6 +99,7 @@ namespace Salamandra.Engine.Services
         }
         #endregion
 
+        #region Scan Methods
         public void CheckAndScan(string path)
         {
             path = path.EnsureHasDirectorySeparatorChar();
@@ -136,6 +137,19 @@ namespace Salamandra.Engine.Services
         {
             this.backgroundWorker.RunWorkerAsync(new Queue<string>(scrapQueue));
             scrapQueue.Clear();
+        }
+        #endregion
+
+        public List<string> GetFilesFromDirectory(string path)
+        {
+            List<string> files = new List<string>();
+
+            var keys = this.directoriesLibrary.Keys.Where(x => x.StartsWith(path));
+
+            foreach (var item in keys)
+                files.AddRange(this.directoriesLibrary[item].Files);
+
+            return files;
         }
     }
 }

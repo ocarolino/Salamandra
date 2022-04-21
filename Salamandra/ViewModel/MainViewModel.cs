@@ -266,7 +266,7 @@ namespace Salamandra.ViewModel
                         sequentialTrack.ResetSequence();
                     }
 
-                    string? file = rotationTrack.GetNextFile();
+                    string? file = rotationTrack.GetFile();
 
                     if (!String.IsNullOrEmpty(file))
                         PlayAudioFile(file);
@@ -498,7 +498,7 @@ namespace Salamandra.ViewModel
 
             if (vistaFolderBrowserDialog.ShowDialog() == true)
             {
-                this.DirectoryAudioScrapper.QueueAndScan(vistaFolderBrowserDialog.SelectedPath);
+                this.DirectoryAudioScrapper.CheckAndScan(vistaFolderBrowserDialog.SelectedPath);
             }
         }
 

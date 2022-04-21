@@ -53,16 +53,32 @@ namespace Salamandra.Engine.Services
                 DirectoryAudioInfo directoryAudioInfo = (DirectoryAudioInfo)e.UserState!;
                 directoryAudioInfo.LastScanDate = DateTime.Now;
 
+                Debug.WriteLine(String.Format("Directory {0} finished scan.", directoryAudioInfo.DirectoryPath));
+
                 if (this.directoriesLibrary.ContainsKey(directoryAudioInfo.DirectoryPath))
                 {
-                    DirectoryAudioInfo existingDirectoryAudioInfo = this.directoriesLibrary[directoryAudioInfo.DirectoryPath];
-                    existingDirectoryAudioInfo.LastScanDate = directoryAudioInfo.LastScanDate;
-                    existingDirectoryAudioInfo.Files = new List<string>(directoryAudioInfo.Files);
+                    if (directoryAudioInfo.Files.Count > 0)
+                    {
+                        DirectoryAudioInfo existingDirectoryAudioInfo = this.directoriesLibrary[directoryAudioInfo.DirectoryPath];
+                        existingDirectoryAudioInfo.LastScanDate = directoryAudioInfo.LastScanDate;
+                        existingDirectoryAudioInfo.Files = new List<string>(directoryAudioInfo.Files);
+
+                        Debug.WriteLine(String.Format("Directory {0} updated.", directoryAudioInfo.DirectoryPath));
+                    }
+                    else
+                    {
+                        this.directoriesLibrary.Remove(directoryAudioInfo.DirectoryPath);
+                        Debug.WriteLine(String.Format("Directory {0} removed from library.", directoryAudioInfo.DirectoryPath));
+                    }
                 }
                 else
-                    this.directoriesLibrary.Add(directoryAudioInfo.DirectoryPath, directoryAudioInfo);
-
-                Debug.WriteLine(String.Format("Directory {0} finished scan.", directoryAudioInfo.DirectoryPath));
+                {
+                    if (directoryAudioInfo.Files.Count > 0)
+                    {
+                        this.directoriesLibrary.Add(directoryAudioInfo.DirectoryPath, directoryAudioInfo);
+                        Debug.WriteLine(String.Format("Directory {0} added to library.", directoryAudioInfo.DirectoryPath));
+                    }
+                }
             }
         }
 
@@ -78,23 +94,27 @@ namespace Salamandra.Engine.Services
                     break;
                 }
 
-                string directory = directories.Dequeue();
-                string[] supportedFiles = { ".wav", ".mp3", ".wma", ".ogg", ".flac" };
+                string directory = directories.Dequeue().EnsureHasDirectorySeparatorChar();
+                DirectoryAudioInfo directoryAudioInfo = new DirectoryAudioInfo(directory);
 
-                Debug.WriteLine(String.Format("Scanning {0}...", directory));
+                if (Directory.Exists(directory))
+                {
+                    string[] supportedFiles = { ".wav", ".mp3", ".wma", ".ogg", ".flac" };
 
-                var files = Directory.EnumerateFiles(directory, "*.*", SearchOption.TopDirectoryOnly)
-                    .Where(f => supportedFiles.Any(f.ToLower().EndsWith)).ToList();
+                    Debug.WriteLine(String.Format("Scanning {0}...", directory));
 
-                var subDirs = Directory.EnumerateDirectories(directory);
+                    var files = Directory.EnumerateFiles(directory, "*.*", SearchOption.TopDirectoryOnly)
+                        .Where(f => supportedFiles.Any(f.ToLower().EndsWith)).ToList();
 
-                foreach (var item in subDirs)
-                    directories.Enqueue(item);
+                    var subDirs = Directory.EnumerateDirectories(directory);
 
-                DirectoryAudioInfo directoryAudioInfo = new DirectoryAudioInfo(directory.EnsureHasDirectorySeparatorChar());
-                directoryAudioInfo.Files = files;
+                    foreach (var item in subDirs)
+                        directories.Enqueue(item);
 
+                    directoryAudioInfo.Files = files;
+                }
                 this.backgroundWorker.ReportProgress(0, directoryAudioInfo);
+
             }
         }
         #endregion

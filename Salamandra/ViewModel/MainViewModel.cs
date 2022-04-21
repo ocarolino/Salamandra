@@ -137,6 +137,7 @@ namespace Salamandra.ViewModel
             if (!CheckPlaylistModified())
                 return false;
 
+            this.DirectoryAudioScrapper.StopScanning();
             this.StopPlayback();
 
             return true;

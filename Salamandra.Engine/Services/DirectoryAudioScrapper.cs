@@ -138,6 +138,12 @@ namespace Salamandra.Engine.Services
             this.backgroundWorker.RunWorkerAsync(new Queue<string>(scrapQueue));
             scrapQueue.Clear();
         }
+
+        public void StopScanning()
+        {
+            if (this.backgroundWorker.IsBusy)
+                this.backgroundWorker.CancelAsync();
+        }
         #endregion
 
         public List<string> GetFilesFromDirectory(string path)

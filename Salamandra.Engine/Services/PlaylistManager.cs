@@ -157,6 +157,11 @@ namespace Salamandra.Engine.Services
 
                 if (item.Filename!.EndsWith(".time"))
                     track = new TimeAnnouncementTrack();
+                else if (item.Filename.EndsWith(".dir"))
+                {
+                    string dir = item.Filename.Substring(0, item.Filename.Length - 4);
+                    track = new RandomFileTrack() { Filename = dir.EnsureHasDirectorySeparatorChar(), FriendlyName = Path.GetFileName(dir) };
+                }
                 else
                 {
                     track = new AudioFileTrack() { Filename = item.Filename, FriendlyName = item.FriendlyName, Duration = item.Duration };

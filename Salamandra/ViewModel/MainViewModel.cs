@@ -283,6 +283,8 @@ namespace Salamandra.ViewModel
                     }
                     break;
                 case RandomFileTrack randomTrack:
+                    this.DirectoryAudioScrapper.CheckAndScan(randomTrack.Filename!);
+
                     randomTrack.Filenames = this.DirectoryAudioScrapper.GetFilesFromDirectory(randomTrack.Filename!.EnsureHasDirectorySeparatorChar());
                     string? randomFile = randomTrack.GetFile();
 

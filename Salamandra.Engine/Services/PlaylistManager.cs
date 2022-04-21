@@ -190,11 +190,16 @@ namespace Salamandra.Engine.Services
 
             foreach (var item in this.Tracks)
             {
-                if (item is SingleFileTrack singleFileTrack)
+                switch (item)
                 {
-                    // ToDo: Alterar isso futuramente para outros tipos de tracks.
-                    PlaylistEntryInfo entry = new PlaylistEntryInfo() { Filename = singleFileTrack.Filename, FriendlyName = singleFileTrack.FriendlyName, Duration = singleFileTrack.Duration };
-                    entries.Add(entry);
+                    case RandomFileTrack randomFileTrack:
+                        entries.Add(new PlaylistEntryInfo() { Filename = randomFileTrack.Filename!.TrimEnd(Path.DirectorySeparatorChar) + ".dir", FriendlyName = randomFileTrack.FriendlyName, Duration = randomFileTrack.Duration });
+                        break;
+                    case SingleFileTrack singleFileTrack:
+                        entries.Add(new PlaylistEntryInfo() { Filename = singleFileTrack.Filename, FriendlyName = singleFileTrack.FriendlyName, Duration = singleFileTrack.Duration });
+                        break;
+                    default:
+                        throw new NotImplementedException();
                 }
             }
 

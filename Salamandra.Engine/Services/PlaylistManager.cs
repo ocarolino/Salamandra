@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Salamandra.Engine.Domain.Tracks;
+using Salamandra.Engine.Extensions;
 
 namespace Salamandra.Engine.Services
 {
@@ -100,6 +101,15 @@ namespace Salamandra.Engine.Services
             AddTracks(tracks.Cast<BaseTrack>().ToList());
         }
 
+        public void AddRandomTrack(string directoryPath)
+        {
+            RandomTrack randomTrack = new RandomTrack() { Filename = directoryPath.EnsureHasDirectorySeparatorChar() };
+            randomTrack.FriendlyName = Path.GetFileName(randomTrack.Filename.TrimEnd(Path.DirectorySeparatorChar));
+
+            AddTracks(new List<BaseTrack>() { randomTrack });
+        }
+
+
         public void RemoveTracks(List<BaseTrack> tracks)
         {
             foreach (var item in tracks)
@@ -124,6 +134,7 @@ namespace Salamandra.Engine.Services
             }
         }
         #endregion
+
         public void ClearPlaylist()
         {
             this.Tracks = new ObservableCollection<BaseTrack>();

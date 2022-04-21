@@ -16,6 +16,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Salamandra.Engine.Domain.Tracks;
+using Salamandra.Engine.Extensions;
 
 namespace Salamandra.ViewModel
 {
@@ -280,6 +281,15 @@ namespace Salamandra.ViewModel
                         this.PlaybackState = PlaylistState.WaitingNextTrack;
                     }
                     break;
+                case RandomTrack randomTrack:
+                    randomTrack.Filenames = this.DirectoryAudioScrapper.GetFilesFromDirectory(randomTrack.Filename!.EnsureHasDirectorySeparatorChar());
+                    string? randomFile = randomTrack.GetFile();
+
+                    if (!String.IsNullOrEmpty(randomFile))
+                        PlayAudioFile(randomFile);
+                    else
+                        this.PlaybackState = PlaylistState.WaitingNextTrack;
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -499,6 +509,7 @@ namespace Salamandra.ViewModel
             if (vistaFolderBrowserDialog.ShowDialog() == true)
             {
                 this.DirectoryAudioScrapper.CheckAndScan(vistaFolderBrowserDialog.SelectedPath);
+                this.PlaylistManager.AddRandomTrack(vistaFolderBrowserDialog.SelectedPath);
             }
         }
 

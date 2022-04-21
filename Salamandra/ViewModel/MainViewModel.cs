@@ -46,6 +46,8 @@ namespace Salamandra.ViewModel
         public bool PlaylistLoading { get; set; }
         public string PlaylistInfoText { get; set; }
 
+        public DirectoryAudioScrapper DirectoryAudioScrapper { get; set; }
+
         public TimeSpan? RemainingTime { get; set; }
         public TimeSpan? EndingTimeOfDay { get; set; }
         public DateTime CurrentDateTime { get; set; }
@@ -70,6 +72,7 @@ namespace Salamandra.ViewModel
         public ICommand? SavePlaylistAsCommand { get; set; }
         public ICommand? NewPlaylistCommand { get; set; }
         public ICommand? ShufflePlaylistCommand { get; set; }
+        public ICommand? AddRandomTrackCommand { get; set; }
         #endregion
 
         public MainViewModel()
@@ -96,6 +99,8 @@ namespace Salamandra.ViewModel
 
             this.PlaylistLoading = false;
             this.PlaylistInfoText = string.Empty;
+
+            this.DirectoryAudioScrapper = new DirectoryAudioScrapper();
 
             UpdateWindowTitle();
             LoadCommands();
@@ -140,6 +145,7 @@ namespace Salamandra.ViewModel
         {
             this.AddFilesToPlaylistCommand = new RelayCommandAsync(p => AddFilesToPlaylist(), p => HandlePlaylistException(p), p => !this.PlaylistLoading);
             this.AddTimeAnnouncementTrackCommand = new RelayCommand(p => AddTimeAnnouncementTrack(), p => !this.PlaylistLoading);
+            this.AddRandomTrackCommand = new RelayCommand(p => AddRandomTrack(), p => !this.PlaylistLoading);
             this.RemoveTracksFromPlaylistCommand = new RelayCommand(p => RemoveTracksFromPlaylist(p), p => !this.PlaylistLoading);
 
             this.StartPlaybackCommand = new RelayCommand(p => StartPlayback(), p => !this.IsPlaying);
@@ -484,6 +490,16 @@ namespace Salamandra.ViewModel
             TimeAnnouncementTrack timeAnnouncementTrack = new TimeAnnouncementTrack();
 
             this.PlaylistManager.AddTracks(new List<BaseTrack>() { timeAnnouncementTrack });
+        }
+
+        private void AddRandomTrack()
+        {
+            Ookii.Dialogs.Wpf.VistaFolderBrowserDialog vistaFolderBrowserDialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog();
+
+            if (vistaFolderBrowserDialog.ShowDialog() == true)
+            {
+                this.DirectoryAudioScrapper.QueueAndScan(vistaFolderBrowserDialog.SelectedPath);
+            }
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

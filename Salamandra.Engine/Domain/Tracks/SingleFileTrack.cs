@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Salamandra.Engine.Domain
+namespace Salamandra.Engine.Domain.Tracks
 {
-    public class SoundFileTrack : BaseTrack
+    public abstract class SingleFileTrack : BaseTrack
     {
         public string? Filename { get; set; }
-
-        public override bool HasTrackFinished => true;
     }
 }

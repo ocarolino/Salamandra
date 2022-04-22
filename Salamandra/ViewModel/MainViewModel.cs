@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Salamandra.Engine.Domain.Tracks;
+using Salamandra.Engine.Extensions;
 
 namespace Salamandra.ViewModel
 {
@@ -36,7 +38,7 @@ namespace Salamandra.ViewModel
         public TimeSpan TrackPositionTime { get => TimeSpan.FromSeconds(this.TrackPositionInSeconds); }
         public TimeSpan TrackLengthTime { get => TimeSpan.FromSeconds(this.TrackLengthInSeconds); }
 
-        public SoundFileTrack? SelectedTrack { get; set; }
+        public BaseTrack? SelectedTrack { get; set; }
 
         public DispatcherTimer MainTimer { get; set; }
 
@@ -45,12 +47,15 @@ namespace Salamandra.ViewModel
         public bool PlaylistLoading { get; set; }
         public string PlaylistInfoText { get; set; }
 
+        public DirectoryAudioScrapper DirectoryAudioScrapper { get; set; }
+
         public TimeSpan? RemainingTime { get; set; }
         public TimeSpan? EndingTimeOfDay { get; set; }
         public DateTime CurrentDateTime { get; set; }
 
         #region Commands Properties
         public ICommand? AddFilesToPlaylistCommand { get; set; }
+        public ICommand? AddTimeAnnouncementTrackCommand { get; set; }
         public ICommand? RemoveTracksFromPlaylistCommand { get; set; }
         public ICommand? StartPlaybackCommand { get; set; }
         public ICommand? StopPlaybackCommand { get; set; }
@@ -68,6 +73,7 @@ namespace Salamandra.ViewModel
         public ICommand? SavePlaylistAsCommand { get; set; }
         public ICommand? NewPlaylistCommand { get; set; }
         public ICommand? ShufflePlaylistCommand { get; set; }
+        public ICommand? AddRandomTrackCommand { get; set; }
         #endregion
 
         public MainViewModel()
@@ -76,7 +82,7 @@ namespace Salamandra.ViewModel
             this.SoundEngine.SoundStopped += SoundEngine_SoundStopped;
             this.SoundEngine.SoundError += SoundEngine_SoundError;
             this.PlaylistManager = new PlaylistManager();
-            this.PlaylistManager.PlaylistMode = PlaylistMode.Random;
+            this.PlaylistManager.PlaylistMode = PlaylistMode.Repeat;
 
             this.IsPlaying = false;
             this.PlaybackState = PlaylistState.Stopped;
@@ -94,6 +100,8 @@ namespace Salamandra.ViewModel
 
             this.PlaylistLoading = false;
             this.PlaylistInfoText = string.Empty;
+
+            this.DirectoryAudioScrapper = new DirectoryAudioScrapper();
 
             UpdateWindowTitle();
             LoadCommands();
@@ -129,6 +137,7 @@ namespace Salamandra.ViewModel
             if (!CheckPlaylistModified())
                 return false;
 
+            this.DirectoryAudioScrapper.StopScanning();
             this.StopPlayback();
 
             return true;
@@ -137,6 +146,8 @@ namespace Salamandra.ViewModel
         private void LoadCommands()
         {
             this.AddFilesToPlaylistCommand = new RelayCommandAsync(p => AddFilesToPlaylist(), p => HandlePlaylistException(p), p => !this.PlaylistLoading);
+            this.AddTimeAnnouncementTrackCommand = new RelayCommand(p => AddTimeAnnouncementTrack(), p => !this.PlaylistLoading);
+            this.AddRandomTrackCommand = new RelayCommand(p => AddRandomTrack(), p => !this.PlaylistLoading);
             this.RemoveTracksFromPlaylistCommand = new RelayCommand(p => RemoveTracksFromPlaylist(p), p => !this.PlaylistLoading);
 
             this.StartPlaybackCommand = new RelayCommand(p => StartPlayback(), p => !this.IsPlaying);
@@ -186,7 +197,7 @@ namespace Salamandra.ViewModel
             if (items == null || !(items is System.Collections.IList))
                 return;
 
-            List<SoundFileTrack> tracks = ((System.Collections.IList)items).Cast<SoundFileTrack>().ToList();
+            List<BaseTrack> tracks = ((System.Collections.IList)items).Cast<BaseTrack>().ToList();
 
             this.PlaylistManager.RemoveTracks(tracks);
         }
@@ -201,25 +212,16 @@ namespace Salamandra.ViewModel
             PlayTrack(this.PlaylistManager.NextTrack);
         }
 
-        private void PlayTrack(SoundFileTrack soundFileTrack)
+        private void PlayAudioFile(string filename)
         {
-            this.IsPaused = false;
-
-            this.PlaylistManager.CurrentTrack = soundFileTrack;
-            this.PlaylistManager.UpdateNextTrack();
-
-            // ToDo: Tratamento de erros...
             try
             {
-                this.SoundEngine.PlayAudioFile(soundFileTrack.Filename, this.CurrentVolume);
+                this.SoundEngine.PlayAudioFile(filename, this.CurrentVolume);
 
                 this.PlaybackState = PlaylistState.PlayingPlaylistTrack; // ToDo: Refatorar quando for evento!
                 this.TrackLengthInSeconds = this.SoundEngine.TotalLengthInSeconds;
                 this.TrackPositionInSeconds = 0;
                 this.CalculateEndingTimeOfDay(false);
-
-                if (soundFileTrack.Duration == null) // ToDo: Refatorar para garantir que isso seja necessário!
-                    soundFileTrack.Duration = TimeSpan.FromSeconds(this.SoundEngine.TotalLengthInSeconds);
 
                 this.AllowSeekDrag = true;
             }
@@ -229,20 +231,81 @@ namespace Salamandra.ViewModel
             }
             catch (SoundEngineDeviceException ex)
             {
-                // ToDo: Mensagem!
-
                 this.StopPlaybackWithError(ex);
             }
             catch (Exception ex)
             {
-                // ToDo: Mensagem!
-
                 this.StopPlaybackWithError(ex);
+            }
+        }
+
+        private void PlayTrack(BaseTrack track, bool updateNextTrack = true, bool resetSequence = true)
+        {
+            this.IsPaused = false;
+
+            this.PlaylistManager.CurrentTrack = track;
+
+            if (updateNextTrack)
+                this.PlaylistManager.UpdateNextTrack();
+
+            switch (track)
+            {
+                case AudioFileTrack audioFileTrack:
+                    PlayAudioFile(audioFileTrack.Filename!);
+
+                    if (this.PlaybackState == PlaylistState.PlayingPlaylistTrack)
+                    {
+                        if (audioFileTrack.Duration == null)
+                            audioFileTrack.Duration = TimeSpan.FromSeconds(this.SoundEngine.TotalLengthInSeconds);
+                    }
+                    break;
+                case RotationTrack rotationTrack:
+                    if (rotationTrack is SequentialTrack sequentialTrack && resetSequence)
+                    {
+                        if (sequentialTrack is TimeAnnouncementTrack timeAnnouncementTrack)
+                            timeAnnouncementTrack.AudioFilesDirectory = @"C:\Users\Matheus\Desktop\Pacote ZaraRadio\Pacote ZaraRadio\Horas\(ZaraRadio) Horas masculino sem efeito";
+
+                        sequentialTrack.ResetSequence();
+                    }
+
+                    string? file = rotationTrack.GetFile();
+
+                    if (!String.IsNullOrEmpty(file))
+                        PlayAudioFile(file);
+                    else
+                    {
+                        // Try to avoid looping an invalid track.
+                        // ToDo: Actually, I don't know if this is really necessary.
+                        if (this.PlaylistManager.NextTrack == track)
+                            this.PlaylistManager.UpdateNextTrack();
+
+                        this.PlaybackState = PlaylistState.WaitingNextTrack;
+                    }
+                    break;
+                case RandomFileTrack randomTrack:
+                    this.DirectoryAudioScrapper.CheckAndScan(randomTrack.Filename!);
+
+                    randomTrack.Filenames = this.DirectoryAudioScrapper.GetFilesFromDirectory(randomTrack.Filename!.EnsureHasDirectorySeparatorChar());
+                    string? randomFile = randomTrack.GetFile();
+
+                    if (!String.IsNullOrEmpty(randomFile))
+                        PlayAudioFile(randomFile);
+                    else
+                        this.PlaybackState = PlaylistState.WaitingNextTrack;
+                    break;
+                default:
+                    throw new NotImplementedException();
             }
         }
 
         private void PlayNextTrackOrStop()
         {
+            if (this.PlaylistManager.CurrentTrack != null && !this.PlaylistManager.CurrentTrack.HasTrackFinished)
+            {
+                PlayTrack(this.PlaylistManager.CurrentTrack, false, false);
+                return;
+            }
+
             if (this.PlaylistManager.NextTrack != null)
                 PlayTrack(this.PlaylistManager.NextTrack);
             else
@@ -433,6 +496,24 @@ namespace Salamandra.ViewModel
         {
             MessageBox.Show("Houve um erro ao manipular a playlist.\n\n" + ex.Message, "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
             this.PlaylistLoading = false;
+        }
+
+        private void AddTimeAnnouncementTrack()
+        {
+            TimeAnnouncementTrack timeAnnouncementTrack = new TimeAnnouncementTrack();
+
+            this.PlaylistManager.AddTracks(new List<BaseTrack>() { timeAnnouncementTrack });
+        }
+
+        private void AddRandomTrack()
+        {
+            Ookii.Dialogs.Wpf.VistaFolderBrowserDialog vistaFolderBrowserDialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog();
+
+            if (vistaFolderBrowserDialog.ShowDialog() == true)
+            {
+                this.DirectoryAudioScrapper.CheckAndScan(vistaFolderBrowserDialog.SelectedPath);
+                this.PlaylistManager.AddRandomTrack(vistaFolderBrowserDialog.SelectedPath);
+            }
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

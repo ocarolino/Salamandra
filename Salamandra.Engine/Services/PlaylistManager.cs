@@ -9,16 +9,18 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Salamandra.Engine.Domain.Tracks;
+using Salamandra.Engine.Extensions;
 
 namespace Salamandra.Engine.Services
 {
     public class PlaylistManager : INotifyPropertyChanged
     {
         public PlaylistMode PlaylistMode { get; set; }
-        public ObservableCollection<SoundFileTrack> Tracks { get; set; }
+        public ObservableCollection<BaseTrack> Tracks { get; set; }
 
-        public SoundFileTrack? CurrentTrack { get; set; }
-        public SoundFileTrack? NextTrack { get; set; }
+        public BaseTrack? CurrentTrack { get; set; }
+        public BaseTrack? NextTrack { get; set; }
 
         public bool Modified { get; set; }
         public string Filename { get; set; }
@@ -27,7 +29,7 @@ namespace Salamandra.Engine.Services
         {
             this.PlaylistMode = PlaylistMode.Default;
 
-            this.Tracks = new ObservableCollection<SoundFileTrack>();
+            this.Tracks = new ObservableCollection<BaseTrack>();
 
             this.CurrentTrack = null;
             this.NextTrack = null;
@@ -71,7 +73,7 @@ namespace Salamandra.Engine.Services
         }
 
         #region Add and Remove Tracks
-        public void AddTracks(List<SoundFileTrack> tracks)
+        public void AddTracks(List<BaseTrack> tracks)
         {
             foreach (var item in tracks)
                 this.Tracks.Add(item);
@@ -84,11 +86,11 @@ namespace Salamandra.Engine.Services
 
         public async Task AddFiles(List<string> filenames)
         {
-            List<SoundFileTrack> tracks = new List<SoundFileTrack>();
+            List<AudioFileTrack> tracks = new List<AudioFileTrack>();
 
             foreach (var item in filenames)
             {
-                SoundFileTrack soundFileTrack = new SoundFileTrack() { Filename = item, FriendlyName = Path.GetFileNameWithoutExtension(item) };
+                AudioFileTrack soundFileTrack = new AudioFileTrack() { Filename = item, FriendlyName = Path.GetFileNameWithoutExtension(item) };
 
                 var duration = await Task.Run(() => GetAudioFileDuration(item));
                 soundFileTrack.Duration = duration;
@@ -96,10 +98,19 @@ namespace Salamandra.Engine.Services
                 tracks.Add(soundFileTrack);
             }
 
-            AddTracks(tracks);
+            AddTracks(tracks.Cast<BaseTrack>().ToList());
         }
 
-        public void RemoveTracks(List<SoundFileTrack> tracks)
+        public void AddRandomTrack(string directoryPath)
+        {
+            RandomFileTrack randomTrack = new RandomFileTrack() { Filename = directoryPath.EnsureHasDirectorySeparatorChar() };
+            randomTrack.FriendlyName = Path.GetFileName(randomTrack.Filename.TrimEnd(Path.DirectorySeparatorChar));
+
+            AddTracks(new List<BaseTrack>() { randomTrack });
+        }
+
+
+        public void RemoveTracks(List<BaseTrack> tracks)
         {
             foreach (var item in tracks)
                 this.Tracks.Remove(item);
@@ -123,9 +134,10 @@ namespace Salamandra.Engine.Services
             }
         }
         #endregion
+
         public void ClearPlaylist()
         {
-            this.Tracks = new ObservableCollection<SoundFileTrack>();
+            this.Tracks = new ObservableCollection<BaseTrack>();
             this.NextTrack = null;
 
             this.Filename = string.Empty;
@@ -137,25 +149,37 @@ namespace Salamandra.Engine.Services
             M3UPlaylistLoader playlistLoader = new M3UPlaylistLoader();
 
             List<PlaylistEntryInfo> entries = playlistLoader.Load(filename);
-            List<SoundFileTrack> tracks = new List<SoundFileTrack>();
+            List<BaseTrack> tracks = new List<BaseTrack>();
 
             foreach (var item in entries)
             {
-                var track = new SoundFileTrack() { Filename = item.Filename, FriendlyName = item.FriendlyName, Duration = item.Duration };
+                BaseTrack? track = null;
 
-                if (String.IsNullOrEmpty(track.FriendlyName))
-                    track.FriendlyName = Path.GetFileNameWithoutExtension(track.Filename);
-
-                if (track.Duration == null)
+                if (item.Filename!.EndsWith(".time"))
+                    track = new TimeAnnouncementTrack();
+                else if (item.Filename.EndsWith(".dir"))
                 {
-                    var duration = await Task.Run(() => GetAudioFileDuration(track.Filename!));
-                    track.Duration = duration;
+                    string dir = item.Filename.Substring(0, item.Filename.Length - 4);
+                    track = new RandomFileTrack() { Filename = dir.EnsureHasDirectorySeparatorChar(), FriendlyName = Path.GetFileName(dir) };
+                }
+                else
+                {
+                    track = new AudioFileTrack() { Filename = item.Filename, FriendlyName = item.FriendlyName, Duration = item.Duration };
+
+                    if (String.IsNullOrEmpty(track.FriendlyName))
+                        track.FriendlyName = Path.GetFileNameWithoutExtension(item.Filename);
+
+                    if (track.Duration == null)
+                    {
+                        var duration = await Task.Run(() => GetAudioFileDuration(item.Filename!));
+                        track.Duration = duration;
+                    }
                 }
 
                 tracks.Add(track);
             }
 
-            this.Tracks = new ObservableCollection<SoundFileTrack>(tracks);
+            this.Tracks = new ObservableCollection<BaseTrack>(tracks);
 
             this.UpdateNextTrack();
 
@@ -171,8 +195,17 @@ namespace Salamandra.Engine.Services
 
             foreach (var item in this.Tracks)
             {
-                PlaylistEntryInfo entry = new PlaylistEntryInfo() { Filename = item.Filename, FriendlyName = item.FriendlyName, Duration = item.Duration };
-                entries.Add(entry);
+                switch (item)
+                {
+                    case RandomFileTrack randomFileTrack:
+                        entries.Add(new PlaylistEntryInfo() { Filename = randomFileTrack.Filename!.TrimEnd(Path.DirectorySeparatorChar) + ".dir", FriendlyName = randomFileTrack.FriendlyName, Duration = randomFileTrack.Duration });
+                        break;
+                    case SingleFileTrack singleFileTrack:
+                        entries.Add(new PlaylistEntryInfo() { Filename = singleFileTrack.Filename, FriendlyName = singleFileTrack.FriendlyName, Duration = singleFileTrack.Duration });
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
             }
 
             playlistLoader.Save(filename, entries);
@@ -194,7 +227,7 @@ namespace Salamandra.Engine.Services
             {
                 int j = i + random.Next(n - i);
 
-                SoundFileTrack track = this.Tracks[j];
+                BaseTrack track = this.Tracks[j];
 
                 this.Tracks[j] = this.Tracks[i];
                 this.Tracks[i] = track;

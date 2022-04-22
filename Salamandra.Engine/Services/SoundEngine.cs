@@ -58,13 +58,17 @@ namespace Salamandra.Engine.Services
             this.State = SoundEngineState.Stopped;
         }
 
-        public void EnumerateDevices()
+        public List<SoundOutputDevice> EnumerateDevices()
         {
+            List<SoundOutputDevice> devices = new List<SoundOutputDevice>();
+
             for (int n = -1; n < WaveOut.DeviceCount; n++)
             {
                 var caps = WaveOut.GetCapabilities(n);
-                Debug.WriteLine($"{n}: {caps.ProductName}");
+                devices.Add(new SoundOutputDevice() { DeviceIndex = n, Name = caps.ProductName });
             }
+
+            return devices;
         }
 
         public void PlayAudioFile(string filename, float volume = 1)

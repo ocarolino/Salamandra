@@ -10,7 +10,7 @@ namespace Salamandra.Engine.Domain.Settings
 {
     public class PlayerSettings : INotifyPropertyChanged
     {
-        public double Volume { get; set; }
+        public float Volume { get; set; }
         public PlaylistMode PlaylistMode { get; set; }
         public bool AskToCloseWhenPlayling { get; set; }
 

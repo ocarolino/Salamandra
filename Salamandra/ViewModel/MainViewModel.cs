@@ -17,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using Salamandra.Engine.Domain.Tracks;
 using Salamandra.Engine.Extensions;
+using Salamandra.Engine.Domain.Settings;
 
 namespace Salamandra.ViewModel
 {
@@ -48,6 +49,8 @@ namespace Salamandra.ViewModel
         public string PlaylistInfoText { get; set; }
 
         public DirectoryAudioScrapper DirectoryAudioScrapper { get; set; }
+        public ApplicationSettings ApplicationSettings { get; set; }
+        public SettingsManager<ApplicationSettings> SettingsManager { get; set; }
 
         public TimeSpan? RemainingTime { get; set; }
         public TimeSpan? EndingTimeOfDay { get; set; }
@@ -101,6 +104,9 @@ namespace Salamandra.ViewModel
             this.PlaylistLoading = false;
             this.PlaylistInfoText = string.Empty;
 
+            this.SettingsManager = new SettingsManager<ApplicationSettings>("application_settings.json");
+            this.ApplicationSettings = new ApplicationSettings();
+
             this.DirectoryAudioScrapper = new DirectoryAudioScrapper();
 
             UpdateWindowTitle();
@@ -126,6 +132,23 @@ namespace Salamandra.ViewModel
             }
         }
 
+        public void Loading()
+        {
+            var settings = this.SettingsManager.LoadSettings();
+
+            if (settings != null)
+                this.ApplicationSettings = settings;
+
+            ApplySettings();
+        }
+
+        private void ApplySettings()
+        {
+            this.SoundEngine.OutputDevice = this.ApplicationSettings.DeviceSettings.MainOutputDevice;
+            this.CurrentVolume = this.ApplicationSettings.PlayerSettings.Volume;
+            this.PlaylistManager.PlaylistMode = this.ApplicationSettings.PlayerSettings.PlaylistMode;
+        }
+
         public bool Closing()
         {
             if (this.IsPlaying)
@@ -140,7 +163,17 @@ namespace Salamandra.ViewModel
             this.DirectoryAudioScrapper.StopScanning();
             this.StopPlayback();
 
+            SaveSettings();
+
             return true;
+        }
+
+        private void SaveSettings()
+        {
+            this.ApplicationSettings.PlayerSettings.PlaylistMode = this.PlaylistManager.PlaylistMode;
+            this.ApplicationSettings.PlayerSettings.Volume = this.CurrentVolume;
+
+            this.SettingsManager.SaveSettings(this.ApplicationSettings);
         }
 
         private void LoadCommands()

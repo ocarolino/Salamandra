@@ -80,7 +80,7 @@ namespace Salamandra.Engine.Services
 
             if (this.outputDevice == null)
             {
-                this.outputDevice = new WaveOutEvent() { DeviceNumber = 0 };
+                this.outputDevice = new WaveOutEvent() { DeviceNumber = this.OutputDevice };
                 this.outputDevice.PlaybackStopped += WaveOutEvent_PlaybackStopped;
             }
 

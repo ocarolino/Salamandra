@@ -10,6 +10,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Images\Icons\Playlist\alarm_clock.png" />
+	  <None Remove="Images\Icons\Playlist\audio_file.png" />
+	  <None Remove="Images\Icons\Playlist\music_folder.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Content Include="lizard.ico" />
 	</ItemGroup>
 
@@ -32,6 +38,9 @@
 		<Resource Include="Images\Icons\Player\stop-next.png" />
 		<Resource Include="Images\Icons\Player\stop.png" />
 		<Resource Include="Images\Icons\Player\volume_up.png" />
+		<Resource Include="Images\Icons\Playlist\alarm_clock.png" />
+		<Resource Include="Images\Icons\Playlist\audio_file.png" />
+		<Resource Include="Images\Icons\Playlist\music_folder.png" />
 	</ItemGroup>
 
 </Project>

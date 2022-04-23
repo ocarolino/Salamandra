@@ -9,6 +9,7 @@
         xmlns:controls="clr-namespace:Salamandra.Controls"
         xmlns:extensions="clr-namespace:Salamandra.Extensions"
         xmlns:enums="clr-namespace:Salamandra.Engine.Domain.Enums;assembly=Salamandra.Engine"
+        xmlns:tracks="clr-namespace:Salamandra.Engine.Domain.Tracks;assembly=Salamandra.Engine"
         xmlns:usercontrols="clr-namespace:Salamandra.UserControls"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Height="540" Width="960"
@@ -17,6 +18,7 @@
     <Window.Resources>
         <converters:SameObjectToBoolConverter x:Key="SameObjectToBoolConverter"/>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:DataTypeConverter x:Key="DataTypeConverter"/>
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
@@ -234,8 +236,31 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" Text="{Binding Path=FriendlyName, Mode=OneWay}"></TextBlock>
-                            <TextBlock Grid.Column="1" Text="{Binding Duration, StringFormat=hh\\:mm\\:ss, Mode=OneWay, TargetNullValue='--:--:--'}"/>
+                            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                <Image Width="16" Height="16" RenderOptions.BitmapScalingMode="NearestNeighbor">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ., Converter={StaticResource DataTypeConverter}}" Value="{x:Type tracks:AudioFileTrack}">
+                                                    <Setter Property="Source" Value="/Images/Icons/Playlist/audio_file.png"/>
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding ., Converter={StaticResource DataTypeConverter}}" Value="{x:Type tracks:TimeAnnouncementTrack}">
+                                                    <Setter Property="Source" Value="/Images/Icons/Playlist/alarm_clock.png"/>
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding ., Converter={StaticResource DataTypeConverter}}" Value="{x:Type tracks:RandomFileTrack}">
+                                                    <Setter Property="Source" Value="/Images/Icons/Playlist/music_folder.png"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+
+                                <TextBlock Text="{Binding Path=FriendlyName, Mode=OneWay}"
+                                           Margin="4 0 0 0"/>
+                            </StackPanel>
+                            <TextBlock Grid.Column="2" Text="{Binding Duration, StringFormat=hh\\:mm\\:ss, Mode=OneWay, TargetNullValue='--:--:--'}"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

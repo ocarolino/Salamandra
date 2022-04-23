@@ -24,17 +24,23 @@ namespace Salamandra.Views
     {
         private SettingsViewModel settingsViewModel;
 
-        public SettingsWindow(ApplicationSettings applicationSettings, SoundEngine soundEngine)
+        public SettingsWindow(SettingsViewModel settingsViewModel)
         {
             InitializeComponent();
 
-            this.settingsViewModel = new SettingsViewModel(applicationSettings, soundEngine);
-            this.DataContext = settingsViewModel;
+            this.settingsViewModel = settingsViewModel;
+            this.DataContext = this.settingsViewModel;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.settingsViewModel.Loading();
+        }
+
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+            this.Close();
         }
     }
 }

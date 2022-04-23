@@ -32,7 +32,7 @@
         </TabControl>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 8 0 0" HorizontalAlignment="Right">
-            <Button Content="Confirmar" IsDefault="True" 
+            <Button Content="Confirmar" IsDefault="True" Name="ConfirmButton" Click="ConfirmButton_Click"
                     Width="80" Height="24"/>
             <Button Content="Cancelar" 
                     Width="80" Height="24" Margin="8 0 0 0" IsCancel="True"/>

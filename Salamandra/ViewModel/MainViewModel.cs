@@ -136,19 +136,39 @@ namespace Salamandra.ViewModel
 
         public void Loading()
         {
-            var settings = this.SettingsManager.LoadSettings();
-
-            if (settings != null)
-                this.ApplicationSettings = settings;
-
+            LoadSettingsFile();
             ApplySettings();
         }
 
-        private void ApplySettings()
+        private void LoadSettingsFile()
+        {
+            try
+            {
+                var settings = this.SettingsManager.LoadSettings();
+
+                if (settings != null)
+                    this.ApplicationSettings = settings;
+
+                var devices = this.SoundEngine.EnumerateDevices();
+
+                if (devices.FirstOrDefault(x => x.DeviceIndex == this.ApplicationSettings.DeviceSettings.MainOutputDevice) == null)
+                    this.ApplicationSettings.DeviceSettings.MainOutputDevice = devices.First().DeviceIndex;
+            }
+            catch (Exception ex)
+            {
+                // ToDo: Log ou mensagem!
+            }
+        }
+
+        private void ApplySettings(bool firstTime = true)
         {
             this.SoundEngine.OutputDevice = this.ApplicationSettings.DeviceSettings.MainOutputDevice;
-            this.CurrentVolume = this.ApplicationSettings.PlayerSettings.Volume;
-            this.PlaylistManager.PlaylistMode = this.ApplicationSettings.PlayerSettings.PlaylistMode;
+
+            if (firstTime)
+            {
+                this.CurrentVolume = this.ApplicationSettings.PlayerSettings.Volume;
+                this.PlaylistManager.PlaylistMode = this.ApplicationSettings.PlayerSettings.PlaylistMode;
+            }
         }
 
         public bool Closing()
@@ -556,9 +576,17 @@ namespace Salamandra.ViewModel
 
         private void OpenSettings()
         {
-            SettingsWindow settingsWindow = new SettingsWindow(this.ApplicationSettings, this.SoundEngine);
+            // ToDo: WindowService?
+            SettingsViewModel settingsViewModel = new SettingsViewModel(this.ApplicationSettings, this.SoundEngine);
+
+            SettingsWindow settingsWindow = new SettingsWindow(settingsViewModel);
             settingsWindow.Owner = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            settingsWindow.ShowDialog();
+
+            if (settingsWindow.ShowDialog() == true)
+            {
+                this.ApplicationSettings = settingsViewModel.Settings;
+                ApplySettings(false);
+            }
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

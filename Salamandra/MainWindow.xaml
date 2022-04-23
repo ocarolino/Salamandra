@@ -13,7 +13,7 @@
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Height="540" Width="960"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing"
-        UseLayoutRounding="True" Loaded="Window_Loaded">
+        UseLayoutRounding="True" Loaded="Window_Loaded" WindowState="Maximized">
     <Window.Resources>
         <converters:SameObjectToBoolConverter x:Key="SameObjectToBoolConverter"/>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -35,6 +35,10 @@
                 <MenuItem Header="Remover selecionadas" Command="{Binding RemoveTracksFromPlaylistCommand}" CommandParameter="{Binding SelectedItems, ElementName=playlist}"/>
                 <Separator/>
                 <MenuItem Header="Embaralhar playlist" Command="{Binding ShufflePlaylistCommand}"/>
+            </MenuItem>
+
+            <MenuItem Header="Ferramentas">
+                <MenuItem Header="Configurações" Command="{Binding OpenSettingsCommand}"/>
             </MenuItem>
         </Menu>
 

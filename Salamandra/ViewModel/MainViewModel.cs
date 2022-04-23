@@ -18,6 +18,7 @@ using System.Windows.Threading;
 using Salamandra.Engine.Domain.Tracks;
 using Salamandra.Engine.Extensions;
 using Salamandra.Engine.Domain.Settings;
+using Salamandra.Views;
 
 namespace Salamandra.ViewModel
 {
@@ -77,6 +78,7 @@ namespace Salamandra.ViewModel
         public ICommand? NewPlaylistCommand { get; set; }
         public ICommand? ShufflePlaylistCommand { get; set; }
         public ICommand? AddRandomTrackCommand { get; set; }
+        public ICommand? OpenSettingsCommand { get; set; }
         #endregion
 
         public MainViewModel()
@@ -207,6 +209,8 @@ namespace Salamandra.ViewModel
             this.NewPlaylistCommand = new RelayCommand(p => NewPlaylist(), p => !this.PlaylistLoading);
 
             this.ShufflePlaylistCommand = new RelayCommand(p => this.PlaylistManager.ShufflePlaylist(), p => !this.PlaylistLoading);
+
+            this.OpenSettingsCommand = new RelayCommand(p => OpenSettings());
         }
 
         private async Task AddFilesToPlaylist()
@@ -533,6 +537,7 @@ namespace Salamandra.ViewModel
 
         private void AddTimeAnnouncementTrack()
         {
+            // ToDo: Código abaixo no PlaylistManager
             TimeAnnouncementTrack timeAnnouncementTrack = new TimeAnnouncementTrack();
 
             this.PlaylistManager.AddTracks(new List<BaseTrack>() { timeAnnouncementTrack });
@@ -547,6 +552,13 @@ namespace Salamandra.ViewModel
                 this.DirectoryAudioScrapper.CheckAndScan(vistaFolderBrowserDialog.SelectedPath);
                 this.PlaylistManager.AddRandomTrack(vistaFolderBrowserDialog.SelectedPath);
             }
+        }
+
+        private void OpenSettings()
+        {
+            SettingsWindow settingsWindow = new SettingsWindow();
+            settingsWindow.Owner = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            settingsWindow.ShowDialog();
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

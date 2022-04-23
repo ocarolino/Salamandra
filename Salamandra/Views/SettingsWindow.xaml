@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Salamandra.Views"
         mc:Ignorable="d"
-        Title="Configurações" Height="450" Width="800">
+        Title="Configurações" Height="450" Width="800"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False">
     <TabControl Margin="8">
         <TabItem Header="Geral">
             <StackPanel Margin="8">

@@ -556,7 +556,7 @@ namespace Salamandra.ViewModel
 
         private void OpenSettings()
         {
-            SettingsWindow settingsWindow = new SettingsWindow();
+            SettingsWindow settingsWindow = new SettingsWindow(this.ApplicationSettings, this.SoundEngine);
             settingsWindow.Owner = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             settingsWindow.ShowDialog();
         }

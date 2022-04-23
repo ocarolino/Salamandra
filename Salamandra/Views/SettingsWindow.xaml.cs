@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Salamandra.Engine.Domain.Settings;
+using Salamandra.Engine.Services;
+using Salamandra.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +22,19 @@ namespace Salamandra.Views
     /// </summary>
     public partial class SettingsWindow : Window
     {
-        public SettingsWindow()
+        private SettingsViewModel settingsViewModel;
+
+        public SettingsWindow(ApplicationSettings applicationSettings, SoundEngine soundEngine)
         {
             InitializeComponent();
+
+            this.settingsViewModel = new SettingsViewModel(applicationSettings, soundEngine);
+            this.DataContext = settingsViewModel;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.settingsViewModel.Loading();
         }
     }
 }

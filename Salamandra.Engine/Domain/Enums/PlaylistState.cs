@@ -12,5 +12,6 @@ namespace Salamandra.Engine.Domain.Enums
         PlayingPlaylistTrack = 1,
         PlayingEventTrack = 2,
         WaitingNextTrack = 3,
+        JumpToNextTrack = 4,
     }
 }

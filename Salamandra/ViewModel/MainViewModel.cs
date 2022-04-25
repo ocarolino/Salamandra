@@ -357,10 +357,13 @@ namespace Salamandra.ViewModel
 
         private void PlayNextTrackOrStop()
         {
-            if (this.PlaylistManager.CurrentTrack != null && !this.PlaylistManager.CurrentTrack.HasTrackFinished)
+            if (!(this.PlaybackState == PlaylistState.JumpToNextTrack))
             {
-                PlayTrack(this.PlaylistManager.CurrentTrack, false, false);
-                return;
+                if (this.PlaylistManager.CurrentTrack != null && !this.PlaylistManager.CurrentTrack.HasTrackFinished)
+                {
+                    PlayTrack(this.PlaylistManager.CurrentTrack, false, false);
+                    return;
+                }
             }
 
             if (this.PlaylistManager.NextTrack != null)
@@ -404,7 +407,10 @@ namespace Salamandra.ViewModel
             this.PlaylistManager.NextTrack = this.SelectedTrack;
 
             if (this.IsPlaying)
+            {
+                this.PlaybackState = PlaylistState.JumpToNextTrack;
                 this.SoundEngine.Stop();
+            }
             else
                 this.StartPlayback();
         }
@@ -458,7 +464,10 @@ namespace Salamandra.ViewModel
         private void NextTrack()
         {
             if (this.IsPlaying)
+            {
+                this.PlaybackState = PlaylistState.JumpToNextTrack;
                 this.SoundEngine.Stop();
+            }
         }
 
         private void StopAfterCurrent()

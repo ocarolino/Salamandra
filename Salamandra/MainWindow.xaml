@@ -224,10 +224,37 @@
             </StackPanel>
         </Grid>
 
-        <Grid>
+        <Grid Margin="8 0 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="6*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Próximos Eventos" Grid.Column="0" VerticalAlignment="Bottom"/>
+
+                    <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                        <Button Content="Editar" Command="{Binding OpenEventListCommand}" Padding="4"/>
+                    </StackPanel>
+                </Grid>
+
+                <ListView Grid.Row="1" Margin="0 4 0 0"/>
+            </Grid>
+
             <ListView ItemsSource="{Binding PlaylistManager.Tracks}" SelectedItem="{Binding SelectedTrack}"
                   Name="playlist" SelectionMode="Extended" HorizontalContentAlignment="Stretch"
-                  Margin="8 0 8 0" AlternationCount="2">
+                  Margin="8 0 8 0" AlternationCount="2" Grid.Column="1">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -325,10 +352,10 @@
                 </ListView.ContextMenu>
             </ListView>
 
-            <Border Background="White" Opacity="0.75" 
+            <Border Background="White" Opacity="0.75" Grid.Column="1"
                     Visibility="{Binding PlaylistLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-            <usercontrols:LoadingSpinner LoadingText="{Binding PlaylistInfoText}"
+            <usercontrols:LoadingSpinner LoadingText="{Binding PlaylistInfoText}" Grid.Column="1"
                                          Visibility="{Binding PlaylistLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </Grid>
     </DockPanel>

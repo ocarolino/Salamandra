@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Salamandra.Engine.Domain.Events
 {
-    public class ScheduledEvent
+    public class ScheduledEvent : INotifyPropertyChanged
     {
         public int Id { get; set; }
         public bool Immediate { get; set; }
@@ -26,5 +27,7 @@ namespace Salamandra.Engine.Domain.Events
             this.DaysOfWeek = new ObservableCollection<DayOfWeek>();
             this.Filename = String.Empty;
         }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }

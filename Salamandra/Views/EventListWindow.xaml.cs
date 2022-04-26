@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Salamandra.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,19 @@ namespace Salamandra.Views
     /// </summary>
     public partial class EventListWindow : Window
     {
-        public EventListWindow()
+        private EventListViewModel eventListViewModel;
+
+        public EventListWindow(EventListViewModel eventListViewModel)
         {
             InitializeComponent();
+
+            this.eventListViewModel = eventListViewModel;
+            this.DataContext = this.eventListViewModel;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.eventListViewModel.Loading();
         }
     }
 }

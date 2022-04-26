@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Salamandra.Views"
         mc:Ignorable="d"
         Title="Eventos" Height="480" Width="800"
-        WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        Loaded="Window_Loaded">
     <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -16,12 +17,12 @@
         <ListView Grid.Row="0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Hora"/>
-                    <GridViewColumn Header="Modo"/>
-                    <GridViewColumn Header="Arquivo"/>
-                    <GridViewColumn Header="Dias da Semana"/>
-                    <GridViewColumn Header="Horas"/>
-                    <GridViewColumn Header="Expiração"/>
+                    <GridViewColumn Header="Hora" Width="80"/>
+                    <GridViewColumn Header="Modo" Width="100"/>
+                    <GridViewColumn Header="Arquivo" Width="200"/>
+                    <GridViewColumn Header="Dias da Semana" Width="120"/>
+                    <GridViewColumn Header="Horas" Width="120"/>
+                    <GridViewColumn Header="Expiração" Width="120"/>
                 </GridView>
             </ListView.View>
         </ListView>

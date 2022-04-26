@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Salamandra.Views
 {
     /// <summary>
-    /// Lógica interna para EventListView.xaml
+    /// Lógica interna para EventListWindow.xaml
     /// </summary>
-    public partial class EventListView : Window
+    public partial class EventListWindow : Window
     {
-        public EventListView()
+        public EventListWindow()
         {
             InitializeComponent();
         }

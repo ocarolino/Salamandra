@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Salamandra.Engine.Services
 {
-    public class EventManager
+    public class ScheduleManager
     {
         public List<ScheduledEvent> Events { get; set; }
 
-        public EventManager()
+        public ScheduleManager()
         {
             this.Events = new List<ScheduledEvent>();
         }

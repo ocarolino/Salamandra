@@ -53,6 +53,8 @@ namespace Salamandra.ViewModel
         public ApplicationSettings ApplicationSettings { get; set; }
         public SettingsManager<ApplicationSettings> SettingsManager { get; set; }
 
+        public ScheduleManager ScheduleManager { get; set; }
+
         public TimeSpan? RemainingTime { get; set; }
         public TimeSpan? EndingTimeOfDay { get; set; }
         public DateTime CurrentDateTime { get; set; }
@@ -108,6 +110,8 @@ namespace Salamandra.ViewModel
 
             this.SettingsManager = new SettingsManager<ApplicationSettings>("application_settings.json");
             this.ApplicationSettings = new ApplicationSettings();
+
+            this.ScheduleManager = new ScheduleManager();
 
             this.DirectoryAudioScrapper = new DirectoryAudioScrapper();
 

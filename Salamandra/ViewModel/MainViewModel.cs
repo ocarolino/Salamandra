@@ -81,6 +81,7 @@ namespace Salamandra.ViewModel
         public ICommand? ShufflePlaylistCommand { get; set; }
         public ICommand? AddRandomTrackCommand { get; set; }
         public ICommand? OpenSettingsCommand { get; set; }
+        public ICommand? OpenEventListCommand { get; set; }
         #endregion
 
         public MainViewModel()
@@ -235,6 +236,7 @@ namespace Salamandra.ViewModel
             this.ShufflePlaylistCommand = new RelayCommand(p => this.PlaylistManager.ShufflePlaylist(), p => !this.PlaylistLoading);
 
             this.OpenSettingsCommand = new RelayCommand(p => OpenSettings());
+            this.OpenEventListCommand = new RelayCommand(p => OpenEventList());
         }
 
         private async Task AddFilesToPlaylist()
@@ -599,6 +601,17 @@ namespace Salamandra.ViewModel
             {
                 this.ApplicationSettings = settingsViewModel.Settings;
                 ApplySettings(false);
+            }
+        }
+
+        private void OpenEventList()
+        {
+            EventListView eventListWindow = new EventListView();
+            eventListWindow.Owner = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+            if (eventListWindow.ShowDialog() == true)
+            {
+
             }
         }
 

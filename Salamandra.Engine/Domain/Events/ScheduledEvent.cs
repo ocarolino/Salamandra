@@ -26,6 +26,8 @@ namespace Salamandra.Engine.Domain.Events
 
         public ScheduledEvent()
         {
+            this.StartingDateTime = DateTime.Now;
+            this.ExpirationDateTime = DateTime.Now;
             this.PlayingHours = new ObservableCollection<int>();
             this.DaysOfWeek = new ObservableCollection<DayOfWeek>();
             this.Filename = String.Empty;

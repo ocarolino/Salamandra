@@ -105,17 +105,20 @@
 
             <GroupBox Header="Tipo do Evento" Margin="0 8 0 0">
                 <StackPanel Margin="4">
-                    <ComboBox ItemsSource="{Binding Source={converters:EnumBindingSource EnumType={x:Type enums:TrackScheduleType}}}"/>
+                    <ComboBox SelectedItem="{Binding ScheduledEvent.TrackScheduleType}"
+                              ItemsSource="{Binding Source={converters:EnumBindingSource EnumType={x:Type enums:TrackScheduleType}}}"/>
 
-                    <Grid Margin="0 8 0 0">
+                    <Grid Margin="0 8 0 0" IsEnabled="{Binding EventUseFile}">
                         <Grid.ColumnDefinitions >
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBox Text="{Binding ScheduledTrack.Filename}"
+                        <TextBox Text="{Binding ScheduledEvent.Filename}"
                                  Grid.Column="0" Height="24"/>
-                        <Button Grid.Column="1" Content="..." Width="30" Height="24" Margin="4 0 0 0"/>
+
+                        <Button Command="{Binding OpenPathDialogCommand}" Content="..."
+                                Grid.Column="1" Width="30" Height="24" Margin="4 0 0 0"/>
                     </Grid>
                 </StackPanel>
             </GroupBox>

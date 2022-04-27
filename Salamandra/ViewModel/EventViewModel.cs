@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Salamandra.ViewModel
@@ -26,6 +27,9 @@ namespace Salamandra.ViewModel
 
         public ICommand OpenPathDialogCommand { get; set; }
         public ICommand ComboTrackTypeChangedCommand { get; set; }
+        public ICommand ValidateAndCloseCommand { get; set; }
+
+        public Action<bool>? CloseWindow { get; set; }
 
         public EventViewModel()
         {
@@ -43,6 +47,7 @@ namespace Salamandra.ViewModel
 
             this.OpenPathDialogCommand = new RelayCommand(p => OpenPathDialog(), p => this.EventRequiresPath);
             this.ComboTrackTypeChangedCommand = new RelayCommand(p => ComboTrackTypeChanged());
+            this.ValidateAndCloseCommand = new RelayCommand(p => ValidateAndClose());
         }
 
         public EventViewModel(ScheduledEvent scheduledEvent) : this()
@@ -97,6 +102,40 @@ namespace Salamandra.ViewModel
                     this.EventRequiresPath = true;
                     break;
             }
+        }
+
+        private void ValidateAndClose()
+        {
+            if (this.ScheduledEvent.UseExpirationDateTime &&
+                this.ScheduledEvent.StartingDateTime >= this.ScheduledEvent.ExpirationDateTime)
+            {
+                MessageBox.Show("A data de expiração do evento deve ser posterior a data de início.", "Eventos",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (this.ScheduledEvent.UsePlayingHours && this.ScheduledEvent.PlayingHours.Count == 0)
+            {
+                MessageBox.Show("Os horários que o evento tocará devem ser selecionados.", "Eventos",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (this.ScheduledEvent.UseDaysOfWeek && this.ScheduledEvent.DaysOfWeek.Count == 0)
+            {
+                MessageBox.Show("Os dias que o evento tocará devem ser selecionados.", "Eventos",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (this.EventRequiresPath && String.IsNullOrWhiteSpace(this.ScheduledEvent.Filename))
+            {
+                MessageBox.Show("O arquivo do evento deve ser selecionado.", "Eventos",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            this.CloseWindow?.Invoke(true);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

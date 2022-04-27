@@ -27,7 +27,14 @@ namespace Salamandra.Views
             InitializeComponent();
 
             this.eventViewModel = eventViewModel;
+            this.eventViewModel.CloseWindow += CloseWindow_Handler;
             this.DataContext = this.eventViewModel;
+        }
+
+        private void CloseWindow_Handler(bool result)
+        {
+            this.DialogResult = result;
+            this.Close();
         }
     }
 }

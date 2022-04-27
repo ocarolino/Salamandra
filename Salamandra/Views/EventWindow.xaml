@@ -3,95 +3,129 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:enums="clr-namespace:Salamandra.Engine.Domain.Enums;assembly=Salamandra.Engine"
         xmlns:local="clr-namespace:Salamandra.Views"
         xmlns:converters="clr-namespace:Salamandra.Converters"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Evento" Height="600" Width="480"
+        Title="Evento" Width="480" SizeToContent="Height"
         ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <converters:DayOfWeekStringConverter x:Key="DayOfWeekStringConverter"/>
     </Window.Resources>
-    <StackPanel Margin="8">
-        <GroupBox Header="Início e Término">
-            <StackPanel Margin="4">
-                <TextBlock Text="Data e Hora de Início"/>
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-                <Grid Margin="0 4 0 0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0">
+            <GroupBox Header="Início e Término">
+                <StackPanel Margin="4">
+                    <TextBlock Text="Data e Hora de Início"/>
 
-                    <DatePicker SelectedDateFormat="Short" MinWidth="150" Grid.Column="0"/>
-                    <xctk:TimePicker Grid.Column="1" Margin="8 0 0 0" MinWidth="150"/>
-                    <CheckBox Grid.Column="2" Content="Imediato"
+                    <Grid Margin="0 4 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <xctk:DateTimePicker Value="{Binding ScheduledEvent.StartingDateTime}" 
+                                         Format="Custom" FormatString="dd/MM/yyyy" 
+                                         Grid.Column="0" MinWidth="150"/>
+
+                        <xctk:TimePicker Value="{Binding ScheduledEvent.StartingDateTime}" 
+                                     Format="Custom" FormatString="HH:mm:ss" TimeInterval="00:15:00"
+                                     Grid.Column="1" Margin="8 0 0 0" MinWidth="150"/>
+
+                        <CheckBox Grid.Column="2" Content="Imediato" IsChecked="{Binding Immediate}"
                               Margin="8 0 0 0" VerticalAlignment="Center"/>
-                </Grid>
+                    </Grid>
 
-                <CheckBox Content="Data e Hora de Expiração" Margin="0 8 0 0"/>
+                    <CheckBox IsChecked="{Binding ScheduledEvent.UseExpirationDateTime}"
+                          Content="Data e Hora de Expiração" Margin="0 8 0 0"/>
 
-                <Grid Margin="0 4 0 0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+                    <Grid Margin="0 4 0 0" IsEnabled="{Binding ScheduledEvent.UseExpirationDateTime}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-                    <DatePicker SelectedDateFormat="Short" MinWidth="150" Grid.Column="0"/>
-                    <xctk:TimePicker Grid.Column="1" Margin="8 0 0 0" MinWidth="150"/>
-                </Grid>
-            </StackPanel>
-        </GroupBox>
+                        <xctk:DateTimePicker Value="{Binding ScheduledEvent.ExpirationDateTime}" 
+                                         Format="Custom" FormatString="dd/MM/yyyy" 
+                                         Grid.Column="0" MinWidth="150"/>
 
-        <GroupBox Header="Horários e Dias" Margin="0 8 0 0">
-            <StackPanel Margin="4">
-                <CheckBox Content="Outros Horários"/>
-                <xctk:CheckListBox Margin="0 4 0 0" ItemsSource="{Binding Hours}"
+                        <xctk:TimePicker Value="{Binding ScheduledEvent.ExpirationDateTime}" 
+                                     Format="Custom" FormatString="HH:mm:ss" TimeInterval="00:15:00"
+                                     Grid.Column="1" Margin="8 0 0 0" MinWidth="150"/>
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Horários e Dias" Margin="0 8 0 0">
+                <StackPanel Margin="4">
+                    <CheckBox IsChecked="{Binding ScheduledEvent.UsePlayingHours}" Content="Outros Horários"/>
+
+                    <xctk:CheckListBox ItemsSource="{Binding Hours}" SelectedItemsOverride="{Binding ScheduledEvent.PlayingHours}"
+                                   IsEnabled="{Binding ScheduledEvent.UsePlayingHours}" Margin="0 4 0 0"
                                    IsSelectAllActive="True" SelectAllContent="Selecionar Todos">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid Columns="4" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="4" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
 
-                    <xctk:CheckListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding ., StringFormat='00.##'}"/>
-                        </DataTemplate>
-                    </xctk:CheckListBox.ItemTemplate>
-                </xctk:CheckListBox>
-                <CheckBox Content="Dias da Semana" Margin="0 8 0 0"/>
-                <xctk:CheckListBox Margin="0 4 0 0" ItemsSource="{Binding Days}"
+                        <xctk:CheckListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ., StringFormat='00.##'}"/>
+                            </DataTemplate>
+                        </xctk:CheckListBox.ItemTemplate>
+                    </xctk:CheckListBox>
+
+                    <CheckBox IsChecked="{Binding ScheduledEvent.UseDaysOfWeek}" Content="Dias da Semana" Margin="0 8 0 0"/>
+
+                    <xctk:CheckListBox ItemsSource="{Binding Days}" SelectedItemsOverride="{Binding ScheduledEvent.DaysOfWeek}"
+                                   IsEnabled="{Binding ScheduledEvent.UseDaysOfWeek}" Margin="0 4 0 0"
                                    IsSelectAllActive="True" SelectAllContent="Selecionar Todos">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid Columns="7" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="7" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
 
-                    <xctk:CheckListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding ., Converter={StaticResource DayOfWeekStringConverter}}"/>
-                        </DataTemplate>
-                    </xctk:CheckListBox.ItemTemplate>
-                </xctk:CheckListBox>
-            </StackPanel>
-        </GroupBox>
+                        <xctk:CheckListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ., Converter={StaticResource DayOfWeekStringConverter}}"/>
+                            </DataTemplate>
+                        </xctk:CheckListBox.ItemTemplate>
+                    </xctk:CheckListBox>
+                </StackPanel>
+            </GroupBox>
 
-        <GroupBox Header="Tipo do Evento" Margin="0 8 0 0">
-            <StackPanel Margin="4">
-                <ComboBox/>
-                <Grid Margin="0 8 0 0">
-                    <Grid.ColumnDefinitions >
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+            <GroupBox Header="Tipo do Evento" Margin="0 8 0 0">
+                <StackPanel Margin="4">
+                    <ComboBox ItemsSource="{Binding Source={converters:EnumBindingSource EnumType={x:Type enums:TrackScheduleType}}}"/>
 
-                    <TextBox Grid.Column="0" Height="24"/>
-                    <Button Grid.Column="1" Content="..." Width="30" Height="24" Margin="4 0 0 0"/>
-                </Grid>
-            </StackPanel>
-        </GroupBox>
-    </StackPanel>
+                    <Grid Margin="0 8 0 0">
+                        <Grid.ColumnDefinitions >
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Text="{Binding ScheduledTrack.Filename}"
+                                 Grid.Column="0" Height="24"/>
+                        <Button Grid.Column="1" Content="..." Width="30" Height="24" Margin="4 0 0 0"/>
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 8 0 0" HorizontalAlignment="Right">
+            <Button Content="Confirmar" IsDefault="True" Name="ConfirmButton"
+                    Width="80" Height="24"/>
+            <Button Content="Cancelar" 
+                    Width="80" Height="24" Margin="8 0 0 0" IsCancel="True"/>
+        </StackPanel>
+    </Grid>
 </Window>

@@ -3,10 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:enums="clr-namespace:Salamandra.Engine.Domain.Enums;assembly=Salamandra.Engine"
         xmlns:local="clr-namespace:Salamandra.Views"
         xmlns:converters="clr-namespace:Salamandra.Converters"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         mc:Ignorable="d"
         Title="Evento" Width="480" SizeToContent="Height"
         ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
@@ -106,9 +107,15 @@
             <GroupBox Header="Tipo do Evento" Margin="0 8 0 0">
                 <StackPanel Margin="4">
                     <ComboBox SelectedItem="{Binding ScheduledEvent.TrackScheduleType}"
-                              ItemsSource="{Binding Source={converters:EnumBindingSource EnumType={x:Type enums:TrackScheduleType}}}"/>
+                              ItemsSource="{Binding Source={converters:EnumBindingSource EnumType={x:Type enums:TrackScheduleType}}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding ComboTrackTypeChangedCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
 
-                    <Grid Margin="0 8 0 0" IsEnabled="{Binding EventUseFile}">
+                    <Grid Margin="0 8 0 0" IsEnabled="{Binding EventRequiresPath}">
                         <Grid.ColumnDefinitions >
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>

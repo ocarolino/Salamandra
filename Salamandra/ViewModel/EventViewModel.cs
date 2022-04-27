@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using Newtonsoft.Json;
 using Salamandra.Commands;
+using Salamandra.Engine.Domain.Enums;
 using Salamandra.Engine.Domain.Events;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace Salamandra.ViewModel
         public ObservableCollection<DayOfWeek> Days { get; set; }
 
         public ICommand OpenPathDialogCommand { get; set; }
+        public ICommand ComboTrackTypeChangedCommand { get; set; }
 
         public EventViewModel()
         {
@@ -40,6 +42,7 @@ namespace Salamandra.ViewModel
             this.EventRequiresPath = true;
 
             this.OpenPathDialogCommand = new RelayCommand(p => OpenPathDialog(), p => this.EventRequiresPath);
+            this.ComboTrackTypeChangedCommand = new RelayCommand(p => ComboTrackTypeChanged());
         }
 
         public EventViewModel(ScheduledEvent scheduledEvent) : this()
@@ -62,7 +65,7 @@ namespace Salamandra.ViewModel
         {
             switch (this.ScheduledEvent.TrackScheduleType)
             {
-                case Engine.Domain.Enums.TrackScheduleType.FileTrack:
+                case TrackScheduleType.FileTrack:
                     OpenFileDialog openFileDialog = new OpenFileDialog();
                     openFileDialog.Filter = "Arquivos de áudio (*.wav, *.mp3, *.wma, *.ogg, *.flac) | *.wav; *.mp3; *.wma; *.ogg; *.flac";
                     openFileDialog.Multiselect = true;
@@ -70,14 +73,29 @@ namespace Salamandra.ViewModel
                     if (openFileDialog.ShowDialog() == true)
                         this.ScheduledEvent.Filename = openFileDialog.FileName;
                     break;
-                case Engine.Domain.Enums.TrackScheduleType.RandomFileTrack:
+                case TrackScheduleType.RandomFileTrack:
                     Ookii.Dialogs.Wpf.VistaFolderBrowserDialog vistaFolderBrowserDialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog();
 
                     if (vistaFolderBrowserDialog.ShowDialog() == true)
                         this.ScheduledEvent.Filename = vistaFolderBrowserDialog.SelectedPath;
                     break;
-                case Engine.Domain.Enums.TrackScheduleType.TimeAnnouncementTrack:
+                case TrackScheduleType.TimeAnnouncementTrack:
                     throw new NotImplementedException();
+            }
+        }
+
+        private void ComboTrackTypeChanged()
+        {
+            this.ScheduledEvent.Filename = String.Empty;
+
+            switch (this.ScheduledEvent.TrackScheduleType)
+            {
+                case TrackScheduleType.TimeAnnouncementTrack:
+                    this.EventRequiresPath = false;
+                    break;
+                default:
+                    this.EventRequiresPath = true;
+                    break;
             }
         }
 

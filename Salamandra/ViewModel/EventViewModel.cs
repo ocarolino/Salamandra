@@ -3,10 +3,12 @@ using Newtonsoft.Json;
 using Salamandra.Commands;
 using Salamandra.Engine.Domain.Enums;
 using Salamandra.Engine.Domain.Events;
+using Salamandra.Engine.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -135,7 +137,28 @@ namespace Salamandra.ViewModel
                 return;
             }
 
+            this.PrepareFriendlyName();
+
             this.CloseWindow?.Invoke(true);
+        }
+
+        private void PrepareFriendlyName()
+        {
+            switch (this.ScheduledEvent.TrackScheduleType)
+            {
+                case TrackScheduleType.FileTrack:
+                    this.ScheduledEvent.FriendlyName = Path.GetFileNameWithoutExtension(this.ScheduledEvent.Filename);
+                    break;
+                case TrackScheduleType.RandomFileTrack:
+                    this.ScheduledEvent.Filename = this.ScheduledEvent.Filename.EnsureHasDirectorySeparatorChar();
+                    this.ScheduledEvent.FriendlyName = Path.GetFileName(this.ScheduledEvent.Filename.TrimEnd(Path.DirectorySeparatorChar));
+                    break;
+                case TrackScheduleType.TimeAnnouncementTrack:
+                    this.ScheduledEvent.FriendlyName = "Locução de Hora";
+                    break;
+                default:
+                    break;
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

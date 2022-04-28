@@ -13,7 +13,6 @@ namespace Salamandra.Engine.Domain.Events
     {
         public int Id { get; set; }
         public bool Immediate { get; set; }
-        //public TimeScheduleType TimeScheduleType { get; set; }
         public DateTime StartingDateTime { get; set; }
         public bool UsePlayingHours { get; set; }
         public ObservableCollection<int> PlayingHours { get; set; }
@@ -23,6 +22,7 @@ namespace Salamandra.Engine.Domain.Events
         public ObservableCollection<DayOfWeek> DaysOfWeek { get; set; }
         public TrackScheduleType TrackScheduleType { get; set; }
         public string Filename { get; set; }
+        public string FriendlyName { get; set; }
 
         public ScheduledEvent()
         {
@@ -31,6 +31,7 @@ namespace Salamandra.Engine.Domain.Events
             this.PlayingHours = new ObservableCollection<int>();
             this.DaysOfWeek = new ObservableCollection<DayOfWeek>();
             this.Filename = String.Empty;
+            this.FriendlyName = String.Empty;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

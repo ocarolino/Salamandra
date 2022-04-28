@@ -41,7 +41,7 @@
                                      Format="Custom" FormatString="HH:mm:ss" TimeInterval="00:15:00"
                                      Grid.Column="1" Margin="8 0 0 0" MinWidth="150"/>
 
-                        <CheckBox Grid.Column="2" Content="Imediato" IsChecked="{Binding Immediate}"
+                        <CheckBox Grid.Column="2" Content="Imediato" IsChecked="{Binding ScheduledEvent.Immediate}"
                               Margin="8 0 0 0" VerticalAlignment="Center"/>
                     </Grid>
 

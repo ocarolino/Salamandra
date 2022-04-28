@@ -89,10 +89,11 @@
                     <GridViewColumn Header="Expiração" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock x:Name="ExpirationTextBlock" Text="{Binding ExpirationDateTime, StringFormat='dd/MM/yyyy HH:mm:ss'}"/>
+                                <TextBlock Text="{Binding ExpirationDateTime, StringFormat='dd/MM/yyyy HH:mm:ss'}"
+                                           x:Name="ExpirationTextBlock"/>
 
                                 <DataTemplate.Triggers>
-                                    <DataTrigger Binding="{Binding UsaDataExpiracao}" Value="False">
+                                    <DataTrigger Binding="{Binding UseExpirationDateTime}" Value="False">
                                         <Setter Property="Visibility" Value="Hidden" TargetName="ExpirationTextBlock"/>
                                     </DataTrigger>
                                 </DataTemplate.Triggers>

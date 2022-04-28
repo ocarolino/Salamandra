@@ -4,25 +4,101 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Salamandra.Views"
+        xmlns:converters="clr-namespace:Salamandra.Converters"
         mc:Ignorable="d"
         Title="Eventos" Height="480" Width="800"
         WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
         Loaded="Window_Loaded">
+    <Window.Resources>
+        <converters:DayOfWeekStringConverter x:Key="DayOfWeekStringConverter"/>
+    </Window.Resources>
     <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ListView Grid.Row="0">
+        <ListView Grid.Row="0" ItemsSource="{Binding Events}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Hora" Width="80"/>
-                    <GridViewColumn Header="Modo" Width="100"/>
-                    <GridViewColumn Header="Arquivo" Width="200"/>
-                    <GridViewColumn Header="Dias da Semana" Width="120"/>
-                    <GridViewColumn Header="Horas" Width="120"/>
-                    <GridViewColumn Header="Expiração" Width="120"/>
+                    <GridViewColumn Header="Hora" DisplayMemberBinding="{Binding StartingDateTime, StringFormat='HH:mm:ss'}"
+                                    Width="80"/>
+
+                    <GridViewColumn Header="Modo" DisplayMemberBinding="{converters:SwitchBinding Immediate, Imediato, Espera}"
+                                    Width="100"/>
+
+                    <GridViewColumn Header="Arquivo" DisplayMemberBinding="{Binding FriendlyName}"
+                                    Width="200"/>
+
+                    <GridViewColumn Header="Dias da Semana" Width="120">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Expander x:Name="DaysOfWeekListbox">
+                                    <ListBox ItemsSource="{Binding DaysOfWeek}">
+                                        <ListBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ListBox.ItemsPanel>
+
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding ., Converter={StaticResource DayOfWeekStringConverter}}"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </Expander>
+
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding UseDaysOfWeek}" Value="False">
+                                        <Setter Property="Visibility" Value="Hidden" TargetName="DaysOfWeekListbox"/>
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Horas" Width="120">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Expander x:Name="HoursListbox">
+                                    <ListBox ItemsSource="{Binding PlayingHours}">
+                                        <ListBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ListBox.ItemsPanel>
+
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding ., StringFormat='00'}"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </Expander>
+
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding UsePlayingHours}" Value="False">
+                                        <Setter Property="Visibility" Value="Hidden" TargetName="HoursListbox"/>
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Expiração" Width="120">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock x:Name="ExpirationTextBlock" Text="{Binding ExpirationDateTime, StringFormat='dd/MM/yyyy HH:mm:ss'}"/>
+
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding UsaDataExpiracao}" Value="False">
+                                        <Setter Property="Visibility" Value="Hidden" TargetName="ExpirationTextBlock"/>
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

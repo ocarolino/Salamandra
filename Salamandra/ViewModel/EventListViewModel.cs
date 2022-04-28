@@ -20,7 +20,11 @@ namespace Salamandra.ViewModel
         public ObservableCollection<ScheduledEvent> Events { get; set; }
         public int LastEventId { get; set; }
 
-        public ICommand NewEventCommand { get; set; }
+        public ScheduledEvent? SelectedScheduledEvent { get; set; }
+
+        public ICommand CreateEventCommand { get; set; }
+        public ICommand EditEventCommand { get; set; }
+        public ICommand DeleteEventCommand { get; set; }
 
         public EventListViewModel(List<ScheduledEvent> events)
         {
@@ -30,7 +34,9 @@ namespace Salamandra.ViewModel
             if (events.Count > 0)
                 this.LastEventId = events.Last().Id;
 
-            this.NewEventCommand = new RelayCommand(p => NewEvent());
+            this.CreateEventCommand = new RelayCommand(p => CreateEvent());
+            this.EditEventCommand = new RelayCommand(p => EditEvent(), p => this.SelectedScheduledEvent != null);
+            this.DeleteEventCommand = new RelayCommand(p => DeleteEvent(), p => this.SelectedScheduledEvent != null);
         }
 
         public void Loading()
@@ -42,7 +48,7 @@ namespace Salamandra.ViewModel
             this.Events = new ObservableCollection<ScheduledEvent>(events);
         }
 
-        private void NewEvent()
+        private void CreateEvent()
         {
             EventViewModel eventViewModel = new EventViewModel();
 
@@ -57,6 +63,38 @@ namespace Salamandra.ViewModel
                 scheduledEvent.Id = this.LastEventId;
 
                 this.Events.Add(scheduledEvent);
+            }
+        }
+
+        private void EditEvent()
+        {
+            if (this.SelectedScheduledEvent == null)
+                return;
+
+            EventViewModel eventViewModel = new EventViewModel(this.SelectedScheduledEvent);
+
+            EventWindow eventWindow = new EventWindow(eventViewModel);
+            eventWindow.Owner = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+            if (eventWindow.ShowDialog() == true)
+            {
+                int index = this.Events.IndexOf(this.SelectedScheduledEvent);
+
+                this.Events[index] = eventViewModel.ScheduledEvent;
+                this.SelectedScheduledEvent = this.Events[index];
+            }
+        }
+
+        private void DeleteEvent()
+        {
+            if (this.SelectedScheduledEvent == null)
+                return;
+
+            if (MessageBox.Show(String.Format("Tem certeza que deseja excluir o evento {0}?", this.SelectedScheduledEvent.FriendlyName),
+                "Eventos", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                this.Events.Remove(this.SelectedScheduledEvent);
+                this.SelectedScheduledEvent = null;
             }
         }
 

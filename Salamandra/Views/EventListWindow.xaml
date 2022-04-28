@@ -18,7 +18,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ListView Grid.Row="0" ItemsSource="{Binding Events}">
+        <ListView Grid.Row="0" ItemsSource="{Binding Events}" SelectedItem="{Binding SelectedScheduledEvent}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Hora" DisplayMemberBinding="{Binding StartingDateTime, StringFormat='HH:mm:ss'}"
@@ -111,7 +111,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0 8 0 0" HorizontalAlignment="Right">
-                <Button Content="Novo" Command="{Binding NewEventCommand}"
+                <Button Content="Novo" Command="{Binding CreateEventCommand}"
                     Width="80" Height="24"/>
                 <Button Content="Editar" Command="{Binding EditEventCommand}"
                     Width="80" Height="24" Margin="8 0 0 0"/>

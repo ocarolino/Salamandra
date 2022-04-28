@@ -11,11 +11,13 @@ namespace Salamandra.Engine.Domain.Settings
     {
         public DeviceSettings DeviceSettings { get; set; }
         public PlayerSettings PlayerSettings { get; set; }
+        public ScheduledEventSettings ScheduledEventSettings { get; set; }
 
         public ApplicationSettings()
         {
             this.DeviceSettings = new DeviceSettings();
             this.PlayerSettings = new PlayerSettings();
+            this.ScheduledEventSettings = new ScheduledEventSettings();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

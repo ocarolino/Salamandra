@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Salamandra.Engine.Domain.Settings
+{
+    public class ScheduledEventSettings
+    {
+        public string ScheduledEventFilename { get; set; }
+
+        public ScheduledEventSettings()
+        {
+            this.ScheduledEventFilename = String.Empty;
+        }
+    }
+}

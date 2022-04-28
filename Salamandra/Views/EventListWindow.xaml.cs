@@ -34,5 +34,11 @@ namespace Salamandra.Views
         {
             this.eventListViewModel.Loading();
         }
+
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+            this.Close();
+        }
     }
 }

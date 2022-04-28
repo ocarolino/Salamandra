@@ -613,7 +613,7 @@ namespace Salamandra.ViewModel
 
             if (eventListWindow.ShowDialog() == true)
             {
-
+                this.ScheduleManager.SwapEvents(eventListViewModel.Events);
             }
         }
 

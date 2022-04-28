@@ -143,6 +143,7 @@ namespace Salamandra.ViewModel
         {
             LoadSettingsFile();
             ApplySettings();
+            LoadEventsFile();
         }
 
         private void LoadSettingsFile()
@@ -175,6 +176,22 @@ namespace Salamandra.ViewModel
                 this.PlaylistManager.PlaylistMode = this.ApplicationSettings.PlayerSettings.PlaylistMode;
             }
         }
+
+        private void LoadEventsFile()
+        {
+            try
+            {
+                if (!String.IsNullOrWhiteSpace(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename))
+                    this.ScheduleManager.LoadFromFile(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename);
+            }
+            catch (Exception ex)
+            {
+                this.ScheduleManager.CleanEvents();
+                // ToDo: Log ou mensagem!
+            }
+        }
+
+
 
         public bool Closing()
         {
@@ -614,6 +631,26 @@ namespace Salamandra.ViewModel
             if (eventListWindow.ShowDialog() == true)
             {
                 this.ScheduleManager.SwapEvents(eventListViewModel.Events);
+
+                if (String.IsNullOrWhiteSpace(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename))
+                {
+                    SaveFileDialog saveFileDialog = new SaveFileDialog();
+                    saveFileDialog.Filter = "Playlist de Eventos (*.sche) | *.sche";
+
+                    if (saveFileDialog.ShowDialog() == true)
+                        this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename = saveFileDialog.FileName;
+                    else
+                        return;
+                }
+                try
+                {
+                    this.ScheduleManager.SaveToFile(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(String.Format("Houve um erro ao salvar a planilha de eventos.\n\n{0}", ex.Message),
+                        "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 

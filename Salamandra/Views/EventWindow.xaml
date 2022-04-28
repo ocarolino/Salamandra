@@ -10,7 +10,8 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         mc:Ignorable="d"
         Title="Evento" Width="480" SizeToContent="Height"
-        ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+        ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
+        Loaded="Window_Loaded">
     <Window.Resources>
         <converters:DayOfWeekStringConverter x:Key="DayOfWeekStringConverter"/>
     </Window.Resources>

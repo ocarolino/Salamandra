@@ -65,6 +65,7 @@ namespace Salamandra.ViewModel
                 var scheduledEvent = JsonConvert.DeserializeObject<ScheduledEvent>(serialized);
 
                 this.ScheduledEvent = scheduledEvent;
+                UpdateEventRequiresPath();
             }
         }
 
@@ -95,6 +96,11 @@ namespace Salamandra.ViewModel
         {
             this.ScheduledEvent.Filename = String.Empty;
 
+            UpdateEventRequiresPath();
+        }
+
+        private void UpdateEventRequiresPath()
+        {
             switch (this.ScheduledEvent.TrackScheduleType)
             {
                 case TrackScheduleType.TimeAnnouncementTrack:

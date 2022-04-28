@@ -51,7 +51,12 @@ namespace Salamandra.ViewModel
 
             if (eventWindow.ShowDialog() == true)
             {
+                this.LastEventId++;
 
+                ScheduledEvent scheduledEvent = eventViewModel.ScheduledEvent;
+                scheduledEvent.Id = this.LastEventId;
+
+                this.Events.Add(scheduledEvent);
             }
         }
 

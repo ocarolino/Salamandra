@@ -18,7 +18,9 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ListView Grid.Row="0" ItemsSource="{Binding Events}" SelectedItem="{Binding SelectedScheduledEvent}">
+        <ListView Grid.Row="0" ItemsSource="{Binding Events}" SelectedItem="{Binding SelectedScheduledEvent}"
+                  Style="{StaticResource ListViewStyle}" ItemContainerStyle="{StaticResource ListViewItemStyle}"
+                  VerticalContentAlignment="Center">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Hora" DisplayMemberBinding="{Binding StartingDateTime, StringFormat='HH:mm:ss'}"

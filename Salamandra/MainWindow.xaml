@@ -249,7 +249,9 @@
                     </StackPanel>
                 </Grid>
 
-                <ListView Grid.Row="1" Margin="0 4 0 0" ItemsSource="{Binding ScheduleManager.EventsQueue}">
+                <ListView Grid.Row="1" Margin="0 4 0 0" ItemsSource="{Binding ScheduleManager.EventsQueue}" SelectionMode="Single"
+                          Style="{StaticResource ListViewStyle}" ItemContainerStyle="{StaticResource ListViewItemStyle}"
+                          Name="UpcomingEventsListView" MouseDown="UpcomingEventsListView_MouseDown">
                     <ListView.View>
                         <GridView>
                             <!-- Icon -->
@@ -263,7 +265,7 @@
 
             <ListView ItemsSource="{Binding PlaylistManager.Tracks}" SelectedItem="{Binding SelectedTrack}"
                   Name="playlist" SelectionMode="Extended" HorizontalContentAlignment="Stretch"
-                  Margin="8 0 8 0" AlternationCount="2" Grid.Column="1">
+                  Margin="8 0 8 0" AlternationCount="2" Grid.Column="1" MouseDown="UpcomingEventsListView_MouseDown">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>

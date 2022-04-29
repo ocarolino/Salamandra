@@ -40,5 +40,13 @@ namespace Salamandra
         {
             this.mainViewModel.Loading();
         }
+
+        private void UpcomingEventsListView_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            HitTestResult r = VisualTreeHelper.HitTest(this, e.GetPosition(this));
+
+            if (r.VisualHit.GetType() != typeof(ListViewItem))
+                (sender as ListView)!.UnselectAll();
+        }
     }
 }

@@ -104,7 +104,6 @@ namespace Salamandra.ViewModel
             this.MainTimer = new DispatcherTimer();
             this.MainTimer.Interval = TimeSpan.FromMilliseconds(250);
             this.MainTimer.Tick += MainTimer_Tick;
-            this.MainTimer.Start();
 
             this.PlaylistLoading = false;
             this.PlaylistInfoText = string.Empty;
@@ -126,6 +125,8 @@ namespace Salamandra.ViewModel
         {
             this.CurrentDateTime = DateTime.Now;
 
+            this.ScheduleManager.UpdateQueuedEventsList();
+
             if (!this.IsPlaying)
                 return;
 
@@ -144,6 +145,8 @@ namespace Salamandra.ViewModel
             LoadSettingsFile();
             ApplySettings();
             LoadEventsFile();
+
+            this.MainTimer.Start();
         }
 
         private void LoadSettingsFile()

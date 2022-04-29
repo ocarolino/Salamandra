@@ -56,7 +56,7 @@ namespace Salamandra.Engine.Services
 
         public bool CheckEventSchedule(ScheduledEvent scheduledEvent, DateTime dateToTest)
         {
-            if (scheduledEvent.StartingDateTime.Date <= dateToTest.Date)
+            if (scheduledEvent.StartingDateTime.Date > dateToTest.Date)
                 return false;
 
             if (scheduledEvent.UseDaysOfWeek)
@@ -84,7 +84,7 @@ namespace Salamandra.Engine.Services
             DateTime runningDate = new DateTime(dateToTest.Year, dateToTest.Month, dateToTest.Day,
                 dateToTest.Hour, scheduledEvent.StartingDateTime.Minute, scheduledEvent.StartingDateTime.Second);
 
-            if (runningDate < dateToTest || runningDate > scheduledEvent.ExpirationDateTime)
+            if (runningDate < dateToTest || (scheduledEvent.UseExpirationDateTime && runningDate > scheduledEvent.ExpirationDateTime))
                 return false;
 
             return true;
@@ -105,8 +105,22 @@ namespace Salamandra.Engine.Services
             foreach (var item in this.Events)
             {
                 if (CheckEventSchedule(item, startFromDate))
-                    Debug.WriteLine(String.Format("Queueing event: {0}", item.FriendlyName));
+                    QueueEvent(item, startFromDate);
             }
+        }
+
+        private void QueueEvent(ScheduledEvent scheduledEvent, DateTime startFromDate)
+        {
+            Debug.WriteLine(String.Format("Queueing event: {0}", scheduledEvent.FriendlyName));
+
+            UpcomingEvent upcomingEvent = new UpcomingEvent();
+            upcomingEvent.EventId = scheduledEvent.Id;
+            upcomingEvent.Imediate = scheduledEvent.Immediate;
+            upcomingEvent.StartTime = new DateTime(startFromDate.Year, startFromDate.Month, startFromDate.Day,
+                startFromDate.Hour, scheduledEvent.StartingDateTime.Minute, scheduledEvent.StartingDateTime.Second);
+            upcomingEvent.Track = scheduledEvent.GetTrack();
+
+            this.EventsQueue.Add(upcomingEvent);
         }
     }
 }

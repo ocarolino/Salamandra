@@ -2,4 +2,44 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- Fonts -->
     <FontFamily x:Key="FontAwesome">/Fonts/FontAwesome.otf#Font Awesome 5 Free Solid</FontFamily>
+    
+    <!-- Colors -->
+    <!-- Window Colours. Background, Border and TitleBar colours. -->
+    <SolidColorBrush x:Key="BackgroundColour" Color="#FFF8F8F8" />
+    <SolidColorBrush x:Key="WindowBorderColour" Color="#FFE0E0E0" />
+    <SolidColorBrush x:Key="WindowTitleColour" Color="WhiteSmoke" />
+
+    <!-- Control colour themes. dont mess with em okay unless youre good at styles -->
+    <!-- Complete DarkTheme Colours -->
+    <SolidColorBrush x:Key="TransparentBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="ContainerBackground" Color="WhiteSmoke" />
+    <SolidColorBrush x:Key="ContainerBorder" Color="#FFE8E8E8" />
+    <SolidColorBrush x:Key="ControlDefaultForeground" Color="#FF040404" />
+    <SolidColorBrush x:Key="ControlMOSelectForeground" Color="#FF040404" />
+
+    <SolidColorBrush x:Key="ControlDarkerBackground" Color="#FFC7C7C7" />
+    <SolidColorBrush x:Key="ControlDarkerBorderBrush" Color="#FFBEBEBE" />
+    <SolidColorBrush x:Key="ControlDefaultBackground" Color="#FFE1E1E1" />
+    <SolidColorBrush x:Key="ControlDefaultBorderBrush" Color="#FFAFAFAF" />
+    <SolidColorBrush x:Key="ControlBrightDefaultBackground" Color="#FFCDCDCD" />
+    <SolidColorBrush x:Key="ControlBrightDefaultBorderBrush" Color="#FFAFAFAF" />
+    <SolidColorBrush x:Key="ControlDisabledBackground" Color="#FFB4B4B4" />
+    <SolidColorBrush x:Key="ControlDisabledBorderBrush" Color="#FF8C8C8C" />
+    <SolidColorBrush x:Key="ControlMouseOverBackground" Color="#FFD2D2D2" />
+    <SolidColorBrush x:Key="ControlMouseOverBorderBrush" Color="#FFBEBEBE" />
+    <SolidColorBrush x:Key="ControlSelectedBackground" Color="#FFE0E0E0" />
+    <SolidColorBrush x:Key="ControlSelectedBorderBrush" Color="#FFCCCCCC" />
+    <SolidColorBrush x:Key="ControlSelectedMouseOverBackground" Color="Gainsboro" />
+    <SolidColorBrush x:Key="ControlSelectedMouseOverBorderBrush" Color="#FFB9B9B9" />
+    <SolidColorBrush x:Key="ControlGlythColour" Color="#FF0A0A0A" />
+    <SolidColorBrush x:Key="ControlMouseOverGlythColour" Color="#FF212121" />
+    <SolidColorBrush x:Key="ControlSelectedGlythColour" Color="#FF191919" />
+    <SolidColorBrush x:Key="ControlDisabledGlythColour" Color="#FF666666" />
+
+    <!-- Colourful theme  Colours -->
+
+    <SolidColorBrush x:Key="ControlPrimaryColourBackground" Color="#FF2084E8" />
+    <SolidColorBrush x:Key="ControlPrimaryColourBorderBrush" Color="#FF3294E8" />
+    <SolidColorBrush x:Key="ControlBrightPrimaryColourBackground" Color="#FF3296FA" />
+    <SolidColorBrush x:Key="ControlBrightPrimaryColourBorderBrush" Color="#FF50A4FA" />
 </ResourceDictionary>

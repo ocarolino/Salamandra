@@ -116,7 +116,7 @@ namespace Salamandra.Engine.Services
 
             UpcomingEvent upcomingEvent = new UpcomingEvent();
             upcomingEvent.EventId = scheduledEvent.Id;
-            upcomingEvent.Imediate = scheduledEvent.Immediate;
+            upcomingEvent.Immediate = scheduledEvent.Immediate;
             upcomingEvent.StartTime = new DateTime(startFromDate.Year, startFromDate.Month, startFromDate.Day,
                 startFromDate.Hour, scheduledEvent.StartingDateTime.Minute, scheduledEvent.StartingDateTime.Second);
             upcomingEvent.Track = scheduledEvent.GetTrack();

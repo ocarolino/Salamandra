@@ -249,7 +249,7 @@
                     </StackPanel>
                 </Grid>
 
-                <ListView Grid.Row="1" Margin="0 4 0 0" ItemsSource="{Binding ScheduleManager.EventQueue}">
+                <ListView Grid.Row="1" Margin="0 4 0 0" ItemsSource="{Binding ScheduleManager.EventsQueue}">
                     <ListView.View>
                         <GridView>
                             <!-- Icon -->

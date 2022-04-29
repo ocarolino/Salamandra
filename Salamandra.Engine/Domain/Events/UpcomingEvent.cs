@@ -10,7 +10,7 @@ namespace Salamandra.Engine.Domain.Events
     {
         public int EventId { get; set; }
         public DateTime StartTime { get; set; }
-        public bool Imediate { get; set; }
+        public bool Immediate { get; set; }
         public BaseTrack? Track { get; set; }
     }
 }

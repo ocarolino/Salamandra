@@ -1,4 +1,5 @@
 ﻿using Salamandra.Engine.Domain.Enums;
+using Salamandra.Engine.Domain.Tracks;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,6 +33,29 @@ namespace Salamandra.Engine.Domain.Events
             this.DaysOfWeek = new ObservableCollection<DayOfWeek>();
             this.Filename = String.Empty;
             this.FriendlyName = String.Empty;
+        }
+
+        public BaseTrack GetTrack()
+        {
+            switch (this.TrackScheduleType)
+            {
+                case TrackScheduleType.FileTrack:
+                    return new AudioFileTrack()
+                    {
+                        FriendlyName = this.FriendlyName,
+                        Filename = this.Filename
+                    };
+                case TrackScheduleType.RandomFileTrack:
+                    return new RandomFileTrack()
+                    {
+                        FriendlyName = this.FriendlyName,
+                        Filename = this.Filename
+                    };
+                case TrackScheduleType.TimeAnnouncementTrack:
+                    return new TimeAnnouncementTrack();
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

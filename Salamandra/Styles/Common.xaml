@@ -36,6 +36,8 @@
     <SolidColorBrush x:Key="ControlSelectedGlythColour" Color="#FF191919" />
     <SolidColorBrush x:Key="ControlDisabledGlythColour" Color="#FF666666" />
 
+    <SolidColorBrush x:Key="ControlAlternateBackground" Color="#fafafa"/>
+
     <!-- Colourful theme  Colours -->
 
     <SolidColorBrush x:Key="ControlPrimaryColourBackground" Color="#FF2084E8" />

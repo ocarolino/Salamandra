@@ -45,5 +45,41 @@ namespace Salamandra.Engine.Services
         {
             this.Events = new List<ScheduledEvent>();
         }
+
+        public bool CheckEventSchedule(ScheduledEvent scheduledEvent, DateTime dateToTest)
+        {
+            if (scheduledEvent.StartingDateTime.Date <= dateToTest.Date)
+                return false;
+
+            if (scheduledEvent.UseDaysOfWeek)
+            {
+                if (!scheduledEvent.DaysOfWeek.Contains(dateToTest.DayOfWeek))
+                    return false;
+            }
+            else
+            {
+                if (scheduledEvent.StartingDateTime.Date != dateToTest.Date)
+                    return false;
+            }
+
+            if (scheduledEvent.UsePlayingHours)
+            {
+                if (!scheduledEvent.PlayingHours.Contains(dateToTest.Hour))
+                    return false;
+            }
+            else
+            {
+                if (scheduledEvent.StartingDateTime.Hour != dateToTest.Hour)
+                    return false;
+            }
+
+            DateTime runningDate = new DateTime(dateToTest.Year, dateToTest.Month, dateToTest.Day,
+                dateToTest.Hour, scheduledEvent.StartingDateTime.Minute, scheduledEvent.StartingDateTime.Second);
+
+            if (runningDate < dateToTest || runningDate < scheduledEvent.ExpirationDateTime)
+                return false;
+
+            return true;
+        }
     }
 }

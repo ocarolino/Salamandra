@@ -3,6 +3,7 @@ using Salamandra.Engine.Domain.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Salamandra.Engine.Services
 {
-    public class ScheduleManager
+    public class ScheduleManager : INotifyPropertyChanged
     {
         public List<ScheduledEvent> Events { get; set; }
         public ObservableCollection<UpcomingEvent> EventsQueue { get; set; }
@@ -122,5 +123,7 @@ namespace Salamandra.Engine.Services
 
             this.EventsQueue.Add(upcomingEvent);
         }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }

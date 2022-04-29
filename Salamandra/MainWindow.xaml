@@ -249,7 +249,16 @@
                     </StackPanel>
                 </Grid>
 
-                <ListView Grid.Row="1" Margin="0 4 0 0"/>
+                <ListView Grid.Row="1" Margin="0 4 0 0" ItemsSource="{Binding ScheduleManager.EventQueue}">
+                    <ListView.View>
+                        <GridView>
+                            <!-- Icon -->
+                            <GridViewColumn Header="Hora" DisplayMemberBinding="{Binding StartTime, StringFormat='HH:mm:ss'}"/>
+                            <GridViewColumn Header="Início" DisplayMemberBinding="{converters:SwitchBinding Immediate, Imediato, Espera}"/>
+                            <GridViewColumn Header="Evento" DisplayMemberBinding="{Binding Track.FriendlyName}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </Grid>
 
             <ListView ItemsSource="{Binding PlaylistManager.Tracks}" SelectedItem="{Binding SelectedTrack}"

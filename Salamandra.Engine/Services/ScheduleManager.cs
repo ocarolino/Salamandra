@@ -76,7 +76,7 @@ namespace Salamandra.Engine.Services
             DateTime runningDate = new DateTime(dateToTest.Year, dateToTest.Month, dateToTest.Day,
                 dateToTest.Hour, scheduledEvent.StartingDateTime.Minute, scheduledEvent.StartingDateTime.Second);
 
-            if (runningDate < dateToTest || runningDate < scheduledEvent.ExpirationDateTime)
+            if (runningDate < dateToTest || runningDate > scheduledEvent.ExpirationDateTime)
                 return false;
 
             return true;

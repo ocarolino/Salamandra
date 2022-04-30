@@ -226,8 +226,8 @@
 
         <Grid Margin="8 0 0 0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="420"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
@@ -255,9 +255,12 @@
                     <ListView.View>
                         <GridView>
                             <!-- Icon -->
-                            <GridViewColumn Header="Hora" DisplayMemberBinding="{Binding StartTime, StringFormat='HH:mm:ss'}"/>
-                            <GridViewColumn Header="Início" DisplayMemberBinding="{converters:SwitchBinding Immediate, Imediato, Espera}"/>
-                            <GridViewColumn Header="Evento" DisplayMemberBinding="{Binding Track.FriendlyName}"/>
+                            <GridViewColumn Header="Hora" DisplayMemberBinding="{Binding StartTime, StringFormat='HH:mm:ss'}"
+                                            Width="60"/>
+                            <GridViewColumn Header="Início" DisplayMemberBinding="{converters:SwitchBinding Immediate, Imediato, Espera}"
+                                            Width="60"/>
+                            <GridViewColumn Header="Evento" DisplayMemberBinding="{Binding Track.FriendlyName}"
+                                            Width="280"/>
                         </GridView>
                     </ListView.View>
                 </ListView>

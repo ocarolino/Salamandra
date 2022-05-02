@@ -146,11 +146,21 @@ namespace Salamandra.Engine.Services
                     continue;
                 }
 
-                if (this.Events.FirstOrDefault(x => x.Id == temp.EventId) == null)
+                var model = this.Events.FirstOrDefault(x => x.Id == temp.EventId);
+
+                if (model == null)
                 {
                     this.EventsQueue.Remove(temp);
                     continue;
                 }
+
+                if (!CheckEventSchedule(model, temp.StartDateTime))
+                {
+                    this.EventsQueue.Remove(temp);
+                    continue;
+                }
+
+                temp.Track = model.GetTrack();
             }
 
             CreateUpcomingEvents(refreshDate);

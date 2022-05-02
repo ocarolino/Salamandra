@@ -16,6 +16,8 @@ namespace Salamandra.Engine.Services
         public List<ScheduledEvent> Events { get; set; }
         public ObservableCollection<UpcomingEvent> EventsQueue { get; set; }
         public int LastHourChecked { get; set; }
+        public bool HasLateImmediateEvent { get; set; }
+        public bool HasLateWaitingEvent { get; set; }
 
         public ScheduleManager()
         {
@@ -99,6 +101,34 @@ namespace Salamandra.Engine.Services
                     DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second));
                 this.LastHourChecked = DateTime.Now.Hour;
             }
+
+            if (this.EventsQueue.Count == 0)
+            {
+                this.HasLateImmediateEvent = false;
+                this.HasLateWaitingEvent = false;
+
+                return;
+            }
+
+            // ToDo: Is this really efficient?
+            if (!this.HasLateImmediateEvent && !this.HasLateWaitingEvent)
+                UpdateLateEvents();
+        }
+
+        private void UpdateLateEvents()
+        {
+            UpcomingEvent? immediate = GetLateImmediateEvent();
+            UpcomingEvent? waiting = GetLateWaitingEvent();
+
+            if (immediate != null)
+                this.HasLateImmediateEvent = true;
+            else
+                this.HasLateImmediateEvent = false;
+
+            if (waiting != null)
+                this.HasLateWaitingEvent = true;
+            else
+                this.HasLateImmediateEvent = false;
         }
 
         private void CreateUpcomingEvents(DateTime startFromDate)
@@ -164,6 +194,18 @@ namespace Salamandra.Engine.Services
             }
 
             CreateUpcomingEvents(refreshDate);
+            UpdateLateEvents();
         }
+
+        public UpcomingEvent? GetLateImmediateEvent()
+        {
+            return this.EventsQueue.FirstOrDefault(x => x.Immediate && x.StartDateTime < DateTime.Now);
+        }
+
+        public UpcomingEvent? GetLateWaitingEvent()
+        {
+            return this.EventsQueue.FirstOrDefault(x => !x.Immediate && x.StartDateTime < DateTime.Now);
+        }
+
     }
 }

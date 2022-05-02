@@ -255,7 +255,7 @@
                     <ListView.View>
                         <GridView>
                             <!-- Icon -->
-                            <GridViewColumn Header="Hora" DisplayMemberBinding="{Binding StartTime, StringFormat='HH:mm:ss'}"
+                            <GridViewColumn Header="Hora" DisplayMemberBinding="{Binding StartDateTime, StringFormat='HH:mm:ss'}"
                                             Width="60"/>
                             <GridViewColumn Header="Início" DisplayMemberBinding="{converters:SwitchBinding Immediate, Imediato, Espera}"
                                             Width="60"/>

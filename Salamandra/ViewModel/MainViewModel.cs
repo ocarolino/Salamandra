@@ -648,6 +648,7 @@ namespace Salamandra.ViewModel
             if (eventListWindow.ShowDialog() == true)
             {
                 this.ScheduleManager.SwapEvents(eventListViewModel.Events);
+                this.ScheduleManager.RefreshEventsQueue();
 
                 if (String.IsNullOrWhiteSpace(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename))
                 {

@@ -108,6 +108,10 @@ namespace Salamandra.Engine.Services
                 if (CheckEventSchedule(item, startFromDate))
                     QueueEvent(item, startFromDate);
             }
+
+            this.EventsQueue = new ObservableCollection<UpcomingEvent>(
+                this.EventsQueue.OrderBy(x => x.StartDateTime).ThenByDescending(x => x.Immediate)
+                );
         }
 
         private void QueueEvent(ScheduledEvent scheduledEvent, DateTime startFromDate)
@@ -117,7 +121,7 @@ namespace Salamandra.Engine.Services
             UpcomingEvent upcomingEvent = new UpcomingEvent();
             upcomingEvent.EventId = scheduledEvent.Id;
             upcomingEvent.Immediate = scheduledEvent.Immediate;
-            upcomingEvent.StartTime = new DateTime(startFromDate.Year, startFromDate.Month, startFromDate.Day,
+            upcomingEvent.StartDateTime = new DateTime(startFromDate.Year, startFromDate.Month, startFromDate.Day,
                 startFromDate.Hour, scheduledEvent.StartingDateTime.Minute, scheduledEvent.StartingDateTime.Second);
             upcomingEvent.Track = scheduledEvent.GetTrack();
 
@@ -125,5 +129,31 @@ namespace Salamandra.Engine.Services
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        public void RefreshEventsQueue()
+        {
+            DateTime refreshDate = DateTime.Now;
+
+            var futureQueue = this.EventsQueue.Where(x => x.StartDateTime >= refreshDate);
+
+            for (int i = this.EventsQueue.Count - 1; i >= 0; i--)
+            {
+                var temp = this.EventsQueue[i];
+
+                if (futureQueue.Contains(temp))
+                {
+                    this.EventsQueue.Remove(temp);
+                    continue;
+                }
+
+                if (this.Events.FirstOrDefault(x => x.Id == temp.EventId) == null)
+                {
+                    this.EventsQueue.Remove(temp);
+                    continue;
+                }
+            }
+
+            CreateUpcomingEvents(refreshDate);
+        }
     }
 }

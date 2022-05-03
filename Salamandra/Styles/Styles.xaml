@@ -95,10 +95,14 @@
                         <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
-                            <Setter Property="Background" Value="{StaticResource ControlAlternateBackground}"></Setter>
-                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="True"/>
+                                <Condition Property="ItemsControl.AlternationIndex" Value="1"/>
+                            </MultiTrigger.Conditions>
 
+                            <Setter Property="Background" Value="{StaticResource ControlAlternateBackground}"></Setter>
+                        </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver" Value="True" />

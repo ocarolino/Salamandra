@@ -20,17 +20,29 @@
 
         <ListView Grid.Row="0" ItemsSource="{Binding Events}" SelectedItem="{Binding SelectedScheduledEvent}"
                   Style="{StaticResource ListViewStyle}" ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                  VerticalContentAlignment="Center">
+                  VerticalContentAlignment="Center" Name="EventsListView">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Hora" DisplayMemberBinding="{Binding StartingDateTime, StringFormat='HH:mm:ss'}"
-                                    Width="80"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding StartingDateTime, StringFormat='HH:mm:ss'}"
+                                    Width="80">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="StartingDateTime" Click="GridViewColumnHeader_Click">Hora</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
 
-                    <GridViewColumn Header="Modo" DisplayMemberBinding="{converters:SwitchBinding Immediate, Imediato, Espera}"
-                                    Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{converters:SwitchBinding Immediate, Imediato, Espera}"
+                                    Width="100">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Immediate" Click="GridViewColumnHeader_Click">Modo</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
 
-                    <GridViewColumn Header="Arquivo" DisplayMemberBinding="{Binding FriendlyName}"
-                                    Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding FriendlyName}"
+                                    Width="200">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="FriendlyName" Click="GridViewColumnHeader_Click">Arquivo</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
 
                     <GridViewColumn Header="Dias da Semana" Width="120">
                         <GridViewColumn.CellTemplate>

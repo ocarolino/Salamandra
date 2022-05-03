@@ -225,8 +225,13 @@ namespace Salamandra.Engine.Services
             var lateEvents = this.EventsQueue.Where(x => x.StartDateTime < DateTime.Now);
 
             // ToDo: RemoveRange
-            foreach (var item in lateEvents)
-                this.EventsQueue.Remove(item);
+            for (int i = this.EventsQueue.Count - 1; i >= 0; i--)
+            {
+                var temp = this.EventsQueue[i];
+
+                if (lateEvents.Contains(temp))
+                    this.EventsQueue.Remove(temp);
+            }
         }
     }
 }

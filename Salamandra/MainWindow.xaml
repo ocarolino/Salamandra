@@ -245,7 +245,8 @@
                     <TextBlock Text="Próximos Eventos" Grid.Column="0" VerticalAlignment="Bottom"/>
 
                     <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
-                        <Button Content="Editar" Command="{Binding OpenEventListCommand}" Padding="4"/>
+                        <Button Content="Editar" Command="{Binding OpenEventListCommand}" Padding="4"
+                                Style="{StaticResource FlatButtonStyle}" Cursor="Hand"/>
                     </StackPanel>
                 </Grid>
 

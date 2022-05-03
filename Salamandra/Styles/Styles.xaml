@@ -171,8 +171,6 @@
                             <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource ControlSelectedBorderBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Background" TargetName="border" Value="{StaticResource ControlBrightDefaultBackground}" />
-                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource ControlBrightDefaultBorderBrush}" />
                             <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource ControlDisabledGlythColour}" />
                         </Trigger>
                     </ControlTemplate.Triggers>

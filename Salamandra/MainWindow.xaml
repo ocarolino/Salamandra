@@ -247,13 +247,13 @@
                     <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
                         <Button Command="{Binding PlayLateEventsCommand}" Padding="4"
                                 Style="{StaticResource FlatButtonStyle}">
-                            <Image Source="/Images/Icons/Toolbar/play.png" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            <controls:AutoDisableImage Source="/Images/Icons/Toolbar/play.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                         </Button>
 
                         <Button Command="{Binding DiscardLateEventsCommand}" Padding="4" Margin="4 0 0 0"
                                 Style="{StaticResource FlatButtonStyle}">
-                            <Image Source="/Images/Icons/Toolbar/trash.png" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            <controls:AutoDisableImage Source="/Images/Icons/Toolbar/trash.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                         </Button>
 

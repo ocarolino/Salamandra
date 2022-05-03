@@ -259,6 +259,12 @@
 
                         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="4 0 0 0"/>
 
+                        <ToggleButton Padding="4" Margin="4 0 0 0" IsChecked="{Binding EnableEvents}"
+                                Style="{StaticResource FlatToggleButtonStyle}">
+                            <Image Source="/Images/Icons/Toolbar/checkmark.png" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
+                        </ToggleButton>
+
                         <Button Command="{Binding OpenEventListCommand}" Padding="4" Margin="4 0 0 0"
                                 Style="{StaticResource FlatButtonStyle}">
                             <Image Source="/Images/Icons/Toolbar/calendar.png" VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -269,7 +275,8 @@
 
                 <ListView Grid.Row="1" Margin="0 4 0 0" ItemsSource="{Binding ScheduleManager.EventsQueue}" SelectionMode="Single"
                           Style="{StaticResource ListViewStyle}" ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                          Name="UpcomingEventsListView" MouseDown="UpcomingEventsListView_MouseDown">
+                          Name="UpcomingEventsListView" MouseDown="UpcomingEventsListView_MouseDown"
+                          IsEnabled="{Binding EnableEvents}">
                     <ListView.View>
                         <GridView>
                             <!-- Icon -->

@@ -54,6 +54,7 @@ namespace Salamandra.ViewModel
         public SettingsManager<ApplicationSettings> SettingsManager { get; set; }
 
         public ScheduleManager ScheduleManager { get; set; }
+        public bool EnableEvents { get; set; }
 
         public TimeSpan? RemainingTime { get; set; }
         public TimeSpan? EndingTimeOfDay { get; set; }
@@ -114,6 +115,7 @@ namespace Salamandra.ViewModel
             this.ApplicationSettings = new ApplicationSettings();
 
             this.ScheduleManager = new ScheduleManager();
+            this.EnableEvents = true;
 
             this.DirectoryAudioScrapper = new DirectoryAudioScrapper();
 

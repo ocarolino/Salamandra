@@ -14,6 +14,7 @@
 	  <None Remove="Images\Icons\Playlist\audio_file.png" />
 	  <None Remove="Images\Icons\Playlist\music_folder.png" />
 	  <None Remove="Images\Icons\Toolbar\calendar.png" />
+	  <None Remove="Images\Icons\Toolbar\checkmark.png" />
 	  <None Remove="Images\Icons\Toolbar\play.png" />
 	  <None Remove="Images\Icons\Toolbar\trash.png" />
 	</ItemGroup>
@@ -46,6 +47,7 @@
 		<Resource Include="Images\Icons\Playlist\audio_file.png" />
 		<Resource Include="Images\Icons\Playlist\music_folder.png" />
 		<Resource Include="Images\Icons\Toolbar\calendar.png" />
+		<Resource Include="Images\Icons\Toolbar\checkmark.png" />
 		<Resource Include="Images\Icons\Toolbar\play.png" />
 		<Resource Include="Images\Icons\Toolbar\trash.png" />
 	</ItemGroup>

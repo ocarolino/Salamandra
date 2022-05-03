@@ -219,5 +219,14 @@ namespace Salamandra.Engine.Services
 
             return upcomingEvent;
         }
+
+        public void DiscardLateEvents()
+        {
+            var lateEvents = this.EventsQueue.Where(x => x.StartDateTime < DateTime.Now);
+
+            // ToDo: RemoveRange
+            foreach (var item in lateEvents)
+                this.EventsQueue.Remove(item);
+        }
     }
 }

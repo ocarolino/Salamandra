@@ -82,6 +82,8 @@ namespace Salamandra.ViewModel
         public ICommand? AddRandomTrackCommand { get; set; }
         public ICommand? OpenSettingsCommand { get; set; }
         public ICommand? OpenEventListCommand { get; set; }
+        public ICommand? PlayLateEventsCommand { get; set; }
+        public ICommand? DiscardLateEventsCommand { get; set; }
         #endregion
 
         public MainViewModel()
@@ -268,6 +270,9 @@ namespace Salamandra.ViewModel
 
             this.OpenSettingsCommand = new RelayCommand(p => OpenSettings());
             this.OpenEventListCommand = new RelayCommand(p => OpenEventList());
+
+            this.PlayLateEventsCommand = new RelayCommand(p => PlayLateEvents(), p => this.ScheduleManager.HasLateEvent);
+            this.DiscardLateEventsCommand = new RelayCommand(p => DiscardLateEvents(), p => this.ScheduleManager.HasLateEvent);
         }
 
         private async Task AddFilesToPlaylist()
@@ -691,6 +696,24 @@ namespace Salamandra.ViewModel
                         "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+        private void PlayLateEvents()
+        {
+            if (this.IsPlaying)
+            {
+                this.PlaybackState = PlaylistState.JumpToNextEvent;
+                this.SoundEngine.Stop();
+            }
+            else
+            {
+                this.StartPlayback(true);
+            }
+        }
+
+        private void DiscardLateEvents()
+        {
+            this.ScheduleManager.DiscardLateEvents();
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)

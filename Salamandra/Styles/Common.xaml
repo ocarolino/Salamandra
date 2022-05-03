@@ -44,4 +44,5 @@
     <SolidColorBrush x:Key="ControlPrimaryColourBorderBrush" Color="#FF3294E8" />
     <SolidColorBrush x:Key="ControlBrightPrimaryColourBackground" Color="#FF3296FA" />
     <SolidColorBrush x:Key="ControlBrightPrimaryColourBorderBrush" Color="#FF50A4FA" />
+    <SolidColorBrush x:Key="ControlLightBlueBackground" Color="#C8E1FA"/>
 </ResourceDictionary>

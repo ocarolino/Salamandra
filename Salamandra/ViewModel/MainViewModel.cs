@@ -127,6 +127,17 @@ namespace Salamandra.ViewModel
 
             this.ScheduleManager.UpdateQueuedEventsList();
 
+            if (this.ScheduleManager.HasLateImmediateEvent)
+            {
+                if (this.IsPlaying)
+                {
+                    this.PlaybackState = PlaylistState.JumpToNextEvent;
+                    this.SoundEngine.Stop();
+                }
+                else
+                    this.StartPlayback(true);
+            }
+
             if (!this.IsPlaying)
                 return;
 
@@ -285,14 +296,24 @@ namespace Salamandra.ViewModel
             this.PlaylistManager.RemoveTracks(tracks);
         }
 
-        private void StartPlayback()
+        private void StartPlayback(bool startWithEvent = false)
         {
-            if (this.PlaylistManager.NextTrack == null)
+            if (!startWithEvent && this.PlaylistManager.NextTrack == null)
                 return;
 
             this.IsPlaying = true;
 
-            PlayTrack(this.PlaylistManager.NextTrack);
+            var track = this.PlaylistManager.NextTrack;
+
+            if (startWithEvent)
+            {
+                var upcomingEvent = this.ScheduleManager.DequeueLateEvent();
+
+                if (upcomingEvent != null)
+                    track = upcomingEvent.Track;
+            }
+
+            PlayTrack(track!, !startWithEvent);
         }
 
         private void PlayAudioFile(string filename)
@@ -383,13 +404,11 @@ namespace Salamandra.ViewModel
 
         private void PlayNextTrackOrStop()
         {
-            /*
-             * if (this.Playbackstate == PlaylistState.JumpToNextEvent)
-             * {
-             * PlayTrack(GetEvent.Track)
-             * return;
-             * }
-             */
+            if (this.PlaybackState == PlaylistState.JumpToNextEvent)
+            {
+                PlayTrack(this.ScheduleManager.DequeueLateEvent()!.Track!, false);
+                return;
+            }
 
             if (!(this.PlaybackState == PlaylistState.JumpToNextTrack))
             {
@@ -402,9 +421,11 @@ namespace Salamandra.ViewModel
 
             if (this.PlaylistManager.NextTrack != null)
             {
-                // if (!this.PlaybackState == PlaylistState.JumpToNextTrack && HasEventWaiting)
-                // PlayEvent
-                // return
+                if (!(this.PlaybackState == PlaylistState.JumpToNextTrack) && this.ScheduleManager.HasLateEvent)
+                {
+                    PlayTrack(this.ScheduleManager.DequeueLateEvent()!.Track!, false);
+                    return;
+                }
 
                 PlayTrack(this.PlaylistManager.NextTrack);
             }

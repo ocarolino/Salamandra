@@ -13,5 +13,6 @@ namespace Salamandra.Engine.Domain.Enums
         PlayingEventTrack = 2,
         WaitingNextTrack = 3,
         JumpToNextTrack = 4,
+        JumpToNextEvent = 5,
     }
 }

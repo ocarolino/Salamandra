@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Salamandra.Engine.Domain;
 using Salamandra.Engine.Domain.Events;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace Salamandra.Engine.Services
         public int LastHourChecked { get; set; }
         public bool HasLateImmediateEvent { get; set; }
         public bool HasLateWaitingEvent { get; set; }
+        public bool HasLateEvent { get => this.HasLateImmediateEvent || this.HasLateWaitingEvent; }
 
         public ScheduleManager()
         {
@@ -110,9 +112,7 @@ namespace Salamandra.Engine.Services
                 return;
             }
 
-            // ToDo: Is this really efficient?
-            if (!this.HasLateImmediateEvent && !this.HasLateWaitingEvent)
-                UpdateLateEvents();
+            UpdateLateEvents();
         }
 
         private void UpdateLateEvents()
@@ -128,7 +128,7 @@ namespace Salamandra.Engine.Services
             if (waiting != null)
                 this.HasLateWaitingEvent = true;
             else
-                this.HasLateImmediateEvent = false;
+                this.HasLateWaitingEvent = false;
         }
 
         private void CreateUpcomingEvents(DateTime startFromDate)
@@ -207,5 +207,17 @@ namespace Salamandra.Engine.Services
             return this.EventsQueue.FirstOrDefault(x => !x.Immediate && x.StartDateTime < DateTime.Now);
         }
 
+        public UpcomingEvent? DequeueLateEvent()
+        {
+            var upcomingEvent = this.GetLateImmediateEvent();
+
+            if (upcomingEvent == null)
+                upcomingEvent = this.GetLateWaitingEvent();
+
+            if (upcomingEvent != null)
+                this.EventsQueue.Remove(upcomingEvent);
+
+            return upcomingEvent;
+        }
     }
 }

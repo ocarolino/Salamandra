@@ -131,7 +131,7 @@ namespace Salamandra.ViewModel
 
             this.ScheduleManager.UpdateQueuedEventsList();
 
-            if (this.ScheduleManager.HasLateImmediateEvent)
+            if (this.EnableEvents && this.ScheduleManager.HasLateImmediateEvent)
             {
                 if (this.IsPlaying)
                 {
@@ -273,8 +273,8 @@ namespace Salamandra.ViewModel
             this.OpenSettingsCommand = new RelayCommand(p => OpenSettings());
             this.OpenEventListCommand = new RelayCommand(p => OpenEventList());
 
-            this.PlayLateEventsCommand = new RelayCommand(p => PlayLateEvents(), p => this.ScheduleManager.HasLateEvent);
-            this.DiscardLateEventsCommand = new RelayCommand(p => DiscardLateEvents(), p => this.ScheduleManager.HasLateEvent);
+            this.PlayLateEventsCommand = new RelayCommand(p => PlayLateEvents(), p => this.ScheduleManager.HasLateEvent && this.EnableEvents);
+            this.DiscardLateEventsCommand = new RelayCommand(p => DiscardLateEvents(), p => this.ScheduleManager.HasLateEvent && this.EnableEvents);
         }
 
         private async Task AddFilesToPlaylist()
@@ -306,6 +306,9 @@ namespace Salamandra.ViewModel
         private void StartPlayback(bool startWithEvent = false)
         {
             if (!startWithEvent && this.PlaylistManager.NextTrack == null)
+                return;
+
+            if (startWithEvent && !this.EnableEvents)
                 return;
 
             this.IsPlaying = true;
@@ -411,7 +414,7 @@ namespace Salamandra.ViewModel
 
         private void PlayNextTrackOrStop()
         {
-            if (this.PlaybackState == PlaylistState.JumpToNextEvent)
+            if (this.EnableEvents && this.PlaybackState == PlaylistState.JumpToNextEvent)
             {
                 PlayTrack(this.ScheduleManager.DequeueLateEvent()!.Track!, false);
                 return;
@@ -428,7 +431,7 @@ namespace Salamandra.ViewModel
 
             if (this.PlaylistManager.NextTrack != null)
             {
-                if (!(this.PlaybackState == PlaylistState.JumpToNextTrack) && this.ScheduleManager.HasLateEvent)
+                if (this.EnableEvents && !(this.PlaybackState == PlaylistState.JumpToNextTrack) && this.ScheduleManager.HasLateEvent)
                 {
                     PlayTrack(this.ScheduleManager.DequeueLateEvent()!.Track!, false);
                     return;

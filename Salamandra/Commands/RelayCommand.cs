@@ -29,10 +29,34 @@ namespace Salamandra.Commands
             execute(parameter);
         }
 
+        private event EventHandler _internalCanExecuteChanged;
+
         public event EventHandler? CanExecuteChanged
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            add
+            {
+                _internalCanExecuteChanged += value;
+                CommandManager.RequerySuggested += value;
+            }
+            remove
+            {
+                _internalCanExecuteChanged -= value;
+                CommandManager.RequerySuggested -= value;
+            }
+        }
+
+        public void RaiseCanExecuteChanged()
+        {
+            if (canExecute != null)
+                OnCanExecuteChanged();
+        }
+
+        protected virtual void OnCanExecuteChanged()
+        {
+            EventHandler eCanExecuteChanged = _internalCanExecuteChanged;
+
+            if (eCanExecuteChanged != null)
+                eCanExecuteChanged(this, EventArgs.Empty);
         }
     }
 }

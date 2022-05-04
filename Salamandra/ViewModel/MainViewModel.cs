@@ -130,6 +130,8 @@ namespace Salamandra.ViewModel
             this.CurrentDateTime = DateTime.Now;
 
             this.ScheduleManager.UpdateQueuedEventsList();
+            (this.PlayLateEventsCommand as RelayCommand)?.RaiseCanExecuteChanged();
+            (this.DiscardLateEventsCommand as RelayCommand)?.RaiseCanExecuteChanged();
 
             if (this.EnableEvents && this.ScheduleManager.HasLateImmediateEvent)
             {
@@ -274,7 +276,7 @@ namespace Salamandra.ViewModel
             this.OpenEventListCommand = new RelayCommand(p => OpenEventList());
 
             this.PlayLateEventsCommand = new RelayCommand(p => PlayLateEvents(), p => this.ScheduleManager.HasLateEvent && this.EnableEvents);
-            this.DiscardLateEventsCommand = new RelayCommand(p => DiscardLateEvents(), p => this.ScheduleManager.HasLateEvent && this.EnableEvents);
+            this.DiscardLateEventsCommand = new RelayCommand(p => DiscardLateEvents(), p => this.ScheduleManager.HasLateEvent);
         }
 
         private async Task AddFilesToPlaylist()

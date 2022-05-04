@@ -129,6 +129,8 @@ namespace Salamandra.Engine.Services
                 this.HasLateWaitingEvent = true;
             else
                 this.HasLateWaitingEvent = false;
+
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HasLateEvent)));
         }
 
         private void CreateUpcomingEvents(DateTime startFromDate)

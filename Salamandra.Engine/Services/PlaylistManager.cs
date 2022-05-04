@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Salamandra.Engine.Domain.Tracks;
 using Salamandra.Engine.Extensions;
+using System.Drawing;
 
 namespace Salamandra.Engine.Services
 {
@@ -127,6 +128,42 @@ namespace Salamandra.Engine.Services
             {
                 TagLib.File file = TagLib.File.Create(filename);
                 return file.Properties.Duration;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public SongTagsInfo? GetAudioFileTags(string filename)
+        {
+            try
+            {
+                TagLib.File file = TagLib.File.Create(filename);
+
+                SongTagsInfo songTagsInfo = new SongTagsInfo();
+                songTagsInfo.Artist = file.Tag.FirstPerformer;
+                songTagsInfo.Title = file.Tag.Title;
+                songTagsInfo.Album = file.Tag.Album;
+                songTagsInfo.Year = (int?)file.Tag.Year;
+                songTagsInfo.Genre = file.Tag.FirstGenre;
+                songTagsInfo.Comment = file.Tag.Comment;
+
+                if (file.Tag.Pictures.Length > 0)
+                {
+                    TagLib.IPicture coverArt = file.Tag.Pictures[0];
+
+                    using (var stream = new MemoryStream(coverArt.Data.Data))
+                    {
+                        if (stream != null && stream.Length > 4096)
+                        {
+                            var currentImage = Image.FromStream(stream);
+                            songTagsInfo.CoverArt = currentImage;
+                        }
+                    }
+                }
+
+                return songTagsInfo;
             }
             catch
             {

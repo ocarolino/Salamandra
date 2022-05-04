@@ -48,5 +48,10 @@ namespace Salamandra
             if (r.VisualHit.GetType() != typeof(ListViewItem))
                 (sender as ListView)!.UnselectAll();
         }
+
+        private void playlist_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.mainViewModel.UpdateSelectedTrackTags();
+        }
     }
 }

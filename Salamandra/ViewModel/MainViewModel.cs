@@ -41,6 +41,7 @@ namespace Salamandra.ViewModel
         public TimeSpan TrackLengthTime { get => TimeSpan.FromSeconds(this.TrackLengthInSeconds); }
 
         public BaseTrack? SelectedTrack { get; set; }
+        public SongTagsInfo? SelectedTrackTags { get; set; }
 
         public DispatcherTimer MainTimer { get; set; }
 
@@ -740,6 +741,20 @@ namespace Salamandra.ViewModel
         private void CalculateEndingTimeOfDay(bool useRemainingTime = true)
         {
             this.EndingTimeOfDay = DateTime.Now.TimeOfDay + (useRemainingTime ? this.RemainingTime : this.TrackLengthTime);
+        }
+
+        public void UpdateSelectedTrackTags()
+        {
+            if (this.SelectedTrack == null)
+            {
+                this.SelectedTrackTags = null;
+                return;
+            }
+
+            if (SelectedTrack is AudioFileTrack audioFileTrack)
+            {
+                this.SelectedTrackTags = this.PlaylistManager.GetAudioFileTags(audioFileTrack.Filename);
+            }
         }
 
 #pragma warning disable 67

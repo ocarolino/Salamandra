@@ -166,6 +166,7 @@ namespace Salamandra.ViewModel
             LoadSettingsFile();
             ApplySettings();
             LoadEventsFile();
+            LoadLibraryFile();
 
             this.MainTimer.Start();
         }
@@ -215,7 +216,13 @@ namespace Salamandra.ViewModel
             }
         }
 
+        private void LoadLibraryFile()
+        {
+            string filename = Path.Combine(Environment.CurrentDirectory, "directory_library.json");
 
+            if (File.Exists(filename))
+                this.DirectoryAudioScrapper.LoadFromFile(filename);
+        }
 
         public bool Closing()
         {
@@ -232,6 +239,7 @@ namespace Salamandra.ViewModel
             this.StopPlayback();
 
             SaveSettings();
+            SaveLibrary();
 
             return true;
         }
@@ -242,6 +250,13 @@ namespace Salamandra.ViewModel
             this.ApplicationSettings.PlayerSettings.Volume = this.CurrentVolume;
 
             this.SettingsManager.SaveSettings(this.ApplicationSettings);
+        }
+
+        private void SaveLibrary()
+        {
+            string filename = Path.Combine(Environment.CurrentDirectory, "directory_library.json");
+
+            this.DirectoryAudioScrapper.SaveToFile(filename);
         }
 
         private void LoadCommands()

@@ -1,4 +1,5 @@
-﻿using Salamandra.Engine.Domain;
+﻿using Newtonsoft.Json;
+using Salamandra.Engine.Domain;
 using Salamandra.Engine.Extensions;
 using System;
 using System.Collections.Generic;
@@ -176,6 +177,29 @@ namespace Salamandra.Engine.Services
                 files.AddRange(this.directoriesLibrary[item].Files);
 
             return files;
+        }
+
+        public void SaveToFile(string filename)
+        {
+            string json = JsonConvert.SerializeObject(this.directoriesLibrary);
+            File.WriteAllText(filename, json);
+        }
+
+        public void LoadFromFile(string filename)
+        {
+            try
+            {
+                var library = JsonConvert.DeserializeObject<Dictionary<string, DirectoryAudioInfo>>(File.ReadAllText(filename));
+
+                if (library != null)
+                    this.directoriesLibrary = library;
+                else
+                    this.directoriesLibrary = new Dictionary<string, DirectoryAudioInfo>();
+            }
+            catch (Exception ex)
+            {
+                this.directoriesLibrary = new Dictionary<string, DirectoryAudioInfo>();
+            }
         }
     }
 }

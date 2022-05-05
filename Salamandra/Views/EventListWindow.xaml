@@ -11,6 +11,7 @@
         Loaded="Window_Loaded">
     <Window.Resources>
         <converters:DayOfWeekStringConverter x:Key="DayOfWeekStringConverter"/>
+        <converters:StartingTimeToStringComparer x:Key="StartingTimeToStringComparer"/>
     </Window.Resources>
     <Grid Margin="8">
         <Grid.RowDefinitions>
@@ -23,11 +24,23 @@
                   VerticalContentAlignment="Center" Name="EventsListView">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding StartingDateTime, StringFormat='HH:mm:ss'}"
-                                    Width="80">
+                    <GridViewColumn  Width="80">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="StartingDateTime" Click="GridViewColumnHeader_Click">Hora</GridViewColumnHeader>
                         </GridViewColumn.Header>
+
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource StartingTimeToStringComparer}">
+                                            <Binding Path="StartingDateTime"/>
+                                            <Binding Path="UsePlayingHours"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
                     <GridViewColumn DisplayMemberBinding="{converters:SwitchBinding Immediate, Imediato, Espera}"

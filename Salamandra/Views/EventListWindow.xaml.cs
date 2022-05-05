@@ -1,4 +1,5 @@
 ﻿using Salamandra.Controls;
+using Salamandra.Engine.Comparer;
 using Salamandra.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -65,7 +66,14 @@ namespace Salamandra.Views
             listViewSortCol = column;
             listViewSortAdorner = new SortAdorner(listViewSortCol, newDir);
             AdornerLayer.GetAdornerLayer(listViewSortCol).Add(listViewSortAdorner);
-            EventsListView.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
+
+            if (sortBy == "StartingDateTime")
+            {
+                var view = (ListCollectionView)CollectionViewSource.GetDefaultView(EventsListView.ItemsSource);
+                view.CustomSort = new ScheduledEventTimeComparer(newDir == ListSortDirection.Ascending ? SortDirection.Ascending : SortDirection.Descending);
+            }
+            else
+                EventsListView.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
         }
     }
 }

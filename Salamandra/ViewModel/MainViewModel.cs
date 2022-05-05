@@ -19,6 +19,8 @@ using Salamandra.Engine.Domain.Tracks;
 using Salamandra.Engine.Extensions;
 using Salamandra.Engine.Domain.Settings;
 using Salamandra.Views;
+using System.Windows.Media.Imaging;
+using System.Drawing.Imaging;
 
 namespace Salamandra.ViewModel
 {
@@ -42,6 +44,7 @@ namespace Salamandra.ViewModel
 
         public BaseTrack? SelectedTrack { get; set; }
         public SongTagsInfo? SelectedTrackTags { get; set; }
+        public BitmapImage? SelectedTrackArt { get; set; }
 
         public DispatcherTimer MainTimer { get; set; }
 
@@ -748,12 +751,59 @@ namespace Salamandra.ViewModel
             if (this.SelectedTrack == null)
             {
                 this.SelectedTrackTags = null;
+                this.SelectedTrackArt = null;
                 return;
             }
 
             if (SelectedTrack is AudioFileTrack audioFileTrack)
             {
-                this.SelectedTrackTags = this.PlaylistManager.GetAudioFileTags(audioFileTrack.Filename);
+                this.SelectedTrackTags = this.PlaylistManager.GetAudioFileTags(audioFileTrack.Filename!);
+
+                if (this.SelectedTrackTags!.CoverArt != null)
+                {
+                    try
+                    {
+                        ConvertCoverArtToBitmapImage();
+                    }
+                    catch (Exception ex)
+                    {
+                        this.SelectedTrackArt = null;
+                    }
+                }
+                else
+                {
+                    this.SelectedTrackArt = null;
+                }
+            }
+        }
+
+        private void ConvertCoverArtToBitmapImage()
+        {
+            using (var stream = new MemoryStream(this.SelectedTrackTags!.CoverArt))
+            {
+                /*this.SelectedTrackTags.CoverArt.Save(ms, ImageFormat.Bmp);
+                ms.Seek(0, SeekOrigin.Begin);
+
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.StreamSource = ms;
+                bitmapImage.EndInit();
+
+                this.SelectedTrackArt = bitmapImage;*/
+                if (stream != null && stream.Length > 4096)
+                {
+                    stream.Seek(0, SeekOrigin.Begin);
+
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.StreamSource = stream;
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+                    bitmap.Freeze();
+
+                    this.SelectedTrackArt = bitmap;
+                }
             }
         }
 

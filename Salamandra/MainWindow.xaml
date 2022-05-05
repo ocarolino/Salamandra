@@ -412,12 +412,11 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!--<Border Background="{StaticResource ControlBrightDefaultBackground}" 
+                        <Border Background="{StaticResource ControlBrightDefaultBackground}" 
                                 Grid.Column="0" Width="64" Height="64"/>
-                        -->
 
-                        <Image Grid.Column="0" Source="{Binding SelectedTrackTags.CoverArt}"
-                               Width="64" Height="64"/>
+                        <Image Grid.Column="0" Source="{Binding SelectedTrackArt}" 
+                               Width="64" Height="64" RenderOptions.BitmapScalingMode="HighQuality"/>
 
                         <Grid Grid.Column="1" Margin="10 0 0 0">
                             <Grid.ColumnDefinitions>

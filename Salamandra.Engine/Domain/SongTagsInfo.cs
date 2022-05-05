@@ -5,7 +5,7 @@ namespace Salamandra.Engine.Domain
 {
     public class SongTagsInfo : INotifyPropertyChanged
     {
-        public Image? CoverArt { get; set; }
+        public byte[] CoverArt { get; set; }
         public string? Artist { get; set; }
         public string? Title { get; set; }
         public string? Album { get; set; }

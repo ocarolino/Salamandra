@@ -150,18 +150,7 @@ namespace Salamandra.Engine.Services
                 songTagsInfo.Comment = file.Tag.Comment;
 
                 if (file.Tag.Pictures.Length > 0)
-                {
-                    TagLib.IPicture coverArt = file.Tag.Pictures[0];
-
-                    using (var stream = new MemoryStream(coverArt.Data.Data))
-                    {
-                        if (stream != null && stream.Length > 4096)
-                        {
-                            var currentImage = Image.FromStream(stream);
-                            songTagsInfo.CoverArt = currentImage;
-                        }
-                    }
-                }
+                    songTagsInfo.CoverArt = file.Tag.Pictures[0].Data.Data;
 
                 return songTagsInfo;
             }

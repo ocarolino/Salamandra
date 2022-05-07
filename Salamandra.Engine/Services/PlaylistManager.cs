@@ -240,7 +240,7 @@ namespace Salamandra.Engine.Services
             this.Modified = false;
         }
 
-        public void ShufflePlaylist()
+        public void ShufflePlaylist(bool setAsModified = false)
         {
             if (this.Tracks.Count == 0)
                 return;
@@ -258,6 +258,9 @@ namespace Salamandra.Engine.Services
                 this.Tracks[j] = this.Tracks[i];
                 this.Tracks[i] = track;
             }
+
+            if (setAsModified)
+                this.Modified = true;
         }
 
 #pragma warning disable 67

@@ -289,7 +289,7 @@ namespace Salamandra.ViewModel
             this.SavePlaylistAsCommand = new RelayCommand(p => SavePlaylist(true), p => !this.PlaylistLoading);
             this.NewPlaylistCommand = new RelayCommand(p => NewPlaylist(), p => !this.PlaylistLoading);
 
-            this.ShufflePlaylistCommand = new RelayCommand(p => this.PlaylistManager.ShufflePlaylist(), p => !this.PlaylistLoading);
+            this.ShufflePlaylistCommand = new RelayCommand(p => this.PlaylistManager.ShufflePlaylist(true), p => !this.PlaylistLoading);
 
             this.OpenSettingsCommand = new RelayCommand(p => OpenSettings());
             this.OpenEventListCommand = new RelayCommand(p => OpenEventList());

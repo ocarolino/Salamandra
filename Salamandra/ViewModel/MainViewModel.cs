@@ -570,6 +570,9 @@ namespace Salamandra.ViewModel
 
         private async Task OpenPlaylist()
         {
+            if (!CheckPlaylistModified())
+                return;
+
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Playlist M3U (*.m3u) | *.m3u";
 

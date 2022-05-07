@@ -13,6 +13,7 @@ namespace Salamandra.Engine.Domain.Events
     public class ScheduledEvent : INotifyPropertyChanged
     {
         public int Id { get; set; }
+        public bool IsEnabled { get; set; }
         public bool Immediate { get; set; }
         public DateTime StartingDateTime { get; set; }
         public bool UsePlayingHours { get; set; }
@@ -27,6 +28,7 @@ namespace Salamandra.Engine.Domain.Events
 
         public ScheduledEvent()
         {
+            this.IsEnabled = true;
             this.StartingDateTime = DateTime.Now;
             this.ExpirationDateTime = DateTime.Now;
             this.PlayingHours = new ObservableCollection<int>();

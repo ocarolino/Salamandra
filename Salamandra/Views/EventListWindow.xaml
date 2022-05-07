@@ -31,14 +31,17 @@
 
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock>
-                                    <TextBlock.Text>
-                                        <MultiBinding Converter="{StaticResource StartingTimeToStringComparer}">
-                                            <Binding Path="StartingDateTime"/>
-                                            <Binding Path="UsePlayingHours"/>
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox IsChecked="{Binding IsEnabled}"/>
+                                    <TextBlock Margin="8 0 0 0">
+                                        <TextBlock.Text>
+                                            <MultiBinding Converter="{StaticResource StartingTimeToStringComparer}">
+                                                <Binding Path="StartingDateTime"/>
+                                                <Binding Path="UsePlayingHours"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

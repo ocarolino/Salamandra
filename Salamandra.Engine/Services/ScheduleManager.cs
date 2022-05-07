@@ -61,6 +61,9 @@ namespace Salamandra.Engine.Services
 
         public bool CheckEventSchedule(ScheduledEvent scheduledEvent, DateTime dateToTest)
         {
+            if (!scheduledEvent.IsEnabled)
+                return false;
+
             if (scheduledEvent.StartingDateTime.Date > dateToTest.Date)
                 return false;
 
@@ -178,7 +181,7 @@ namespace Salamandra.Engine.Services
                     continue;
                 }
 
-                var model = this.Events.FirstOrDefault(x => x.Id == temp.EventId);
+                var model = this.Events.FirstOrDefault(x => (x.Id == temp.EventId) && x.IsEnabled);
 
                 if (model == null)
                 {

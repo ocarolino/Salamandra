@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Salamandra.Views"
+        xmlns:enums="clr-namespace:Salamandra.Engine.Domain.Enums;assembly=Salamandra.Engine"
         xmlns:converters="clr-namespace:Salamandra.Converters"
         mc:Ignorable="d"
         Title="Eventos" Height="480" Width="800"
@@ -21,7 +22,7 @@
 
         <ListView Grid.Row="0" ItemsSource="{Binding Events}" SelectedItem="{Binding SelectedScheduledEvent}"
                   Style="{StaticResource ListViewStyle}" ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                  VerticalContentAlignment="Center" Name="EventsListView">
+                  VerticalContentAlignment="Center" Name="EventsListView" SnapsToDevicePixels="True">
             <ListView.View>
                 <GridView>
                     <GridViewColumn  Width="80">
@@ -33,6 +34,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <CheckBox IsChecked="{Binding IsEnabled}"/>
+
                                     <TextBlock Margin="8 0 0 0">
                                         <TextBlock.Text>
                                             <MultiBinding Converter="{StaticResource StartingTimeToStringComparer}">
@@ -53,11 +55,40 @@
                         </GridViewColumn.Header>
                     </GridViewColumn>
 
-                    <GridViewColumn DisplayMemberBinding="{Binding FriendlyName}"
-                                    Width="200">
+                    <GridViewColumn Width="200">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="FriendlyName" Click="GridViewColumnHeader_Click">Arquivo</GridViewColumnHeader>
                         </GridViewColumn.Header>
+
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Width="16" Height="24" VerticalAlignment="Center">
+                                        <Image Width="16" Height="16" RenderOptions.BitmapScalingMode="NearestNeighbor">
+                                            <Image.Style>
+                                                <Style TargetType="{x:Type Image}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding TrackScheduleType}" Value="{x:Static enums:TrackScheduleType.FileTrack}">
+                                                            <Setter Property="Source" Value="/Images/Icons/Playlist/audio_file.png"/>
+                                                        </DataTrigger>
+
+                                                        <DataTrigger Binding="{Binding TrackScheduleType}" Value="{x:Static enums:TrackScheduleType.TimeAnnouncementTrack}">
+                                                            <Setter Property="Source" Value="/Images/Icons/Playlist/alarm_clock.png"/>
+                                                        </DataTrigger>
+
+                                                        <DataTrigger Binding="{Binding TrackScheduleType}" Value="{x:Static enums:TrackScheduleType.RandomFileTrack}">
+                                                            <Setter Property="Source" Value="/Images/Icons/Playlist/music_folder.png"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
+                                    </Border>
+
+                                    <TextBlock Text="{Binding FriendlyName}" Margin="8 0 0 0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
                     <GridViewColumn Header="Dias da Semana" Width="120">

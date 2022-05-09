@@ -20,16 +20,23 @@ namespace Salamandra.ViewModel
         public ObservableCollection<ScheduledEvent> Events { get; set; }
         public int LastEventId { get; set; }
 
+        public string Filename { get; set; }
+        public bool HasFileChanged { get; set; }
+
         public ScheduledEvent? SelectedScheduledEvent { get; set; }
 
         public ICommand CreateEventCommand { get; set; }
         public ICommand EditEventCommand { get; set; }
         public ICommand DeleteEventCommand { get; set; }
 
-        public EventListViewModel(List<ScheduledEvent> events)
+        public EventListViewModel(List<ScheduledEvent> events, string filename)
         {
             this.originalScheduledEvents = new List<ScheduledEvent>(events);
+
             this.Events = new ObservableCollection<ScheduledEvent>();
+
+            this.Filename = filename;
+            this.HasFileChanged = false;
 
             if (events.Count > 0)
                 this.LastEventId = events.Last().Id;

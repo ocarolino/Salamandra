@@ -695,7 +695,7 @@ namespace Salamandra.ViewModel
 
         private void OpenEventList()
         {
-            EventListViewModel eventListViewModel = new EventListViewModel(this.ScheduleManager.Events);
+            EventListViewModel eventListViewModel = new EventListViewModel(this.ScheduleManager.Events, this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename);
 
             EventListWindow eventListWindow = new EventListWindow(eventListViewModel);
             eventListWindow.Owner = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);

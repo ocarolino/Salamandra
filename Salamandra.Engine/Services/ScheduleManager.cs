@@ -44,7 +44,7 @@ namespace Salamandra.Engine.Services
 
             try
             {
-                jsonEventsLoader.Save(filename);
+                jsonEventsLoader.Save(filename, this.Events);
             }
             catch (Exception ex)
             {
@@ -59,6 +59,7 @@ namespace Salamandra.Engine.Services
             try
             {
                 var list = jsonEventsLoader.Load(filename);
+                this.Events = new List<ScheduledEvent>(list);
             }
             catch (Exception ex)
             {

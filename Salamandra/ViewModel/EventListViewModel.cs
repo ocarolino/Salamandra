@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Win32;
+using Newtonsoft.Json;
 using Salamandra.Commands;
 using Salamandra.Engine.Domain.Events;
+using Salamandra.Engine.Services.Playlists;
 using Salamandra.Views;
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,8 @@ namespace Salamandra.ViewModel
         public ICommand CreateEventCommand { get; set; }
         public ICommand EditEventCommand { get; set; }
         public ICommand DeleteEventCommand { get; set; }
+        public ICommand OpenEventListCommand { get; set; }
+        public ICommand SaveEventListAsCommand { get; set; }
 
         public EventListViewModel(List<ScheduledEvent> events, string filename)
         {
@@ -44,6 +48,8 @@ namespace Salamandra.ViewModel
             this.CreateEventCommand = new RelayCommand(p => CreateEvent());
             this.EditEventCommand = new RelayCommand(p => EditEvent(), p => this.SelectedScheduledEvent != null);
             this.DeleteEventCommand = new RelayCommand(p => DeleteEvent(), p => this.SelectedScheduledEvent != null);
+            this.OpenEventListCommand = new RelayCommand(p => OpenEventList());
+            this.SaveEventListAsCommand = new RelayCommand(p => SaveEventListAs());
         }
 
         public void Loading()
@@ -102,6 +108,51 @@ namespace Salamandra.ViewModel
             {
                 this.Events.Remove(this.SelectedScheduledEvent);
                 this.SelectedScheduledEvent = null;
+            }
+        }
+
+        private void OpenEventList()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Lista de Eventos (*.sche) | *.sche";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                JsonEventsLoader jsonEventsLoader = new JsonEventsLoader();
+
+                try
+                {
+                    var list = jsonEventsLoader.Load(openFileDialog.FileName);
+                    this.Events = new ObservableCollection<ScheduledEvent>(list);
+
+                    // ToDo: Don't really care if the user opened the same file. Maybe it can be changed in the future.
+                    this.HasFileChanged = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Houve um erro ao abrir a lista.\n\n" + ex.Message, "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void SaveEventListAs()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Lista de Eventos (*.sche) | *.sche";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                JsonEventsLoader jsonEventsLoader = new JsonEventsLoader();
+
+                try
+                {
+                    jsonEventsLoader.Save(saveFileDialog.FileName, this.Events.ToList());
+                    this.Filename = saveFileDialog.FileName;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Houve um erro ao salvar a lista.\n\n" + ex.Message, "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 

@@ -179,6 +179,15 @@
                     Width="80" Height="24" Margin="8 0 0 0"/>
                 <Button Content="Excluir" Command="{Binding DeleteEventCommand}"
                     Width="80" Height="24" Margin="8 0 0 0"/>
+
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" 
+                           Margin="8 0 0 0" />
+
+                <Button Content="Abrir..." Command="{Binding OpenEventListCommand}"
+                    Width="80" Height="24" Margin="8 0 0 0"/>
+                <Button Content="Salvar..." Command="{Binding SaveEventListAsCommand}"
+                    Width="80" Height="24" Margin="8 0 0 0"/>
+
             </StackPanel>
 
             <Separator Grid.Row="1" Margin="0 8 0 0"/>

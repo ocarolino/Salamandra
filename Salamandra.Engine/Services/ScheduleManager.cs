@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Salamandra.Engine.Domain;
 using Salamandra.Engine.Domain.Events;
+using Salamandra.Engine.Services.Playlists;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,25 +33,38 @@ namespace Salamandra.Engine.Services
         public void SwapEvents(ObservableCollection<ScheduledEvent> events)
         {
             // ToDo: Filename argument!
+            // ToDo: Refresh, reset here!
             this.Events = new List<ScheduledEvent>(events);
         }
 
-        #region Saving, Loading and Reseting a List
-        // ToDo: Criar um Save e Load genéricos depois!
+        #region Saving and Loading
         public void SaveToFile(string filename)
         {
-            string json = JsonConvert.SerializeObject(this.Events);
-            File.WriteAllText(filename, json);
+            JsonEventsLoader jsonEventsLoader = new JsonEventsLoader();
+
+            try
+            {
+                jsonEventsLoader.Save(filename);
+            }
+            catch (Exception ex)
+            {
+                // ToDo: Log/Notification via Rethrow/Event...
+            }
         }
 
         public void LoadFromFile(string filename)
         {
-            var list = JsonConvert.DeserializeObject<List<ScheduledEvent>>(File.ReadAllText(filename));
+            JsonEventsLoader jsonEventsLoader = new JsonEventsLoader();
 
-            if (list != null)
-                this.Events = list;
-            else
+            try
+            {
+                var list = jsonEventsLoader.Load(filename);
+            }
+            catch (Exception ex)
+            {
+                // ToDo: Log/Notification/Rethrow via Rethrow/Event...
                 this.Events = new List<ScheduledEvent>();
+            }
         }
         #endregion
 

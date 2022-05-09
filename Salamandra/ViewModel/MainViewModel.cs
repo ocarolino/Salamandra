@@ -612,6 +612,7 @@ namespace Salamandra.ViewModel
                     return;
             }
 
+            // ToDo: Why there isn't a try/catch here?
             this.PlaylistManager.SavePlaylist(filename);
 
             UpdateWindowTitle();
@@ -702,8 +703,10 @@ namespace Salamandra.ViewModel
 
             if (eventListWindow.ShowDialog() == true)
             {
-                this.ScheduleManager.SwapEvents(eventListViewModel.Events);
-                this.ScheduleManager.RefreshEventsQueue();
+                if (eventListViewModel.HasFileChanged)
+                    this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename = eventListViewModel.Filename;
+
+                this.ScheduleManager.SwapEvents(eventListViewModel.Events, eventListViewModel.HasFileChanged);
 
                 if (String.IsNullOrWhiteSpace(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename))
                 {
@@ -711,18 +714,19 @@ namespace Salamandra.ViewModel
                     saveFileDialog.Filter = "Playlist de Eventos (*.sche) | *.sche";
 
                     if (saveFileDialog.ShowDialog() == true)
+                    {
                         this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename = saveFileDialog.FileName;
-                    else
-                        return;
-                }
-                try
-                {
-                    this.ScheduleManager.SaveToFile(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(String.Format("Houve um erro ao salvar a planilha de eventos.\n\n{0}", ex.Message),
-                        "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                        try
+                        {
+                            this.ScheduleManager.SaveToFile(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(String.Format("Houve um erro ao salvar a planilha de eventos.\n\n{0}", ex.Message),
+                                "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
                 }
             }
         }

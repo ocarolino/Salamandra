@@ -703,9 +703,7 @@ namespace Salamandra.ViewModel
 
             if (eventListWindow.ShowDialog() == true)
             {
-                if (eventListViewModel.HasFileChanged)
-                    this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename = eventListViewModel.Filename;
-
+                this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename = eventListViewModel.Filename;
                 this.ScheduleManager.SwapEvents(eventListViewModel.Events, eventListViewModel.HasFileChanged);
 
                 if (String.IsNullOrWhiteSpace(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename))
@@ -713,22 +711,23 @@ namespace Salamandra.ViewModel
                     SaveFileDialog saveFileDialog = new SaveFileDialog();
                     saveFileDialog.Filter = "Playlist de Eventos (*.sche) | *.sche";
 
-                    if (saveFileDialog.ShowDialog() == true)
-                    {
+                    if (!saveFileDialog.ShowDialog() == true)
                         this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename = saveFileDialog.FileName;
+                    else
+                        return;
+                }
 
-                        try
-                        {
-                            this.ScheduleManager.SaveToFile(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename);
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(String.Format("Houve um erro ao salvar a planilha de eventos.\n\n{0}", ex.Message),
-                                "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                    }
+                try
+                {
+                    this.ScheduleManager.SaveToFile(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(String.Format("Houve um erro ao salvar a planilha de eventos.\n\n{0}", ex.Message),
+                        "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+
         }
 
         private void PlayLateEvents()

@@ -126,6 +126,7 @@ namespace Salamandra.ViewModel
                     this.Events = new ObservableCollection<ScheduledEvent>(list);
 
                     // ToDo: Don't really care if the user opened the same file. Maybe it can be changed in the future.
+                    this.Filename = openFileDialog.FileName;
                     this.HasFileChanged = true;
                 }
                 catch (Exception ex)

@@ -149,13 +149,19 @@ namespace Salamandra.Engine.Services
         public void QueueAndScan(string path)
         {
             this.scrapQueue.Enqueue(path);
-
-            if (!this.backgroundWorker.IsBusy)
-                StartScanning();
+            StartScanning();
         }
 
-        private void StartScanning()
+        public void Enqueue(string path)
         {
+            this.scrapQueue.Enqueue(path);
+        }
+
+        public void StartScanning()
+        {
+            if (this.backgroundWorker.IsBusy)
+                return;
+
             this.backgroundWorker.RunWorkerAsync(new Queue<string>(scrapQueue));
             scrapQueue.Clear();
         }

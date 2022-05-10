@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Salamandra.Engine.Domain.Tracks;
 using Salamandra.Engine.Extensions;
 using System.Drawing;
+using Salamandra.Engine.Comparer;
 
 namespace Salamandra.Engine.Services
 {
@@ -263,8 +264,37 @@ namespace Salamandra.Engine.Services
                 this.Modified = true;
         }
 
+        public void Sort(PlaylistSortCriteria sortBy, SortDirection sortDirection)
+        {
+            if (this.Tracks.Count == 0)
+                return;
+
+            switch (sortBy)
+            {
+                case PlaylistSortCriteria.FriendlyName:
+                    if (sortDirection == SortDirection.Ascending)
+                        this.Tracks = new ObservableCollection<BaseTrack>(this.Tracks.OrderBy(x => x.FriendlyName));
+                    else
+                        this.Tracks = new ObservableCollection<BaseTrack>(this.Tracks.OrderByDescending(x => x.FriendlyName));
+                    break;
+                case PlaylistSortCriteria.Duration:
+                    if (sortDirection == SortDirection.Ascending)
+                        this.Tracks = new ObservableCollection<BaseTrack>(this.Tracks.OrderBy(x => x.Duration));
+                    else
+                        this.Tracks = new ObservableCollection<BaseTrack>(this.Tracks.OrderByDescending(x => x.Duration));
+                    break;
+                default:
+                    throw new NotImplementedException();
+                    break;
+            }
+
+            this.Modified = true;
+        }
+
 #pragma warning disable 67
         public event PropertyChangedEventHandler? PropertyChanged;
+
+
 #pragma warning restore 67
 
     }

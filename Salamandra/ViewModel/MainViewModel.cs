@@ -21,6 +21,7 @@ using Salamandra.Engine.Domain.Settings;
 using Salamandra.Views;
 using System.Windows.Media.Imaging;
 using System.Drawing.Imaging;
+using Salamandra.Engine.Comparer;
 
 namespace Salamandra.ViewModel
 {
@@ -78,6 +79,7 @@ namespace Salamandra.ViewModel
         public ICommand? SeekBarDragCompletedCommand { get; set; }
         public ICommand? NextTrackCommand { get; set; }
         public ICommand? StopAfterCurrentCommand { get; set; }
+
         public ICommand? UpdateNextTrackCommand { get; set; }
         public ICommand? OpenPlaylistCommand { get; set; }
         public ICommand? SavePlaylistCommand { get; set; }
@@ -90,6 +92,8 @@ namespace Salamandra.ViewModel
         public ICommand? PlayLateEventsCommand { get; set; }
         public ICommand? DiscardLateEventsCommand { get; set; }
         #endregion
+
+        public Action? RemovePlaylistAdorner { get; set; }
 
         public MainViewModel()
         {
@@ -596,6 +600,8 @@ namespace Salamandra.ViewModel
 
                 this.PlaylistLoading = false;
                 this.PlaylistInfoText = string.Empty;
+
+                this.RemovePlaylistAdorner?.Invoke();
             }
         }
 
@@ -623,7 +629,11 @@ namespace Salamandra.ViewModel
         private void NewPlaylist()
         {
             if (CheckPlaylistModified())
+            {
                 this.PlaylistManager.ClearPlaylist();
+
+                this.RemovePlaylistAdorner?.Invoke();
+            }
         }
 
         private bool CheckPlaylistModified()
@@ -822,16 +832,6 @@ namespace Salamandra.ViewModel
         {
             using (var stream = new MemoryStream(this.SelectedTrackTags!.CoverArt))
             {
-                /*this.SelectedTrackTags.CoverArt.Save(ms, ImageFormat.Bmp);
-                ms.Seek(0, SeekOrigin.Begin);
-
-                var bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.StreamSource = ms;
-                bitmapImage.EndInit();
-
-                this.SelectedTrackArt = bitmapImage;*/
                 if (stream != null && stream.Length > 4096)
                 {
                     stream.Seek(0, SeekOrigin.Begin);
@@ -846,6 +846,16 @@ namespace Salamandra.ViewModel
                     this.SelectedTrackArt = bitmap;
                 }
             }
+        }
+
+        public bool CanSortPlaylist()
+        {
+            return !this.PlaylistLoading && !(this.PlaylistManager.Tracks.Count == 0);
+        }
+
+        public void SortPlaylist(PlaylistSortCriteria sortBy, SortDirection sortDirection)
+        {
+            this.PlaylistManager.Sort(sortBy, sortDirection);
         }
 
 #pragma warning disable 67

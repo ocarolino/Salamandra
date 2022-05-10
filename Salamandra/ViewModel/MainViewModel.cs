@@ -418,7 +418,7 @@ namespace Salamandra.ViewModel
                     }
                     break;
                 case RandomFileTrack randomTrack:
-                    this.DirectoryAudioScrapper.CheckAndScan(randomTrack.Filename!);
+                    this.DirectoryAudioScrapper.EnqueueAndScan(randomTrack.Filename!);
 
                     randomTrack.Filenames = this.DirectoryAudioScrapper.GetFilesFromDirectory(randomTrack.Filename!.EnsureHasDirectorySeparatorChar());
                     string? randomFile = randomTrack.GetFile();
@@ -674,7 +674,7 @@ namespace Salamandra.ViewModel
 
             if (vistaFolderBrowserDialog.ShowDialog() == true)
             {
-                this.DirectoryAudioScrapper.CheckAndScan(vistaFolderBrowserDialog.SelectedPath);
+                this.DirectoryAudioScrapper.EnqueueAndScan(vistaFolderBrowserDialog.SelectedPath);
                 this.PlaylistManager.AddRandomTrack(vistaFolderBrowserDialog.SelectedPath);
             }
         }
@@ -706,28 +706,46 @@ namespace Salamandra.ViewModel
                 this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename = eventListViewModel.Filename;
                 this.ScheduleManager.SwapEvents(eventListViewModel.Events, eventListViewModel.HasFileChanged);
 
-                if (String.IsNullOrWhiteSpace(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename))
-                {
-                    SaveFileDialog saveFileDialog = new SaveFileDialog();
-                    saveFileDialog.Filter = "Playlist de Eventos (*.sche) | *.sche";
+                PersistEvents();
+                ScanScheduledRandomFiles();
+            }
+        }
 
-                    if (!saveFileDialog.ShowDialog() == true)
-                        this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename = saveFileDialog.FileName;
-                    else
-                        return;
-                }
+        private void PersistEvents()
+        {
+            if (String.IsNullOrWhiteSpace(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename))
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Playlist de Eventos (*.sche) | *.sche";
 
-                try
-                {
-                    this.ScheduleManager.SaveToFile(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(String.Format("Houve um erro ao salvar a planilha de eventos.\n\n{0}", ex.Message),
-                        "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                if (!saveFileDialog.ShowDialog() == true)
+                    this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename = saveFileDialog.FileName;
+                else
+                    return;
             }
 
+            try
+            {
+                this.ScheduleManager.SaveToFile(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(String.Format("Houve um erro ao salvar a planilha de eventos.\n\n{0}", ex.Message),
+                    "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ScanScheduledRandomFiles()
+        {
+            var directoriesEvents = this.ScheduleManager.Events.Where(x => x.TrackScheduleType == TrackScheduleType.RandomFileTrack);
+
+            if (directoriesEvents.Count() == 0)
+                return;
+
+            foreach (var item in directoriesEvents)
+                this.DirectoryAudioScrapper.Enqueue(item.Filename);
+
+            this.DirectoryAudioScrapper.StartScanning();
         }
 
         private void PlayLateEvents()

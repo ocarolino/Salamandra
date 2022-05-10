@@ -121,14 +121,6 @@ namespace Salamandra.Engine.Services
         #endregion
 
         #region Scan Methods
-        public void CheckAndScan(string path)
-        {
-            path = path.EnsureHasDirectorySeparatorChar();
-
-            if (ShouldScanDirectory(path))
-                QueueAndScan(path);
-        }
-
         public bool ShouldScanDirectory(string path)
         {
             if (!this.directoriesLibrary.ContainsKey(path))
@@ -146,20 +138,28 @@ namespace Salamandra.Engine.Services
             return false;
         }
 
-        public void QueueAndScan(string path)
+        public bool Enqueue(string path)
         {
-            this.scrapQueue.Enqueue(path);
-            StartScanning();
+            path = path.EnsureHasDirectorySeparatorChar();
+
+            if (ShouldScanDirectory(path))
+            {
+                this.scrapQueue.Enqueue(path);
+                return true;
+            }
+
+            return false;
         }
 
-        public void Enqueue(string path)
+        public void EnqueueAndScan(string path)
         {
-            this.scrapQueue.Enqueue(path);
+            if (Enqueue(path))
+                StartScanning();
         }
 
         public void StartScanning()
         {
-            if (this.backgroundWorker.IsBusy)
+            if (this.backgroundWorker.IsBusy || this.scrapQueue.Count == 0)
                 return;
 
             this.backgroundWorker.RunWorkerAsync(new Queue<string>(scrapQueue));

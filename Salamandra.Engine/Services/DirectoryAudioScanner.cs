@@ -171,6 +171,14 @@ namespace Salamandra.Engine.Services
             if (this.backgroundWorker.IsBusy)
                 this.backgroundWorker.CancelAsync();
         }
+
+        public void ScanLibrary()
+        {
+            foreach (var directory in this.directoriesLibrary)
+                Enqueue(directory.Key);
+
+            StartScanning();
+        }
         #endregion
 
         public List<string> GetFilesFromDirectory(string path)

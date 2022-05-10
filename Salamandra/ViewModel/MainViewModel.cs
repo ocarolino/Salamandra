@@ -222,6 +222,8 @@ namespace Salamandra.ViewModel
 
             if (File.Exists(filename))
                 this.DirectoryAudioScanner.LoadFromFile(filename);
+
+            this.DirectoryAudioScanner.ScanLibrary();
         }
 
         public bool Closing()

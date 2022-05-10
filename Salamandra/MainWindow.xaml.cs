@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using Salamandra.Extensions;
 using System.Windows.Shapes;
 
 namespace Salamandra
@@ -52,6 +53,21 @@ namespace Salamandra
         private void playlist_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.mainViewModel.UpdateSelectedTrackTags();
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ScrollViewer? scrollViewer = playlist.GetChildOfType<ScrollViewer>();
+
+            if (scrollViewer == null)
+                return;
+            //GetChildOfType<ScrollViewer>(playlist);
+
+            double width = scrollViewer.ActualWidth - (SystemParameters.VerticalScrollBarWidth * 2);
+
+            // ToDo: Magic numbers!
+            PlaylistFriendlyNameColumn.Width = Math.Max(360, width - 160);
+            PlaylistDurationColumn.Width = 160;
         }
     }
 }

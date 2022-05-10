@@ -14,7 +14,8 @@
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Height="540" Width="960"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing"
-        UseLayoutRounding="True" Loaded="Window_Loaded" WindowState="Maximized">
+        UseLayoutRounding="True" Loaded="Window_Loaded" WindowState="Maximized"
+        SizeChanged="Window_SizeChanged">
     <Window.Resources>
         <converters:SameObjectToBoolConverter x:Key="SameObjectToBoolConverter"/>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -298,48 +299,58 @@
                 </Grid.RowDefinitions>
 
                 <ListView ItemsSource="{Binding PlaylistManager.Tracks}" SelectedItem="{Binding SelectedTrack}"
-                  Name="playlist" SelectionMode="Extended" HorizontalContentAlignment="Stretch"
-                  AlternationCount="2" Grid.Row="0" MouseDown="UpcomingEventsListView_MouseDown"
-                        SelectionChanged="playlist_SelectionChanged">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
+                          Name="playlist" SelectionMode="Extended" AlternationCount="2" Grid.Row="0" 
+                          MouseDown="UpcomingEventsListView_MouseDown" SelectionChanged="playlist_SelectionChanged" 
+                          Style="{StaticResource ListViewStyle}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Arquivo" x:Name="PlaylistFriendlyNameColumn"
+                                            Width="360">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                            <Image Width="16" Height="16" RenderOptions.BitmapScalingMode="NearestNeighbor">
+                                                <Image.Style>
+                                                    <Style TargetType="{x:Type Image}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding ., Converter={StaticResource DataTypeConverter}}" Value="{x:Type tracks:AudioFileTrack}">
+                                                                <Setter Property="Source" Value="/Images/Icons/Playlist/audio_file.png"/>
+                                                            </DataTrigger>
 
-                                <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                    <Image Width="16" Height="16" RenderOptions.BitmapScalingMode="NearestNeighbor">
-                                        <Image.Style>
-                                            <Style TargetType="{x:Type Image}">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding ., Converter={StaticResource DataTypeConverter}}" Value="{x:Type tracks:AudioFileTrack}">
-                                                        <Setter Property="Source" Value="/Images/Icons/Playlist/audio_file.png"/>
-                                                    </DataTrigger>
+                                                            <DataTrigger Binding="{Binding ., Converter={StaticResource DataTypeConverter}}" Value="{x:Type tracks:TimeAnnouncementTrack}">
+                                                                <Setter Property="Source" Value="/Images/Icons/Playlist/alarm_clock.png"/>
+                                                            </DataTrigger>
 
-                                                    <DataTrigger Binding="{Binding ., Converter={StaticResource DataTypeConverter}}" Value="{x:Type tracks:TimeAnnouncementTrack}">
-                                                        <Setter Property="Source" Value="/Images/Icons/Playlist/alarm_clock.png"/>
-                                                    </DataTrigger>
+                                                            <DataTrigger Binding="{Binding ., Converter={StaticResource DataTypeConverter}}" Value="{x:Type tracks:RandomFileTrack}">
+                                                                <Setter Property="Source" Value="/Images/Icons/Playlist/music_folder.png"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
 
-                                                    <DataTrigger Binding="{Binding ., Converter={StaticResource DataTypeConverter}}" Value="{x:Type tracks:RandomFileTrack}">
-                                                        <Setter Property="Source" Value="/Images/Icons/Playlist/music_folder.png"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Image.Style>
-                                    </Image>
-
-                                    <TextBlock Text="{Binding Path=FriendlyName, Mode=OneWay}"
+                                            <TextBlock Text="{Binding Path=FriendlyName, Mode=OneWay}"
                                            Margin="4 0 0 0"/>
-                                </StackPanel>
-                                <TextBlock Grid.Column="2" Text="{Binding Duration, StringFormat=hh\\:mm\\:ss, Mode=OneWay, TargetNullValue='--:--:--'}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Duração" Width="120" x:Name="PlaylistDurationColumn">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Duration, StringFormat=hh\\:mm\\:ss, Mode=OneWay, TargetNullValue='--:--:--'}"
+                                                   HorizontalAlignment="Stretch" TextAlignment="Right"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
 
                     <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}">
+                        <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ListViewItemStyle}">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            
                             <Style.Triggers>
                                 <!-- Style for Alternation -->
                                 <Trigger Property="ItemsControl.AlternationIndex"  Value="1">

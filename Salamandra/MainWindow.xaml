@@ -304,8 +304,11 @@
                           Style="{StaticResource ListViewStyle}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Arquivo" x:Name="PlaylistFriendlyNameColumn"
-                                            Width="360">
+                            <GridViewColumn x:Name="PlaylistFriendlyNameColumn" Width="360">
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader Tag="0" Click="PlaylistColumnHeader_Click">Arquivo</GridViewColumnHeader>
+                                </GridViewColumn.Header>
+
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Grid.Column="0" Orientation="Horizontal">
@@ -336,7 +339,11 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <GridViewColumn Header="Duração" Width="120" x:Name="PlaylistDurationColumn">
+                            <GridViewColumn Width="120" x:Name="PlaylistDurationColumn">
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader Tag="1" Click="PlaylistColumnHeader_Click">Duração</GridViewColumnHeader>
+                                </GridViewColumn.Header>
+
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Duration, StringFormat=hh\\:mm\\:ss, Mode=OneWay, TargetNullValue='--:--:--'}"
@@ -350,7 +357,7 @@
                     <ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ListViewItemStyle}">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            
+
                             <Style.Triggers>
                                 <!-- Style for Alternation -->
                                 <Trigger Property="ItemsControl.AlternationIndex"  Value="1">

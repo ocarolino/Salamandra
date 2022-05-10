@@ -14,6 +14,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Salamandra.Extensions;
 using System.Windows.Shapes;
+using Salamandra.Controls;
+using System.ComponentModel;
+using Salamandra.Engine.Domain.Enums;
+using Salamandra.Engine.Comparer;
 
 namespace Salamandra
 {
@@ -24,11 +28,15 @@ namespace Salamandra
     {
         private MainViewModel mainViewModel;
 
+        private GridViewColumnHeader listViewSortCol = null;
+        private SortAdorner listViewSortAdorner = null;
+
         public MainWindow()
         {
             InitializeComponent();
 
             this.mainViewModel = new MainViewModel();
+            this.mainViewModel.RemovePlaylistAdorner += RemovePlaylistAdorner;
             this.DataContext = this.mainViewModel;
         }
 
@@ -68,6 +76,35 @@ namespace Salamandra
             // ToDo: Magic numbers!
             PlaylistFriendlyNameColumn.Width = Math.Max(360, width - 160);
             PlaylistDurationColumn.Width = 160;
+        }
+
+        private void PlaylistColumnHeader_Click(object sender, RoutedEventArgs e)
+        {
+            GridViewColumnHeader? column = (sender as GridViewColumnHeader);
+
+            if (column == null || !this.mainViewModel.CanSortPlaylist())
+                return;
+
+            int sortBy = int.Parse(column.Tag.ToString());
+
+            RemovePlaylistAdorner();
+
+            ListSortDirection newDir = ListSortDirection.Ascending;
+
+            if (listViewSortCol == column && listViewSortAdorner.Direction == newDir)
+                newDir = ListSortDirection.Descending;
+
+            listViewSortCol = column;
+            listViewSortAdorner = new SortAdorner(listViewSortCol, newDir);
+            AdornerLayer.GetAdornerLayer(listViewSortCol).Add(listViewSortAdorner);
+
+            this.mainViewModel.SortPlaylist((PlaylistSortCriteria)sortBy, newDir == ListSortDirection.Ascending ? SortDirection.Ascending : SortDirection.Descending);
+        }
+
+        private void RemovePlaylistAdorner()
+        {
+            if (listViewSortCol != null)
+                AdornerLayer.GetAdornerLayer(listViewSortCol).Remove(listViewSortAdorner);
         }
     }
 }

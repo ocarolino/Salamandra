@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace Salamandra.Engine.Services
 {
-    public class DirectoryAudioScrapper
+    public class DirectoryAudioScanner
     {
         private Dictionary<string, DirectoryAudioInfo> directoriesLibrary;
 
         private BackgroundWorker backgroundWorker;
         private Queue<string> scrapQueue;
 
-        public DirectoryAudioScrapper()
+        public DirectoryAudioScanner()
         {
             this.directoriesLibrary = new Dictionary<string, DirectoryAudioInfo>();
 

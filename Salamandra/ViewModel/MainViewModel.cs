@@ -53,7 +53,7 @@ namespace Salamandra.ViewModel
         public bool PlaylistLoading { get; set; }
         public string PlaylistInfoText { get; set; }
 
-        public DirectoryAudioScrapper DirectoryAudioScrapper { get; set; }
+        public DirectoryAudioScanner DirectoryAudioScanner { get; set; }
         public ApplicationSettings ApplicationSettings { get; set; }
         public SettingsManager<ApplicationSettings> SettingsManager { get; set; }
 
@@ -121,7 +121,7 @@ namespace Salamandra.ViewModel
             this.ScheduleManager = new ScheduleManager();
             this.EnableEvents = true;
 
-            this.DirectoryAudioScrapper = new DirectoryAudioScrapper();
+            this.DirectoryAudioScanner = new DirectoryAudioScanner();
 
             UpdateWindowTitle();
             LoadCommands();
@@ -221,7 +221,7 @@ namespace Salamandra.ViewModel
             string filename = Path.Combine(Environment.CurrentDirectory, "directory_library.json");
 
             if (File.Exists(filename))
-                this.DirectoryAudioScrapper.LoadFromFile(filename);
+                this.DirectoryAudioScanner.LoadFromFile(filename);
         }
 
         public bool Closing()
@@ -235,7 +235,7 @@ namespace Salamandra.ViewModel
             if (!CheckPlaylistModified())
                 return false;
 
-            this.DirectoryAudioScrapper.StopScanning();
+            this.DirectoryAudioScanner.StopScanning();
             this.StopPlayback();
 
             SaveSettings();
@@ -256,7 +256,7 @@ namespace Salamandra.ViewModel
         {
             string filename = Path.Combine(Environment.CurrentDirectory, "directory_library.json");
 
-            this.DirectoryAudioScrapper.SaveToFile(filename);
+            this.DirectoryAudioScanner.SaveToFile(filename);
         }
 
         private void LoadCommands()
@@ -418,9 +418,9 @@ namespace Salamandra.ViewModel
                     }
                     break;
                 case RandomFileTrack randomTrack:
-                    this.DirectoryAudioScrapper.EnqueueAndScan(randomTrack.Filename!);
+                    this.DirectoryAudioScanner.EnqueueAndScan(randomTrack.Filename!);
 
-                    randomTrack.Filenames = this.DirectoryAudioScrapper.GetFilesFromDirectory(randomTrack.Filename!.EnsureHasDirectorySeparatorChar());
+                    randomTrack.Filenames = this.DirectoryAudioScanner.GetFilesFromDirectory(randomTrack.Filename!.EnsureHasDirectorySeparatorChar());
                     string? randomFile = randomTrack.GetFile();
 
                     if (!String.IsNullOrEmpty(randomFile))
@@ -674,7 +674,7 @@ namespace Salamandra.ViewModel
 
             if (vistaFolderBrowserDialog.ShowDialog() == true)
             {
-                this.DirectoryAudioScrapper.EnqueueAndScan(vistaFolderBrowserDialog.SelectedPath);
+                this.DirectoryAudioScanner.EnqueueAndScan(vistaFolderBrowserDialog.SelectedPath);
                 this.PlaylistManager.AddRandomTrack(vistaFolderBrowserDialog.SelectedPath);
             }
         }
@@ -743,9 +743,9 @@ namespace Salamandra.ViewModel
                 return;
 
             foreach (var item in directoriesEvents)
-                this.DirectoryAudioScrapper.Enqueue(item.Filename);
+                this.DirectoryAudioScanner.Enqueue(item.Filename);
 
-            this.DirectoryAudioScrapper.StartScanning();
+            this.DirectoryAudioScanner.StartScanning();
         }
 
         private void PlayLateEvents()

@@ -29,7 +29,7 @@ namespace Salamandra.ViewModel
 
         public ICommand CreateEventCommand { get; set; }
         public ICommand EditEventCommand { get; set; }
-        public ICommand DeleteEventCommand { get; set; }
+        public ICommand DeleteEventsCommand { get; set; }
         public ICommand OpenEventListCommand { get; set; }
         public ICommand SaveEventListAsCommand { get; set; }
 
@@ -47,7 +47,7 @@ namespace Salamandra.ViewModel
 
             this.CreateEventCommand = new RelayCommand(p => CreateEvent());
             this.EditEventCommand = new RelayCommand(p => EditEvent(), p => this.SelectedScheduledEvent != null);
-            this.DeleteEventCommand = new RelayCommand(p => DeleteEvent(), p => this.SelectedScheduledEvent != null);
+            this.DeleteEventsCommand = new RelayCommand(p => DeleteEvents(p), p => this.SelectedScheduledEvent != null);
             this.OpenEventListCommand = new RelayCommand(p => OpenEventList());
             this.SaveEventListAsCommand = new RelayCommand(p => SaveEventListAs());
         }
@@ -98,16 +98,18 @@ namespace Salamandra.ViewModel
             }
         }
 
-        private void DeleteEvent()
+        private void DeleteEvents(object? items)
         {
-            if (this.SelectedScheduledEvent == null)
+            if (items == null || !(items is System.Collections.IList))
                 return;
 
-            if (MessageBox.Show(String.Format("Tem certeza que deseja excluir o evento {0}?", this.SelectedScheduledEvent.FriendlyName),
+            List<ScheduledEvent> events = ((System.Collections.IList)items).Cast<ScheduledEvent>().ToList();
+
+            if (MessageBox.Show("Tem certeza que deseja excluir os eventos selecionados?",
                 "Eventos", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                this.Events.Remove(this.SelectedScheduledEvent);
-                this.SelectedScheduledEvent = null;
+                foreach (var item in events)
+                    this.Events.Remove(item);
             }
         }
 

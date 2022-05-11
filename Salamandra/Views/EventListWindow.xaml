@@ -177,8 +177,9 @@
                     Width="80" Height="24"/>
                 <Button Content="Editar" Command="{Binding EditEventCommand}"
                     Width="80" Height="24" Margin="8 0 0 0"/>
-                <Button Content="Excluir" Command="{Binding DeleteEventCommand}"
-                    Width="80" Height="24" Margin="8 0 0 0"/>
+                <Button Content="Excluir" Command="{Binding DeleteEventsCommand}"
+                        CommandParameter="{Binding SelectedItems, ElementName=EventsListView}"
+                        Width="80" Height="24" Margin="8 0 0 0"/>
 
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" 
                            Margin="8 0 0 0" />

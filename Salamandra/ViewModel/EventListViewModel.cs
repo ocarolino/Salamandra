@@ -125,8 +125,12 @@ namespace Salamandra.ViewModel
                     var list = jsonEventsLoader.Load(openFileDialog.FileName);
                     this.Events = new ObservableCollection<ScheduledEvent>(list);
 
-                    // ToDo: Don't really care if the user opened the same file. Maybe it can be changed in the future.
                     this.Filename = openFileDialog.FileName;
+
+                    if (this.Events.Count > 0)
+                        this.LastEventId = this.Events.Last().Id;
+
+                    // ToDo: Don't really care if the user opened the same file. Maybe it can be changed in the future.
                     this.HasFileChanged = true;
                 }
                 catch (Exception ex)

@@ -232,7 +232,7 @@ namespace Salamandra.ViewModel
 
         public bool Closing()
         {
-            if (this.IsPlaying && this.ApplicationSettings.PlayerSettings.AskToCloseWhenPlayling)
+            if (this.IsPlaying && this.ApplicationSettings.PlayerSettings.AskToCloseWhenPlaying)
             {
                 if (MessageBox.Show("A playlist ainda está tocando. Tem certeza que deseja fechar?", "Salamandra", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                     return false;

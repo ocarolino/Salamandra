@@ -254,6 +254,7 @@ namespace Salamandra.ViewModel
         {
             this.ApplicationSettings.PlayerSettings.PlaylistMode = this.PlaylistManager.PlaylistMode;
             this.ApplicationSettings.PlayerSettings.Volume = this.CurrentVolume;
+            this.ApplicationSettings.PlayerSettings.LastPlaylist = this.PlaylistManager.Filename;
 
             this.SettingsManager.SaveSettings(this.ApplicationSettings);
         }

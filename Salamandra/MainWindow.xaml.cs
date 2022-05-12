@@ -45,9 +45,9 @@ namespace Salamandra
             e.Cancel = !this.mainViewModel.Closing();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.mainViewModel.Loading();
+            await this.mainViewModel.Loading();
         }
 
         private void UpcomingEventsListView_MouseDown(object sender, MouseButtonEventArgs e)

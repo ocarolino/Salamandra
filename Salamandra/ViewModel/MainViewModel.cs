@@ -165,14 +165,18 @@ namespace Salamandra.ViewModel
             }
         }
 
-        public void Loading()
+        public async Task Loading()
         {
             LoadSettingsFile();
             ApplySettings();
+            await ApplyStartupSettings();
             LoadEventsFile();
             LoadLibraryFile();
 
             this.MainTimer.Start();
+
+            if (this.ApplicationSettings.PlayerSettings.PlayOnStartup)
+                StartPlayback();
         }
 
         private void LoadSettingsFile()
@@ -195,14 +199,32 @@ namespace Salamandra.ViewModel
             }
         }
 
-        private void ApplySettings(bool firstTime = true)
+        private void ApplySettings()
         {
             this.SoundEngine.OutputDevice = this.ApplicationSettings.DeviceSettings.MainOutputDevice;
+        }
 
-            if (firstTime)
+        private async Task ApplyStartupSettings()
+        {
+            this.CurrentVolume = this.ApplicationSettings.PlayerSettings.Volume;
+            this.PlaylistManager.PlaylistMode = this.ApplicationSettings.PlayerSettings.PlaylistMode;
+            this.EnableEvents = this.ApplicationSettings.PlayerSettings.EnableEvents;
+
+            if (this.ApplicationSettings.PlayerSettings.OpenLastPlaylistOnStartup &&
+                !String.IsNullOrWhiteSpace(this.ApplicationSettings.PlayerSettings.LastPlaylist) &&
+                File.Exists(this.ApplicationSettings.PlayerSettings.LastPlaylist))
             {
-                this.CurrentVolume = this.ApplicationSettings.PlayerSettings.Volume;
-                this.PlaylistManager.PlaylistMode = this.ApplicationSettings.PlayerSettings.PlaylistMode;
+                try
+                {
+                    await this.PlaylistManager.LoadPlaylist(this.ApplicationSettings.PlayerSettings.LastPlaylist);
+
+                    if (this.ApplicationSettings.PlayerSettings.ShufflePlaylistOnStartup)
+                        this.PlaylistManager.ShufflePlaylist();
+                }
+                catch (Exception ex)
+                {
+                    // ToDo: Log/Notification!
+                }
             }
         }
 
@@ -703,7 +725,7 @@ namespace Salamandra.ViewModel
             if (settingsWindow.ShowDialog() == true)
             {
                 this.ApplicationSettings = settingsViewModel.Settings;
-                ApplySettings(false);
+                ApplySettings();
             }
         }
 

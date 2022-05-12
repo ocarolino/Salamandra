@@ -18,7 +18,13 @@
             <TabItem Header="Geral">
                 <StackPanel Margin="8">
                     <CheckBox Content="Confirmar ao fechar caso player esteja tocando"
-                          IsChecked="{Binding Settings.PlayerSettings.AskToCloseWhenPlayling}" />
+                          IsChecked="{Binding Settings.PlayerSettings.AskToCloseWhenPlaying}" />
+                    <CheckBox Content="Abrir última playlist quando iniciar o programa"
+                          IsChecked="{Binding Settings.PlayerSettings.OpenLastPlaylistOnStartup}" Margin="0 8 0 0"/>
+                    <CheckBox Content="Embaralhar playlist quando iniciar o programa"
+                          IsChecked="{Binding Settings.PlayerSettings.ShufflePlaylistOnStartup}" Margin="0 8 0 0"/>
+                    <CheckBox Content="Reproduzir playlist quando iniciar o programa"
+                          IsChecked="{Binding Settings.PlayerSettings.PlayOnStartup}" Margin="0 8 0 0"/>
                 </StackPanel>
             </TabItem>
 

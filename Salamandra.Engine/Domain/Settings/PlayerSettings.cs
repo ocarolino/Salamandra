@@ -15,7 +15,7 @@ namespace Salamandra.Engine.Domain.Settings
         public bool AskToCloseWhenPlaying { get; set; }
         public bool EnableEvents { get; set; }
         public bool OpenLastPlaylistOnStartup { get; set; }
-        public bool LastPlaylist { get; set; }
+        public string? LastPlaylist { get; set; }
         public bool ShufflePlaylistOnStartup { get; set; }
         public bool PlayOnStartup { get; set; }
 
@@ -25,7 +25,7 @@ namespace Salamandra.Engine.Domain.Settings
             this.PlaylistMode = PlaylistMode.Default;
             this.AskToCloseWhenPlaying = true;
             this.EnableEvents = true;
-            this.LastPlaylist = string.Empty;
+            this.LastPlaylist = String.Empty;
             this.ShufflePlaylistOnStartup = false;
             this.PlayOnStartup = false;
         }

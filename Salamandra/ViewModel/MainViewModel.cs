@@ -61,6 +61,18 @@ namespace Salamandra.ViewModel
         public ScheduleManager ScheduleManager { get; set; }
         public bool EnableEvents { get; set; }
 
+        public string? CurrentTrackFilename { get; set; }
+        public string? TrackDisplayName
+        {
+            get
+            {
+                if (String.IsNullOrWhiteSpace(this.CurrentTrackFilename))
+                    return this.PlaylistManager.CurrentTrack?.FriendlyName;
+                else
+                    return this.CurrentTrackFilename;
+            }
+        }
+
         public TimeSpan? RemainingTime { get; set; }
         public TimeSpan? EndingTimeOfDay { get; set; }
         public DateTime CurrentDateTime { get; set; }
@@ -410,6 +422,7 @@ namespace Salamandra.ViewModel
         {
             this.IsPaused = false;
 
+            this.CurrentTrackFilename = null;
             this.PlaylistManager.CurrentTrack = track;
 
             if (updateNextTrack)
@@ -436,6 +449,7 @@ namespace Salamandra.ViewModel
                     }
 
                     string? file = rotationTrack.GetFile();
+                    this.CurrentTrackFilename = Path.GetFileNameWithoutExtension(file);
 
                     if (!String.IsNullOrEmpty(file))
                         PlayAudioFile(file);
@@ -454,6 +468,7 @@ namespace Salamandra.ViewModel
 
                     randomTrack.Filenames = this.DirectoryAudioScanner.GetFilesFromDirectory(randomTrack.Filename!.EnsureHasDirectorySeparatorChar());
                     string? randomFile = randomTrack.GetFile();
+                    this.CurrentTrackFilename = Path.GetFileNameWithoutExtension(randomFile);
 
                     if (!String.IsNullOrEmpty(randomFile))
                         PlayAudioFile(randomFile);
@@ -463,6 +478,8 @@ namespace Salamandra.ViewModel
                 default:
                     throw new NotImplementedException();
             }
+
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TrackDisplayName)));
         }
 
         private void PlayNextTrackOrStop()

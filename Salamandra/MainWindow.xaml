@@ -73,7 +73,7 @@
                 </TextBlock>
 
                 <Border Height="64" Margin="0 4 0 0" BorderBrush="Black" BorderThickness="1">
-                    <TextBlock Text="{Binding PlaylistManager.CurrentTrack.FriendlyName}" 
+                    <TextBlock Text="{Binding TrackDisplayName}" 
                            FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
             </StackPanel>

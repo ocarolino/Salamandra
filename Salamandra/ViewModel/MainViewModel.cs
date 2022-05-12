@@ -219,7 +219,10 @@ namespace Salamandra.ViewModel
                     await this.PlaylistManager.LoadPlaylist(this.ApplicationSettings.PlayerSettings.LastPlaylist);
 
                     if (this.ApplicationSettings.PlayerSettings.ShufflePlaylistOnStartup)
+                    {
                         this.PlaylistManager.ShufflePlaylist();
+                        this.PlaylistManager.UpdateNextTrack();
+                    }
                 }
                 catch (Exception ex)
                 {

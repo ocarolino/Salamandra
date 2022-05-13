@@ -103,6 +103,13 @@ namespace Salamandra.Engine.Services
             AddTracks(tracks.Cast<BaseTrack>().ToList());
         }
 
+        public void AddTimeAnnouncementTrack()
+        {
+            TimeAnnouncementTrack timeAnnouncementTrack = new TimeAnnouncementTrack();
+
+            AddTracks(new List<BaseTrack>() { timeAnnouncementTrack });
+        }
+
         public void AddRandomTrack(string directoryPath)
         {
             RandomFileTrack randomTrack = new RandomFileTrack() { Filename = directoryPath.EnsureHasDirectorySeparatorChar() };

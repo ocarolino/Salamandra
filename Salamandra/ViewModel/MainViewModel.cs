@@ -717,10 +717,7 @@ namespace Salamandra.ViewModel
 
         private void AddTimeAnnouncementTrack()
         {
-            // ToDo: Código abaixo no PlaylistManager
-            TimeAnnouncementTrack timeAnnouncementTrack = new TimeAnnouncementTrack();
-
-            this.PlaylistManager.AddTracks(new List<BaseTrack>() { timeAnnouncementTrack });
+            this.PlaylistManager.AddTimeAnnouncementTrack();
         }
 
         private void AddRandomTrack()

@@ -637,7 +637,18 @@ namespace Salamandra.ViewModel
                 }
                 catch (PlaylistLoaderException ex)
                 {
-                    MessageBox.Show("Houve um erro ao abrir a playlist.\n\n" + ex.Message, "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(String.Format("Houve um erro ao processar a playlist.\n\n{0}", ex.Message),
+                        "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (IOException ex)
+                {
+                    MessageBox.Show(String.Format("Houve um erro de acesso ao arquivo.\n\n{0}", ex.Message),
+                        "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(String.Format("Houve um erro ao abrir a playlist.\n\n{0}", ex.Message),
+                        "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
                 UpdateWindowTitle();
@@ -664,8 +675,20 @@ namespace Salamandra.ViewModel
                     return;
             }
 
-            // ToDo: Why there isn't a try/catch here?
-            this.PlaylistManager.SavePlaylist(filename);
+            try
+            {
+                this.PlaylistManager.SavePlaylist(filename);
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show(String.Format("Houve um erro de acesso ao arquivo.\n\n{0}", ex.Message),
+                    "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(String.Format("Houve um erro ao salvar o arquivo.\n\n{0}", ex.Message),
+                    "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
             UpdateWindowTitle();
         }

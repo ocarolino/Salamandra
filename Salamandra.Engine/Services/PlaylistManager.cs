@@ -75,10 +75,18 @@ namespace Salamandra.Engine.Services
         }
 
         #region Add and Remove Tracks
-        public void AddTracks(List<BaseTrack> tracks)
+        public void AddTracks(List<BaseTrack> tracks, int index = -1)
         {
             foreach (var item in tracks)
-                this.Tracks.Add(item);
+            {
+                if (index != -1)
+                {
+                    index++;
+                    this.Tracks.Insert(index, item);
+                }
+                else
+                    this.Tracks.Add(item);
+            }
 
             if (this.NextTrack == null)
                 UpdateNextTrack();
@@ -86,7 +94,7 @@ namespace Salamandra.Engine.Services
             this.Modified = true;
         }
 
-        public async Task AddFiles(List<string> filenames)
+        public async Task AddFiles(List<string> filenames, int index = -1)
         {
             List<AudioFileTrack> tracks = new List<AudioFileTrack>();
 
@@ -100,22 +108,22 @@ namespace Salamandra.Engine.Services
                 tracks.Add(soundFileTrack);
             }
 
-            AddTracks(tracks.Cast<BaseTrack>().ToList());
+            AddTracks(tracks.Cast<BaseTrack>().ToList(), index);
         }
 
-        public void AddTimeAnnouncementTrack()
+        public void AddTimeAnnouncementTrack(int index = -1)
         {
             TimeAnnouncementTrack timeAnnouncementTrack = new TimeAnnouncementTrack();
 
-            AddTracks(new List<BaseTrack>() { timeAnnouncementTrack });
+            AddTracks(new List<BaseTrack>() { timeAnnouncementTrack }, index);
         }
 
-        public void AddRandomTrack(string directoryPath)
+        public void AddRandomTrack(string directoryPath, int index = -1)
         {
             RandomFileTrack randomTrack = new RandomFileTrack() { Filename = directoryPath.EnsureHasDirectorySeparatorChar() };
             randomTrack.FriendlyName = Path.GetFileName(randomTrack.Filename.TrimEnd(Path.DirectorySeparatorChar));
 
-            AddTracks(new List<BaseTrack>() { randomTrack });
+            AddTracks(new List<BaseTrack>() { randomTrack }, index);
         }
 
 

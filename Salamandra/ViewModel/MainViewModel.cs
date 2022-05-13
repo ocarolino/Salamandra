@@ -352,7 +352,8 @@ namespace Salamandra.ViewModel
             openFileDialog.Multiselect = true;
 
             if (openFileDialog.ShowDialog() == true)
-                await this.PlaylistManager.AddFiles(openFileDialog.FileNames.ToList());
+                await this.PlaylistManager.AddFiles(openFileDialog.FileNames.ToList(),
+                    this.PlaylistManager.Tracks.IndexOf(this.SelectedTrack!));
 
             this.PlaylistLoading = false;
             this.PlaylistInfoText = string.Empty;
@@ -717,7 +718,7 @@ namespace Salamandra.ViewModel
 
         private void AddTimeAnnouncementTrack()
         {
-            this.PlaylistManager.AddTimeAnnouncementTrack();
+            this.PlaylistManager.AddTimeAnnouncementTrack(this.PlaylistManager.Tracks.IndexOf(this.SelectedTrack!));
         }
 
         private void AddRandomTrack()
@@ -727,7 +728,8 @@ namespace Salamandra.ViewModel
             if (vistaFolderBrowserDialog.ShowDialog() == true)
             {
                 this.DirectoryAudioScanner.EnqueueAndScan(vistaFolderBrowserDialog.SelectedPath);
-                this.PlaylistManager.AddRandomTrack(vistaFolderBrowserDialog.SelectedPath);
+                this.PlaylistManager.AddRandomTrack(vistaFolderBrowserDialog.SelectedPath,
+                    this.PlaylistManager.Tracks.IndexOf(this.SelectedTrack!));
             }
         }
 

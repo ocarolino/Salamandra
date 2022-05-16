@@ -505,8 +505,6 @@ namespace Salamandra.ViewModel
             {
                 if (this.PlaylistManager.CurrentTrack != null && !this.PlaylistManager.CurrentTrack.HasTrackFinished)
                 {
-                    this.IsEventPlaying = false;
-
                     PlayTrack(this.PlaylistManager.CurrentTrack, false, false);
                     return;
                 }

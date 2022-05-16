@@ -401,7 +401,7 @@ namespace Salamandra.ViewModel
             {
                 this.SoundEngine.PlayAudioFile(filename, this.CurrentVolume);
 
-                this.PlaybackState = PlaylistState.PlayingPlaylistTrack; // ToDo: Refatorar quando for evento!
+                this.PlaybackState = PlaylistState.PlayingTrack; // ToDo: Refatorar quando for evento!
                 this.TrackLengthInSeconds = this.SoundEngine.TotalLengthInSeconds;
                 this.TrackPositionInSeconds = 0;
                 this.CalculateEndingTimeOfDay(false);
@@ -437,7 +437,7 @@ namespace Salamandra.ViewModel
                 case AudioFileTrack audioFileTrack:
                     PlayAudioFile(audioFileTrack.Filename!);
 
-                    if (this.PlaybackState == PlaylistState.PlayingPlaylistTrack)
+                    if (this.PlaybackState == PlaylistState.PlayingTrack)
                     {
                         if (audioFileTrack.Duration == null)
                             audioFileTrack.Duration = TimeSpan.FromSeconds(this.SoundEngine.TotalLengthInSeconds);

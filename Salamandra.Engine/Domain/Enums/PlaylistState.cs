@@ -9,8 +9,7 @@ namespace Salamandra.Engine.Domain.Enums
     public enum PlaylistState
     {
         Stopped = 0,
-        PlayingPlaylistTrack = 1,
-        PlayingEventTrack = 2,
+        PlayingTrack = 1,
         WaitingNextTrack = 3,
         JumpToNextTrack = 4,
         JumpToNextEvent = 5,

@@ -75,6 +75,15 @@
                 <Border Height="64" Margin="0 4 0 0" BorderBrush="Black" BorderThickness="1">
                     <TextBlock Text="{Binding TrackDisplayName}" 
                            FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEventPlaying}" Value="True">
+                                    <Setter Property="Background" Value="LightYellow"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
                 </Border>
             </StackPanel>
 

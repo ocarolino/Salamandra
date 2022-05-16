@@ -79,7 +79,7 @@ namespace Salamandra.Engine.Services
             this.Events = new List<ScheduledEvent>();
         }
 
-        public bool CheckEventSchedule(ScheduledEvent scheduledEvent, DateTime dateToTest)
+        public bool CheckEventSchedule(ScheduledEvent scheduledEvent, DateTime dateToTest, bool refresh = false)
         {
             if (!scheduledEvent.IsEnabled)
                 return false;
@@ -112,7 +112,8 @@ namespace Salamandra.Engine.Services
             DateTime runningDate = new DateTime(dateToTest.Year, dateToTest.Month, dateToTest.Day,
                 dateToTest.Hour, scheduledEvent.StartingDateTime.Minute, scheduledEvent.StartingDateTime.Second);
 
-            if (runningDate < dateToTest || (scheduledEvent.UseExpirationDateTime && runningDate > scheduledEvent.ExpirationDateTime))
+            if (runningDate < dateToTest || (scheduledEvent.UseExpirationDateTime && runningDate > scheduledEvent.ExpirationDateTime)
+                || (refresh && (runningDate > dateToTest)))
                 return false;
 
             return true;
@@ -209,7 +210,7 @@ namespace Salamandra.Engine.Services
                     continue;
                 }
 
-                if (!CheckEventSchedule(model, temp.StartDateTime))
+                if (!CheckEventSchedule(model, temp.StartDateTime, true))
                 {
                     this.EventsQueue.Remove(temp);
                     continue;

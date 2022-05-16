@@ -66,8 +66,11 @@ namespace Salamandra.ViewModel
         {
             get
             {
+                if (this.PlaylistManager.CurrentTrack == null)
+                    return null;
+
                 if (String.IsNullOrWhiteSpace(this.CurrentTrackFilename))
-                    return this.PlaylistManager.CurrentTrack?.FriendlyName;
+                    return this.PlaylistManager.CurrentTrack.FriendlyName;
                 else
                     return this.CurrentTrackFilename;
             }
@@ -522,6 +525,7 @@ namespace Salamandra.ViewModel
             this.SoundEngine.Stop();
 
             this.PlaylistManager.CurrentTrack = null;
+            this.CurrentTrackFilename = null;
             this.TrackLengthInSeconds = 0;
             this.TrackPositionInSeconds = 0;
             this.RemainingTime = null;

@@ -568,12 +568,7 @@ namespace Salamandra.ViewModel
             this.PlaylistManager.NextTrack = this.SelectedTrack;
 
             if (this.IsPlaying)
-            {
-                this.PlaybackState = PlaylistState.JumpToNextTrack;
-                this.IsEventPlaying = false;
-
-                this.SoundEngine.Stop();
-            }
+                NextTrack();
             else
                 this.StartPlayback();
         }

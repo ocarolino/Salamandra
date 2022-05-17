@@ -494,6 +494,7 @@ namespace Salamandra.ViewModel
 
         private void PlayNextTrackOrStop()
         {
+            // Do we have to play an immediate event or the user asked to play late events?
             if (this.EnableEvents && this.PlaybackState == PlaylistState.JumpToNextEvent)
             {
                 this.IsEventPlaying = true;
@@ -502,6 +503,7 @@ namespace Salamandra.ViewModel
                 return;
             }
 
+            // Is the current track a sequential track?
             if (!(this.PlaybackState == PlaylistState.JumpToNextTrack))
             {
                 if (this.PlaylistManager.CurrentTrack != null && !this.PlaylistManager.CurrentTrack.HasTrackFinished)
@@ -511,29 +513,39 @@ namespace Salamandra.ViewModel
                 }
             }
 
+            // Has user asked to stop after current track?
+            if (this.StopAfterCurrentTrack)
+            {
+                StopPlayback();
+                return;
+            }
+
+            // Do we have a late queued event?
+            if (this.EnableEvents && !(this.PlaybackState == PlaylistState.JumpToNextTrack) && this.ScheduleManager.HasLateEvent)
+            {
+                this.IsEventPlaying = true;
+
+                PlayTrack(this.ScheduleManager.DequeueLateEvent()!.Track!, false);
+                return;
+            }
+
+            // Do we have a next track?
             if (this.PlaylistManager.NextTrack != null)
             {
-                if (this.EnableEvents && !(this.PlaybackState == PlaylistState.JumpToNextTrack) && this.ScheduleManager.HasLateEvent)
-                {
-                    this.IsEventPlaying = true;
-
-                    PlayTrack(this.ScheduleManager.DequeueLateEvent()!.Track!, false);
-                    return;
-                }
-
                 this.IsEventPlaying = false;
 
                 PlayTrack(this.PlaylistManager.NextTrack);
+                return;
             }
-            else
-                StopPlayback();
+
+            StopPlayback();
         }
 
         private void StopPlayback()
         {
             this.IsPlaying = false;
             this.IsPaused = false;
-            this.StopAfterCurrent = false;
+            this.StopAfterCurrentTrack = false;
             this.PlaybackState = PlaylistState.Stopped;
             this.SoundEngine.Stop();
 
@@ -549,6 +561,8 @@ namespace Salamandra.ViewModel
 
             if (this.PlaylistManager.NextTrack == null)
                 this.PlaylistManager.UpdateNextTrack(); // ToDo: Quando houver manual.
+
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TrackDisplayName)));
         }
 
         private void StopPlaybackWithError(Exception ex)

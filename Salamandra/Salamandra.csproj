@@ -10,6 +10,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Images\Icons\Player\stop-next.png" />
 	  <None Remove="Images\Icons\Playlist\alarm_clock.png" />
 	  <None Remove="Images\Icons\Playlist\audio_file.png" />
 	  <None Remove="Images\Icons\Playlist\music_folder.png" />

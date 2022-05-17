@@ -33,6 +33,7 @@ namespace Salamandra.ViewModel
         public PlaylistState PlaybackState { get; set; }
         public bool IsPlaying { get; set; }
         public bool IsPaused { get; set; }
+        public bool StopAfterCurrentTrack { get; set; }
         public float CurrentVolume { get; set; }
 
         public bool AllowSeekDrag { get; set; }
@@ -532,6 +533,7 @@ namespace Salamandra.ViewModel
         {
             this.IsPlaying = false;
             this.IsPaused = false;
+            this.StopAfterCurrent = false;
             this.PlaybackState = PlaylistState.Stopped;
             this.SoundEngine.Stop();
 

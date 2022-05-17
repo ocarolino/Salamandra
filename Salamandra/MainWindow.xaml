@@ -194,10 +194,11 @@
                        RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
             </Button>
 
-            <Button Grid.Column="4" Margin="8 0 0 0" Width="30" Height="30" Command="{Binding StopAfterCurrentCommand}">
+            <ToggleButton Grid.Column="4" Margin="8 0 0 0" Width="30" Height="30" 
+                          IsChecked="{Binding StopAfterCurrentTrack}" IsEnabled="{Binding IsPlaying}">
                 <Image Source="/Images/Icons/Player/stop-next.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                        RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
-            </Button>
+            </ToggleButton>
 
             <ComboBox Grid.Column="5" SelectedItem="{Binding PlaylistManager.PlaylistMode}"
                       ItemsSource="{Binding Source={extensions:EnumBindingSource {x:Type enums:PlaylistMode}}}"

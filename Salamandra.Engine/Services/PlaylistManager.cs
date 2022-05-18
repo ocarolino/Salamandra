@@ -306,11 +306,22 @@ namespace Salamandra.Engine.Services
             this.Modified = true;
         }
 
+        public void SwapTracks(BaseTrack sourceItem, BaseTrack targetItem)
+        {
+            int i = this.Tracks.IndexOf(sourceItem);
+            int j = this.Tracks.IndexOf(targetItem);
+
+            if (i != -1 && j != -1 && i != j)
+            {
+                this.Tracks[i] = targetItem;
+                this.Tracks[j] = sourceItem;
+            }
+
+            this.Modified = true;
+        }
+
 #pragma warning disable 67
         public event PropertyChangedEventHandler? PropertyChanged;
-
-
 #pragma warning restore 67
-
     }
 }

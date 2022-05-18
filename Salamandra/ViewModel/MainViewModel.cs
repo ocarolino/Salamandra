@@ -22,10 +22,11 @@ using Salamandra.Views;
 using System.Windows.Media.Imaging;
 using System.Drawing.Imaging;
 using Salamandra.Engine.Comparer;
+using GongSolutions.Wpf.DragDrop;
 
 namespace Salamandra.ViewModel
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged, IDropTarget
     {
         public SoundEngine SoundEngine { get; set; }
         public PlaylistManager PlaylistManager { get; set; }
@@ -954,6 +955,29 @@ namespace Salamandra.ViewModel
         {
             this.PlaylistManager.Sort(sortBy, sortDirection);
         }
+
+        #region DragDrop Handlers
+        public void DragOver(IDropInfo dropInfo)
+        {
+            BaseTrack? sourceItem = dropInfo.Data as BaseTrack;
+            BaseTrack? targetItem = dropInfo.TargetItem as BaseTrack;
+
+            if (sourceItem != null && targetItem != null)
+            {
+                dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
+                dropInfo.Effects = DragDropEffects.Copy;
+            }
+        }
+
+        public void Drop(IDropInfo dropInfo)
+        {
+            BaseTrack? sourceItem = dropInfo.Data as BaseTrack;
+            BaseTrack? targetItem = dropInfo.TargetItem as BaseTrack;
+
+            if (sourceItem != null && targetItem != null)
+                this.PlaylistManager.SwapTracks(sourceItem, targetItem);
+        }
+        #endregion
 
 #pragma warning disable 67
         public event PropertyChangedEventHandler? PropertyChanged;

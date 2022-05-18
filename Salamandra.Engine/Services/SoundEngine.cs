@@ -52,6 +52,8 @@ namespace Salamandra.Engine.Services
             get => this.audioFileReader != null ? this.audioFileReader.TotalTime.TotalSeconds : 0;
         }
 
+        public static string[] SupportedFormats = { ".wav", ".mp3", ".wma", ".ogg", ".flac" };
+
         public SoundEngine()
         {
             this.OutputDevice = 0;

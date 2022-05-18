@@ -11,6 +11,7 @@
         xmlns:enums="clr-namespace:Salamandra.Engine.Domain.Enums;assembly=Salamandra.Engine"
         xmlns:tracks="clr-namespace:Salamandra.Engine.Domain.Tracks;assembly=Salamandra.Engine"
         xmlns:usercontrols="clr-namespace:Salamandra.UserControls"
+        xmlns:dd="urn:gong-wpf-dragdrop"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Height="540" Width="960"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing"
@@ -311,7 +312,10 @@
                 <ListView ItemsSource="{Binding PlaylistManager.Tracks}" SelectedItem="{Binding SelectedTrack}"
                           Name="playlist" SelectionMode="Extended" AlternationCount="2" Grid.Row="0" 
                           MouseDown="UpcomingEventsListView_MouseDown" SelectionChanged="playlist_SelectionChanged" 
-                          Style="{StaticResource ListViewStyle}">
+                          Style="{StaticResource ListViewStyle}"
+                          dd:DragDrop.IsDragSource="True"
+                          dd:DragDrop.IsDropTarget="True"                          
+                          dd:DragDrop.DropHandler="{Binding .}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn x:Name="PlaylistFriendlyNameColumn" Width="360">

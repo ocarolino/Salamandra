@@ -980,7 +980,23 @@ namespace Salamandra.ViewModel
 
             if (dataObject != null && dataObject.ContainsFileDropList())
             {
+                // ToDo: Tornar esses textos genéricos.
+                this.PlaylistLoading = true;
+                this.PlaylistInfoText = "Adicionando arquivos a playlist...";
 
+                var task = this.HandleDropActionAsync(dropInfo, dataObject.GetFileDropList());
+
+
+                task.ContinueWith(t =>
+                {
+                    if (t.IsFaulted)
+                    {
+                        // ToDo: Log!
+                    }
+
+                    this.PlaylistLoading = false;
+                    this.PlaylistInfoText = String.Empty;
+                }, TaskScheduler.FromCurrentSynchronizationContext());
             }
             else
             {
@@ -988,6 +1004,14 @@ namespace Salamandra.ViewModel
 
                 this.PlaylistManager.Modified = true;
             }
+        }
+
+        private async Task HandleDropActionAsync(IDropInfo dropInfo, StringCollection fileOrDirDropList)
+        {
+            var files = fileOrDirDropList.Cast<string>().Where(x => SoundEngine.SupportedFormats.Any(y => x.EndsWith(y))).ToList();
+
+            if (files.Count > 0)
+                await this.PlaylistManager.AddFiles(files, dropInfo.InsertIndex);
         }
         #endregion
 

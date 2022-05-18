@@ -23,6 +23,7 @@ using System.Windows.Media.Imaging;
 using System.Drawing.Imaging;
 using Salamandra.Engine.Comparer;
 using GongSolutions.Wpf.DragDrop;
+using System.Collections.Specialized;
 
 namespace Salamandra.ViewModel
 {
@@ -959,23 +960,34 @@ namespace Salamandra.ViewModel
         #region DragDrop Handlers
         public void DragOver(IDropInfo dropInfo)
         {
-            BaseTrack? sourceItem = dropInfo.Data as BaseTrack;
-            BaseTrack? targetItem = dropInfo.TargetItem as BaseTrack;
+            dropInfo.DropTargetAdorner = DropTargetAdorners.Insert;
 
-            if (sourceItem != null && targetItem != null)
+            var dataObject = dropInfo.Data as IDataObject;
+
+            if (dataObject != null && dataObject.GetDataPresent(DataFormats.FileDrop))
             {
-                dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
                 dropInfo.Effects = DragDropEffects.Copy;
+            }
+            else
+            {
+                dropInfo.Effects = DragDropEffects.Move;
             }
         }
 
         public void Drop(IDropInfo dropInfo)
         {
-            BaseTrack? sourceItem = dropInfo.Data as BaseTrack;
-            BaseTrack? targetItem = dropInfo.TargetItem as BaseTrack;
+            var dataObject = dropInfo.Data as DataObject;
 
-            if (sourceItem != null && targetItem != null)
-                this.PlaylistManager.SwapTracks(sourceItem, targetItem);
+            if (dataObject != null && dataObject.ContainsFileDropList())
+            {
+
+            }
+            else
+            {
+                GongSolutions.Wpf.DragDrop.DragDrop.DefaultDropHandler.Drop(dropInfo);
+
+                this.PlaylistManager.Modified = true;
+            }
         }
         #endregion
 

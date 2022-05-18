@@ -110,9 +110,12 @@ namespace Salamandra.ViewModel
         public ICommand? OpenEventListCommand { get; set; }
         public ICommand? PlayLateEventsCommand { get; set; }
         public ICommand? DiscardLateEventsCommand { get; set; }
+        public ICommand? FocusOnCurrentTrackCommand { get; set; }
+        public ICommand? FocusOnNextTrackCommand { get; set; }
         #endregion
 
         public Action? RemovePlaylistAdorner { get; set; }
+        public Action<BaseTrack?>? FocusOnTrack { get; set; }
 
         public MainViewModel()
         {
@@ -347,6 +350,9 @@ namespace Salamandra.ViewModel
 
             this.PlayLateEventsCommand = new RelayCommand(p => PlayLateEvents(), p => this.ScheduleManager.HasLateEvent && this.EnableEvents);
             this.DiscardLateEventsCommand = new RelayCommand(p => DiscardLateEvents(), p => this.ScheduleManager.HasLateEvent);
+
+            this.FocusOnCurrentTrackCommand = new RelayCommand(p => FocusOnTrack?.Invoke(this.PlaylistManager.CurrentTrack));
+            this.FocusOnNextTrackCommand = new RelayCommand(p => FocusOnTrack?.Invoke(this.PlaylistManager.NextTrack));
         }
 
         private async Task AddFilesToPlaylist()

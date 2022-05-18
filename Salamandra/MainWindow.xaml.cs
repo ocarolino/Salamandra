@@ -18,6 +18,7 @@ using Salamandra.Controls;
 using System.ComponentModel;
 using Salamandra.Engine.Domain.Enums;
 using Salamandra.Engine.Comparer;
+using Salamandra.Engine.Domain;
 
 namespace Salamandra
 {
@@ -37,6 +38,7 @@ namespace Salamandra
 
             this.mainViewModel = new MainViewModel();
             this.mainViewModel.RemovePlaylistAdorner += RemovePlaylistAdorner;
+            this.mainViewModel.FocusOnTrack += FocusOnTrackHandler;
             this.DataContext = this.mainViewModel;
         }
 
@@ -105,6 +107,12 @@ namespace Salamandra
         {
             if (listViewSortCol != null)
                 AdornerLayer.GetAdornerLayer(listViewSortCol).Remove(listViewSortAdorner);
+        }
+
+        private void FocusOnTrackHandler(BaseTrack? track)
+        {
+            if (track != null)
+                this.playlist.ScrollIntoView(track);
         }
     }
 }

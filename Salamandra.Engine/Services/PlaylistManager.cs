@@ -54,12 +54,19 @@ namespace Salamandra.Engine.Services
             {
                 case PlaylistMode.Default:
                 case PlaylistMode.Repeat:
+                case PlaylistMode.Shuffle:
                     if (nextTrackIndex >= this.Tracks.Count)
                     {
                         if (this.PlaylistMode == PlaylistMode.Default)
+                        {
                             this.NextTrack = null;
-                        else
-                            this.NextTrack = this.Tracks.First();
+                            return;
+                        }
+
+                        if (this.PlaylistMode == PlaylistMode.Shuffle)
+                            ShufflePlaylist();
+
+                        this.NextTrack = this.Tracks.First();
                     }
                     else
                         this.NextTrack = this.Tracks[nextTrackIndex];
@@ -68,6 +75,9 @@ namespace Salamandra.Engine.Services
                     Random random = new Random(); // ToDo: Random singleton.
 
                     this.NextTrack = this.Tracks[random.Next(0, this.Tracks.Count)];
+                    break;
+                case PlaylistMode.Manual:
+                    this.NextTrack = null;
                     break;
                 default:
                     throw new NotImplementedException();

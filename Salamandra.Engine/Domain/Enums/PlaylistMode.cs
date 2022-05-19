@@ -11,5 +11,7 @@ namespace Salamandra.Engine.Domain.Enums
         Default = 0,
         Repeat = 1,
         Random = 2,
+        Manual = 3,
+        Shuffle = 4,
     }
 }

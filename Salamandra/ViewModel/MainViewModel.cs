@@ -482,10 +482,9 @@ namespace Salamandra.ViewModel
                     }
                     break;
                 case RandomFileTrack randomTrack:
-                    this.DirectoryAudioScanner.EnqueueAndScan(randomTrack.Filename!);
+                    this.DirectoryAudioScanner.EnqueueAndScan(randomTrack.Filename);
 
-                    randomTrack.Filenames = this.DirectoryAudioScanner.GetFilesFromDirectory(randomTrack.Filename!.EnsureHasDirectorySeparatorChar());
-                    string? randomFile = randomTrack.GetFile();
+                    string? randomFile = this.DirectoryAudioScanner.GetRandomFileFromDirectory(randomTrack.Filename);
                     this.CurrentTrackFilename = Path.GetFileNameWithoutExtension(randomFile);
 
                     if (!String.IsNullOrEmpty(randomFile))

@@ -18,6 +18,8 @@ namespace Salamandra.Engine.Services
         private BackgroundWorker backgroundWorker;
         private Queue<string> scrapQueue;
 
+        private List<string> filesBlackList;
+
         public DirectoryAudioScanner()
         {
             this.directoriesLibrary = new Dictionary<string, DirectoryAudioInfo>();
@@ -30,6 +32,7 @@ namespace Salamandra.Engine.Services
             this.backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
 
             this.scrapQueue = new Queue<string>();
+            this.filesBlackList = new List<string>();
         }
 
         #region Background Worker Events
@@ -151,8 +154,11 @@ namespace Salamandra.Engine.Services
             return false;
         }
 
-        public void EnqueueAndScan(string path)
+        public void EnqueueAndScan(string? path)
         {
+            if (path == null)
+                return;
+
             if (Enqueue(path))
                 StartScanning();
         }
@@ -181,16 +187,49 @@ namespace Salamandra.Engine.Services
         }
         #endregion
 
-        public List<string> GetFilesFromDirectory(string path)
+        public List<string> GetFilesFromDirectory(string? path)
         {
             List<string> files = new List<string>();
 
-            var keys = this.directoriesLibrary.Keys.Where(x => x.StartsWith(path));
+            if (path != null)
+            {
+                path = path.EnsureHasDirectorySeparatorChar();
 
-            foreach (var item in keys)
-                files.AddRange(this.directoriesLibrary[item].Files);
+                var keys = this.directoriesLibrary.Keys.Where(x => x.StartsWith(path));
+
+                foreach (var item in keys)
+                    files.AddRange(this.directoriesLibrary[item].Files);
+            }
 
             return files;
+        }
+
+        public string? GetRandomFileFromDirectory(string? path, bool blacklist = true)
+        {
+            if (path == null)
+                return null;
+
+            var files = GetFilesFromDirectory(path);
+
+            if (files.Count == 0)
+                return null;
+
+            var availableFiles = files.Except(this.filesBlackList).ToList();
+
+            if (availableFiles.Count == 0)
+            {
+                availableFiles = files;
+                filesBlackList = filesBlackList.Except(filesBlackList.Where(x => x.StartsWith(path))).ToList();
+            }
+
+            Random random = new Random();
+
+            string file = availableFiles[random.Next(availableFiles.Count)];
+
+            if (blacklist)
+                this.filesBlackList.Add(file);
+
+            return file;
         }
 
         public void SaveToFile(string filename)

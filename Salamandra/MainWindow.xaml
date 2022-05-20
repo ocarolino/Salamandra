@@ -81,7 +81,7 @@
                     </TextBlock.Style>
                 </TextBlock>
 
-                <Border Height="48" Margin="0 4 0 0" Background="Transparent" Cursor="Hand"
+                <Border Height="48" Margin="0 4 0 0" Cursor="Hand"
                         BorderBrush="Black" BorderThickness="1">
                     <Border.InputBindings>
                         <MouseBinding MouseAction="LeftClick" Command="{Binding FocusOnCurrentTrackCommand}"/>
@@ -90,6 +90,8 @@
                            FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <Border.Style>
                         <Style TargetType="Border">
+                            <Setter Property="Background" Value="Transparent"/>
+                            
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsEventPlaying}" Value="True">
                                     <Setter Property="Background" Value="LightYellow"/>

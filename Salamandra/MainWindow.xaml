@@ -49,18 +49,26 @@
         <!-- Top Grid -->
         <Grid DockPanel.Dock="Top" Margin="8">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <!-- Linha Superior -->
+            <!-- Horário -->
             <StackPanel Grid.Column="0">
-                <TextBlock Text="Reproduzindo agora" HorizontalAlignment="Left">
+                <TextBlock Text="{Binding CurrentDateTime, StringFormat='ddd, dd\\/MM\\/yyyy', FallbackValue='seg, 18/05/2022'}"
+                           HorizontalAlignment="Center" FontWeight="DemiBold" FontSize="14"/>
+                <Border Grid.Column="0" Height="48" Margin="0 4 0 0"
+                        BorderBrush="Black" BorderThickness="1">
+                    <TextBlock Text="{Binding CurrentDateTime, StringFormat=HH\\:mm\\:ss}"
+                           FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </StackPanel>
+
+            <!-- Faixa Atual -->
+            <StackPanel Grid.Column="1" Margin="8 0 0 0">
+                <TextBlock Text="Reproduzindo agora" HorizontalAlignment="Left"
+                           FontWeight="DemiBold" FontSize="14">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Style.Triggers>
@@ -73,7 +81,7 @@
                     </TextBlock.Style>
                 </TextBlock>
 
-                <Border Height="64" Margin="0 4 0 0" Background="Transparent" Cursor="Hand"
+                <Border Height="48" Margin="0 4 0 0" Background="Transparent" Cursor="Hand"
                         BorderBrush="Black" BorderThickness="1">
                     <Border.InputBindings>
                         <MouseBinding MouseAction="LeftClick" Command="{Binding FocusOnCurrentTrackCommand}"/>
@@ -90,72 +98,42 @@
                         </Style>
                     </Border.Style>
                 </Border>
+
+                <Grid Margin="0 4 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Tempo Restante" Grid.Column="0" VerticalAlignment="Center"
+                               Foreground="{StaticResource ControlDisabledGlythColour}"/>
+
+                    <TextBlock Text="{Binding RemainingTime, StringFormat='mm\\:ss', TargetNullValue='--:--', FallbackValue='00:00'}"
+                               Grid.Column="1" VerticalAlignment="Center" FontWeight="Bold" Margin="8 0 0 0"/>
+
+                    <TextBlock Text="Horário de Término" Grid.Column="3" VerticalAlignment="Center"
+                               Foreground="{StaticResource ControlDisabledGlythColour}"/>
+
+                    <TextBlock Text="{Binding EndingTimeOfDay, StringFormat='hh\\:mm\\:ss', TargetNullValue='--:--:--', FallbackValue='00:00:00'}"
+                               Grid.Column="4" VerticalAlignment="Center" FontWeight="Bold" Margin="8 0 0 0"/>
+
+                </Grid>
             </StackPanel>
 
-            <StackPanel Grid.Column="1" Margin="8 0 0 0">
-                <TextBlock Text="Próxima faixa"/>
-                <Border Height="64" Margin="0 4 0 0" Background="Transparent" Cursor="Hand"
+            <!-- Próxima Faixa -->
+            <StackPanel Grid.Column="2" Margin="8 0 0 0">
+                <TextBlock Text="Próxima faixa"
+                           FontWeight="DemiBold" FontSize="14"/>
+                <Border Height="48" Margin="0 4 0 0" Background="Transparent" Cursor="Hand"
                     BorderBrush="Black" BorderThickness="1">
                     <Border.InputBindings>
                         <MouseBinding MouseAction="LeftClick" Command="{Binding FocusOnNextTrackCommand}"/>
                     </Border.InputBindings>
                     <TextBlock Text="{Binding PlaylistManager.NextTrack.FriendlyName}"
                            FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
-            </StackPanel>
-
-            <!-- Linha Inferior -->
-            <Grid Grid.Column="0" Grid.Row="1" Margin="0 8 0 0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*"/>
-                    <ColumnDefinition Width="6*"/>
-                    <ColumnDefinition Width="4*"/>
-                </Grid.ColumnDefinitions>
-
-                <StackPanel Grid.Column="0">
-                    <TextBlock Text="Tempo Restante"/>
-                    <Border Height="48"  BorderBrush="Black" BorderThickness="1" Margin="0 4 0 0">
-                        <TextBlock Text="{Binding RemainingTime, StringFormat='mm\\:ss', TargetNullValue='--:--', FallbackValue='00:00'}"
-                           FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </StackPanel>
-
-                <!--
-                <Grid Grid.Column="1" Margin="8 0 8 0" VerticalAlignment="Bottom">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="L" VerticalAlignment="Center"/>
-                    <ProgressBar Grid.Row="0" Grid.Column="1" Height="18" Margin="4 0 0 0"/>
-
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="R" VerticalAlignment="Center"/>
-                    <ProgressBar Grid.Row="1" Grid.Column="1" Height="18" Margin="4 8 0 0"/>
-                </Grid>
-                -->
-
-                <StackPanel Grid.Column="2">
-                    <TextBlock Text="Horário de Término"/>
-                    <Border Height="48"  BorderBrush="Black" BorderThickness="1" Margin="0 4 0 0">
-                        <TextBlock Text="{Binding EndingTimeOfDay, StringFormat='hh\\:mm\\:ss', TargetNullValue='--:--:--', FallbackValue='00:00:00'}"
-                           FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </StackPanel>
-            </Grid>
-
-            <StackPanel Grid.Column="1" Grid.Row="1" Margin="8 8 0 0">
-                <TextBlock Text="{Binding CurrentDateTime, StringFormat='ddd, dd\\/MM\\/yyyy'}"
-                           HorizontalAlignment="Center" FontWeight="DemiBold"/>
-                <Border Height="48" Margin="0 4 0 0"
-                        BorderBrush="Black" BorderThickness="1">
-                    <TextBlock Text="{Binding CurrentDateTime, StringFormat=HH\\:mm\\:ss}"
-                           FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
             </StackPanel>
         </Grid>

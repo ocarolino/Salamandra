@@ -1014,6 +1014,11 @@ namespace Salamandra.ViewModel
         private async Task HandleDropActionAsync(IDropInfo dropInfo, StringCollection fileOrDirDropList)
         {
             await this.PlaylistManager.AddTracksFromPaths(fileOrDirDropList.Cast<string>().ToList(), dropInfo.InsertIndex);
+
+            foreach (var item in this.PlaylistManager.Tracks.OfType<RandomFileTrack>())
+                this.DirectoryAudioScanner.Enqueue(item.Filename!);
+
+            this.DirectoryAudioScanner.ScanLibrary();
         }
         #endregion
 

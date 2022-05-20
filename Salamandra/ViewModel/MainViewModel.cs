@@ -1013,10 +1013,7 @@ namespace Salamandra.ViewModel
 
         private async Task HandleDropActionAsync(IDropInfo dropInfo, StringCollection fileOrDirDropList)
         {
-            var files = fileOrDirDropList.Cast<string>().Where(x => SoundEngine.SupportedFormats.Any(y => x.EndsWith(y))).ToList();
-
-            if (files.Count > 0)
-                await this.PlaylistManager.AddFiles(files, dropInfo.InsertIndex);
+            await this.PlaylistManager.AddTracksFromPaths(fileOrDirDropList.Cast<string>().ToList(), dropInfo.InsertIndex);
         }
         #endregion
 

@@ -115,15 +115,43 @@ namespace Salamandra.Engine.Services
 
             foreach (var item in filenames)
             {
-                AudioFileTrack soundFileTrack = new AudioFileTrack() { Filename = item, FriendlyName = Path.GetFileNameWithoutExtension(item) };
-
-                var duration = await Task.Run(() => GetAudioFileDuration(item));
-                soundFileTrack.Duration = duration;
+                AudioFileTrack soundFileTrack = await CreateAudioFileTrackFromFilename(item);
 
                 tracks.Add(soundFileTrack);
             }
 
             AddTracks(tracks.Cast<BaseTrack>().ToList(), index);
+        }
+
+        private async Task<AudioFileTrack> CreateAudioFileTrackFromFilename(string item)
+        {
+            AudioFileTrack soundFileTrack = new AudioFileTrack() { Filename = item, FriendlyName = Path.GetFileNameWithoutExtension(item) };
+
+            var duration = await Task.Run(() => GetAudioFileDuration(item));
+            soundFileTrack.Duration = duration;
+
+            return soundFileTrack;
+        }
+
+        public async Task AddTracksFromPaths(List<string> paths, int index = -1)
+        {
+            List<BaseTrack> tracks = new List<BaseTrack>();
+
+            foreach (var item in paths)
+            {
+                FileAttributes attr = File.GetAttributes(item);
+
+                if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                    tracks.Add(CreateRandomTrackFromPath(item));
+                else
+                {
+                    if (SoundEngine.SupportedFormats.Any(x => item.EndsWith(x)))
+                        tracks.Add(await CreateAudioFileTrackFromFilename(item));
+                }
+            }
+
+            if (tracks.Count > 0)
+                AddTracks(tracks, index);
         }
 
         public void AddTimeAnnouncementTrack(int index = -1)
@@ -135,12 +163,17 @@ namespace Salamandra.Engine.Services
 
         public void AddRandomTrack(string directoryPath, int index = -1)
         {
-            RandomFileTrack randomTrack = new RandomFileTrack() { Filename = directoryPath.EnsureHasDirectorySeparatorChar() };
-            randomTrack.FriendlyName = Path.GetFileName(randomTrack.Filename.TrimEnd(Path.DirectorySeparatorChar));
+            RandomFileTrack randomTrack = CreateRandomTrackFromPath(directoryPath);
 
             AddTracks(new List<BaseTrack>() { randomTrack }, index);
         }
 
+        private static RandomFileTrack CreateRandomTrackFromPath(string directoryPath)
+        {
+            RandomFileTrack randomTrack = new RandomFileTrack() { Filename = directoryPath.EnsureHasDirectorySeparatorChar() };
+            randomTrack.FriendlyName = Path.GetFileName(randomTrack.Filename.TrimEnd(Path.DirectorySeparatorChar));
+            return randomTrack;
+        }
 
         public void RemoveTracks(List<BaseTrack> tracks)
         {

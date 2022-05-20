@@ -89,8 +89,6 @@ namespace Salamandra.Engine.Services
         {
             if (index >= this.Tracks.Count)
                 index = -1;
-            else if (index <= 0)
-                index = 0;
 
             foreach (var item in tracks)
             {

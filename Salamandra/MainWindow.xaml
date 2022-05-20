@@ -46,6 +46,45 @@
             </MenuItem>
         </Menu>
 
+        <ToolBarTray DockPanel.Dock="Top" Background="{StaticResource ContainerBackground}">
+            <ToolBar>
+                <Button Command="{Binding NewPlaylistCommand}" ToolTip="Nova playlist">
+                    <controls:AutoDisableImage Source="/Images/Icons/Toolbar/new.png" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
+                </Button>
+
+                <Button Command="{Binding OpenPlaylistCommand}" ToolTip="Abrir playlist...">
+                    <controls:AutoDisableImage Source="/Images/Icons/Toolbar/open.png" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
+                </Button>
+
+                <Button Command="{Binding SavePlaylistCommand}" ToolTip="Salvar playlist">
+                    <controls:AutoDisableImage Source="/Images/Icons/Toolbar/save.png" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
+                </Button>
+
+                <Separator/>
+
+                <Button Command="{Binding AddFilesToPlaylistCommand}" ToolTip="Adicionar arquivos de áudio...">
+                    <controls:AutoDisableImage Source="/Images/Icons/Toolbar/plus.png" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
+                </Button>
+
+                <Button Command="{Binding RemoveTracksFromPlaylistCommand}" CommandParameter="{Binding SelectedItems, ElementName=playlist}"
+                        ToolTip="Excluir faixas selecionadas...">
+                    <controls:AutoDisableImage Source="/Images/Icons/Toolbar/delete.png" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
+                </Button>
+
+                <Separator/>
+
+                <Button Command="{Binding OpenSettingsCommand}" ToolTip="Configurações">
+                    <controls:AutoDisableImage Source="/Images/Icons/Toolbar/service.png" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+
         <!-- Top Grid -->
         <Grid DockPanel.Dock="Top" Margin="8">
             <Grid.ColumnDefinitions>
@@ -91,7 +130,7 @@
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="Transparent"/>
-                            
+
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsEventPlaying}" Value="True">
                                     <Setter Property="Background" Value="LightYellow"/>

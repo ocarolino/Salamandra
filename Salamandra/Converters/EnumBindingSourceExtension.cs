@@ -9,8 +9,8 @@ namespace Salamandra.Converters
 {
     public class EnumBindingSourceExtension : MarkupExtension
     {
-        private Type _enumType;
-        public Type EnumType
+        private Type? _enumType;
+        public Type? EnumType
         {
             get { return this._enumType; }
             set

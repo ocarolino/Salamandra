@@ -39,10 +39,10 @@ namespace Salamandra.Converters
         }
 
         [ConstructorArgument("valueIfTrue")]
-        public object ValueIfTrue { get; set; }
+        public object? ValueIfTrue { get; set; }
 
         [ConstructorArgument("valueIfFalse")]
-        public object ValueIfFalse { get; set; }
+        public object? ValueIfFalse { get; set; }
 
         private class SwitchConverter : IValueConverter
         {
@@ -55,7 +55,7 @@ namespace Salamandra.Converters
 
             #region IValueConverter Members
 
-            public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+            public object? Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
             {
                 try
                 {
@@ -68,7 +68,7 @@ namespace Salamandra.Converters
                 }
             }
 
-            public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+            public object? ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
             {
                 return Binding.DoNothing;
             }

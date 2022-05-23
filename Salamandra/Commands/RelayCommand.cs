@@ -29,7 +29,7 @@ namespace Salamandra.Commands
             execute(parameter);
         }
 
-        private event EventHandler _internalCanExecuteChanged;
+        private event EventHandler? _internalCanExecuteChanged;
 
         public event EventHandler? CanExecuteChanged
         {
@@ -53,7 +53,7 @@ namespace Salamandra.Commands
 
         protected virtual void OnCanExecuteChanged()
         {
-            EventHandler eCanExecuteChanged = _internalCanExecuteChanged;
+            EventHandler? eCanExecuteChanged = _internalCanExecuteChanged;
 
             if (eCanExecuteChanged != null)
                 eCanExecuteChanged(this, EventArgs.Empty);

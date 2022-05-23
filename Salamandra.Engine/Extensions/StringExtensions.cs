@@ -22,5 +22,13 @@ namespace Salamandra.Engine.Extensions
                 default: return input.First().ToString().ToUpper() + input.Substring(1);
             }
         }
+
+        public static string NullToEmpty(this string? input)
+        {
+            if (input == null)
+                return String.Empty;
+
+            return input.ToString();
+        }
     }
 }

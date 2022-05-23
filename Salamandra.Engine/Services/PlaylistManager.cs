@@ -48,7 +48,10 @@ namespace Salamandra.Engine.Services
                 return;
             }
 
-            int nextTrackIndex = this.Tracks.IndexOf(this.CurrentTrack!) + 1;
+            int nextTrackIndex = 0;
+
+            if (this.CurrentTrack != null)
+                nextTrackIndex = this.Tracks.IndexOf(this.CurrentTrack) + 1;
 
             switch (this.PlaylistMode)
             {
@@ -247,12 +250,23 @@ namespace Salamandra.Engine.Services
                     track = new TimeAnnouncementTrack();
                 else if (item.Filename.EndsWith(".dir"))
                 {
+                    // ToDo: Validate if it is a valid path!
                     string dir = item.Filename.Substring(0, item.Filename.Length - 4);
-                    track = new RandomFileTrack() { Filename = dir.EnsureHasDirectorySeparatorChar(), FriendlyName = Path.GetFileName(dir) };
+
+                    track = new RandomFileTrack()
+                    {
+                        Filename = dir.EnsureHasDirectorySeparatorChar(),
+                        FriendlyName = Path.GetFileName(dir)
+                    };
                 }
                 else
                 {
-                    track = new AudioFileTrack() { Filename = item.Filename, FriendlyName = !String.IsNullOrWhiteSpace(item.FriendlyName) ? item.FriendlyName : String.Empty, Duration = item.Duration };
+                    track = new AudioFileTrack()
+                    {
+                        Filename = item.Filename.NullToEmpty(),
+                        FriendlyName = item.FriendlyName.NullToEmpty(),
+                        Duration = item.Duration
+                    };
 
                     if (String.IsNullOrEmpty(track.FriendlyName))
                         track.FriendlyName = Path.GetFileNameWithoutExtension(item.Filename);
@@ -286,10 +300,20 @@ namespace Salamandra.Engine.Services
                 switch (item)
                 {
                     case RandomFileTrack randomFileTrack:
-                        entries.Add(new PlaylistEntryInfo() { Filename = randomFileTrack.Filename!.TrimEnd(Path.DirectorySeparatorChar) + ".dir", FriendlyName = randomFileTrack.FriendlyName, Duration = randomFileTrack.Duration });
+                        entries.Add(new PlaylistEntryInfo()
+                        {
+                            Filename = randomFileTrack.Filename.TrimEnd(Path.DirectorySeparatorChar) + ".dir",
+                            FriendlyName = randomFileTrack.FriendlyName,
+                            Duration = randomFileTrack.Duration
+                        });
                         break;
                     case SingleFileTrack singleFileTrack:
-                        entries.Add(new PlaylistEntryInfo() { Filename = singleFileTrack.Filename, FriendlyName = singleFileTrack.FriendlyName, Duration = singleFileTrack.Duration });
+                        entries.Add(new PlaylistEntryInfo()
+                        {
+                            Filename = singleFileTrack.Filename,
+                            FriendlyName = singleFileTrack.FriendlyName,
+                            Duration = singleFileTrack.Duration
+                        });
                         break;
                     default:
                         throw new NotImplementedException();

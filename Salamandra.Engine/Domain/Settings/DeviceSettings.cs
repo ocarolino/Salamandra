@@ -16,7 +16,8 @@ namespace Salamandra.Engine.Domain.Settings
             this.MainOutputDevice = 0;
         }
 
+#pragma warning disable 67
         public event PropertyChangedEventHandler? PropertyChanged;
-
+#pragma warning restore 67
     }
 }

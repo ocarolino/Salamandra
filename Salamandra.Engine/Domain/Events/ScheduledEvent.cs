@@ -60,6 +60,8 @@ namespace Salamandra.Engine.Domain.Events
             }
         }
 
+#pragma warning disable 67
         public event PropertyChangedEventHandler? PropertyChanged;
+#pragma warning restore 67
     }
 }

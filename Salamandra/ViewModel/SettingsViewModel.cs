@@ -36,6 +36,8 @@ namespace Salamandra.ViewModel
             this.OutputDevices = new ObservableCollection<SoundOutputDevice>(this.soundEngine.EnumerateDevices());
         }
 
+#pragma warning disable 67
         public event PropertyChangedEventHandler? PropertyChanged;
+#pragma warning restore 67
     }
 }

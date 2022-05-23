@@ -13,6 +13,8 @@ namespace Salamandra.Engine.Domain
         public string? Genre { get; set; }
         public string? Comment { get; set; }
 
+#pragma warning disable 67
         public event PropertyChangedEventHandler? PropertyChanged;
+#pragma warning restore 67
     }
 }

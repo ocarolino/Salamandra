@@ -9,9 +9,15 @@ namespace Salamandra.Engine.Domain
 {
     public abstract class BaseTrack : INotifyPropertyChanged
     {
-        public string? FriendlyName { get; set; }
+        public string FriendlyName { get; set; }
         public TimeSpan? Duration { get; set; }
         public abstract bool HasTrackFinished { get; }
+
+        public BaseTrack()
+        {
+            this.FriendlyName = String.Empty;
+            this.Duration = null;
+        }
 
 #pragma warning disable 67
         public event PropertyChangedEventHandler? PropertyChanged;

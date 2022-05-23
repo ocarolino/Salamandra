@@ -8,6 +8,11 @@ namespace Salamandra.Engine.Domain.Tracks
 {
     public abstract class SingleFileTrack : BaseTrack
     {
-        public string? Filename { get; set; }
+        public string Filename { get; set; }
+
+        public SingleFileTrack() : base()
+        {
+            this.Filename = String.Empty;
+        }
     }
 }

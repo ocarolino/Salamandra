@@ -29,8 +29,8 @@ namespace Salamandra
     {
         private MainViewModel mainViewModel;
 
-        private GridViewColumnHeader listViewSortCol = null;
-        private SortAdorner listViewSortAdorner = null;
+        private GridViewColumnHeader? listViewSortCol = null;
+        private SortAdorner? listViewSortAdorner = null;
 
         public MainWindow()
         {
@@ -87,13 +87,18 @@ namespace Salamandra
             if (column == null || !this.mainViewModel.CanSortPlaylist())
                 return;
 
-            int sortBy = int.Parse(column.Tag.ToString());
+            string? sortColumn = column.Tag.ToString();
+
+            if (string.IsNullOrWhiteSpace(sortColumn))
+                return;
+
+            int sortBy = int.Parse(sortColumn);
 
             RemovePlaylistAdorner();
 
             ListSortDirection newDir = ListSortDirection.Ascending;
 
-            if (listViewSortCol == column && listViewSortAdorner.Direction == newDir)
+            if (listViewSortCol == column && listViewSortAdorner != null && listViewSortAdorner.Direction == newDir)
                 newDir = ListSortDirection.Descending;
 
             listViewSortCol = column;

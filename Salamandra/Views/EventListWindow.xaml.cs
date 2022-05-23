@@ -25,8 +25,8 @@ namespace Salamandra.Views
     {
         private EventListViewModel eventListViewModel;
 
-        private GridViewColumnHeader listViewSortCol = null;
-        private SortAdorner listViewSortAdorner = null;
+        private GridViewColumnHeader? listViewSortCol = null;
+        private SortAdorner? listViewSortAdorner = null;
 
         public EventListWindow(EventListViewModel eventListViewModel)
         {
@@ -49,8 +49,12 @@ namespace Salamandra.Views
 
         private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
         {
-            GridViewColumnHeader column = (sender as GridViewColumnHeader);
-            string sortBy = column.Tag.ToString();
+            GridViewColumnHeader? column = sender as GridViewColumnHeader;
+
+            if (column == null)
+                return;
+
+            string? sortBy = column.Tag.ToString();
 
             if (listViewSortCol != null)
             {
@@ -60,7 +64,7 @@ namespace Salamandra.Views
 
             ListSortDirection newDir = ListSortDirection.Ascending;
 
-            if (listViewSortCol == column && listViewSortAdorner.Direction == newDir)
+            if (listViewSortCol == column && listViewSortAdorner != null && listViewSortAdorner.Direction == newDir)
                 newDir = ListSortDirection.Descending;
 
             listViewSortCol = column;

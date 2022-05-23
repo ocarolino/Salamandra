@@ -252,7 +252,7 @@ namespace Salamandra.Engine.Services
                 }
                 else
                 {
-                    track = new AudioFileTrack() { Filename = item.Filename, FriendlyName = item.FriendlyName, Duration = item.Duration };
+                    track = new AudioFileTrack() { Filename = item.Filename, FriendlyName = !String.IsNullOrWhiteSpace(item.FriendlyName) ? item.FriendlyName : String.Empty, Duration = item.Duration };
 
                     if (String.IsNullOrEmpty(track.FriendlyName))
                         track.FriendlyName = Path.GetFileNameWithoutExtension(item.Filename);

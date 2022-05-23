@@ -58,7 +58,8 @@ namespace Salamandra.ViewModel
             var serialized = JsonConvert.SerializeObject(this.originalScheduledEvents);
             var events = JsonConvert.DeserializeObject<List<ScheduledEvent>>(serialized);
 
-            this.Events = new ObservableCollection<ScheduledEvent>(events);
+            if (events != null)
+                this.Events = new ObservableCollection<ScheduledEvent>(events);
         }
 
         private void CreateEvent()

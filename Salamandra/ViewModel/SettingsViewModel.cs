@@ -30,8 +30,15 @@ namespace Salamandra.ViewModel
 
         public void Loading()
         {
-            var serialized = JsonConvert.SerializeObject(this.originalApplicationSettings);
-            this.Settings = JsonConvert.DeserializeObject<ApplicationSettings>(serialized);
+            try
+            {
+                var serialized = JsonConvert.SerializeObject(this.originalApplicationSettings);
+                this.Settings = JsonConvert.DeserializeObject<ApplicationSettings>(serialized);
+            }
+            catch (Exception)
+            {
+                this.Settings = new ApplicationSettings();
+            }
 
             this.OutputDevices = new ObservableCollection<SoundOutputDevice>(this.soundEngine.EnumerateDevices());
         }

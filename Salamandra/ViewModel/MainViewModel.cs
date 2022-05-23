@@ -805,7 +805,7 @@ namespace Salamandra.ViewModel
 
             if (settingsWindow.ShowDialog() == true)
             {
-                this.ApplicationSettings = settingsViewModel.Settings;
+                this.ApplicationSettings = settingsViewModel.Settings!;
                 ApplySettings();
             }
         }
@@ -934,7 +934,10 @@ namespace Salamandra.ViewModel
 
         private void ConvertCoverArtToBitmapImage()
         {
-            using (var stream = new MemoryStream(this.SelectedTrackTags!.CoverArt))
+            if (this.SelectedTrackTags == null || this.SelectedTrackTags.CoverArt == null)
+                return;
+
+            using (var stream = new MemoryStream(this.SelectedTrackTags.CoverArt))
             {
                 if (stream != null && stream.Length > 4096)
                 {

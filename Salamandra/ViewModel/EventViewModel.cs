@@ -64,8 +64,11 @@ namespace Salamandra.ViewModel
                 var serialized = JsonConvert.SerializeObject(this.originalScheduledEvent);
                 var scheduledEvent = JsonConvert.DeserializeObject<ScheduledEvent>(serialized);
 
-                this.ScheduledEvent = scheduledEvent;
-                UpdateEventRequiresPath();
+                if (scheduledEvent != null)
+                {
+                    this.ScheduledEvent = scheduledEvent;
+                    UpdateEventRequiresPath();
+                }
             }
         }
 

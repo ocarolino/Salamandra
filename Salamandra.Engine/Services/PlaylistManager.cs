@@ -346,7 +346,6 @@ namespace Salamandra.Engine.Services
                     break;
                 default:
                     throw new NotImplementedException();
-                    break;
             }
 
             this.Modified = true;

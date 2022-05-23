@@ -51,7 +51,7 @@ namespace Salamandra.Engine.Services
             {
                 jsonEventsLoader.Save(filename, this.Events);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // ToDo: Log/Notification via Rethrow/Event...
             }
@@ -66,7 +66,7 @@ namespace Salamandra.Engine.Services
                 var list = jsonEventsLoader.Load(filename);
                 this.Events = new List<ScheduledEvent>(list);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // ToDo: Log/Notification/Rethrow via Rethrow/Event...
                 this.Events = new List<ScheduledEvent>();

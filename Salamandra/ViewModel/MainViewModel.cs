@@ -215,7 +215,7 @@ namespace Salamandra.ViewModel
                 if (devices.FirstOrDefault(x => x.DeviceIndex == this.ApplicationSettings.DeviceSettings.MainOutputDevice) == null)
                     this.ApplicationSettings.DeviceSettings.MainOutputDevice = devices.First().DeviceIndex;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // ToDo: Log ou mensagem!
             }
@@ -246,7 +246,7 @@ namespace Salamandra.ViewModel
                         this.PlaylistManager.UpdateNextTrack();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // ToDo: Log/Notification!
                 }
@@ -260,7 +260,7 @@ namespace Salamandra.ViewModel
                 if (!String.IsNullOrWhiteSpace(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename))
                     this.ScheduleManager.LoadFromFile(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 this.ScheduleManager.CleanEvents();
                 // ToDo: Log ou mensagem!
@@ -920,7 +920,7 @@ namespace Salamandra.ViewModel
                     {
                         ConvertCoverArtToBitmapImage();
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         this.SelectedTrackArt = null;
                     }

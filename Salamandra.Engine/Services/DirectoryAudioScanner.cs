@@ -143,6 +143,8 @@ namespace Salamandra.Engine.Services
 
         public bool Enqueue(string path)
         {
+            ArgumentNullException.ThrowIfNull(nameof(path));
+
             path = path.EnsureHasDirectorySeparatorChar();
 
             if (ShouldScanDirectory(path))
@@ -154,10 +156,9 @@ namespace Salamandra.Engine.Services
             return false;
         }
 
-        public void EnqueueAndScan(string? path)
+        public void EnqueueAndScan(string path)
         {
-            if (path == null)
-                return;
+            ArgumentNullException.ThrowIfNull(nameof(path));
 
             if (Enqueue(path))
                 StartScanning();
@@ -187,27 +188,25 @@ namespace Salamandra.Engine.Services
         }
         #endregion
 
-        public List<string> GetFilesFromDirectory(string? path)
+        public List<string> GetFilesFromDirectory(string path)
         {
+            ArgumentNullException.ThrowIfNull(nameof(path));
+
             List<string> files = new List<string>();
 
-            if (path != null)
-            {
-                path = path.EnsureHasDirectorySeparatorChar();
+            path = path.EnsureHasDirectorySeparatorChar();
 
-                var keys = this.directoriesLibrary.Keys.Where(x => x.StartsWith(path));
+            var keys = this.directoriesLibrary.Keys.Where(x => x.StartsWith(path));
 
-                foreach (var item in keys)
-                    files.AddRange(this.directoriesLibrary[item].Files);
-            }
+            foreach (var item in keys)
+                files.AddRange(this.directoriesLibrary[item].Files);
 
             return files;
         }
 
-        public string? GetRandomFileFromDirectory(string? path, bool blacklist = true)
+        public string? GetRandomFileFromDirectory(string path, bool blacklist = true)
         {
-            if (path == null)
-                return null;
+            ArgumentNullException.ThrowIfNull(nameof(path));
 
             var files = GetFilesFromDirectory(path);
 
@@ -234,12 +233,16 @@ namespace Salamandra.Engine.Services
 
         public void SaveToFile(string filename)
         {
+            ArgumentNullException.ThrowIfNull(nameof(filename));
+
             string json = JsonConvert.SerializeObject(this.directoriesLibrary);
             File.WriteAllText(filename, json);
         }
 
         public void LoadFromFile(string filename)
         {
+            ArgumentNullException.ThrowIfNull(nameof(filename));
+
             try
             {
                 var library = JsonConvert.DeserializeObject<Dictionary<string, DirectoryAudioInfo>>(File.ReadAllText(filename));

@@ -20,6 +20,7 @@ namespace Salamandra.Engine.Services
     {
         public PlaylistMode PlaylistMode { get; set; }
         public ObservableCollection<BaseTrack> Tracks { get; set; }
+        public List<BaseTrack> RandomBlacklist { get; set; }
 
         public BaseTrack? CurrentTrack { get; set; }
         public BaseTrack? NextTrack { get; set; }
@@ -32,6 +33,7 @@ namespace Salamandra.Engine.Services
             this.PlaylistMode = PlaylistMode.Default;
 
             this.Tracks = new ObservableCollection<BaseTrack>();
+            this.RandomBlacklist = new List<BaseTrack>();
 
             this.CurrentTrack = null;
             this.NextTrack = null;
@@ -85,6 +87,12 @@ namespace Salamandra.Engine.Services
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        public void AddToBlacklist(BaseTrack track)
+        {
+            if (this.Tracks.Contains(track))
+                this.RandomBlacklist.Add(track);
         }
 
         #region Add and Remove Tracks

@@ -444,7 +444,10 @@ namespace Salamandra.ViewModel
             this.PlaylistManager.CurrentTrack = track;
 
             if (updateNextTrack)
+            {
+                this.PlaylistManager.AddToBlacklist(track);
                 this.PlaylistManager.UpdateNextTrack();
+            }
 
             switch (track)
             {

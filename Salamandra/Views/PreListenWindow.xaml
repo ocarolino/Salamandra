@@ -1,0 +1,41 @@
+﻿<Window x:Class="Salamandra.Views.PreListenWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Salamandra.Views"
+        xmlns:controls="clr-namespace:Salamandra.Controls"
+        mc:Ignorable="d"
+        Title="Pré-Escuta" Width="300" SizeToContent="Height">
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <controls:ExtendedSlider Minimum="0" x:Name="SeekBar" VerticalAlignment="Center" IsEnabled="{Binding AllowSeekDrag}" Grid.Row="0"                         
+                                 Maximum="{Binding TrackLengthInSeconds, Mode=OneWay}" Value="{Binding TrackPositionInSeconds}"                                     
+                                 TickFrequency="1" IsSnapToTickEnabled="True" LargeChange="20" SmallChange="5"                                     
+                                 DragStartedCommand="{Binding SeekBarDragStartedCommand}" DragCompletedCommand="{Binding SeekBarDragCompletedCommand}"
+                                 AutoToolTipPlacement="TopLeft" CustomToolTipContent="{Binding TrackPositionTime, Mode=OneWay, StringFormat={}{0:hh':'mm':'ss}, UpdateSourceTrigger=PropertyChanged}" />
+        <Grid Grid.Row="1" Margin="0 8 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Width="30" Height="30" Command="{Binding StopPlaybackCommand}">
+                <Image Source="/Images/Icons/Player/stop.png" VerticalAlignment="Center" HorizontalAlignment="Center"
+                       RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
+            </Button>
+
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="{Binding TrackPositionTime, StringFormat=mm\\:ss, TargetNullValue='--:--', FallbackValue='00:00', Mode=OneWay}" 
+                           FontSize="16" FontWeight="Bold" HorizontalAlignment="Right"/>
+                <TextBlock Text="{Binding TrackLengthTime, StringFormat=mm\\:ss, TargetNullValue='--:--', FallbackValue='00:00', Mode=OneWay}"
+                           FontWeight="Bold" HorizontalAlignment="Right"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

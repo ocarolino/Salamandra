@@ -6,19 +6,25 @@
         xmlns:local="clr-namespace:Salamandra.Views"
         xmlns:controls="clr-namespace:Salamandra.Controls"
         mc:Ignorable="d"
-        Title="Pré-Escuta" Width="300" SizeToContent="Height">
+        Title="Pré-Escuta" Width="300" SizeToContent="Height" 
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+        Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <controls:ExtendedSlider Minimum="0" x:Name="SeekBar" VerticalAlignment="Center" IsEnabled="{Binding AllowSeekDrag}" Grid.Row="0"                         
+        <TextBlock Text="{Binding FriendlyName, FallbackValue='2Pac - Changes'}"
+                   Grid.Row="0" FontWeight="DemiBold"/>
+
+        <controls:ExtendedSlider Minimum="0" x:Name="SeekBar" VerticalAlignment="Center" IsEnabled="{Binding AllowSeekDrag}" Grid.Row="1"                         
                                  Maximum="{Binding TrackLengthInSeconds, Mode=OneWay}" Value="{Binding TrackPositionInSeconds}"                                     
-                                 TickFrequency="1" IsSnapToTickEnabled="True" LargeChange="20" SmallChange="5"                                     
+                                 TickFrequency="1" IsSnapToTickEnabled="True" LargeChange="20" SmallChange="5" Margin="0 8 0 0"                                 
                                  DragStartedCommand="{Binding SeekBarDragStartedCommand}" DragCompletedCommand="{Binding SeekBarDragCompletedCommand}"
                                  AutoToolTipPlacement="TopLeft" CustomToolTipContent="{Binding TrackPositionTime, Mode=OneWay, StringFormat={}{0:hh':'mm':'ss}, UpdateSourceTrigger=PropertyChanged}" />
-        <Grid Grid.Row="1" Margin="0 8 0 0">
+        <Grid Grid.Row="2" Margin="0 8 0 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>

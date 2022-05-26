@@ -452,6 +452,8 @@
                         <ContextMenu>
                             <MenuItem Header="Tocar faixa selecionada" Command="{Binding PlaySelectedTrackCommand}"/>
                             <MenuItem Header="Marcar como próxima" Command="{Binding SelectedAsNextTrackCommand}"/>
+                            <Separator/>
+                            <MenuItem Header="Pré-Escuta" Command="{Binding OpenPreListenCommand}"/>
                         </ContextMenu>
                     </ListView.ContextMenu>
                 </ListView>

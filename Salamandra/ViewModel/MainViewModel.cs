@@ -91,6 +91,7 @@ namespace Salamandra.ViewModel
         public ICommand? StartPlaybackCommand { get; set; }
         public ICommand? StopPlaybackCommand { get; set; }
         public ICommand? PlaySelectedTrackCommand { get; set; }
+        public ICommand? OpenPreListenCommand { get; set; }
         public ICommand? SelectedAsNextTrackCommand { get; set; }
         public ICommand? VolumeControlValueChangedCommand { get; set; }
         public ICommand? TogglePlayPauseCommand { get; set; }
@@ -324,6 +325,7 @@ namespace Salamandra.ViewModel
             this.StopPlaybackCommand = new RelayCommand(p => StopPlayback(), p => this.IsPlaying);
 
             this.PlaySelectedTrackCommand = new RelayCommand(p => PlaySelectedTrack(), p => this.SelectedTrack != null);
+            this.OpenPreListenCommand = new RelayCommand(p => OpenPreListen(), p => this.SelectedTrack != null && this.SelectedTrack is AudioFileTrack);
             this.SelectedAsNextTrackCommand = new RelayCommand(p => SetSelectedAsNextTrack(), p => this.SelectedTrack != null);
 
             this.VolumeControlValueChangedCommand = new RelayCommand(p => VolumeControlValueChanged(), p => true);
@@ -966,6 +968,21 @@ namespace Salamandra.ViewModel
         public void SortPlaylist(PlaylistSortCriteria sortBy, SortDirection sortDirection)
         {
             this.PlaylistManager.Sort(sortBy, sortDirection);
+        }
+
+        public void OpenPreListen()
+        {
+            if (this.SelectedTrack == null || !(this.SelectedTrack is AudioFileTrack))
+                return;
+
+            var track = this.SelectedTrack as AudioFileTrack;
+
+            PreListenViewModel preListenViewModel = new PreListenViewModel(this.ApplicationSettings.DeviceSettings.MainOutputDevice,
+                track!.Filename);
+
+            PreListenWindow preListenWindow = new PreListenWindow(preListenViewModel);
+            preListenWindow.Owner = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            preListenWindow.ShowDialog();
         }
 
         #region DragDrop Handlers

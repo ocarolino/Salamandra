@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Salamandra.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,34 @@ namespace Salamandra.Views
     /// </summary>
     public partial class PreListenWindow : Window
     {
-        public PreListenWindow()
+        private PreListenViewModel preListenViewModel;
+
+        public PreListenWindow(PreListenViewModel preListenViewModel)
         {
             InitializeComponent();
+
+            this.preListenViewModel = preListenViewModel;
+            this.preListenViewModel.CloseHandler += CloseHandler;
+            this.DataContext = preListenViewModel;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.preListenViewModel.Loading();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!this.preListenViewModel.HasSoundStopped)
+            {
+                this.preListenViewModel.StopPlayback();
+                e.Cancel = true;
+            }
+        }
+
+        private void CloseHandler()
+        {
+            this.Close();
         }
     }
 }

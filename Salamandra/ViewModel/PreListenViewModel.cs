@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -16,7 +17,7 @@ namespace Salamandra.ViewModel
 {
     public class PreListenViewModel : INotifyPropertyChanged
     {
-        private bool isDraggingTrackPosition = true;
+        private bool isDraggingTrackPosition;
 
         public int Device { get; set; }
         public string Filename { get; set; }
@@ -60,24 +61,19 @@ namespace Salamandra.ViewModel
 
         private void SoundEngine_SoundError(object? sender, Engine.Events.SoundErrorEventArgs e)
         {
-            /*if (e.SoundErrorException is SoundEngineFileException)
-                this.PlaybackState = PlaylistState.WaitingNextTrack;
-            else
-                this.StopPlaybackWithError(e.SoundErrorException!);*/
-            // ToDo: Mensagem e fechar!
-
+            DisplayError(e.SoundErrorException!.Message);
             CloseWindow();
         }
 
         private void CloseWindow()
         {
-            CloseWindow();
+            this.HasSoundStopped = true;
+            this.CloseHandler?.Invoke();
         }
 
         private void SoundEngine_SoundStopped(object? sender, Engine.Events.SoundStoppedEventArgs e)
         {
-            this.HasSoundStopped = true;
-            this.CloseHandler?.Invoke();
+            CloseWindow();
         }
 
         private void MainTimer_Tick(object? sender, EventArgs e)
@@ -113,22 +109,16 @@ namespace Salamandra.ViewModel
 
                 this.MainTimer.Start();
             }
-            catch (SoundEngineFileException)
-            {
-                // ToDo: Mensagem e fechar!
-            }
-            catch (SoundEngineDeviceException ex)
-            {
-                // ToDo: Mensagem e fechar!
-            }
             catch (Exception ex)
             {
-                // ToDo: Mensagem e fechar!
+                DisplayError(ex.Message);
+                CloseWindow();
             }
         }
 
         public void StopPlayback()
         {
+            this.MainTimer.Stop();
             this.SoundEngine.Stop();
         }
 
@@ -146,6 +136,12 @@ namespace Salamandra.ViewModel
             this.SoundEngine.PositionInSeconds = this.TrackPositionInSeconds;
 
             this.isDraggingTrackPosition = false;
+        }
+
+        private void DisplayError(string message)
+        {
+            MessageBox.Show(String.Format("Houve um erro na reprodução da pré-escuta.\n\nErro: {0}", message),
+                "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
 

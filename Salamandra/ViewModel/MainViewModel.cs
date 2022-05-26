@@ -291,6 +291,7 @@ namespace Salamandra.ViewModel
 
             this.DirectoryAudioScanner.StopScanning();
             this.StopPlayback();
+            this.MainTimer.Stop();
 
             SaveSettings();
             SaveLibrary();
@@ -919,18 +920,17 @@ namespace Salamandra.ViewModel
             {
                 this.SelectedTrackTags = this.PlaylistManager.GetAudioFileTags(audioFileTrack.Filename!);
 
-                if (this.SelectedTrackTags!.CoverArt != null)
+                if (this.SelectedTrackTags == null || this.SelectedTrackTags.CoverArt == null)
                 {
-                    try
-                    {
-                        ConvertCoverArtToBitmapImage();
-                    }
-                    catch (Exception)
-                    {
-                        this.SelectedTrackArt = null;
-                    }
+                    this.SelectedTrackArt = null;
+                    return;
                 }
-                else
+
+                try
+                {
+                    ConvertCoverArtToBitmapImage();
+                }
+                catch (Exception)
                 {
                     this.SelectedTrackArt = null;
                 }

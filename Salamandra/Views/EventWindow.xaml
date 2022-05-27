@@ -132,11 +132,21 @@
             </GroupBox>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 8 0 0" HorizontalAlignment="Right">
-            <Button Content="Confirmar" IsDefault="True" Name="ConfirmButton" Command="{Binding ValidateAndCloseCommand}"
+        <Grid Grid.Row="1" Margin="0 8 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="Pré-Escuta" Command="{Binding OpenPreListenCommand}"
                     Width="80" Height="24"/>
-            <Button Content="Cancelar" 
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Confirmar" IsDefault="True" Name="ConfirmButton" Command="{Binding ValidateAndCloseCommand}"
+                    Width="80" Height="24"/>
+                <Button Content="Cancelar" 
                     Width="80" Height="24" Margin="8 0 0 0" IsCancel="True"/>
-        </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

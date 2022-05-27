@@ -3,7 +3,9 @@ using Newtonsoft.Json;
 using Salamandra.Commands;
 using Salamandra.Engine.Domain.Enums;
 using Salamandra.Engine.Domain.Events;
+using Salamandra.Engine.Domain.Settings;
 using Salamandra.Engine.Extensions;
+using Salamandra.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,11 +32,16 @@ namespace Salamandra.ViewModel
         public ICommand OpenPathDialogCommand { get; set; }
         public ICommand ComboTrackTypeChangedCommand { get; set; }
         public ICommand ValidateAndCloseCommand { get; set; }
+        public ICommand OpenPreListenCommand { get; set; }
 
         public Action<bool>? CloseWindow { get; set; }
 
-        public EventViewModel()
+        public ApplicationSettings ApplicationSettings { get; set; }
+
+        public EventViewModel(ApplicationSettings applicationSettings)
         {
+            this.ApplicationSettings = applicationSettings;
+
             this.Hours = new ObservableCollection<int>();
             this.Days = new ObservableCollection<DayOfWeek>();
 
@@ -50,9 +57,12 @@ namespace Salamandra.ViewModel
             this.OpenPathDialogCommand = new RelayCommand(p => OpenPathDialog(), p => this.EventRequiresPath);
             this.ComboTrackTypeChangedCommand = new RelayCommand(p => ComboTrackTypeChanged());
             this.ValidateAndCloseCommand = new RelayCommand(p => ValidateAndClose());
+
+            this.OpenPreListenCommand = new RelayCommand(p => OpenPreListen(),
+                p => this.ScheduledEvent.TrackScheduleType == TrackScheduleType.FileTrack && !String.IsNullOrEmpty(this.ScheduledEvent.Filename));
         }
 
-        public EventViewModel(ScheduledEvent scheduledEvent) : this()
+        public EventViewModel(ScheduledEvent scheduledEvent, ApplicationSettings applicationSettings) : this(applicationSettings)
         {
             this.originalScheduledEvent = scheduledEvent;
         }
@@ -168,6 +178,19 @@ namespace Salamandra.ViewModel
                 default:
                     break;
             }
+        }
+
+        private void OpenPreListen()
+        {
+            if (this.ScheduledEvent.TrackScheduleType != TrackScheduleType.FileTrack ||
+                String.IsNullOrEmpty(this.ScheduledEvent.Filename))
+                return;
+
+            PreListenViewModel preListenViewModel = new PreListenViewModel(this.ApplicationSettings, this.ScheduledEvent.Filename);
+
+            PreListenWindow preListenWindow = new PreListenWindow(preListenViewModel);
+            preListenWindow.Owner = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            preListenWindow.ShowDialog();
         }
 
 #pragma warning disable 67

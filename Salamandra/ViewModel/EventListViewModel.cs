@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Salamandra.Commands;
 using Salamandra.Engine.Domain.Events;
+using Salamandra.Engine.Domain.Settings;
 using Salamandra.Engine.Services.Playlists;
 using Salamandra.Views;
 using System;
@@ -18,6 +19,8 @@ namespace Salamandra.ViewModel
 {
     public class EventListViewModel : INotifyPropertyChanged
     {
+        public ApplicationSettings ApplicationSettings { get; set; }
+
         private List<ScheduledEvent> originalScheduledEvents;
         public ObservableCollection<ScheduledEvent> Events { get; set; }
         public int LastEventId { get; set; }
@@ -33,13 +36,15 @@ namespace Salamandra.ViewModel
         public ICommand OpenEventListCommand { get; set; }
         public ICommand SaveEventListAsCommand { get; set; }
 
-        public EventListViewModel(List<ScheduledEvent> events, string filename)
+        public EventListViewModel(List<ScheduledEvent> events, ApplicationSettings applicationSettings)
         {
+            this.ApplicationSettings = applicationSettings;
+
             this.originalScheduledEvents = new List<ScheduledEvent>(events);
 
             this.Events = new ObservableCollection<ScheduledEvent>();
 
-            this.Filename = filename;
+            this.Filename = this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename;
             this.HasFileChanged = false;
 
             if (events.Count > 0)
@@ -64,7 +69,7 @@ namespace Salamandra.ViewModel
 
         private void CreateEvent()
         {
-            EventViewModel eventViewModel = new EventViewModel();
+            EventViewModel eventViewModel = new EventViewModel(this.ApplicationSettings);
 
             EventWindow eventWindow = new EventWindow(eventViewModel);
             eventWindow.Owner = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -85,7 +90,7 @@ namespace Salamandra.ViewModel
             if (this.SelectedScheduledEvent == null)
                 return;
 
-            EventViewModel eventViewModel = new EventViewModel(this.SelectedScheduledEvent);
+            EventViewModel eventViewModel = new EventViewModel(this.SelectedScheduledEvent, this.ApplicationSettings);
 
             EventWindow eventWindow = new EventWindow(eventViewModel);
             eventWindow.Owner = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);

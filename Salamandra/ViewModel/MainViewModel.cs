@@ -817,7 +817,7 @@ namespace Salamandra.ViewModel
 
         private void OpenEventList()
         {
-            EventListViewModel eventListViewModel = new EventListViewModel(this.ScheduleManager.Events, this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename);
+            EventListViewModel eventListViewModel = new EventListViewModel(this.ScheduleManager.Events, this.ApplicationSettings);
 
             EventListWindow eventListWindow = new EventListWindow(eventListViewModel);
             eventListWindow.Owner = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -981,8 +981,6 @@ namespace Salamandra.ViewModel
             PreListenWindow preListenWindow = new PreListenWindow(preListenViewModel);
             preListenWindow.Owner = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             preListenWindow.ShowDialog();
-
-            this.ApplicationSettings.PlayerSettings.PreListenVolume = preListenViewModel.CurrentVolume;
         }
 
         #region DragDrop Handlers

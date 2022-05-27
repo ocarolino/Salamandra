@@ -33,6 +33,10 @@
                     <TextBlock Text="Dispositivo de Saída Principal"/>
                     <ComboBox Margin="0 4 0 0" ItemsSource="{Binding OutputDevices}" SelectedValuePath="DeviceIndex" DisplayMemberPath="Name"
                           SelectedValue="{Binding Settings.DeviceSettings.MainOutputDevice}" />
+
+                    <TextBlock Text="Dispositivo de Saída de Pré Escuta" Margin="0 8 0 0"/>
+                    <ComboBox Margin="0 4 0 0" ItemsSource="{Binding OutputDevices}" SelectedValuePath="DeviceIndex" DisplayMemberPath="Name"
+                          SelectedValue="{Binding Settings.DeviceSettings.PreListenOutputDevice}" />
                 </StackPanel>
             </TabItem>
         </TabControl>

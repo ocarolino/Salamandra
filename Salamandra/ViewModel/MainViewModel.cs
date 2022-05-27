@@ -213,8 +213,7 @@ namespace Salamandra.ViewModel
 
                 var devices = this.SoundEngine.EnumerateDevices();
 
-                if (devices.FirstOrDefault(x => x.DeviceIndex == this.ApplicationSettings.DeviceSettings.MainOutputDevice) == null)
-                    this.ApplicationSettings.DeviceSettings.MainOutputDevice = devices.First().DeviceIndex;
+                this.ApplicationSettings.DeviceSettings.CheckDevices(devices);
             }
             catch (Exception)
             {

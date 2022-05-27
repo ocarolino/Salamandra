@@ -976,12 +976,13 @@ namespace Salamandra.ViewModel
 
             var track = this.SelectedTrack as AudioFileTrack;
 
-            PreListenViewModel preListenViewModel = new PreListenViewModel(this.ApplicationSettings.DeviceSettings.PreListenOutputDevice,
-                track!.Filename);
+            PreListenViewModel preListenViewModel = new PreListenViewModel(this.ApplicationSettings, track!.Filename);
 
             PreListenWindow preListenWindow = new PreListenWindow(preListenViewModel);
             preListenWindow.Owner = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             preListenWindow.ShowDialog();
+
+            this.ApplicationSettings.PlayerSettings.PreListenVolume = preListenViewModel.CurrentVolume;
         }
 
         #region DragDrop Handlers

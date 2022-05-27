@@ -11,6 +11,7 @@ namespace Salamandra.Engine.Domain.Settings
     public class PlayerSettings : INotifyPropertyChanged
     {
         public float Volume { get; set; }
+        public float PreListenVolume { get; set; }
         public PlaylistMode PlaylistMode { get; set; }
         public bool AskToCloseWhenPlaying { get; set; }
         public bool EnableEvents { get; set; }
@@ -22,6 +23,7 @@ namespace Salamandra.Engine.Domain.Settings
         public PlayerSettings()
         {
             this.Volume = 1;
+            this.PreListenVolume = 1;
             this.PlaylistMode = PlaylistMode.Default;
             this.AskToCloseWhenPlaying = true;
             this.EnableEvents = true;

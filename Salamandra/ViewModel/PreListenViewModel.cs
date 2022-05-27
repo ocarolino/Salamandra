@@ -1,4 +1,5 @@
 ﻿using Salamandra.Commands;
+using Salamandra.Engine.Domain.Settings;
 using Salamandra.Engine.Exceptions;
 using Salamandra.Engine.Services;
 using System;
@@ -44,13 +45,14 @@ namespace Salamandra.ViewModel
 
         public Action? CloseHandler { get; set; }
 
-        public PreListenViewModel(int device, string filename, float volume = 1)
+        public PreListenViewModel(ApplicationSettings applicationSettings, string filename)
         {
-            this.Device = device;
-            this.Filename = filename;
-            this.CurrentVolume = volume;
+            this.Device = applicationSettings.DeviceSettings.PreListenOutputDevice;
+            this.CurrentVolume = applicationSettings.PlayerSettings.PreListenVolume;
 
-            this.SoundEngine = new SoundEngine() { OutputDevice = device };
+            this.Filename = filename;
+
+            this.SoundEngine = new SoundEngine() { OutputDevice = this.Device };
             this.SoundEngine.SoundStopped += SoundEngine_SoundStopped;
             this.SoundEngine.SoundError += SoundEngine_SoundError;
 

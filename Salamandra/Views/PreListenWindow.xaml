@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:Salamandra.Views"
         xmlns:controls="clr-namespace:Salamandra.Controls"
         mc:Ignorable="d"
@@ -36,7 +37,24 @@
                        RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
             </Button>
 
-            <StackPanel Grid.Column="1">
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="8 0 0 0" HorizontalAlignment="Center">
+                <Image Source="/Images/Icons/Player/volume_up.png" VerticalAlignment="Center" HorizontalAlignment="Center"
+                       RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
+
+                <controls:ExtendedSlider Value="{Binding CurrentVolume}" x:Name="VolumeControl" 
+                                         Width="128" VerticalAlignment="Center" Margin="8 0 0 0"
+                                         Minimum="0" Maximum="1" LargeChange="0.2" SmallChange="0.05" 
+                                         TickFrequency="0.1" AutoToolTipPlacement="TopLeft" 
+                                         CustomToolTipContent="{Binding CurrentVolume, Mode=OneWay, StringFormat={}{0:P0}, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <i:InvokeCommandAction Command="{Binding VolumeControlValueChangedCommand}"></i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </controls:ExtendedSlider>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2">
                 <TextBlock Text="{Binding TrackPositionTime, StringFormat=mm\\:ss, TargetNullValue='--:--', FallbackValue='00:00', Mode=OneWay}" 
                            FontSize="16" FontWeight="Bold" HorizontalAlignment="Right"/>
                 <TextBlock Text="{Binding TrackLengthTime, StringFormat=mm\\:ss, TargetNullValue='--:--', FallbackValue='00:00', Mode=OneWay}"

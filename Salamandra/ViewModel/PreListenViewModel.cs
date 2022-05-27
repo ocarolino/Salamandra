@@ -34,17 +34,21 @@ namespace Salamandra.ViewModel
         public TimeSpan TrackPositionTime { get => TimeSpan.FromSeconds(this.TrackPositionInSeconds); }
         public TimeSpan TrackLengthTime { get => TimeSpan.FromSeconds(this.TrackLengthInSeconds); }
 
+        public float CurrentVolume { get; set; }
 
         public ICommand? StopPlaybackCommand { get; set; }
         public ICommand? SeekBarDragStartedCommand { get; set; }
         public ICommand? SeekBarDragCompletedCommand { get; set; }
 
+        public ICommand? VolumeControlValueChangedCommand { get; set; }
+
         public Action? CloseHandler { get; set; }
 
-        public PreListenViewModel(int device, string filename)
+        public PreListenViewModel(int device, string filename, float volume = 1)
         {
             this.Device = device;
             this.Filename = filename;
+            this.CurrentVolume = volume;
 
             this.SoundEngine = new SoundEngine() { OutputDevice = device };
             this.SoundEngine.SoundStopped += SoundEngine_SoundStopped;
@@ -88,6 +92,8 @@ namespace Salamandra.ViewModel
 
             this.SeekBarDragStartedCommand = new RelayCommand(p => SeekBarDragStarted(), p => this.AllowSeekDrag);
             this.SeekBarDragCompletedCommand = new RelayCommand(p => SeekBarDragCompleted(), p => this.AllowSeekDrag);
+
+            this.VolumeControlValueChangedCommand = new RelayCommand(p => VolumeControlValueChanged());
         }
 
         public void Loading()
@@ -99,7 +105,7 @@ namespace Salamandra.ViewModel
         {
             try
             {
-                this.SoundEngine.PlayAudioFile(this.Filename, 1);
+                this.SoundEngine.PlayAudioFile(this.Filename, this.CurrentVolume);
                 this.FriendlyName = Path.GetFileNameWithoutExtension(this.Filename);
 
                 this.TrackLengthInSeconds = this.SoundEngine.TotalLengthInSeconds;
@@ -136,6 +142,11 @@ namespace Salamandra.ViewModel
             this.SoundEngine.PositionInSeconds = this.TrackPositionInSeconds;
 
             this.isDraggingTrackPosition = false;
+        }
+
+        private void VolumeControlValueChanged()
+        {
+            this.SoundEngine.Volume = this.CurrentVolume;
         }
 
         private void DisplayError(string message)

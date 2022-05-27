@@ -20,11 +20,12 @@ namespace Salamandra.ViewModel
     {
         private bool isDraggingTrackPosition;
 
-        public int Device { get; set; }
+        public ApplicationSettings ApplicationSettings { get; set; }
         public string Filename { get; set; }
-        public bool HasSoundStopped { get; set; }
 
         public SoundEngine SoundEngine { get; set; }
+        public bool HasSoundStopped { get; set; }
+
         public DispatcherTimer MainTimer { get; set; }
 
         public string FriendlyName { get; set; }
@@ -47,12 +48,13 @@ namespace Salamandra.ViewModel
 
         public PreListenViewModel(ApplicationSettings applicationSettings, string filename)
         {
-            this.Device = applicationSettings.DeviceSettings.PreListenOutputDevice;
+            this.ApplicationSettings = applicationSettings;
+
             this.CurrentVolume = applicationSettings.PlayerSettings.PreListenVolume;
 
             this.Filename = filename;
 
-            this.SoundEngine = new SoundEngine() { OutputDevice = this.Device };
+            this.SoundEngine = new SoundEngine() { OutputDevice = this.ApplicationSettings.DeviceSettings.PreListenOutputDevice };
             this.SoundEngine.SoundStopped += SoundEngine_SoundStopped;
             this.SoundEngine.SoundError += SoundEngine_SoundError;
 
@@ -73,6 +75,8 @@ namespace Salamandra.ViewModel
 
         private void CloseWindow()
         {
+            this.ApplicationSettings.PlayerSettings.PreListenVolume = this.CurrentVolume;
+
             this.HasSoundStopped = true;
             this.CloseHandler?.Invoke();
         }
@@ -157,7 +161,8 @@ namespace Salamandra.ViewModel
                 "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
-
+#pragma warning disable 67
         public event PropertyChangedEventHandler? PropertyChanged;
+#pragma warning restore 67
     }
 }

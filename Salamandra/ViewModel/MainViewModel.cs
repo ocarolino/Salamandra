@@ -976,7 +976,7 @@ namespace Salamandra.ViewModel
 
             var track = this.SelectedTrack as AudioFileTrack;
 
-            PreListenViewModel preListenViewModel = new PreListenViewModel(this.ApplicationSettings.DeviceSettings.MainOutputDevice,
+            PreListenViewModel preListenViewModel = new PreListenViewModel(this.ApplicationSettings.DeviceSettings.PreListenOutputDevice,
                 track!.Filename);
 
             PreListenWindow preListenWindow = new PreListenWindow(preListenViewModel);

@@ -22,6 +22,7 @@ namespace Salamandra.Engine.Services
         public ObservableCollection<BaseTrack> Tracks { get; set; }
         public List<BaseTrack> RandomBlacklist { get; set; }
 
+        public BaseTrack? LastTrack { get; set; }
         public BaseTrack? CurrentTrack { get; set; }
         public BaseTrack? NextTrack { get; set; }
 
@@ -102,6 +103,12 @@ namespace Salamandra.Engine.Services
         {
             if (this.Tracks.Contains(track))
                 this.RandomBlacklist.Add(track);
+        }
+
+        public void SetAsLastTrack(BaseTrack track)
+        {
+            if (this.Tracks.Contains(track))
+                this.LastTrack = track;
         }
 
         #region Add and Remove Tracks

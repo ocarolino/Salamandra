@@ -13,6 +13,7 @@
 	  <None Remove="Images\Icons\Player\stop-next.png" />
 	  <None Remove="Images\Icons\Playlist\alarm_clock.png" />
 	  <None Remove="Images\Icons\Playlist\audio_file.png" />
+	  <None Remove="Images\Icons\Playlist\loop.png" />
 	  <None Remove="Images\Icons\Playlist\music_folder.png" />
 	  <None Remove="Images\Icons\Toolbar\calendar.png" />
 	  <None Remove="Images\Icons\Toolbar\checkmark.png" />
@@ -53,6 +54,7 @@
 		<Resource Include="Images\Icons\Player\volume_up.png" />
 		<Resource Include="Images\Icons\Playlist\alarm_clock.png" />
 		<Resource Include="Images\Icons\Playlist\audio_file.png" />
+		<Resource Include="Images\Icons\Toolbar\loop.png" />
 		<Resource Include="Images\Icons\Playlist\music_folder.png" />
 		<Resource Include="Images\Icons\Toolbar\calendar.png" />
 		<Resource Include="Images\Icons\Toolbar\checkmark.png" />

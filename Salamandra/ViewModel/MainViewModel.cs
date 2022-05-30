@@ -84,6 +84,8 @@ namespace Salamandra.ViewModel
         public TimeSpan? EndingTimeOfDay { get; set; }
         public DateTime CurrentDateTime { get; set; }
 
+        public bool EnableLoopMode { get; set; }
+
         #region Commands Properties
         public ICommand? AddFilesToPlaylistCommand { get; set; }
         public ICommand? AddTimeAnnouncementTrackCommand { get; set; }
@@ -447,6 +449,7 @@ namespace Salamandra.ViewModel
 
             if (updateNextTrack)
             {
+                this.PlaylistManager.SetAsLastTrack(track);
                 this.PlaylistManager.AddToBlacklist(track);
                 this.PlaylistManager.UpdateNextTrack();
             }
@@ -538,6 +541,15 @@ namespace Salamandra.ViewModel
                 this.IsEventPlaying = true;
 
                 PlayTrack(this.ScheduleManager.DequeueLateEvent()!.Track!, false);
+                return;
+            }
+
+            // Is loop mode enabled?
+            if (this.EnableLoopMode && this.PlaylistManager.LastTrack != null)
+            {
+                this.IsEventPlaying = false;
+
+                PlayTrack(this.PlaylistManager.LastTrack, false);
                 return;
             }
 

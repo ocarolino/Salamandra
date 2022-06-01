@@ -506,6 +506,19 @@ namespace Salamandra.ViewModel
                     else
                         this.PlaybackState = PlaylistState.WaitingNextTrack;
                     break;
+                case PlayerCommandTrack playerCommandTrack:
+                    switch (playerCommandTrack.Command)
+                    {
+                        case PlayerCommandType.Play:
+                            this.PlaybackState = PlaylistState.WaitingNextTrack;
+                            break;
+                        case PlayerCommandType.Stop:
+                            StopPlayback();
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
                 default:
                     throw new NotImplementedException();
             }

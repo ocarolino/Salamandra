@@ -25,6 +25,8 @@
                           IsChecked="{Binding Settings.PlayerSettings.ShufflePlaylistOnStartup}" Margin="0 8 0 0"/>
                     <CheckBox Content="Reproduzir playlist quando iniciar o programa"
                           IsChecked="{Binding Settings.PlayerSettings.PlayOnStartup}" Margin="0 8 0 0"/>
+                    <CheckBox Content="Ativar modo de exclusão ao iniciar caso o programa seja fechado com este modo ativo"
+                              IsChecked="{Binding Settings.PlayerSettings.KeepDeleteModeIfActiveOnStartup}" Margin="0 8 0 0"/>
                 </StackPanel>
             </TabItem>
 

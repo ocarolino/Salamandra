@@ -19,17 +19,26 @@ namespace Salamandra.Engine.Domain.Settings
         public string? LastPlaylist { get; set; }
         public bool ShufflePlaylistOnStartup { get; set; }
         public bool PlayOnStartup { get; set; }
+        public bool KeepDeleteModeIfActiveOnStartup { get; set; }
+        public bool LastDeleteModeState { get; set; }
 
         public PlayerSettings()
         {
             this.Volume = 1;
             this.PreListenVolume = 1;
+
             this.PlaylistMode = PlaylistMode.Default;
+
             this.AskToCloseWhenPlaying = true;
+
             this.EnableEvents = true;
+
             this.LastPlaylist = String.Empty;
             this.ShufflePlaylistOnStartup = false;
             this.PlayOnStartup = false;
+
+            this.KeepDeleteModeIfActiveOnStartup = false;
+            this.LastDeleteModeState = false;
         }
 
 #pragma warning disable 67

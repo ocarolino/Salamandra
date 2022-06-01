@@ -254,6 +254,10 @@ namespace Salamandra.ViewModel
                     // ToDo: Log/Notification!
                 }
             }
+
+            if (this.ApplicationSettings.PlayerSettings.KeepDeleteModeIfActiveOnStartup &&
+                this.ApplicationSettings.PlayerSettings.LastDeleteModeState)
+                this.EnableDeleteMode = true;
         }
 
         private void LoadEventsFile()
@@ -306,6 +310,7 @@ namespace Salamandra.ViewModel
             this.ApplicationSettings.PlayerSettings.PlaylistMode = this.PlaylistManager.PlaylistMode;
             this.ApplicationSettings.PlayerSettings.Volume = this.CurrentVolume;
             this.ApplicationSettings.PlayerSettings.LastPlaylist = this.PlaylistManager.Filename;
+            this.ApplicationSettings.PlayerSettings.LastDeleteModeState = this.EnableDeleteMode;
 
             this.SettingsManager.SaveSettings(this.ApplicationSettings);
         }

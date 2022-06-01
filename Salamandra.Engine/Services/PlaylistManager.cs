@@ -200,7 +200,7 @@ namespace Salamandra.Engine.Services
             return randomTrack;
         }
 
-        public void RemoveTracks(List<BaseTrack> tracks)
+        public void RemoveTracks(List<BaseTrack> tracks, bool modified = true)
         {
             foreach (var item in tracks)
                 this.Tracks.Remove(item);
@@ -208,7 +208,7 @@ namespace Salamandra.Engine.Services
             if (!this.Tracks.Contains(this.NextTrack!))
                 UpdateNextTrack();
 
-            this.Modified = true;
+            this.Modified = modified;
         }
 
         public TimeSpan? GetAudioFileDuration(string filename)

@@ -85,6 +85,7 @@ namespace Salamandra.ViewModel
         public DateTime CurrentDateTime { get; set; }
 
         public bool EnableLoopMode { get; set; }
+        public bool EnableDeleteMode { get; set; }
 
         #region Commands Properties
         public ICommand? AddFilesToPlaylistCommand { get; set; }
@@ -509,6 +510,9 @@ namespace Salamandra.ViewModel
 
         private void PlayNextTrackOrStop()
         {
+            if (this.EnableDeleteMode)
+                this.PlaylistManager.RemoveTracks(new List<BaseTrack>() { this.PlaylistManager.CurrentTrack! }, false);
+
             // Do we have to play an immediate event or the user asked to play late events?
             if (this.EnableEvents && this.PlaybackState == PlaylistState.JumpToNextEvent)
             {

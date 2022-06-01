@@ -18,6 +18,7 @@
 	  <None Remove="Images\Icons\Toolbar\calendar.png" />
 	  <None Remove="Images\Icons\Toolbar\checkmark.png" />
 	  <None Remove="Images\Icons\Toolbar\delete.png" />
+	  <None Remove="Images\Icons\Toolbar\delete_row.png" />
 	  <None Remove="Images\Icons\Toolbar\new.png" />
 	  <None Remove="Images\Icons\Toolbar\open.png" />
 	  <None Remove="Images\Icons\Toolbar\play.png" />
@@ -54,6 +55,7 @@
 		<Resource Include="Images\Icons\Player\volume_up.png" />
 		<Resource Include="Images\Icons\Playlist\alarm_clock.png" />
 		<Resource Include="Images\Icons\Playlist\audio_file.png" />
+		<Resource Include="Images\Icons\Toolbar\delete_row.png" />
 		<Resource Include="Images\Icons\Toolbar\loop.png" />
 		<Resource Include="Images\Icons\Playlist\music_folder.png" />
 		<Resource Include="Images\Icons\Toolbar\calendar.png" />

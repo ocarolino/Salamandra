@@ -42,5 +42,10 @@ namespace Salamandra.Views
             this.DialogResult = true;
             this.Close();
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.settingsViewModel.Closing();
+        }
     }
 }

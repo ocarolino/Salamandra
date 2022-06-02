@@ -43,6 +43,15 @@ namespace Salamandra.ViewModel
             this.OutputDevices = new ObservableCollection<SoundOutputDevice>(this.soundEngine.EnumerateDevices());
         }
 
+        public void Closing()
+        {
+            this.Settings!.DeviceSettings.MainOutputDeviceName =
+                this.OutputDevices.First(x => x.DeviceIndex == this.Settings.DeviceSettings.MainOutputDevice).Name!;
+
+            this.Settings!.DeviceSettings.PreListenOutputDeviceName =
+                this.OutputDevices.First(x => x.DeviceIndex == this.Settings.DeviceSettings.PreListenOutputDevice).Name!;
+        }
+
 #pragma warning disable 67
         public event PropertyChangedEventHandler? PropertyChanged;
 #pragma warning restore 67

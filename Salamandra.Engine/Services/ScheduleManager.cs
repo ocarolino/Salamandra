@@ -243,6 +243,8 @@ namespace Salamandra.Engine.Services
             if (upcomingEvent != null)
                 this.EventsQueue.Remove(upcomingEvent);
 
+            UpdateLateEvents();
+
             return upcomingEvent;
         }
 

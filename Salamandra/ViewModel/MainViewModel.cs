@@ -560,10 +560,15 @@ namespace Salamandra.ViewModel
             // Do we have a late queued event?
             if (this.EnableEvents && !(this.PlaybackState == PlaylistState.JumpToNextTrack) && this.ScheduleManager.HasLateEvent)
             {
-                this.IsEventPlaying = true;
+                var scheduledEvent = this.ScheduleManager.DequeueLateEvent();
 
-                PlayTrack(this.ScheduleManager.DequeueLateEvent()!.Track!, false);
-                return;
+                if (scheduledEvent != null)
+                {
+                    this.IsEventPlaying = true;
+
+                    PlayTrack(scheduledEvent.Track!, false);
+                    return;
+                }
             }
 
             // Is loop mode enabled?

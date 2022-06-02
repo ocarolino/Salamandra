@@ -116,11 +116,12 @@ namespace Salamandra.ViewModel
         {
             switch (this.ScheduledEvent.TrackScheduleType)
             {
-                case TrackScheduleType.TimeAnnouncementTrack:
-                    this.EventRequiresPath = false;
+                case TrackScheduleType.FileTrack:
+                case TrackScheduleType.RandomFileTrack:
+                    this.EventRequiresPath = true;
                     break;
                 default:
-                    this.EventRequiresPath = true;
+                    this.EventRequiresPath = false;
                     break;
             }
         }
@@ -156,6 +157,13 @@ namespace Salamandra.ViewModel
                 return;
             }
 
+            if (this.ScheduledEvent.TrackScheduleType == TrackScheduleType.StartPlaylistTrack &&
+                !this.ScheduledEvent.Immediate)
+            {
+                MessageBox.Show("Um evento de iniciar a playlist que não seja imediato pode não ter o efeito desejado.", "Eventos",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
             this.PrepareFriendlyName();
 
             this.CloseWindow?.Invoke(true);
@@ -174,6 +182,12 @@ namespace Salamandra.ViewModel
                     break;
                 case TrackScheduleType.TimeAnnouncementTrack:
                     this.ScheduledEvent.FriendlyName = "Locução de Hora";
+                    break;
+                case TrackScheduleType.StartPlaylistTrack:
+                    this.ScheduledEvent.FriendlyName = "Iniciar Playlist";
+                    break;
+                case TrackScheduleType.StopPlaylistTrack:
+                    this.ScheduledEvent.FriendlyName = "Parar Playlist";
                     break;
                 default:
                     break;

@@ -11,5 +11,7 @@ namespace Salamandra.Engine.Domain.Enums
         FileTrack = 0,
         RandomFileTrack = 1,
         TimeAnnouncementTrack = 2,
+        StartPlaylistTrack = 3,
+        StopPlaylistTrack = 4,
     }
 }

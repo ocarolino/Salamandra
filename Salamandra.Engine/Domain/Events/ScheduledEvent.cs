@@ -55,6 +55,10 @@ namespace Salamandra.Engine.Domain.Events
                     };
                 case TrackScheduleType.TimeAnnouncementTrack:
                     return new TimeAnnouncementTrack();
+                case TrackScheduleType.StartPlaylistTrack:
+                    return new PlayerCommandTrack(PlayerCommandType.Play);
+                case TrackScheduleType.StopPlaylistTrack:
+                    return new PlayerCommandTrack(PlayerCommandType.Stop);
                 default:
                     throw new NotImplementedException();
             }

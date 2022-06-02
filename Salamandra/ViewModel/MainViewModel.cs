@@ -90,6 +90,7 @@ namespace Salamandra.ViewModel
         #region Commands Properties
         public ICommand? AddFilesToPlaylistCommand { get; set; }
         public ICommand? AddTimeAnnouncementTrackCommand { get; set; }
+        public ICommand? AddStopTrackCommand { get; set; }
         public ICommand? RemoveTracksFromPlaylistCommand { get; set; }
         public ICommand? StartPlaybackCommand { get; set; }
         public ICommand? StopPlaybackCommand { get; set; }
@@ -327,6 +328,7 @@ namespace Salamandra.ViewModel
             this.AddFilesToPlaylistCommand = new RelayCommandAsync(p => AddFilesToPlaylist(), p => HandlePlaylistException(p), p => !this.PlaylistLoading);
             this.AddTimeAnnouncementTrackCommand = new RelayCommand(p => AddTimeAnnouncementTrack(), p => !this.PlaylistLoading);
             this.AddRandomTrackCommand = new RelayCommand(p => AddRandomTrack(), p => !this.PlaylistLoading);
+            this.AddStopTrackCommand = new RelayCommand(p => AddStopTrack(), p => !this.PlaylistLoading);
             this.RemoveTracksFromPlaylistCommand = new RelayCommand(p => RemoveTracksFromPlaylist(p), p => !this.PlaylistLoading);
 
             this.StartPlaybackCommand = new RelayCommand(p => StartPlayback(), p => !this.IsPlaying);
@@ -837,6 +839,11 @@ namespace Salamandra.ViewModel
                 this.PlaylistManager.AddRandomTrack(vistaFolderBrowserDialog.SelectedPath,
                     this.PlaylistManager.Tracks.IndexOf(this.SelectedTrack!));
             }
+        }
+
+        private void AddStopTrack()
+        {
+            this.PlaylistManager.AddStopTrack(this.PlaylistManager.Tracks.IndexOf(this.SelectedTrack!));
         }
 
         private void OpenSettings()

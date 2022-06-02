@@ -35,6 +35,7 @@
                 <MenuItem Header="Adicionar arquivos de áudio..." Command="{Binding AddFilesToPlaylistCommand}"/>
                 <MenuItem Header="Adicionar locução de horário..." Command="{Binding AddTimeAnnouncementTrackCommand}"/>
                 <MenuItem Header="Adicionar arquivo aleatório de pasta..." Command="{Binding AddRandomTrackCommand}"/>
+                <MenuItem Header="Adicionar comando para parar playlist" Command="{Binding AddStopTrackCommand}"/>
                 <Separator/>
                 <MenuItem Header="Remover selecionadas" Command="{Binding RemoveTracksFromPlaylistCommand}" CommandParameter="{Binding SelectedItems, ElementName=playlist}"/>
                 <Separator/>
@@ -395,6 +396,10 @@
 
                                                                 <DataTrigger Binding="{Binding ., Converter={StaticResource DataTypeConverter}}" Value="{x:Type tracks:RandomFileTrack}">
                                                                     <Setter Property="Source" Value="/Images/Icons/Playlist/music_folder.png"/>
+                                                                </DataTrigger>
+
+                                                                <DataTrigger Binding="{Binding ., Converter={StaticResource DataTypeConverter}}" Value="{x:Type tracks:PlayerCommandTrack}">
+                                                                    <Setter Property="Source" Value="/Images/Icons/Playlist/remote_control.png"/>
                                                                 </DataTrigger>
                                                             </Style.Triggers>
                                                         </Style>

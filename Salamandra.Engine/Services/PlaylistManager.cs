@@ -193,6 +193,13 @@ namespace Salamandra.Engine.Services
             AddTracks(new List<BaseTrack>() { randomTrack }, index);
         }
 
+        public void AddStopTrack(int index = -1)
+        {
+            PlayerCommandTrack playerCommandTrack = new PlayerCommandTrack(PlayerCommandType.Stop);
+
+            AddTracks(new List<BaseTrack>() { playerCommandTrack }, index);
+        }
+
         private static RandomFileTrack CreateRandomTrackFromPath(string directoryPath)
         {
             RandomFileTrack randomTrack = new RandomFileTrack() { Filename = directoryPath.EnsureHasDirectorySeparatorChar() };
@@ -272,6 +279,8 @@ namespace Salamandra.Engine.Services
 
                 if (item.Filename!.EndsWith(".time"))
                     track = new TimeAnnouncementTrack();
+                else if (item.Filename.EndsWith(".stop"))
+                    track = new PlayerCommandTrack(PlayerCommandType.Stop);
                 else if (item.Filename.EndsWith(".dir"))
                 {
                     // ToDo: Validate if it is a valid path!

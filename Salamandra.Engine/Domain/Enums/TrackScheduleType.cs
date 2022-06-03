@@ -13,5 +13,6 @@ namespace Salamandra.Engine.Domain.Enums
         TimeAnnouncementTrack = 2,
         StartPlaylistTrack = 3,
         StopPlaylistTrack = 4,
+        OpenPlaylistTrack = 5,
     }
 }

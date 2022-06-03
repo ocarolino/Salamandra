@@ -87,12 +87,11 @@ namespace Salamandra.ViewModel
             switch (this.ScheduledEvent.TrackScheduleType)
             {
                 case TrackScheduleType.FileTrack:
-                    OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Filter = "Arquivos de áudio (*.wav, *.mp3, *.wma, *.ogg, *.flac) | *.wav; *.mp3; *.wma; *.ogg; *.flac";
-                    openFileDialog.Multiselect = true;
+                    OpenFileDialog audioOpenFileDialog = new OpenFileDialog();
+                    audioOpenFileDialog.Filter = "Arquivos de áudio (*.wav, *.mp3, *.wma, *.ogg, *.flac) | *.wav; *.mp3; *.wma; *.ogg; *.flac";
 
-                    if (openFileDialog.ShowDialog() == true)
-                        this.ScheduledEvent.Filename = openFileDialog.FileName;
+                    if (audioOpenFileDialog.ShowDialog() == true)
+                        this.ScheduledEvent.Filename = audioOpenFileDialog.FileName;
                     break;
                 case TrackScheduleType.RandomFileTrack:
                     Ookii.Dialogs.Wpf.VistaFolderBrowserDialog vistaFolderBrowserDialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog();
@@ -100,7 +99,14 @@ namespace Salamandra.ViewModel
                     if (vistaFolderBrowserDialog.ShowDialog() == true)
                         this.ScheduledEvent.Filename = vistaFolderBrowserDialog.SelectedPath;
                     break;
-                case TrackScheduleType.TimeAnnouncementTrack:
+                case TrackScheduleType.OpenPlaylistTrack:
+                    OpenFileDialog playlistOpenFileDialog = new OpenFileDialog();
+                    playlistOpenFileDialog.Filter = "Playlist M3U (*.m3u) | *.m3u";
+
+                    if (playlistOpenFileDialog.ShowDialog() == true)
+                        this.ScheduledEvent.Filename = playlistOpenFileDialog.FileName;
+                    break;
+                default:
                     throw new NotImplementedException();
             }
         }
@@ -118,6 +124,7 @@ namespace Salamandra.ViewModel
             {
                 case TrackScheduleType.FileTrack:
                 case TrackScheduleType.RandomFileTrack:
+                case TrackScheduleType.OpenPlaylistTrack:
                     this.EventRequiresPath = true;
                     break;
                 default:
@@ -174,6 +181,7 @@ namespace Salamandra.ViewModel
             switch (this.ScheduledEvent.TrackScheduleType)
             {
                 case TrackScheduleType.FileTrack:
+                case TrackScheduleType.OpenPlaylistTrack:
                     this.ScheduledEvent.FriendlyName = Path.GetFileNameWithoutExtension(this.ScheduledEvent.Filename);
                     break;
                 case TrackScheduleType.RandomFileTrack:

@@ -59,6 +59,12 @@ namespace Salamandra.Engine.Domain.Events
                     return new PlayerCommandTrack(PlayerCommandType.Play);
                 case TrackScheduleType.StopPlaylistTrack:
                     return new PlayerCommandTrack(PlayerCommandType.Stop);
+                case TrackScheduleType.OpenPlaylistTrack:
+                    return new PlaylistFileTrack()
+                    {
+                        FriendlyName = this.FriendlyName,
+                        Filename = this.Filename
+                    };
                 default:
                     throw new NotImplementedException();
             }

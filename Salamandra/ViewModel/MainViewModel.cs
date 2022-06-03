@@ -243,6 +243,9 @@ namespace Salamandra.ViewModel
                 try
                 {
                     await this.PlaylistManager.LoadPlaylist(this.ApplicationSettings.PlayerSettings.LastPlaylist);
+                    UpdateWindowTitle();
+
+                    // ToDo: Tornar genérico esse loadplaylist para sempre atualizar o título
 
                     if (this.ApplicationSettings.PlayerSettings.ShufflePlaylistOnStartup)
                     {
@@ -542,6 +545,9 @@ namespace Salamandra.ViewModel
                             if (this.PlaylistManager.CurrentTrack == playlistFileTrack)
                                 this.PlaybackState = PlaylistState.WaitingNextTrack;
                         }
+
+                        UpdateWindowTitle();
+                        // ToDo: Tornar genérico esse loadplaylist para sempre atualizar o título
 
                         this.PlaylistLoading = false;
                         this.PlaylistInfoText = String.Empty;

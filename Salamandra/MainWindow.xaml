@@ -401,6 +401,10 @@
                                                                 <DataTrigger Binding="{Binding ., Converter={StaticResource DataTypeConverter}}" Value="{x:Type tracks:PlayerCommandTrack}">
                                                                     <Setter Property="Source" Value="/Images/Icons/Playlist/remote_control.png"/>
                                                                 </DataTrigger>
+
+                                                                <DataTrigger Binding="{Binding ., Converter={StaticResource DataTypeConverter}}" Value="{x:Type tracks:PlaylistFileTrack}">
+                                                                    <Setter Property="Source" Value="/Images/Icons/Playlist/playlist_file.png"/>
+                                                                </DataTrigger>
                                                             </Style.Triggers>
                                                         </Style>
                                                     </Image.Style>

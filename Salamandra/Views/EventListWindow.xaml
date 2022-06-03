@@ -87,6 +87,10 @@
                                                         <DataTrigger Binding="{Binding TrackScheduleType}" Value="{x:Static enums:TrackScheduleType.StopPlaylistTrack}">
                                                             <Setter Property="Source" Value="/Images/Icons/Playlist/remote_control.png"/>
                                                         </DataTrigger>
+
+                                                        <DataTrigger Binding="{Binding TrackScheduleType}" Value="{x:Static enums:TrackScheduleType.OpenPlaylistTrack}">
+                                                            <Setter Property="Source" Value="/Images/Icons/Playlist/playlist_file.png"/>
+                                                        </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </Image.Style>

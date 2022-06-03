@@ -521,6 +521,32 @@ namespace Salamandra.ViewModel
                             break;
                     }
                     break;
+                case PlaylistFileTrack playlistFileTrack:
+                    this.PlaylistLoading = true;
+                    this.PlaylistInfoText = "Carregando playlist...";
+
+                    var task = this.PlaylistManager.LoadPlaylist(playlistFileTrack.Filename);
+
+                    task.ContinueWith(t =>
+                    {
+                        if (t.IsFaulted)
+                        {
+                            ResetPlaylist();
+
+                            if (this.PlaylistManager.CurrentTrack == playlistFileTrack)
+                                StopPlayback();
+                            // ToDo: Log!
+                        }
+                        else
+                        {
+                            if (this.PlaylistManager.CurrentTrack == playlistFileTrack)
+                                this.PlaybackState = PlaylistState.WaitingNextTrack;
+                        }
+
+                        this.PlaylistLoading = false;
+                        this.PlaylistInfoText = String.Empty;
+                    }, TaskScheduler.FromCurrentSynchronizationContext());
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -781,11 +807,14 @@ namespace Salamandra.ViewModel
         private void NewPlaylist()
         {
             if (CheckPlaylistModified())
-            {
-                this.PlaylistManager.ClearPlaylist();
+                ResetPlaylist();
+        }
 
-                this.RemovePlaylistAdorner?.Invoke();
-            }
+        private void ResetPlaylist()
+        {
+            this.PlaylistManager.ClearPlaylist();
+
+            this.RemovePlaylistAdorner?.Invoke();
         }
 
         private bool CheckPlaylistModified()
@@ -1057,7 +1086,6 @@ namespace Salamandra.ViewModel
                 this.PlaylistInfoText = "Adicionando arquivos a playlist...";
 
                 var task = this.HandleDropActionAsync(dropInfo, dataObject.GetFileDropList());
-
 
                 task.ContinueWith(t =>
                 {

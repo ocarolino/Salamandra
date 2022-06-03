@@ -536,15 +536,12 @@ namespace Salamandra.ViewModel
                         {
                             ResetPlaylist();
 
-                            if (this.PlaylistManager.CurrentTrack == playlistFileTrack)
-                                StopPlayback();
                             // ToDo: Log!
                         }
-                        else
-                        {
-                            if (this.PlaylistManager.CurrentTrack == playlistFileTrack)
-                                this.PlaybackState = PlaylistState.WaitingNextTrack;
-                        }
+
+                        // Maybe an event has started playing when loading a big playlist, so we check just to be safe.
+                        if (this.PlaylistManager.CurrentTrack == playlistFileTrack)
+                            this.PlaybackState = PlaylistState.WaitingNextTrack;
 
                         UpdateWindowTitle();
                         // ToDo: Tornar genérico esse loadplaylist para sempre atualizar o título

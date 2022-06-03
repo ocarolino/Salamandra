@@ -814,6 +814,8 @@ namespace Salamandra.ViewModel
         {
             if (CheckPlaylistModified())
                 ResetPlaylist();
+
+            UpdateWindowTitle(); // ToDo: Criar um evento PlaylistChanged, que chamará sempre esse método.
         }
 
         private void ResetPlaylist()

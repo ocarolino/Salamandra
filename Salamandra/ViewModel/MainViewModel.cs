@@ -89,6 +89,7 @@ namespace Salamandra.ViewModel
 
         #region Commands Properties
         public ICommand? AddFilesToPlaylistCommand { get; set; }
+        public ICommand? AddPlaylistTrackCommand { get; set; }
         public ICommand? AddTimeAnnouncementTrackCommand { get; set; }
         public ICommand? AddStopTrackCommand { get; set; }
         public ICommand? RemoveTracksFromPlaylistCommand { get; set; }
@@ -329,6 +330,7 @@ namespace Salamandra.ViewModel
         private void LoadCommands()
         {
             this.AddFilesToPlaylistCommand = new RelayCommandAsync(p => AddFilesToPlaylist(), p => HandlePlaylistException(p), p => !this.PlaylistLoading);
+            this.AddPlaylistTrackCommand = new RelayCommand(p => AddPlaylistTrack(), p => !this.PlaylistLoading);
             this.AddTimeAnnouncementTrackCommand = new RelayCommand(p => AddTimeAnnouncementTrack(), p => !this.PlaylistLoading);
             this.AddRandomTrackCommand = new RelayCommand(p => AddRandomTrack(), p => !this.PlaylistLoading);
             this.AddStopTrackCommand = new RelayCommand(p => AddStopTrack(), p => !this.PlaylistLoading);
@@ -385,6 +387,16 @@ namespace Salamandra.ViewModel
 
             this.PlaylistLoading = false;
             this.PlaylistInfoText = string.Empty;
+        }
+
+        private void AddPlaylistTrack()
+        {
+            // ToDo: Alguma forma de tornar essas questões de formatos e filtros genéricos!
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Playlist M3U (*.m3u) | *.m3u";
+
+            if (openFileDialog.ShowDialog() == true)
+                this.PlaylistManager.AddPlaylistTrack(openFileDialog.FileName, this.PlaylistManager.Tracks.IndexOf(this.SelectedTrack!));
         }
 
         private void RemoveTracksFromPlaylist(object? items)

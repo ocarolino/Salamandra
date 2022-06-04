@@ -33,8 +33,9 @@
 
             <MenuItem Header="Playlist">
                 <MenuItem Header="Adicionar arquivos de áudio..." Command="{Binding AddFilesToPlaylistCommand}"/>
-                <MenuItem Header="Adicionar locução de horário..." Command="{Binding AddTimeAnnouncementTrackCommand}"/>
                 <MenuItem Header="Adicionar arquivo aleatório de pasta..." Command="{Binding AddRandomTrackCommand}"/>
+                <MenuItem Header="Adicionar arquivo de playlist..." Command="{Binding AddPlaylistTrackCommand}"/>
+                <MenuItem Header="Adicionar locução de horário..." Command="{Binding AddTimeAnnouncementTrackCommand}"/>
                 <MenuItem Header="Adicionar comando para parar playlist" Command="{Binding AddStopTrackCommand}"/>
                 <Separator/>
                 <MenuItem Header="Remover selecionadas" Command="{Binding RemoveTracksFromPlaylistCommand}" CommandParameter="{Binding SelectedItems, ElementName=playlist}"/>

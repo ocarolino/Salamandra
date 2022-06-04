@@ -29,6 +29,8 @@ namespace Salamandra.Engine.Services
         public bool Modified { get; set; }
         public string Filename { get; set; }
 
+        public static string[] SupportedPlaylistFormats = { ".m3u" };
+
         public PlaylistManager()
         {
             this.PlaylistMode = PlaylistMode.Default;
@@ -170,8 +172,10 @@ namespace Salamandra.Engine.Services
                     tracks.Add(CreateRandomTrackFromPath(item));
                 else
                 {
-                    if (SoundEngine.SupportedFormats.Any(x => item.EndsWith(x)))
+                    if (SoundEngine.SupportedAudioFormats.Any(x => item.EndsWith(x)))
                         tracks.Add(await CreateAudioFileTrackFromFilename(item));
+                    else if (PlaylistManager.SupportedPlaylistFormats.Any(x => item.EndsWith(x)))
+                        tracks.Add(CreatePlaylistTrackFromFilename(item));
                 }
             }
 
@@ -200,11 +204,27 @@ namespace Salamandra.Engine.Services
             AddTracks(new List<BaseTrack>() { playerCommandTrack }, index);
         }
 
-        private static RandomFileTrack CreateRandomTrackFromPath(string directoryPath)
+        public void AddPlaylistTrack(string filename, int index = -1)
+        {
+            AddTracks(new List<BaseTrack>() { CreatePlaylistTrackFromFilename(filename) }, index);
+        }
+
+        private RandomFileTrack CreateRandomTrackFromPath(string directoryPath)
         {
             RandomFileTrack randomTrack = new RandomFileTrack() { Filename = directoryPath.EnsureHasDirectorySeparatorChar() };
             randomTrack.FriendlyName = Path.GetFileName(randomTrack.Filename.TrimEnd(Path.DirectorySeparatorChar));
             return randomTrack;
+        }
+
+        private PlaylistFileTrack CreatePlaylistTrackFromFilename(string filename)
+        {
+            PlaylistFileTrack playlistFileTrack = new PlaylistFileTrack()
+            {
+                Filename = filename,
+                FriendlyName = Path.GetFileNameWithoutExtension(filename)
+            };
+
+            return playlistFileTrack;
         }
 
         public void RemoveTracks(List<BaseTrack> tracks, bool modified = true)

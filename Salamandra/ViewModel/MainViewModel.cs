@@ -239,7 +239,7 @@ namespace Salamandra.ViewModel
             if (!this.ApplicationSettings.PlayerSettings.AlwaysEnableEventsOnStartup)
                 this.EnableEvents = this.ApplicationSettings.PlayerSettings.EnableEvents;
             else
-                this.EnableEvents = false;
+                this.EnableEvents = true;
 
             if (this.ApplicationSettings.PlayerSettings.OpenLastPlaylistOnStartup &&
                 !String.IsNullOrWhiteSpace(this.ApplicationSettings.PlayerSettings.LastPlaylist) &&
@@ -320,6 +320,8 @@ namespace Salamandra.ViewModel
             this.ApplicationSettings.PlayerSettings.Volume = this.CurrentVolume;
             this.ApplicationSettings.PlayerSettings.LastPlaylist = this.PlaylistManager.Filename;
             this.ApplicationSettings.PlayerSettings.EnableDeleteMode = this.EnableDeleteMode;
+
+            this.ApplicationSettings.PlayerSettings.EnableEvents = this.EnableEvents;
 
             this.SettingsManager.SaveSettings(this.ApplicationSettings);
         }

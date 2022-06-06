@@ -25,8 +25,8 @@
                           IsChecked="{Binding Settings.PlayerSettings.ShufflePlaylistOnStartup}" Margin="0 8 0 0"/>
                     <CheckBox Content="Reproduzir playlist quando iniciar o programa"
                           IsChecked="{Binding Settings.PlayerSettings.PlayOnStartup}" Margin="0 8 0 0"/>
-                    <CheckBox Content="Ativar modo de exclusão ao iniciar caso o programa seja fechado com este modo ativo"
-                              IsChecked="{Binding Settings.PlayerSettings.KeepDeleteModeIfActiveOnStartup}" Margin="0 8 0 0"/>
+                    <CheckBox Content="Manter último estado do modo de exclusão ao iniciar"
+                              IsChecked="{Binding Settings.PlayerSettings.KeepDeleteModeLastState}" Margin="0 8 0 0"/>
 
                     <TextBlock Text="Caminho para arquivos de Locução de Horário" FontWeight="Bold" Margin="0 8 0 0"/>
                     <Grid Margin="0 4 0 0">

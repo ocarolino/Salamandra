@@ -19,8 +19,8 @@ namespace Salamandra.Engine.Domain.Settings
         public string? LastPlaylist { get; set; }
         public bool ShufflePlaylistOnStartup { get; set; }
         public bool PlayOnStartup { get; set; }
-        public bool KeepDeleteModeIfActiveOnStartup { get; set; }
-        public bool LastDeleteModeState { get; set; }
+        public bool KeepDeleteModeLastState { get; set; }
+        public bool EnableDeleteMode { get; set; }
 
         public PlayerSettings()
         {
@@ -37,8 +37,8 @@ namespace Salamandra.Engine.Domain.Settings
             this.ShufflePlaylistOnStartup = false;
             this.PlayOnStartup = false;
 
-            this.KeepDeleteModeIfActiveOnStartup = false;
-            this.LastDeleteModeState = false;
+            this.KeepDeleteModeLastState = false;
+            this.EnableDeleteMode = false;
         }
 
 #pragma warning disable 67

@@ -260,8 +260,8 @@ namespace Salamandra.ViewModel
                 }
             }
 
-            if (this.ApplicationSettings.PlayerSettings.KeepDeleteModeIfActiveOnStartup &&
-                this.ApplicationSettings.PlayerSettings.LastDeleteModeState)
+            if (this.ApplicationSettings.PlayerSettings.KeepDeleteModeLastState &&
+                this.ApplicationSettings.PlayerSettings.EnableDeleteMode)
                 this.EnableDeleteMode = true;
         }
 
@@ -315,7 +315,7 @@ namespace Salamandra.ViewModel
             this.ApplicationSettings.PlayerSettings.PlaylistMode = this.PlaylistManager.PlaylistMode;
             this.ApplicationSettings.PlayerSettings.Volume = this.CurrentVolume;
             this.ApplicationSettings.PlayerSettings.LastPlaylist = this.PlaylistManager.Filename;
-            this.ApplicationSettings.PlayerSettings.LastDeleteModeState = this.EnableDeleteMode;
+            this.ApplicationSettings.PlayerSettings.EnableDeleteMode = this.EnableDeleteMode;
 
             this.SettingsManager.SaveSettings(this.ApplicationSettings);
         }

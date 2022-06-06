@@ -235,7 +235,11 @@ namespace Salamandra.ViewModel
         {
             this.CurrentVolume = this.ApplicationSettings.PlayerSettings.Volume;
             this.PlaylistManager.PlaylistMode = this.ApplicationSettings.PlayerSettings.PlaylistMode;
-            this.EnableEvents = this.ApplicationSettings.PlayerSettings.EnableEvents;
+
+            if (!this.ApplicationSettings.PlayerSettings.AlwaysEnableEventsOnStartup)
+                this.EnableEvents = this.ApplicationSettings.PlayerSettings.EnableEvents;
+            else
+                this.EnableEvents = false;
 
             if (this.ApplicationSettings.PlayerSettings.OpenLastPlaylistOnStartup &&
                 !String.IsNullOrWhiteSpace(this.ApplicationSettings.PlayerSettings.LastPlaylist) &&

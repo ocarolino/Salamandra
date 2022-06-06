@@ -14,6 +14,7 @@ namespace Salamandra.Engine.Domain.Settings
         public float PreListenVolume { get; set; }
         public PlaylistMode PlaylistMode { get; set; }
         public bool AskToCloseWhenPlaying { get; set; }
+        public bool AlwaysEnableEventsOnStartup { get; set; }
         public bool EnableEvents { get; set; }
         public bool OpenLastPlaylistOnStartup { get; set; }
         public string? LastPlaylist { get; set; }
@@ -31,6 +32,7 @@ namespace Salamandra.Engine.Domain.Settings
 
             this.AskToCloseWhenPlaying = true;
 
+            this.AlwaysEnableEventsOnStartup = false;
             this.EnableEvents = true;
 
             this.LastPlaylist = String.Empty;

@@ -492,7 +492,7 @@ namespace Salamandra.ViewModel
                     if (rotationTrack is SequentialTrack sequentialTrack && resetSequence)
                     {
                         if (sequentialTrack is TimeAnnouncementTrack timeAnnouncementTrack)
-                            timeAnnouncementTrack.AudioFilesDirectory = @"C:\Users\Matheus\Desktop\Pacote ZaraRadio\Pacote ZaraRadio\Horas\(ZaraRadio) Horas masculino sem efeito";
+                            timeAnnouncementTrack.AudioFilesDirectory = this.ApplicationSettings.GeneralSettings.TimeAnnouncementFilesPath;
 
                         sequentialTrack.ResetSequence();
                     }

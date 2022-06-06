@@ -9,12 +9,14 @@ namespace Salamandra.Engine.Domain.Settings
 {
     public class ApplicationSettings : INotifyPropertyChanged
     {
+        public GeneralSettings GeneralSettings { get; set; }
         public DeviceSettings DeviceSettings { get; set; }
         public PlayerSettings PlayerSettings { get; set; }
         public ScheduledEventSettings ScheduledEventSettings { get; set; }
 
         public ApplicationSettings()
         {
+            this.GeneralSettings = new GeneralSettings();
             this.DeviceSettings = new DeviceSettings();
             this.PlayerSettings = new PlayerSettings();
             this.ScheduledEventSettings = new ScheduledEventSettings();

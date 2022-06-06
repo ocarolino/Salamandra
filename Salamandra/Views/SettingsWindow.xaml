@@ -27,6 +27,20 @@
                           IsChecked="{Binding Settings.PlayerSettings.PlayOnStartup}" Margin="0 8 0 0"/>
                     <CheckBox Content="Ativar modo de exclusão ao iniciar caso o programa seja fechado com este modo ativo"
                               IsChecked="{Binding Settings.PlayerSettings.KeepDeleteModeIfActiveOnStartup}" Margin="0 8 0 0"/>
+
+                    <TextBlock Text="Caminho para arquivos de Locução de Horário" FontWeight="Bold" Margin="0 8 0 0"/>
+                    <Grid Margin="0 4 0 0">
+                        <Grid.ColumnDefinitions >
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Text="{Binding Settings.GeneralSettings.TimeAnnouncementFilesPath}"
+                                 Grid.Column="0" Height="24"/>
+
+                        <Button Command="{Binding OpenTimePathDialogCommand}" Content="..."
+                                Grid.Column="1" Width="30" Height="24" Margin="4 0 0 0"/>
+                    </Grid>
                 </StackPanel>
             </TabItem>
 

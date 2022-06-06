@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
+using Salamandra.Commands;
 using Salamandra.Engine.Domain;
 using Salamandra.Engine.Domain.Settings;
+using Salamandra.Engine.Extensions;
 using Salamandra.Engine.Services;
 using System;
 using System.Collections.Generic;
@@ -9,6 +11,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Salamandra.ViewModel
 {
@@ -20,12 +23,16 @@ namespace Salamandra.ViewModel
         public ApplicationSettings? Settings { get; set; }
         public ObservableCollection<SoundOutputDevice> OutputDevices { get; set; }
 
+        public ICommand? OpenTimePathDialogCommand { get; set; }
+
         public SettingsViewModel(ApplicationSettings applicationSettings, SoundEngine soundEngine)
         {
             this.originalApplicationSettings = applicationSettings;
             this.soundEngine = soundEngine;
 
             this.OutputDevices = new ObservableCollection<SoundOutputDevice>();
+
+            this.OpenTimePathDialogCommand = new RelayCommand(p => OpenTimePathDialog());
         }
 
         public void Loading()
@@ -50,6 +57,14 @@ namespace Salamandra.ViewModel
 
             this.Settings!.DeviceSettings.PreListenOutputDeviceName =
                 this.OutputDevices.First(x => x.DeviceIndex == this.Settings.DeviceSettings.PreListenOutputDevice).Name!;
+        }
+
+        private void OpenTimePathDialog()
+        {
+            Ookii.Dialogs.Wpf.VistaFolderBrowserDialog vistaFolderBrowserDialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog();
+
+            if (vistaFolderBrowserDialog.ShowDialog() == true)
+                this.Settings!.GeneralSettings.TimeAnnouncementFilesPath = vistaFolderBrowserDialog.SelectedPath;
         }
 
 #pragma warning disable 67

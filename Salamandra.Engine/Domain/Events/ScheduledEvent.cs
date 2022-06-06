@@ -25,6 +25,7 @@ namespace Salamandra.Engine.Domain.Events
         public TrackScheduleType TrackScheduleType { get; set; }
         public string Filename { get; set; }
         public string FriendlyName { get; set; }
+        public int QueueOrder { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
@@ -37,6 +38,8 @@ namespace Salamandra.Engine.Domain.Events
             this.DaysOfWeek = new ObservableCollection<DayOfWeek>();
             this.Filename = String.Empty;
             this.FriendlyName = String.Empty;
+
+            this.QueueOrder = 1;
 
             this.CreatedAt = DateTime.Now;
             this.UpdatedAt = DateTime.Now;

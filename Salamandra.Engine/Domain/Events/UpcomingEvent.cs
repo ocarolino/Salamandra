@@ -11,6 +11,7 @@ namespace Salamandra.Engine.Domain.Events
         public int EventId { get; set; }
         public DateTime StartDateTime { get; set; }
         public bool Immediate { get; set; }
+        public int QueueOrder { get; set; }
         public BaseTrack? Track { get; set; }
     }
 }

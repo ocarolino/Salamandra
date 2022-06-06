@@ -130,6 +130,15 @@
                     </Grid>
                 </StackPanel>
             </GroupBox>
+
+            <GroupBox Header="Ordenação e Prioridade" Margin="0 8 0 0">
+                <StackPanel Margin="4">
+                    <TextBlock Text="Ordem do Evento na Fila"/>
+                    <xctk:IntegerUpDown Value="{Binding ScheduledEvent.QueueOrder}"
+                                        Increment="1" Minimum="1" Maximum="99"
+                                        Margin="0 4 0 0"/>
+                </StackPanel>
+            </GroupBox>
         </StackPanel>
 
         <Grid Grid.Row="1" Margin="0 8 0 0">

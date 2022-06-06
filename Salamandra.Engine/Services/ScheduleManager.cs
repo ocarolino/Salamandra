@@ -166,7 +166,11 @@ namespace Salamandra.Engine.Services
             }
 
             this.EventsQueue = new ObservableCollection<UpcomingEvent>(
-                this.EventsQueue.OrderBy(x => x.StartDateTime).ThenByDescending(x => x.Immediate)
+                this.EventsQueue
+                .OrderBy(x => x.StartDateTime)
+                .ThenByDescending(x => x.Immediate)
+                .ThenBy(x => x.QueueOrder)
+                .ThenBy(x => x.EventId)
                 );
         }
 
@@ -179,6 +183,7 @@ namespace Salamandra.Engine.Services
             upcomingEvent.Immediate = scheduledEvent.Immediate;
             upcomingEvent.StartDateTime = new DateTime(startFromDate.Year, startFromDate.Month, startFromDate.Day,
                 startFromDate.Hour, scheduledEvent.StartingDateTime.Minute, scheduledEvent.StartingDateTime.Second);
+            upcomingEvent.QueueOrder = scheduledEvent.QueueOrder;
             upcomingEvent.Track = scheduledEvent.GetTrack();
 
             this.EventsQueue.Add(upcomingEvent);

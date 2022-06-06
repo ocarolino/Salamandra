@@ -171,9 +171,23 @@ namespace Salamandra.ViewModel
                     MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
-            this.PrepareFriendlyName();
+            PrepareFriendlyName();
+            UpdateTimestamps();
 
             this.CloseWindow?.Invoke(true);
+        }
+
+        private void UpdateTimestamps()
+        {
+            if (this.originalScheduledEvent == null)
+            {
+                this.ScheduledEvent.CreatedAt = DateTime.Now;
+                this.ScheduledEvent.UpdatedAt = this.ScheduledEvent.CreatedAt;
+            }
+            else
+            {
+                this.ScheduledEvent.UpdatedAt = DateTime.Now;
+            }
         }
 
         private void PrepareFriendlyName()

@@ -141,7 +141,7 @@ namespace Salamandra.ViewModel
             this.TrackPositionInSeconds = 0;
 
             this.MainTimer = new DispatcherTimer();
-            this.MainTimer.Interval = TimeSpan.FromMilliseconds(250);
+            this.MainTimer.Interval = TimeSpan.FromMilliseconds(200);
             this.MainTimer.Tick += MainTimer_Tick;
 
             this.PlaylistLoading = false;

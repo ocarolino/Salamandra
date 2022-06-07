@@ -255,11 +255,10 @@ namespace Salamandra.Engine.Services
             if (defaultEvent == null)
             {
                 var lateWaitingEvent = this.EventsQueue.FirstOrDefault
-                    (
-                    x => x.StartDateTime < DateTime.Now &&
-                    x.MaximumWaitTime != null &&
-                    x.MaximumWaitAction == Domain.Enums.MaximumWaitAction.Play &&
-                    x.StartDateTime.Add(x.MaximumWaitTime.Value) < DateTime.Now
+                    (x => x.MaximumWaitTime != null &&
+                          x.MaximumWaitAction == Domain.Enums.MaximumWaitAction.Play &&
+                          x.StartDateTime < DateTime.Now &&
+                          x.StartDateTime.Add(x.MaximumWaitTime.Value) < DateTime.Now
                     );
 
                 defaultEvent = lateWaitingEvent;

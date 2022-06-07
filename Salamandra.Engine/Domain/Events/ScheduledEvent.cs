@@ -15,19 +15,38 @@ namespace Salamandra.Engine.Domain.Events
         public int Id { get; set; }
         public bool IsEnabled { get; set; }
         public bool Immediate { get; set; }
-        public DateTime StartingDateTime { get; set; }
-        public bool UsePlayingHours { get; set; }
-        public ObservableCollection<int> PlayingHours { get; set; }
-        public bool UseExpirationDateTime { get; set; }
-        public DateTime ExpirationDateTime { get; set; }
-        public bool UseDaysOfWeek { get; set; }
-        public ObservableCollection<DayOfWeek> DaysOfWeek { get; set; }
         public TrackScheduleType TrackScheduleType { get; set; }
         public string Filename { get; set; }
         public string FriendlyName { get; set; }
+
+        #region Starting Date and Time
+        public DateTime StartingDateTime { get; set; }
+        public bool UsePlayingHours { get; set; }
+        public ObservableCollection<int> PlayingHours { get; set; }
+        #endregion
+
+        #region Expiration Date And Time
+        public bool UseExpirationDateTime { get; set; }
+        public DateTime ExpirationDateTime { get; set; }
+        #endregion
+
+        #region Starting Days
+        public bool UseDaysOfWeek { get; set; }
+        public ObservableCollection<DayOfWeek> DaysOfWeek { get; set; }
+        #endregion
+
         public int QueueOrder { get; set; }
+
+        #region Maximum Wait
+        public bool UseMaximumWait { get; set; }
+        public TimeSpan MaximumWaitTime { get; set; }
+        public MaximumWaitAction MaximumWaitAction { get; set; }
+        #endregion
+
+        #region Timestamps
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        #endregion
 
         public ScheduledEvent()
         {
@@ -40,6 +59,9 @@ namespace Salamandra.Engine.Domain.Events
             this.FriendlyName = String.Empty;
 
             this.QueueOrder = 1;
+
+            this.MaximumWaitTime = TimeSpan.Zero;
+            this.MaximumWaitAction = MaximumWaitAction.Discard;
 
             this.CreatedAt = DateTime.Now;
             this.UpdatedAt = DateTime.Now;

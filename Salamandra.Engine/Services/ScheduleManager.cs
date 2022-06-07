@@ -250,7 +250,22 @@ namespace Salamandra.Engine.Services
 
         public UpcomingEvent? GetLateImmediateEvent()
         {
-            return this.EventsQueue.FirstOrDefault(x => x.Immediate && x.StartDateTime < DateTime.Now);
+            var defaultEvent = this.EventsQueue.FirstOrDefault(x => x.Immediate && x.StartDateTime < DateTime.Now);
+
+            if (defaultEvent == null)
+            {
+                var lateWaitingEvent = this.EventsQueue.FirstOrDefault
+                    (
+                    x => x.StartDateTime < DateTime.Now &&
+                    x.MaximumWaitTime != null &&
+                    x.MaximumWaitAction == Domain.Enums.MaximumWaitAction.Play &&
+                    x.StartDateTime.Add(x.MaximumWaitTime.Value) < DateTime.Now
+                    );
+
+                defaultEvent = lateWaitingEvent;
+            }
+
+            return defaultEvent;
         }
 
         public UpcomingEvent? GetLateWaitingEvent()

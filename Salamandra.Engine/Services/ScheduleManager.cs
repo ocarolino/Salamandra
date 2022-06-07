@@ -141,6 +141,8 @@ namespace Salamandra.Engine.Services
 
         private void UpdateLateEvents()
         {
+            DiscardMaximumWaitEvents();
+
             UpcomingEvent? immediate = GetLateImmediateEvent();
             UpcomingEvent? waiting = GetLateWaitingEvent();
 
@@ -155,6 +157,22 @@ namespace Salamandra.Engine.Services
                 this.HasLateWaitingEvent = false;
 
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HasLateEvent)));
+        }
+
+        private void DiscardMaximumWaitEvents()
+        {
+            var maximumWaitEvents = this.EventsQueue.Where(x =>
+                x.MaximumWaitTime != null && x.MaximumWaitAction == Domain.Enums.MaximumWaitAction.Discard).ToList();
+
+            for (int i = 0; i < maximumWaitEvents.Count(); i++)
+            {
+                var waitEvent = maximumWaitEvents[i];
+
+                DateTime maximumDateTime = waitEvent.StartDateTime.Add(waitEvent.MaximumWaitTime!.Value);
+
+                if (maximumDateTime < DateTime.Now)
+                    this.EventsQueue.Remove(waitEvent);
+            }
         }
 
         private void CreateUpcomingEvents(DateTime startFromDate)
@@ -184,6 +202,8 @@ namespace Salamandra.Engine.Services
             upcomingEvent.StartDateTime = new DateTime(startFromDate.Year, startFromDate.Month, startFromDate.Day,
                 startFromDate.Hour, scheduledEvent.StartingDateTime.Minute, scheduledEvent.StartingDateTime.Second);
             upcomingEvent.QueueOrder = scheduledEvent.QueueOrder;
+            upcomingEvent.MaximumWaitTime = scheduledEvent.UseMaximumWait ? scheduledEvent.MaximumWaitTime : null;
+            upcomingEvent.MaximumWaitAction = scheduledEvent.MaximumWaitAction;
             upcomingEvent.Track = scheduledEvent.GetTrack();
 
             this.EventsQueue.Add(upcomingEvent);

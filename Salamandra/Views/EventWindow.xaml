@@ -139,6 +139,33 @@
                                         Margin="0 4 0 0"/>
                 </StackPanel>
             </GroupBox>
+
+            <GroupBox Header="Espera Máxima" Margin="0 8 0 0">
+                <StackPanel Margin="4">
+                    <CheckBox IsChecked="{Binding ScheduledEvent.UseMaximumWait}" Content="Utilizar Espera Máxima"/>
+
+                    <Grid Margin="0 8 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" IsEnabled="{Binding ScheduledEvent.UseMaximumWait}">
+                            <TextBlock Text="Tempo máximo de espera"/>
+                            <xctk:TimeSpanUpDown Value="{Binding ScheduledEvent.MaximumWaitTime}"
+                                                 Minimum="00:00:00" Maximum="00:59:59" Margin="0 4 0 0"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" IsEnabled="{Binding ScheduledEvent.UseMaximumWait}"
+                                    Margin="8 0 0 0">
+                            <TextBlock Text="Ação após espera"/>
+
+                            <ComboBox SelectedItem="{Binding ScheduledEvent.MaximumWaitAction}" Margin="0 4 0 0"
+                                      ItemsSource="{Binding Source={converters:EnumBindingSource EnumType={x:Type enums:MaximumWaitAction}}}"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
         </StackPanel>
 
         <Grid Grid.Row="1" Margin="0 8 0 0">

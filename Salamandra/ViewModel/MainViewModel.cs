@@ -278,7 +278,7 @@ namespace Salamandra.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    this.PlayerLogManager?.Exception(ex.Message + " - Playlist:" + filename);
+                    this.PlayerLogManager?.Error(ex.Message + " - Playlist:" + filename);
                 }
 
                 // ToDo: Tornar genérico esse loadplaylist para sempre atualizar o título
@@ -300,7 +300,7 @@ namespace Salamandra.ViewModel
             catch (Exception)
             {
                 this.ScheduleManager.CleanEvents();
-                // ToDo: Log ou mensagem!
+                // ToDo: Log ou mensagem - Separado!
             }
         }
 
@@ -487,7 +487,7 @@ namespace Salamandra.ViewModel
                 this.PlaybackState = PlaylistState.WaitingNextTrack;
 
                 if (logFile)
-                    this.PlayerLogManager?.Exception(soundEngineFileException.Message + ": {filename}",
+                    this.PlayerLogManager?.Error(soundEngineFileException.Message + ": {filename}",
                         propertyValues: filename);
             }
             catch (SoundEngineDeviceException soundEngineDeviceException)
@@ -495,7 +495,7 @@ namespace Salamandra.ViewModel
                 this.StopPlaybackWithError(soundEngineDeviceException);
 
                 if (logFile)
-                    this.PlayerLogManager?.Exception("Device error: " + soundEngineDeviceException.Message);
+                    this.PlayerLogManager?.Error("Device error: " + soundEngineDeviceException.Message);
 
             }
             catch (Exception ex)
@@ -503,7 +503,7 @@ namespace Salamandra.ViewModel
                 this.StopPlaybackWithError(ex);
 
                 if (logFile)
-                    this.PlayerLogManager?.Exception("Unknown error: " + ex.Message);
+                    this.PlayerLogManager?.Error("Unknown error: " + ex.Message);
             }
         }
 
@@ -594,7 +594,7 @@ namespace Salamandra.ViewModel
                     {
                         if (t.IsFaulted)
                         {
-                            this.PlayerLogManager?.Exception(t.Exception!.Message + " - Playlist:" + playlistFileTrack.Filename);
+                            this.PlayerLogManager?.Error(t.Exception!.Message + " - Playlist:" + playlistFileTrack.Filename);
 
                             ResetPlaylist();
                         }
@@ -841,21 +841,21 @@ namespace Salamandra.ViewModel
                     MessageBox.Show(String.Format("Houve um erro ao processar a playlist.\n\n{0}", ex.Message),
                         "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                    this.PlayerLogManager?.Exception(ex.Message + " - Playlist:" + openFileDialog.FileName);
+                    this.PlayerLogManager?.Error(ex.Message + " - Playlist:" + openFileDialog.FileName);
                 }
                 catch (IOException ex)
                 {
                     MessageBox.Show(String.Format("Houve um erro de acesso ao arquivo.\n\n{0}", ex.Message),
                         "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                    this.PlayerLogManager?.Exception(ex.Message + " - Playlist:" + openFileDialog.FileName);
+                    this.PlayerLogManager?.Error(ex.Message + " - Playlist:" + openFileDialog.FileName);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(String.Format("Houve um erro ao abrir a playlist.\n\n{0}", ex.Message),
                         "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                    this.PlayerLogManager?.Exception(ex.Message + " - Playlist:" + openFileDialog.FileName);
+                    this.PlayerLogManager?.Error(ex.Message + " - Playlist:" + openFileDialog.FileName);
                 }
 
                 UpdateWindowTitle();
@@ -1072,13 +1072,13 @@ namespace Salamandra.ViewModel
             {
                 this.PlaybackState = PlaylistState.WaitingNextTrack;
 
-                this.PlayerLogManager?.Exception("Error during playback of last file: " + e.SoundErrorException.Message);
+                this.PlayerLogManager?.Error("Error during playback of last file: " + e.SoundErrorException.Message);
             }
             else
             {
                 this.StopPlaybackWithError(e.SoundErrorException!);
 
-                this.PlayerLogManager?.Exception("Device error: " + e.SoundErrorException!.Message);
+                this.PlayerLogManager?.Error("Device error: " + e.SoundErrorException!.Message);
             }
         }
 
@@ -1197,7 +1197,7 @@ namespace Salamandra.ViewModel
                 {
                     if (t.IsFaulted)
                     {
-                        // ToDo: Log!
+                        this.PlayerLogManager?.Error("Error when dropping files on player: " + t.Exception!.Message);
                     }
 
                     this.PlaylistLoading = false;

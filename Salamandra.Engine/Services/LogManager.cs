@@ -41,7 +41,7 @@ namespace Salamandra.Engine.Services
             this.Logger?.Information(message, propertyValues);
         }
 
-        public void Exception(string message, Exception? exception = null, params object[] propertyValues)
+        public void Error(string message, Exception? exception = null, params object[] propertyValues)
         {
             this.Logger?.Error(exception, message, propertyValues);
         }

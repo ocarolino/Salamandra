@@ -100,6 +100,7 @@ namespace Salamandra.ViewModel
         public ICommand? OpenPreListenCommand { get; set; }
         public ICommand? SelectedAsNextTrackCommand { get; set; }
         public ICommand? VolumeControlValueChangedCommand { get; set; }
+        public ICommand? VolumeMutedChangedCommand { get; set; }
         public ICommand? TogglePlayPauseCommand { get; set; }
         public ICommand? SeekBarDragStartedCommand { get; set; }
         public ICommand? SeekBarDragCompletedCommand { get; set; }
@@ -351,6 +352,7 @@ namespace Salamandra.ViewModel
             this.SelectedAsNextTrackCommand = new RelayCommand(p => SetSelectedAsNextTrack(), p => this.SelectedTrack != null);
 
             this.VolumeControlValueChangedCommand = new RelayCommand(p => VolumeControlValueChanged(), p => true);
+            this.VolumeMutedChangedCommand = new RelayCommand(p => VolumeMutedChanged(), p => true);
 
             this.TogglePlayPauseCommand = new RelayCommand(p => TogglePlayPause(), p => this.IsPlaying);
 
@@ -694,10 +696,33 @@ namespace Salamandra.ViewModel
                 this.PlaylistManager.NextTrack = this.SelectedTrack;
         }
 
-        private void VolumeControlValueChanged()
+        private void VolumeControlValueChanged(bool userChanged = true)
         {
             if (this.IsPlaying)
                 this.SoundEngine.Volume = this.CurrentVolume;
+
+            if (!userChanged)
+                return;
+
+            if (this.CurrentVolume > 0)
+                this.VolumeMuted = false;
+            else
+                this.VolumeMuted = true;
+        }
+
+        private void VolumeMutedChanged()
+        {
+            if (this.VolumeMuted)
+            {
+                this.PreviousVolume = this.CurrentVolume;
+                this.CurrentVolume = 0;
+            }
+            else
+            {
+                this.CurrentVolume = this.PreviousVolume;
+            }
+
+            this.VolumeControlValueChanged(false);
         }
 
         private void TogglePlayPause()

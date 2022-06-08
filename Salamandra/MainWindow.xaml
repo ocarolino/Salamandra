@@ -255,6 +255,16 @@
                             </Style>
                         </Image.Style>
                     </Image>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding VolumeMutedChangedCommand}"/>
+                        </i:EventTrigger>
+
+                        <i:EventTrigger EventName="Unchecked">
+                            <i:InvokeCommandAction Command="{Binding VolumeMutedChangedCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </ToggleButton>
 
 

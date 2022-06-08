@@ -240,8 +240,24 @@
             </ComboBox>
 
             <StackPanel Orientation="Horizontal" Grid.Column="6" Margin="8 0 0 0">
-                <Image Source="/Images/Icons/Player/volume_up.png" VerticalAlignment="Center" HorizontalAlignment="Center"
-                       RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
+                <ToggleButton Padding="4" Margin="4 0 0 0" IsChecked="{Binding VolumeMuted}"
+                                Style="{StaticResource FlatToggleButtonStyle}">
+                    <Image VerticalAlignment="Center" HorizontalAlignment="Center"
+                           RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24">
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Setter Property="Source" Value="/Images/Icons/Player/volume.png" />
+                                <Style.Triggers>
+                                    <DataTrigger Value="True" Binding="{Binding VolumeMuted}">
+                                        <Setter Property="Source" Value="/Images/Icons/Player/volume_off.png"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </ToggleButton>
+
+
 
                 <controls:ExtendedSlider Value="{Binding CurrentVolume}" x:Name="VolumeControl" 
                                          Width="128" VerticalAlignment="Center" Margin="8 0 0 0"

@@ -461,7 +461,7 @@ namespace Salamandra.ViewModel
                 }
             }
 
-            this.PlayerLogManager?.Information("Starting player.");
+            this.PlayerLogManager?.Information("Player: Starting playback");
 
             PlayTrack(track!, !startWithEvent);
         }
@@ -493,10 +493,6 @@ namespace Salamandra.ViewModel
             catch (SoundEngineDeviceException soundEngineDeviceException)
             {
                 this.StopPlaybackWithError(soundEngineDeviceException);
-
-                if (logFile)
-                    this.PlayerLogManager?.Error("Device error: " + soundEngineDeviceException.Message);
-
             }
             catch (Exception ex)
             {
@@ -706,12 +702,14 @@ namespace Salamandra.ViewModel
 
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TrackDisplayName)));
 
-            this.PlayerLogManager?.Information("Stopping player.");
+            this.PlayerLogManager?.Information("Player: Stopping playback");
         }
 
         private void StopPlaybackWithError(Exception ex)
         {
             this.StopPlayback();
+
+            this.PlayerLogManager?.Fatal("Device error: " + ex.Message);
 
             MessageBox.Show(
                 String.Format("Houve um erro no dispositivo de áudio que forçou a parada da reprodução.\n\nErro: {0}", ex.Message),
@@ -1072,13 +1070,11 @@ namespace Salamandra.ViewModel
             {
                 this.PlaybackState = PlaylistState.WaitingNextTrack;
 
-                this.PlayerLogManager?.Error("Error during playback of last file: " + e.SoundErrorException.Message);
+                this.PlayerLogManager?.Fatal("Error during playback of last file: " + e.SoundErrorException.Message);
             }
             else
             {
                 this.StopPlaybackWithError(e.SoundErrorException!);
-
-                this.PlayerLogManager?.Error("Device error: " + e.SoundErrorException!.Message);
             }
         }
 

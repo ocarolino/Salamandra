@@ -46,6 +46,11 @@ namespace Salamandra.Engine.Services
             this.Logger?.Error(exception, message, propertyValues);
         }
 
+        public void Fatal(string message, Exception? exception = null, params object[] propertyValues)
+        {
+            this.Logger?.Fatal(message, exception, propertyValues);
+        }
+
         public void Dispose()
         {
             if (this.Logger != null)

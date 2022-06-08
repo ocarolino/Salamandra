@@ -8,9 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Salamandra.ViewModel
@@ -50,6 +52,23 @@ namespace Salamandra.ViewModel
             }
 
             this.OutputDevices = new ObservableCollection<SoundOutputDevice>(this.soundEngine.EnumerateDevices());
+        }
+
+        public bool Validate()
+        {
+            if (this.Settings!.LoggingSettings.EnableLogging)
+            {
+                if (String.IsNullOrWhiteSpace(this.Settings.LoggingSettings.LoggingOutputPath) ||
+                    !Directory.Exists(this.Settings.LoggingSettings.LoggingOutputPath))
+                {
+                    MessageBox.Show("Para gerar os registros é necessário escolher um diretório válido.", "Eventos",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public void Closing()

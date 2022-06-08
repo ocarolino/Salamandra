@@ -40,12 +40,14 @@ namespace Salamandra.Views
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
-            this.Close();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            this.settingsViewModel.Closing();
+            e.Cancel = !this.settingsViewModel.Validate();
+
+            if (!e.Cancel)
+                this.settingsViewModel.Closing();
         }
     }
 }

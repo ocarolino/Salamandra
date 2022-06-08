@@ -13,6 +13,7 @@ namespace Salamandra.Engine.Domain.Settings
         public DeviceSettings DeviceSettings { get; set; }
         public PlayerSettings PlayerSettings { get; set; }
         public ScheduledEventSettings ScheduledEventSettings { get; set; }
+        public LoggingSettings LoggingSettings { get; set; }
 
         public ApplicationSettings()
         {
@@ -20,6 +21,7 @@ namespace Salamandra.Engine.Domain.Settings
             this.DeviceSettings = new DeviceSettings();
             this.PlayerSettings = new PlayerSettings();
             this.ScheduledEventSettings = new ScheduledEventSettings();
+            this.LoggingSettings = new LoggingSettings();
         }
 
 #pragma warning disable 67

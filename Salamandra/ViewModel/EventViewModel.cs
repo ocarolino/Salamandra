@@ -33,6 +33,7 @@ namespace Salamandra.ViewModel
         public ICommand ComboTrackTypeChangedCommand { get; set; }
         public ICommand ValidateAndCloseCommand { get; set; }
         public ICommand OpenPreListenCommand { get; set; }
+        public ICommand ImmediateChangedCommand { get; set; }
 
         public Action<bool>? CloseWindow { get; set; }
 
@@ -57,6 +58,8 @@ namespace Salamandra.ViewModel
             this.OpenPathDialogCommand = new RelayCommand(p => OpenPathDialog(), p => this.EventRequiresPath);
             this.ComboTrackTypeChangedCommand = new RelayCommand(p => ComboTrackTypeChanged());
             this.ValidateAndCloseCommand = new RelayCommand(p => ValidateAndClose());
+
+            this.ImmediateChangedCommand = new RelayCommand(p => ImmediateChanged());
 
             this.OpenPreListenCommand = new RelayCommand(p => OpenPreListen(),
                 p => this.ScheduledEvent.TrackScheduleType == TrackScheduleType.FileTrack && !String.IsNullOrEmpty(this.ScheduledEvent.Filename));
@@ -116,6 +119,12 @@ namespace Salamandra.ViewModel
             this.ScheduledEvent.Filename = String.Empty;
 
             UpdateEventRequiresPath();
+        }
+
+        private void ImmediateChanged()
+        {
+            if (this.ScheduledEvent.Immediate)
+                this.ScheduledEvent.UseMaximumWait = false;
         }
 
         private void UpdateEventRequiresPath()

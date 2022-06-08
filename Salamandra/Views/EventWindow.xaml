@@ -14,6 +14,7 @@
         Loaded="Window_Loaded">
     <Window.Resources>
         <converters:DayOfWeekStringConverter x:Key="DayOfWeekStringConverter"/>
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
     </Window.Resources>
     <Grid Margin="8">
         <Grid.RowDefinitions>
@@ -42,7 +43,17 @@
                                      Grid.Column="1" Margin="8 0 0 0" MinWidth="150"/>
 
                         <CheckBox Grid.Column="2" Content="Imediato" IsChecked="{Binding ScheduledEvent.Immediate}"
-                              Margin="8 0 0 0" VerticalAlignment="Center"/>
+                              Margin="8 0 0 0" VerticalAlignment="Center">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Checked">
+                                    <i:InvokeCommandAction Command="{Binding ImmediateChangedCommand}"/>
+                                </i:EventTrigger>
+
+                                <i:EventTrigger EventName="Unchecked">
+                                    <i:InvokeCommandAction Command="{Binding ImmediateChangedCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
                     </Grid>
 
                     <CheckBox IsChecked="{Binding ScheduledEvent.UseExpirationDateTime}"
@@ -141,7 +152,7 @@
             </GroupBox>
 
             <GroupBox Header="Espera Máxima" Margin="0 8 0 0">
-                <StackPanel Margin="4">
+                <StackPanel Margin="4" IsEnabled="{Binding ScheduledEvent.Immediate, Converter={StaticResource InverseBooleanConverter}}">
                     <CheckBox IsChecked="{Binding ScheduledEvent.UseMaximumWait}" Content="Utilizar Espera Máxima"/>
 
                     <Grid Margin="0 8 0 0">

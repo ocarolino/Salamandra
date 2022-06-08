@@ -338,7 +338,7 @@ namespace Salamandra.ViewModel
         private void SaveSettings()
         {
             this.ApplicationSettings.PlayerSettings.PlaylistMode = this.PlaylistManager.PlaylistMode;
-            this.ApplicationSettings.PlayerSettings.Volume = this.CurrentVolume;
+            this.ApplicationSettings.PlayerSettings.Volume = this.VolumeMuted ? this.PreviousVolume : this.CurrentVolume;
             this.ApplicationSettings.PlayerSettings.LastPlaylist = this.PlaylistManager.Filename;
             this.ApplicationSettings.PlayerSettings.EnableDeleteMode = this.EnableDeleteMode;
 

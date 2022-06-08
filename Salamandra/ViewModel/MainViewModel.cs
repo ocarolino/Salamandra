@@ -88,6 +88,8 @@ namespace Salamandra.ViewModel
         public bool EnableLoopMode { get; set; }
         public bool EnableDeleteMode { get; set; }
 
+        public LogManager? PlayerLogManager { get; set; }
+
         #region Commands Properties
         public ICommand? AddFilesToPlaylistCommand { get; set; }
         public ICommand? AddPlaylistTrackCommand { get; set; }
@@ -198,6 +200,7 @@ namespace Salamandra.ViewModel
         public async Task Loading()
         {
             LoadSettingsFile();
+            LoadPlayerLogger(this.ApplicationSettings.LoggingSettings);
             ApplySettings();
             await ApplyStartupSettings();
             LoadEventsFile();
@@ -224,7 +227,18 @@ namespace Salamandra.ViewModel
             }
             catch (Exception)
             {
-                // ToDo: Log ou mensagem!
+                // ToDo: Log ou mensagem! Um log separado para o player e outro para coisas tipo essa.
+            }
+        }
+
+        private void LoadPlayerLogger(LoggingSettings loggingSettings)
+        {
+            this.PlayerLogManager = null;
+
+            if (loggingSettings.EnableLogging && !String.IsNullOrWhiteSpace(loggingSettings.LoggingOutputPath))
+            {
+                this.PlayerLogManager = new LogManager(loggingSettings.LoggingOutputPath.EnsureHasDirectorySeparatorChar());
+                this.PlayerLogManager.InitializeLog();
             }
         }
 
@@ -442,10 +456,12 @@ namespace Salamandra.ViewModel
                 }
             }
 
+            this.PlayerLogManager?.Information("Starting player.");
+
             PlayTrack(track!, !startWithEvent);
         }
 
-        private void PlayAudioFile(string filename)
+        private void PlayAudioFile(string filename, bool logFile = true)
         {
             try
             {
@@ -457,18 +473,32 @@ namespace Salamandra.ViewModel
                 this.CalculateEndingTimeOfDay(false);
 
                 this.AllowSeekDrag = true;
+
+                if (logFile)
+                    this.PlayerLogManager?.Information("Playing: {filename}", filename);
             }
-            catch (SoundEngineFileException)
+            catch (SoundEngineFileException soundEngineFileException)
             {
                 this.PlaybackState = PlaylistState.WaitingNextTrack;
+
+                if (logFile)
+                    this.PlayerLogManager?.Exception(soundEngineFileException.Message + ": {filename}",
+                        propertyValues: filename);
             }
-            catch (SoundEngineDeviceException ex)
+            catch (SoundEngineDeviceException soundEngineDeviceException)
             {
-                this.StopPlaybackWithError(ex);
+                this.StopPlaybackWithError(soundEngineDeviceException);
+
+                if (logFile)
+                    this.PlayerLogManager?.Exception("Device error: " + soundEngineDeviceException.Message);
+
             }
             catch (Exception ex)
             {
                 this.StopPlaybackWithError(ex);
+
+                if (logFile)
+                    this.PlayerLogManager?.Exception("Unknown error: " + ex.Message);
             }
         }
 
@@ -501,7 +531,9 @@ namespace Salamandra.ViewModel
                     if (rotationTrack is SequentialTrack sequentialTrack && resetSequence)
                     {
                         if (sequentialTrack is TimeAnnouncementTrack timeAnnouncementTrack)
+                        {
                             timeAnnouncementTrack.AudioFilesDirectory = this.ApplicationSettings.GeneralSettings.TimeAnnouncementFilesPath;
+                        }
 
                         sequentialTrack.ResetSequence();
                     }
@@ -666,6 +698,8 @@ namespace Salamandra.ViewModel
                 this.PlaylistManager.UpdateNextTrack(); // ToDo: Quando houver manual.
 
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TrackDisplayName)));
+
+            this.PlayerLogManager?.Information("Stopping player.");
         }
 
         private void StopPlaybackWithError(Exception ex)
@@ -1020,9 +1054,17 @@ namespace Salamandra.ViewModel
         private void SoundEngine_SoundError(object? sender, Engine.Events.SoundErrorEventArgs e)
         {
             if (e.SoundErrorException is SoundEngineFileException)
+            {
                 this.PlaybackState = PlaylistState.WaitingNextTrack;
+
+                this.PlayerLogManager?.Exception("Error during playback of last file: " + e.SoundErrorException.Message);
+            }
             else
+            {
                 this.StopPlaybackWithError(e.SoundErrorException!);
+
+                this.PlayerLogManager?.Exception("Device error: " + e.SoundErrorException!.Message);
+            }
         }
 
         private void CalculateEndingTimeOfDay(bool useRemainingTime = true)

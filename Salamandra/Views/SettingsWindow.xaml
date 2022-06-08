@@ -38,7 +38,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBox Text="{Binding Settings.GeneralSettings.TimeAnnouncementFilesPath}"
-                                 Grid.Column="0" Height="24"/>
+                                 Grid.Column="0" Height="24" VerticalContentAlignment="Center"/>
 
                         <Button Command="{Binding OpenTimePathDialogCommand}" Content="..."
                                 Grid.Column="1" Width="30" Height="24" Margin="4 0 0 0"/>
@@ -55,6 +55,31 @@
                     <TextBlock Text="Dispositivo de Saída de Pré Escuta" Margin="0 8 0 0"/>
                     <ComboBox Margin="0 4 0 0" ItemsSource="{Binding OutputDevices}" SelectedValuePath="DeviceIndex" DisplayMemberPath="Name"
                           SelectedValue="{Binding Settings.DeviceSettings.PreListenOutputDevice}" />
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Registro">
+                <StackPanel Margin="8">
+                    <TextBlock Text="Os registros são arquivos de texto que informam sobre a atividade do player diariamente, além de erros de arquivos ou dispositivos."
+                               TextWrapping="Wrap"/>
+
+                    <CheckBox Content="Ativar registros" Margin="0 8 0 0"
+                          IsChecked="{Binding Settings.LoggingSettings.EnableLogging}" />
+
+                    <TextBlock Text="Caminho para armazenar arquivos de registro" FontWeight="Bold" Margin="0 8 0 0"/>
+
+                    <Grid Margin="0 4 0 0" IsEnabled="{Binding Settings.LoggingSettings.EnableLogging}">
+                        <Grid.ColumnDefinitions >
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Text="{Binding Settings.LoggingSettings.LoggingOutputPath}"
+                                 Grid.Column="0" Height="24" VerticalContentAlignment="Center"/>
+
+                        <Button Command="{Binding OpenLogsPathDialogCommand}" Content="..."
+                                Grid.Column="1" Width="30" Height="24" Margin="4 0 0 0"/>
+                    </Grid>
                 </StackPanel>
             </TabItem>
         </TabControl>

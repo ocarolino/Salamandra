@@ -24,6 +24,7 @@ namespace Salamandra.ViewModel
         public ObservableCollection<SoundOutputDevice> OutputDevices { get; set; }
 
         public ICommand? OpenTimePathDialogCommand { get; set; }
+        public ICommand? OpenLogsPathDialogCommand { get; set; }
 
         public SettingsViewModel(ApplicationSettings applicationSettings, SoundEngine soundEngine)
         {
@@ -33,6 +34,7 @@ namespace Salamandra.ViewModel
             this.OutputDevices = new ObservableCollection<SoundOutputDevice>();
 
             this.OpenTimePathDialogCommand = new RelayCommand(p => OpenTimePathDialog());
+            this.OpenLogsPathDialogCommand = new RelayCommand(p => OpenLogsPathDialog());
         }
 
         public void Loading()
@@ -66,6 +68,15 @@ namespace Salamandra.ViewModel
             if (vistaFolderBrowserDialog.ShowDialog() == true)
                 this.Settings!.GeneralSettings.TimeAnnouncementFilesPath = vistaFolderBrowserDialog.SelectedPath;
         }
+
+        private void OpenLogsPathDialog()
+        {
+            Ookii.Dialogs.Wpf.VistaFolderBrowserDialog vistaFolderBrowserDialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog();
+
+            if (vistaFolderBrowserDialog.ShowDialog() == true)
+                this.Settings!.LoggingSettings.LoggingOutputPath = vistaFolderBrowserDialog.SelectedPath;
+        }
+
 
 #pragma warning disable 67
         public event PropertyChangedEventHandler? PropertyChanged;

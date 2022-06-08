@@ -116,6 +116,8 @@ namespace Salamandra.Engine.Services
         #region Add and Remove Tracks
         public void AddTracks(List<BaseTrack> tracks, int index = -1)
         {
+            int oldTrackCount = this.Tracks.Count;
+
             if (index >= this.Tracks.Count)
                 index = -1;
 
@@ -130,7 +132,7 @@ namespace Salamandra.Engine.Services
                     this.Tracks.Add(item);
             }
 
-            if (this.NextTrack == null)
+            if (this.NextTrack == null || oldTrackCount == 1)
                 UpdateNextTrack();
 
             this.Modified = true;

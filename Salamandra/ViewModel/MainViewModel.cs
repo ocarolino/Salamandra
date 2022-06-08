@@ -37,7 +37,8 @@ namespace Salamandra.ViewModel
         public bool IsPaused { get; set; }
         public bool StopAfterCurrentTrack { get; set; }
         public float CurrentVolume { get; set; }
-
+        public float PreviousVolume { get; set; }
+        public bool VolumeMuted { get; set; }
         public bool AllowSeekDrag { get; set; }
 
         private bool isDraggingTrackPosition;

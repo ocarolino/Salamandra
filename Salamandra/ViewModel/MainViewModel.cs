@@ -261,12 +261,14 @@ namespace Salamandra.ViewModel
                 !String.IsNullOrWhiteSpace(this.ApplicationSettings.PlayerSettings.LastPlaylist) &&
                 File.Exists(this.ApplicationSettings.PlayerSettings.LastPlaylist))
             {
+                string filename = this.ApplicationSettings.PlayerSettings.LastPlaylist;
+
                 try
                 {
-                    await this.PlaylistManager.LoadPlaylist(this.ApplicationSettings.PlayerSettings.LastPlaylist);
-                    UpdateWindowTitle();
 
-                    // ToDo: Tornar genérico esse loadplaylist para sempre atualizar o título
+                    this.PlayerLogManager?.Information("Loading playlist: " + filename);
+
+                    await this.PlaylistManager.LoadPlaylist(filename);
 
                     if (this.ApplicationSettings.PlayerSettings.ShufflePlaylistOnStartup)
                     {
@@ -274,10 +276,13 @@ namespace Salamandra.ViewModel
                         this.PlaylistManager.UpdateNextTrack();
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    // ToDo: Log/Notification!
+                    this.PlayerLogManager?.Exception(ex.Message + " - Playlist:" + filename);
                 }
+
+                // ToDo: Tornar genérico esse loadplaylist para sempre atualizar o título
+                UpdateWindowTitle();
             }
 
             if (this.ApplicationSettings.PlayerSettings.KeepDeleteModeLastState &&
@@ -581,15 +586,17 @@ namespace Salamandra.ViewModel
                     this.PlaylistLoading = true;
                     this.PlaylistInfoText = "Carregando playlist...";
 
+                    this.PlayerLogManager?.Information("Loading playlist: " + playlistFileTrack.Filename);
+
                     var task = this.PlaylistManager.LoadPlaylist(playlistFileTrack.Filename);
 
                     task.ContinueWith(t =>
                     {
                         if (t.IsFaulted)
                         {
-                            ResetPlaylist();
+                            this.PlayerLogManager?.Exception(t.Exception!.Message + " - Playlist:" + playlistFileTrack.Filename);
 
-                            // ToDo: Log!
+                            ResetPlaylist();
                         }
 
                         // Maybe an event has started playing when loading a big playlist, so we check just to be safe.
@@ -825,22 +832,30 @@ namespace Salamandra.ViewModel
 
                 try
                 {
+                    this.PlayerLogManager?.Information("Loading playlist: " + openFileDialog.FileName);
+
                     await this.PlaylistManager.LoadPlaylist(openFileDialog.FileName);
                 }
                 catch (PlaylistLoaderException ex)
                 {
                     MessageBox.Show(String.Format("Houve um erro ao processar a playlist.\n\n{0}", ex.Message),
                         "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    this.PlayerLogManager?.Exception(ex.Message + " - Playlist:" + openFileDialog.FileName);
                 }
                 catch (IOException ex)
                 {
                     MessageBox.Show(String.Format("Houve um erro de acesso ao arquivo.\n\n{0}", ex.Message),
                         "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    this.PlayerLogManager?.Exception(ex.Message + " - Playlist:" + openFileDialog.FileName);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(String.Format("Houve um erro ao abrir a playlist.\n\n{0}", ex.Message),
                         "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    this.PlayerLogManager?.Exception(ex.Message + " - Playlist:" + openFileDialog.FileName);
                 }
 
                 UpdateWindowTitle();

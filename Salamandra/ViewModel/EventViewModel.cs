@@ -173,12 +173,20 @@ namespace Salamandra.ViewModel
                 return;
             }
 
+            if (this.ScheduledEvent.UseMaximumWait && this.ScheduledEvent.MaximumWaitTime <= TimeSpan.Zero)
+            {
+                MessageBox.Show("Um evento com espera máxima deve ter o tempo de espera maior que zero.", "Eventos",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             if (this.ScheduledEvent.TrackScheduleType == TrackScheduleType.StartPlaylistTrack &&
-                !this.ScheduledEvent.Immediate)
+    !this.ScheduledEvent.Immediate)
             {
                 MessageBox.Show("Um evento de iniciar a playlist que não seja imediato pode não ter o efeito desejado.", "Eventos",
                     MessageBoxButton.OK, MessageBoxImage.Information);
             }
+
 
             PrepareFriendlyName();
             UpdateTimestamps();

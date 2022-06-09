@@ -45,7 +45,7 @@ namespace Salamandra.Engine.Services
             this.Filename = string.Empty;
         }
 
-        public void UpdateNextTrack()
+        public void UpdateNextTrack(bool ignoreManualMode = false)
         {
             if (this.Tracks.Count == 0)
             {
@@ -58,7 +58,12 @@ namespace Salamandra.Engine.Services
             if (this.CurrentTrack != null)
                 nextTrackIndex = this.Tracks.IndexOf(this.CurrentTrack) + 1;
 
-            switch (this.PlaylistMode)
+            var mode = this.PlaylistMode;
+
+            if (ignoreManualMode && mode == PlaylistMode.Manual)
+                mode = PlaylistMode.Repeat;
+
+            switch (mode)
             {
                 case PlaylistMode.Default:
                 case PlaylistMode.Repeat:

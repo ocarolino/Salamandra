@@ -273,7 +273,7 @@ namespace Salamandra.ViewModel
                     if (this.ApplicationSettings.PlayerSettings.ShufflePlaylistOnStartup)
                     {
                         this.PlaylistManager.ShufflePlaylist();
-                        this.PlaylistManager.UpdateNextTrack();
+                        this.PlaylistManager.UpdateNextTrack(true);
                     }
                 }
                 catch (Exception ex)
@@ -681,7 +681,11 @@ namespace Salamandra.ViewModel
             this.PlaybackState = PlaylistState.Stopped;
             this.SoundEngine.Stop();
 
+            if (this.PlaylistManager.NextTrack == null)
+                this.PlaylistManager.UpdateNextTrack(true);
+
             this.PlaylistManager.CurrentTrack = null;
+
             this.CurrentTrackFilename = null;
             this.TrackLengthInSeconds = 0;
             this.TrackPositionInSeconds = 0;
@@ -690,9 +694,6 @@ namespace Salamandra.ViewModel
             this.AllowSeekDrag = false;
 
             this.IsEventPlaying = false;
-
-            if (this.PlaylistManager.NextTrack == null)
-                this.PlaylistManager.UpdateNextTrack(); // ToDo: Quando houver manual.
 
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TrackDisplayName)));
 
@@ -848,6 +849,9 @@ namespace Salamandra.ViewModel
 
                     this.PlayerLogManager?.Error(ex.Message + " - Playlist:" + openFileDialog.FileName);
                 }
+
+                if (this.PlaybackState == PlaylistState.Stopped && this.PlaylistManager.PlaylistMode == PlaylistMode.Manual)
+                    this.PlaylistManager.UpdateNextTrack(true);
 
                 RefreshWindowTitle();
                 SetPlaylistLoading(false);

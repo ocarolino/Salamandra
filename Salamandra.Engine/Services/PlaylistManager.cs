@@ -305,13 +305,12 @@ namespace Salamandra.Engine.Services
                     track = new PlayerCommandTrack(PlayerCommandType.Stop);
                 else if (item.Filename.EndsWith(".dir"))
                 {
-                    // ToDo: Validate if it is a valid path!
                     string dir = item.Filename.Substring(0, item.Filename.Length - 4);
 
                     track = new RandomFileTrack()
                     {
                         Filename = dir.EnsureHasDirectorySeparatorChar(),
-                        FriendlyName = Path.GetFileName(dir)
+                        FriendlyName = Path.GetFileName(dir.TrimEnd('\\'))
                     };
                 }
                 else

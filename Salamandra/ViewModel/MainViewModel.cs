@@ -159,7 +159,7 @@ namespace Salamandra.ViewModel
 
             this.DirectoryAudioScanner = new DirectoryAudioScanner();
 
-            UpdateWindowTitle();
+            RefreshWindowTitle();
             LoadCommands();
 
             this.SoundEngine.EnumerateDevices();
@@ -282,7 +282,7 @@ namespace Salamandra.ViewModel
                 }
 
                 // ToDo: Tornar genérico esse loadplaylist para sempre atualizar o título
-                UpdateWindowTitle();
+                RefreshWindowTitle();
             }
 
             if (this.ApplicationSettings.PlayerSettings.KeepDeleteModeLastState &&
@@ -402,8 +402,7 @@ namespace Salamandra.ViewModel
 
         private async Task AddFilesToPlaylist()
         {
-            this.PlaylistLoading = true;
-            this.PlaylistInfoText = "Adicionando arquivos a playlist...";
+            SetPlaylistLoading(true, "Adicionando arquivos a playlist...");
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Arquivos de áudio (*.wav, *.mp3, *.wma, *.ogg, *.flac) | *.wav; *.mp3; *.wma; *.ogg; *.flac";
@@ -413,8 +412,7 @@ namespace Salamandra.ViewModel
                 await this.PlaylistManager.AddFiles(openFileDialog.FileNames.ToList(),
                     this.PlaylistManager.Tracks.IndexOf(this.SelectedTrack!));
 
-            this.PlaylistLoading = false;
-            this.PlaylistInfoText = string.Empty;
+            SetPlaylistLoading(false);
         }
 
         private void AddPlaylistTrack()
@@ -579,8 +577,7 @@ namespace Salamandra.ViewModel
                     }
                     break;
                 case PlaylistFileTrack playlistFileTrack:
-                    this.PlaylistLoading = true;
-                    this.PlaylistInfoText = "Carregando playlist...";
+                    SetPlaylistLoading(true, "Carregando playlist...");
 
                     this.PlayerLogManager?.Information("Loading playlist: " + playlistFileTrack.Filename);
 
@@ -599,11 +596,8 @@ namespace Salamandra.ViewModel
                         if (this.PlaylistManager.CurrentTrack == playlistFileTrack)
                             this.PlaybackState = PlaylistState.WaitingNextTrack;
 
-                        UpdateWindowTitle();
-                        // ToDo: Tornar genérico esse loadplaylist para sempre atualizar o título
-
-                        this.PlaylistLoading = false;
-                        this.PlaylistInfoText = String.Empty;
+                        RefreshWindowTitle();
+                        SetPlaylistLoading(false);
                     }, TaskScheduler.FromCurrentSynchronizationContext());
                     break;
                 default:
@@ -825,8 +819,7 @@ namespace Salamandra.ViewModel
 
             if (openFileDialog.ShowDialog() == true)
             {
-                this.PlaylistLoading = true;
-                this.PlaylistInfoText = "Carregando playlist...";
+                SetPlaylistLoading(true, "Carregando playlist...");
 
                 try
                 {
@@ -856,10 +849,8 @@ namespace Salamandra.ViewModel
                     this.PlayerLogManager?.Error(ex.Message + " - Playlist:" + openFileDialog.FileName);
                 }
 
-                UpdateWindowTitle();
-
-                this.PlaylistLoading = false;
-                this.PlaylistInfoText = string.Empty;
+                RefreshWindowTitle();
+                SetPlaylistLoading(false);
 
                 this.RemovePlaylistAdorner?.Invoke();
             }
@@ -895,7 +886,7 @@ namespace Salamandra.ViewModel
                     "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            UpdateWindowTitle();
+            RefreshWindowTitle();
         }
 
         private void NewPlaylist()
@@ -903,7 +894,7 @@ namespace Salamandra.ViewModel
             if (CheckPlaylistModified())
                 ResetPlaylist();
 
-            UpdateWindowTitle(); // ToDo: Criar um evento PlaylistChanged, que chamará sempre esse método.
+            RefreshWindowTitle(); // ToDo: Criar um evento PlaylistChanged, que chamará sempre esse método.
         }
 
         private void ResetPlaylist()
@@ -928,7 +919,7 @@ namespace Salamandra.ViewModel
             return true;
         }
 
-        private void UpdateWindowTitle()
+        private void RefreshWindowTitle()
         {
             string title = "Sem título";
 
@@ -1184,8 +1175,7 @@ namespace Salamandra.ViewModel
             if (dataObject != null && dataObject.ContainsFileDropList())
             {
                 // ToDo: Tornar esses textos genéricos.
-                this.PlaylistLoading = true;
-                this.PlaylistInfoText = "Adicionando arquivos a playlist...";
+                SetPlaylistLoading(true, "Adicionando arquivos a playlist...");
 
                 var task = this.HandleDropActionAsync(dropInfo, dataObject.GetFileDropList());
 
@@ -1196,8 +1186,7 @@ namespace Salamandra.ViewModel
                         this.PlayerLogManager?.Error("Error when dropping files on player: " + t.Exception!.Message);
                     }
 
-                    this.PlaylistLoading = false;
-                    this.PlaylistInfoText = String.Empty;
+                    SetPlaylistLoading(false);
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }
             else
@@ -1218,6 +1207,20 @@ namespace Salamandra.ViewModel
             this.DirectoryAudioScanner.ScanLibrary();
         }
         #endregion
+
+        private void SetPlaylistLoading(bool loading, string message = "")
+        {
+            if (loading)
+            {
+                this.PlaylistLoading = true;
+                this.PlaylistInfoText = message;
+            }
+            else
+            {
+                this.PlaylistLoading = false;
+                this.PlaylistInfoText = String.Empty;
+            }
+        }
 
 #pragma warning disable 67
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -16,21 +16,10 @@ namespace Salamandra.Engine.Domain.Tracks
             this.CurrentFileIndex = -1;
         }
 
-        // ToDo: Esses métodos fazem mais sentido diretamente na MultiFileTrack, porém vou pensar por hora...
         public override string? GetFile()
         {
             if (this.Filenames.Count == 0)
                 return null;
-
-            /*if (this.CurrentFileIndex == -1)
-                this.CurrentFileIndex++;
-
-            string file = this.Filenames[this.CurrentFileIndex];
-
-            this.CurrentFileIndex++;
-
-            if (this.CurrentFileIndex >= this.Filenames.Count)
-                this.CurrentFileIndex = 0;*/
 
             this.CurrentFileIndex++;
 

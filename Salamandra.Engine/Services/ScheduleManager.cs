@@ -32,8 +32,6 @@ namespace Salamandra.Engine.Services
 
         public void SwapEvents(ObservableCollection<ScheduledEvent> events, bool resetQueue = false)
         {
-            // ToDo: Filename argument!
-            // ToDo: Refresh, reset here!
             this.Events = new List<ScheduledEvent>(events);
 
             if (resetQueue)

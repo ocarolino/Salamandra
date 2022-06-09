@@ -85,7 +85,7 @@ namespace Salamandra.Engine.Services
                         this.NextTrack = this.Tracks[nextTrackIndex];
                     break;
                 case PlaylistMode.Random:
-                    Random random = new Random(); // ToDo: Random singleton.
+                    Random random = new Random();
 
                     // ToDo: Maybe this should be a extension method? So we can share the logic between all kinds of lists.
                     var availableTracks = this.Tracks.Except(this.RandomBlacklist).ToList();

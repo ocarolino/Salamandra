@@ -138,7 +138,6 @@ namespace Salamandra.ViewModel
                     if (this.Events.Count > 0)
                         this.LastEventId = this.Events.Last().Id;
 
-                    // ToDo: Don't really care if the user opened the same file. Maybe it can be changed in the future.
                     this.HasFileChanged = true;
                 }
                 catch (Exception ex)

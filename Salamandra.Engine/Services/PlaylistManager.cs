@@ -318,6 +318,14 @@ namespace Salamandra.Engine.Services
                         FriendlyName = Path.GetFileName(dir.TrimEnd('\\'))
                     };
                 }
+                else if (PlaylistManager.SupportedPlaylistFormats.Any(x => item.Filename.EndsWith(x)))
+                {
+                    track = new PlaylistFileTrack()
+                    {
+                        Filename = item.Filename.NullToEmpty(),
+                        FriendlyName = item.FriendlyName.NullToEmpty(),
+                    };
+                }
                 else
                 {
                     track = new AudioFileTrack()

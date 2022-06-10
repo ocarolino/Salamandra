@@ -346,12 +346,36 @@
                     <ListView.View>
                         <GridView>
                             <!-- Icon -->
-                            <GridViewColumn Header="Hora" DisplayMemberBinding="{Binding StartDateTime, StringFormat='HH:mm:ss'}"
-                                            Width="60"/>
+                            <GridViewColumn Header="Hora"
+                                            Width="72">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Width="8" Height="8" RenderOptions.BitmapScalingMode="NearestNeighbor">
+                                                <Image.Style>
+                                                    <Style TargetType="{x:Type Image}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding EventPriority}" Value="{x:Static enums:EventPriority.Low}">
+                                                                <Setter Property="Source" Value="/Images/Icons/Events/bullet_green.png"/>
+                                                            </DataTrigger>
+
+                                                            <DataTrigger Binding="{Binding EventPriority}" Value="{x:Static enums:EventPriority.High}">
+                                                                <Setter Property="Source" Value="/Images/Icons/Events/bullet_red.png"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
+                                            
+                                            <TextBlock Text="{Binding StartDateTime, StringFormat='HH:mm:ss'}" Margin="4 0 0 0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Header="Início" DisplayMemberBinding="{converters:SwitchBinding Immediate, Imediato, Espera}"
                                             Width="60"/>
                             <GridViewColumn Header="Evento" DisplayMemberBinding="{Binding Track.FriendlyName}"
-                                            Width="280"/>
+                                            Width="268"/>
                         </GridView>
                     </ListView.View>
                 </ListView>

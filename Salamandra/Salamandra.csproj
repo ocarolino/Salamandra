@@ -10,6 +10,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Images\Icons\Events\arrow_green.png" />
+	  <None Remove="Images\Icons\Events\arrow_red.png" />
+	  <None Remove="Images\Icons\Events\bullet_green.png" />
+	  <None Remove="Images\Icons\Events\bullet_red.png" />
 	  <None Remove="Images\Icons\Player\stop-next.png" />
 	  <None Remove="Images\Icons\Player\volume.png" />
 	  <None Remove="Images\Icons\Player\volume_off.png" />
@@ -50,6 +54,10 @@
 
 	<ItemGroup>
 		<Resource Include="Fonts\FontAwesome.otf" />
+		<Resource Include="Images\Icons\Events\arrow_green.png" />
+		<Resource Include="Images\Icons\Events\arrow_red.png" />
+		<Resource Include="Images\Icons\Events\bullet_green.png" />
+		<Resource Include="Images\Icons\Events\bullet_red.png" />
 		<Resource Include="Images\Icons\Player\autorenew.png" />
 		<Resource Include="Images\Icons\Player\next.png" />
 		<Resource Include="Images\Icons\Player\pause.png" />

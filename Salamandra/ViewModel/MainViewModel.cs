@@ -37,6 +37,7 @@ namespace Salamandra.ViewModel
         public bool IsPlaying { get; set; }
         public bool IsPaused { get; set; }
         public bool StopAfterCurrentTrack { get; set; }
+        private bool isChangingVolumeMutedProgramatically;
         public float CurrentVolume { get; set; }
         public float PreviousVolume { get; set; }
         public bool VolumeMuted { get; set; }
@@ -741,14 +742,21 @@ namespace Salamandra.ViewModel
             if (!userChanged)
                 return;
 
+            this.isChangingVolumeMutedProgramatically = true;
+
             if (this.CurrentVolume > 0)
                 this.VolumeMuted = false;
             else
                 this.VolumeMuted = true;
+
+            this.isChangingVolumeMutedProgramatically = false;
         }
 
         private void VolumeMutedChanged()
         {
+            if (this.isChangingVolumeMutedProgramatically == true)
+                return;
+
             if (this.VolumeMuted)
             {
                 this.PreviousVolume = this.CurrentVolume;
@@ -757,6 +765,9 @@ namespace Salamandra.ViewModel
             else
             {
                 this.CurrentVolume = this.PreviousVolume;
+
+                if (this.CurrentVolume <= 0)
+                    this.CurrentVolume = 1; // ToDo: Max e Min volume
             }
 
             this.VolumeControlValueChanged(false);

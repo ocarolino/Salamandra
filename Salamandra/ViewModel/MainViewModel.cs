@@ -66,6 +66,7 @@ namespace Salamandra.ViewModel
         public ScheduleManager ScheduleManager { get; set; }
         public bool EnableEvents { get; set; }
         public bool IsEventPlaying { get; set; }
+        public EventPriority CurrentEventPriority { get; set; }
 
         public string? CurrentTrackFilename { get; set; }
         public string? TrackDisplayName
@@ -608,6 +609,7 @@ namespace Salamandra.ViewModel
         private void PlayEvent(UpcomingEvent upcomingEvent)
         {
             this.IsEventPlaying = true;
+            this.CurrentEventPriority = upcomingEvent.EventPriority;
 
             PlayTrack(upcomingEvent.Track!, false);
         }

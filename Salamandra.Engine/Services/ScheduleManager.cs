@@ -202,6 +202,7 @@ namespace Salamandra.Engine.Services
             upcomingEvent.QueueOrder = scheduledEvent.QueueOrder;
             upcomingEvent.MaximumWaitTime = scheduledEvent.UseMaximumWait ? scheduledEvent.MaximumWaitTime : null;
             upcomingEvent.MaximumWaitAction = scheduledEvent.MaximumWaitAction;
+            upcomingEvent.EventPriority = scheduledEvent.EventPriority;
             upcomingEvent.Track = scheduledEvent.GetTrack();
 
             this.EventsQueue.Add(upcomingEvent);

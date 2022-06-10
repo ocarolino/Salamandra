@@ -15,6 +15,7 @@ namespace Salamandra.Engine.Domain.Events
         public int QueueOrder { get; set; }
         public TimeSpan? MaximumWaitTime { get; set; }
         public MaximumWaitAction MaximumWaitAction { get; set; }
+        public EventPriority EventPriority { get; set; }
         public BaseTrack? Track { get; set; }
         // ToDo: Maybe we could insert original event here, to avoid duplicating of properties!
     }

@@ -171,7 +171,7 @@ namespace Salamandra.ViewModel
         {
             this.CurrentDateTime = DateTime.Now;
 
-            this.ScheduleManager.UpdateQueuedEventsList();
+            this.ScheduleManager.UpdateQueuedEventsList(this.IsEventPlaying, this.CurrentEventPriority);
             (this.PlayLateEventsCommand as RelayCommand)?.RaiseCanExecuteChanged();
             (this.DiscardLateEventsCommand as RelayCommand)?.RaiseCanExecuteChanged();
 

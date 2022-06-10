@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Salamandra.Engine.Domain;
+using Salamandra.Engine.Domain.Enums;
 using Salamandra.Engine.Domain.Events;
 using Salamandra.Engine.Services.Playlists;
 using System;
@@ -117,7 +118,7 @@ namespace Salamandra.Engine.Services
             return true;
         }
 
-        public void UpdateQueuedEventsList()
+        public void UpdateQueuedEventsList(bool isEventPlaying, EventPriority eventPriority)
         {
             if (DateTime.Now.Hour != this.LastHourChecked)
             {
@@ -134,12 +135,15 @@ namespace Salamandra.Engine.Services
                 return;
             }
 
+            if (isEventPlaying)
+                DiscardLateEventsByPriority(eventPriority);
+
+            DiscardMaximumWaitEvents();
             UpdateLateEvents();
         }
 
         private void UpdateLateEvents()
         {
-            DiscardMaximumWaitEvents();
 
             UpcomingEvent? immediate = GetLateImmediateEvent();
             UpcomingEvent? waiting = GetLateWaitingEvent();
@@ -155,6 +159,14 @@ namespace Salamandra.Engine.Services
                 this.HasLateWaitingEvent = false;
 
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HasLateEvent)));
+        }
+
+        private void DiscardLateEventsByPriority(EventPriority eventPriority)
+        {
+            var lateEvents = this.EventsQueue.Where(x => x.StartDateTime < DateTime.Now && x.EventPriority < eventPriority).ToList();
+
+            for (int i = 0; i < lateEvents.Count; i++)
+                this.EventsQueue.Remove(lateEvents[i]);
         }
 
         private void DiscardMaximumWaitEvents()

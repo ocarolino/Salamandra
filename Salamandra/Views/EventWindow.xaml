@@ -15,6 +15,7 @@
     <Window.Resources>
         <converters:DayOfWeekStringConverter x:Key="DayOfWeekStringConverter"/>
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+        <converters:EnumToBool x:Key="EnumToBool"/>
     </Window.Resources>
     <Grid Margin="8">
         <Grid.RowDefinitions>
@@ -145,9 +146,31 @@
             <GroupBox Header="Ordenação e Prioridade" Margin="0 8 0 0">
                 <StackPanel Margin="4">
                     <TextBlock Text="Ordem do Evento na Fila"/>
-                    <xctk:IntegerUpDown Value="{Binding ScheduledEvent.QueueOrder}"
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <xctk:IntegerUpDown Value="{Binding ScheduledEvent.QueueOrder}"
                                         Increment="1" Minimum="1" Maximum="99"
-                                        Margin="0 4 0 0"/>
+                                        Margin="0 4 0 0" MinWidth="148"/>
+
+
+                        <RadioButton Content="Prioridade Alta" Grid.Column="1" 
+                                     VerticalAlignment="Center" Margin="8 0 0 0"
+                                     IsChecked="{Binding ScheduledEvent.EventPriority,
+                                                 Converter={StaticResource EnumToBool}, 
+                                                ConverterParameter={x:Static enums:EventPriority.High}}"/>
+
+                        <RadioButton Content="Prioridade Baixa" Grid.Column="2" 
+                                     VerticalAlignment="Center" Margin="8 0 0 0"
+                                     IsChecked="{Binding ScheduledEvent.EventPriority,
+                                     Converter={StaticResource EnumToBool}, 
+                                     ConverterParameter={x:Static enums:EventPriority.Low}}"/>
+                    </Grid>
                 </StackPanel>
             </GroupBox>
 

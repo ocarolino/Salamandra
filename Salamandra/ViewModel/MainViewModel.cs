@@ -496,9 +496,6 @@ namespace Salamandra.ViewModel
             catch (Exception ex)
             {
                 this.StopPlaybackWithError(ex);
-
-                if (logFile)
-                    this.PlayerLogManager?.Error("Unknown error: " + ex.Message);
             }
         }
 

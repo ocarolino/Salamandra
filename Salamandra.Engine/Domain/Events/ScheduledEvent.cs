@@ -36,6 +36,7 @@ namespace Salamandra.Engine.Domain.Events
         #endregion
 
         public int QueueOrder { get; set; }
+        public EventPriority EventPriority { get; set; }
 
         #region Maximum Wait
         public bool UseMaximumWait { get; set; }
@@ -59,6 +60,7 @@ namespace Salamandra.Engine.Domain.Events
             this.FriendlyName = String.Empty;
 
             this.QueueOrder = 1;
+            this.EventPriority = EventPriority.Low;
 
             this.MaximumWaitTime = TimeSpan.Zero;
             this.MaximumWaitAction = MaximumWaitAction.Discard;

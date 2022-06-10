@@ -187,7 +187,7 @@
                                  TickFrequency="1" IsSnapToTickEnabled="True" LargeChange="20" SmallChange="5"                                     
                                  DragStartedCommand="{Binding SeekBarDragStartedCommand}" DragCompletedCommand="{Binding SeekBarDragCompletedCommand}"
                                  AutoToolTipPlacement="TopLeft" CustomToolTipContent="{Binding TrackPositionTime, Mode=OneWay, StringFormat={}{0:hh':'mm':'ss}, UpdateSourceTrigger=PropertyChanged}"
-                                 Margin="8 8 8 8"/>
+                                 Margin="8 8 8 8" Style="{StaticResource SliderStyle}"/>
 
         <!-- Controls Grid -->
         <Grid DockPanel.Dock="Bottom" Margin="8 8 8 0">
@@ -267,12 +267,11 @@
                     </i:Interaction.Triggers>
                 </ToggleButton>
 
-
-
                 <controls:ExtendedSlider Value="{Binding CurrentVolume}" x:Name="VolumeControl" 
                                          Width="128" VerticalAlignment="Center" Margin="8 0 0 0"
                                          Minimum="0" Maximum="1" LargeChange="0.2" SmallChange="0.05" 
-                                         TickFrequency="0.1" AutoToolTipPlacement="TopLeft" 
+                                         TickFrequency="0.1" AutoToolTipPlacement="TopLeft"
+                                         Style="{StaticResource SliderStyle}"
                                          CustomToolTipContent="{Binding CurrentVolume, Mode=OneWay, StringFormat={}{0:P0}, UpdateSourceTrigger=PropertyChanged}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
@@ -366,7 +365,7 @@
                                                     </Style>
                                                 </Image.Style>
                                             </Image>
-                                            
+
                                             <TextBlock Text="{Binding StartDateTime, StringFormat='HH:mm:ss'}" Margin="4 0 0 0"/>
                                         </StackPanel>
                                     </DataTemplate>

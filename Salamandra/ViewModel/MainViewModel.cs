@@ -24,6 +24,7 @@ using System.Drawing.Imaging;
 using Salamandra.Engine.Comparer;
 using GongSolutions.Wpf.DragDrop;
 using System.Collections.Specialized;
+using Salamandra.Engine.Domain.Events;
 
 namespace Salamandra.ViewModel
 {
@@ -448,18 +449,18 @@ namespace Salamandra.ViewModel
 
             var track = this.PlaylistManager.NextTrack;
 
+            this.PlayerLogManager?.Information("Player: Starting playback");
+
             if (startWithEvent)
             {
                 var upcomingEvent = this.ScheduleManager.DequeueLateEvent();
 
                 if (upcomingEvent != null)
                 {
-                    track = upcomingEvent.Track;
-                    this.IsEventPlaying = true;
+                    PlayEvent(upcomingEvent);
+                    return;
                 }
             }
-
-            this.PlayerLogManager?.Information("Player: Starting playback");
 
             PlayTrack(track!, !startWithEvent);
         }
@@ -607,6 +608,13 @@ namespace Salamandra.ViewModel
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TrackDisplayName)));
         }
 
+        private void PlayEvent(UpcomingEvent upcomingEvent)
+        {
+            this.IsEventPlaying = true;
+
+            PlayTrack(upcomingEvent.Track!, false);
+        }
+
         private void PlayNextTrackOrStop()
         {
             if (this.EnableDeleteMode)
@@ -615,9 +623,7 @@ namespace Salamandra.ViewModel
             // Do we have to play an immediate event or the user asked to play late events?
             if (this.EnableEvents && this.PlaybackState == PlaylistState.JumpToNextEvent)
             {
-                this.IsEventPlaying = true;
-
-                PlayTrack(this.ScheduleManager.DequeueLateEvent()!.Track!, false);
+                PlayEvent(this.ScheduleManager.DequeueLateEvent()!);
                 return;
             }
 
@@ -641,13 +647,11 @@ namespace Salamandra.ViewModel
             // Do we have a late queued event?
             if (this.EnableEvents && !(this.PlaybackState == PlaylistState.JumpToNextTrack) && this.ScheduleManager.HasLateEvent)
             {
-                var scheduledEvent = this.ScheduleManager.DequeueLateEvent();
+                var upcomingEvent = this.ScheduleManager.DequeueLateEvent();
 
-                if (scheduledEvent != null)
+                if (upcomingEvent != null)
                 {
-                    this.IsEventPlaying = true;
-
-                    PlayTrack(scheduledEvent.Track!, false);
+                    PlayEvent(upcomingEvent);
                     return;
                 }
             }

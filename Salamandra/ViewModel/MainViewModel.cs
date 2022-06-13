@@ -704,9 +704,9 @@ namespace Salamandra.ViewModel
 
         private void StopPlaybackWithError(Exception ex)
         {
-            this.StopPlayback();
+            this.PlayerLogManager?.Fatal(String.Format("{0} ({1})", ex.Message, this.PlaylistManager.CurrentTrack!.FriendlyName), "Device");
 
-            this.PlayerLogManager?.Fatal(ex.Message, "Device");
+            this.StopPlayback();
 
             MessageBox.Show(
                 String.Format("Houve um erro no dispositivo de áudio que forçou a parada da reprodução.\n\nErro: {0}", ex.Message),

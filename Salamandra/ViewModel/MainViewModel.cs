@@ -495,7 +495,10 @@ namespace Salamandra.ViewModel
             }
             catch (Exception ex)
             {
-                this.StopPlaybackWithError(ex);
+                if (ex.Message.ToLowerInvariant().Contains("frame at sample rate"))
+                    this.PlaybackState = PlaylistState.WaitingNextTrack;
+                else
+                    this.StopPlaybackWithError(ex);
             }
         }
 

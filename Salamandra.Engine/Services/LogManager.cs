@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Salamandra.Engine.Extensions;
 using Serilog;
+using Serilog.Context;
 using Serilog.Core;
 
 namespace Salamandra.Engine.Services
@@ -22,10 +23,11 @@ namespace Salamandra.Engine.Services
 
         public void InitializeLog()
         {
-            var outputTemplate = "[{Timestamp:HH:mm:ss.fff} {Level:u3}] {Message:lj}{NewLine}{Exception}";
-            var path = Path.Combine(this.OutputFolder, "PlayerSalamandra-.txt");
+            var outputTemplate = "{Timestamp:HH:mm:ss}\t{Level:u3}\t{ActionContext,-15}\t\t{Message:lj}{NewLine}{Exception}";
+            var path = Path.Combine(this.OutputFolder, "Salamandra Player Log - .txt");
 
             var logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
                 .MinimumLevel.Verbose()
                 .WriteTo.File(path,
                     outputTemplate: outputTemplate,
@@ -36,19 +38,22 @@ namespace Salamandra.Engine.Services
             this.Logger = logger;
         }
 
-        public void Information(string message, params object[] propertyValues)
+        public void Information(string message, string context)
         {
-            this.Logger?.Information(message, propertyValues);
+            using (LogContext.PushProperty("ActionContext", context))
+                this.Logger?.Information(message);
         }
 
-        public void Error(string message, Exception? exception = null, params object[] propertyValues)
+        public void Error(string message, string context, Exception? exception = null)
         {
-            this.Logger?.Error(exception, message, propertyValues);
+            using (LogContext.PushProperty("ActionContext", context))
+                this.Logger?.Error(exception, message);
         }
 
-        public void Fatal(string message, Exception? exception = null, params object[] propertyValues)
+        public void Fatal(string message, string context, Exception? exception = null)
         {
-            this.Logger?.Fatal(message, exception, propertyValues);
+            using (LogContext.PushProperty("ActionContext", context))
+                this.Logger?.Fatal(message, exception);
         }
 
         public void Dispose()

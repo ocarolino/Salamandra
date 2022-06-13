@@ -268,8 +268,7 @@ namespace Salamandra.ViewModel
 
                 try
                 {
-
-                    this.PlayerLogManager?.Information("Loading playlist: " + filename);
+                    this.PlayerLogManager?.Information(filename, "Playlist");
 
                     await this.PlaylistManager.LoadPlaylist(filename);
 
@@ -281,7 +280,7 @@ namespace Salamandra.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    this.PlayerLogManager?.Error(ex.Message + " - Playlist:" + filename);
+                    this.PlayerLogManager?.Error(String.Format("{0} ({1})", ex.Message, filename), "Playlist");
                 }
 
                 // ToDo: Tornar genérico esse loadplaylist para sempre atualizar o título
@@ -451,7 +450,7 @@ namespace Salamandra.ViewModel
 
             var track = this.PlaylistManager.NextTrack;
 
-            this.PlayerLogManager?.Information("Player: Starting playback");
+            this.PlayerLogManager?.Information("Starting Playback", "Player");
 
             if (startWithEvent)
             {
@@ -481,15 +480,14 @@ namespace Salamandra.ViewModel
                 this.AllowSeekDrag = true;
 
                 if (logFile)
-                    this.PlayerLogManager?.Information("Playing: {filename}", filename);
+                    this.PlayerLogManager?.Information(filename, "Player");
             }
             catch (SoundEngineFileException soundEngineFileException)
             {
                 this.PlaybackState = PlaylistState.WaitingNextTrack;
 
                 if (logFile)
-                    this.PlayerLogManager?.Error(soundEngineFileException.Message + ": {filename}",
-                        propertyValues: filename);
+                    this.PlayerLogManager?.Error(String.Format("{0} ({1})", soundEngineFileException.Message, filename), "Player");
             }
             catch (SoundEngineDeviceException soundEngineDeviceException)
             {
@@ -579,7 +577,7 @@ namespace Salamandra.ViewModel
                 case PlaylistFileTrack playlistFileTrack:
                     SetPlaylistLoading(true, "Carregando playlist...");
 
-                    this.PlayerLogManager?.Information("Loading playlist: " + playlistFileTrack.Filename);
+                    this.PlayerLogManager?.Information(playlistFileTrack.Filename, "Playlist");
 
                     var task = this.PlaylistManager.LoadPlaylist(playlistFileTrack.Filename);
 
@@ -587,7 +585,7 @@ namespace Salamandra.ViewModel
                     {
                         if (t.IsFaulted)
                         {
-                            this.PlayerLogManager?.Error(t.Exception!.Message + " - Playlist:" + playlistFileTrack.Filename);
+                            this.PlayerLogManager?.Error(String.Format("{0} ({1})", t.Exception!.Message, playlistFileTrack.Filename), "Playlist");
 
                             ResetPlaylist();
                         }
@@ -701,14 +699,14 @@ namespace Salamandra.ViewModel
 
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TrackDisplayName)));
 
-            this.PlayerLogManager?.Information("Player: Stopping playback");
+            this.PlayerLogManager?.Information("Stopping Playback", "Player");
         }
 
         private void StopPlaybackWithError(Exception ex)
         {
             this.StopPlayback();
 
-            this.PlayerLogManager?.Fatal("Device error: " + ex.Message);
+            this.PlayerLogManager?.Fatal(ex.Message, "Device");
 
             MessageBox.Show(
                 String.Format("Houve um erro no dispositivo de áudio que forçou a parada da reprodução.\n\nErro: {0}", ex.Message),
@@ -838,7 +836,7 @@ namespace Salamandra.ViewModel
 
                 try
                 {
-                    this.PlayerLogManager?.Information("Loading playlist: " + openFileDialog.FileName);
+                    this.PlayerLogManager?.Information(openFileDialog.FileName, "Playlist");
 
                     await this.PlaylistManager.LoadPlaylist(openFileDialog.FileName);
                 }
@@ -847,21 +845,21 @@ namespace Salamandra.ViewModel
                     MessageBox.Show(String.Format("Houve um erro ao processar a playlist.\n\n{0}", ex.Message),
                         "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                    this.PlayerLogManager?.Error(ex.Message + " - Playlist:" + openFileDialog.FileName);
+                    this.PlayerLogManager?.Error(String.Format("{0} ({1})", ex.Message, openFileDialog.FileName), "Playlist");
                 }
                 catch (IOException ex)
                 {
                     MessageBox.Show(String.Format("Houve um erro de acesso ao arquivo.\n\n{0}", ex.Message),
                         "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                    this.PlayerLogManager?.Error(ex.Message + " - Playlist:" + openFileDialog.FileName);
+                    this.PlayerLogManager?.Error(String.Format("{0} ({1})", ex.Message, openFileDialog.FileName), "Playlist");
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(String.Format("Houve um erro ao abrir a playlist.\n\n{0}", ex.Message),
                         "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                    this.PlayerLogManager?.Error(ex.Message + " - Playlist:" + openFileDialog.FileName);
+                    this.PlayerLogManager?.Error(String.Format("{0} ({1})", ex.Message, openFileDialog.FileName), "Playlist");
                 }
 
                 if (this.PlaybackState == PlaylistState.Stopped && this.PlaylistManager.PlaylistMode == PlaylistMode.Manual)
@@ -1079,7 +1077,7 @@ namespace Salamandra.ViewModel
             {
                 this.PlaybackState = PlaylistState.WaitingNextTrack;
 
-                this.PlayerLogManager?.Fatal("Error during playback of last file: " + e.SoundErrorException.Message);
+                this.PlayerLogManager?.Fatal(e.SoundErrorException.Message, "Player");
             }
             else
             {
@@ -1201,7 +1199,7 @@ namespace Salamandra.ViewModel
                 {
                     if (t.IsFaulted)
                     {
-                        this.PlayerLogManager?.Error("Error when dropping files on player: " + t.Exception!.Message);
+                        this.PlayerLogManager?.Error(String.Format("Error when dropping files on player: {0}", t.Exception!.Message), "Player");
                     }
 
                     SetPlaylistLoading(false);

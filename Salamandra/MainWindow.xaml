@@ -522,6 +522,31 @@
                                         </DataTrigger.Setters>
                                     </DataTrigger>
 
+                                    <!-- Style for Loop Mode -->
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Value="True">
+                                                <Condition.Binding>
+                                                    <MultiBinding Mode="OneWay" NotifyOnSourceUpdated="True" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource SameObjectToBoolConverter}">
+                                                        <Binding Path="DataContext.PlaylistManager.LastTrack" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListView}"  />
+                                                        <Binding Path="."></Binding>
+                                                    </MultiBinding>
+                                                </Condition.Binding>
+                                            </Condition>
+
+                                            <Condition Value="True">
+                                                <Condition.Binding>
+                                                    <Binding Path="DataContext.EnableLoopMode" Mode="OneWay" NotifyOnSourceUpdated="True" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListView}"  />
+                                                </Condition.Binding>
+                                            </Condition>
+                                        </MultiDataTrigger.Conditions>
+
+                                        <MultiDataTrigger.Setters>
+                                            <Setter Property="Background" Value="Purple"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
+
                                     <!-- Selected Style -->
                                     <Trigger Property="IsSelected" Value="True">
                                         <Setter Property="Foreground" Value="Black"/>

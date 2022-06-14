@@ -365,8 +365,8 @@ namespace Salamandra.ViewModel
             this.AddStopTrackCommand = new RelayCommand(p => AddStopTrack(), p => !this.PlaylistLoading);
             this.RemoveTracksFromPlaylistCommand = new RelayCommand(p => RemoveTracksFromPlaylist(p), p => !this.PlaylistLoading);
 
-            this.StartPlaybackCommand = new RelayCommand(p => StartPlayback(), p => !this.IsPlaying);
-            this.StopPlaybackCommand = new RelayCommand(p => StopPlayback(), p => this.IsPlaying);
+            this.StartPlaybackCommand = new RelayCommand(p => StartPlayback(false, true), p => !this.IsPlaying);
+            this.StopPlaybackCommand = new RelayCommand(p => StopPlayback(true), p => this.IsPlaying);
 
             this.PlaySelectedTrackCommand = new RelayCommand(p => PlaySelectedTrack(), p => this.SelectedTrack != null);
             this.OpenPreListenCommand = new RelayCommand(p => OpenPreListen(), p => this.SelectedTrack != null && this.SelectedTrack is AudioFileTrack);
@@ -437,7 +437,7 @@ namespace Salamandra.ViewModel
             this.PlaylistManager.RemoveTracks(tracks);
         }
 
-        private void StartPlayback(bool startWithEvent = false)
+        private void StartPlayback(bool startWithEvent = false, bool manual = false)
         {
             if (!startWithEvent && this.PlaylistManager.NextTrack == null)
                 return;
@@ -450,7 +450,11 @@ namespace Salamandra.ViewModel
 
             var track = this.PlaylistManager.NextTrack;
 
-            this.PlayerLogManager?.Information("Starting Playback", "Player");
+
+            if (manual)
+                this.PlayerLogManager?.Information("Starting playback - Manual", "Player");
+            else
+                this.PlayerLogManager?.Information("Starting playback - Automatic", "Player");
 
             if (startWithEvent)
             {
@@ -466,7 +470,7 @@ namespace Salamandra.ViewModel
             PlayTrack(track!, !startWithEvent);
         }
 
-        private void PlayAudioFile(string filename, bool logFile = true)
+        private void PlayAudioFile(string filename, bool logSuccess = true, string? friendlyName = null, bool onlyFriendlyName = false)
         {
             try
             {
@@ -479,15 +483,25 @@ namespace Salamandra.ViewModel
 
                 this.AllowSeekDrag = true;
 
-                if (logFile)
-                    this.PlayerLogManager?.Information(filename, "Player");
+                // ToDo: Maybe this is too much for this method. Should we just return a boolean in success and let the success log formatting for the PlayTrack?
+                if (logSuccess)
+                {
+                    if (String.IsNullOrEmpty(friendlyName))
+                        this.PlayerLogManager?.Information(filename, "Player");
+                    else
+                    {
+                        if (!onlyFriendlyName)
+                            this.PlayerLogManager?.Information(String.Format("{0} ({1})", friendlyName, filename), "Player");
+                        else
+                            this.PlayerLogManager?.Information(friendlyName, "Player");
+                    }
+                }
             }
             catch (SoundEngineFileException soundEngineFileException)
             {
                 this.PlaybackState = PlaylistState.WaitingNextTrack;
 
-                if (logFile)
-                    this.PlayerLogManager?.Error(String.Format("{0} ({1})", soundEngineFileException.Message, filename), "Player");
+                this.PlayerLogManager?.Error(String.Format("{0} ({1})", soundEngineFileException.Message, filename), "Player");
             }
             catch (SoundEngineDeviceException soundEngineDeviceException)
             {
@@ -528,11 +542,15 @@ namespace Salamandra.ViewModel
                     }
                     break;
                 case RotationTrack rotationTrack:
+                    bool shouldLog = true;
+                    bool onlyFriendlyName = false;
+
                     if (rotationTrack is SequentialTrack sequentialTrack && resetSequence)
                     {
                         if (sequentialTrack is TimeAnnouncementTrack timeAnnouncementTrack)
                         {
                             timeAnnouncementTrack.AudioFilesDirectory = this.ApplicationSettings.GeneralSettings.TimeAnnouncementFilesPath;
+                            onlyFriendlyName = true;
                         }
 
                         sequentialTrack.ResetSequence();
@@ -541,8 +559,12 @@ namespace Salamandra.ViewModel
                     string? file = rotationTrack.GetFile();
                     this.CurrentTrackFilename = Path.GetFileNameWithoutExtension(file);
 
+
+                    if (rotationTrack is TimeAnnouncementTrack && !resetSequence)
+                        shouldLog = false;
+
                     if (!String.IsNullOrEmpty(file))
-                        PlayAudioFile(file);
+                        PlayAudioFile(file, shouldLog, rotationTrack.FriendlyName, onlyFriendlyName);
                     else
                     {
                         // Try to avoid looping an invalid track.
@@ -560,7 +582,7 @@ namespace Salamandra.ViewModel
                     this.CurrentTrackFilename = Path.GetFileNameWithoutExtension(randomFile);
 
                     if (!String.IsNullOrEmpty(randomFile))
-                        PlayAudioFile(randomFile);
+                        PlayAudioFile(randomFile, true, randomTrack.FriendlyName);
                     else
                         this.PlaybackState = PlaylistState.WaitingNextTrack;
                     break;
@@ -678,7 +700,7 @@ namespace Salamandra.ViewModel
             StopPlayback();
         }
 
-        private void StopPlayback()
+        private void StopPlayback(bool manual = false)
         {
             this.IsPlaying = false;
             this.IsPaused = false;
@@ -702,7 +724,10 @@ namespace Salamandra.ViewModel
 
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TrackDisplayName)));
 
-            this.PlayerLogManager?.Information("Stopping Playback", "Player");
+            if (manual)
+                this.PlayerLogManager?.Information("Stopping playback - Manual", "Player");
+            else
+                this.PlayerLogManager?.Information("Stopping playback - Automatic", "Player");
         }
 
         private void StopPlaybackWithError(Exception ex)

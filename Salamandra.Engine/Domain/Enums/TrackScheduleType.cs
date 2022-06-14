@@ -8,7 +8,7 @@ namespace Salamandra.Engine.Domain.Enums
 {
     public enum TrackScheduleType
     {
-        FileTrack = 0,
+        AudioFileTrack = 0,
         RandomFileTrack = 1,
         TimeAnnouncementTrack = 2,
         StartPlaylistTrack = 3,

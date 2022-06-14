@@ -73,7 +73,7 @@ namespace Salamandra.Engine.Domain.Events
         {
             switch (this.TrackScheduleType)
             {
-                case TrackScheduleType.FileTrack:
+                case TrackScheduleType.AudioFileTrack:
                     return new AudioFileTrack()
                     {
                         FriendlyName = this.FriendlyName,

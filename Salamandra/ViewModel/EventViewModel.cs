@@ -62,7 +62,7 @@ namespace Salamandra.ViewModel
             this.ImmediateChangedCommand = new RelayCommand(p => ImmediateChanged());
 
             this.OpenPreListenCommand = new RelayCommand(p => OpenPreListen(),
-                p => this.ScheduledEvent.TrackScheduleType == TrackScheduleType.FileTrack && !String.IsNullOrEmpty(this.ScheduledEvent.Filename));
+                p => this.ScheduledEvent.TrackScheduleType == TrackScheduleType.AudioFileTrack && !String.IsNullOrEmpty(this.ScheduledEvent.Filename));
         }
 
         public EventViewModel(ScheduledEvent scheduledEvent, ApplicationSettings applicationSettings) : this(applicationSettings)
@@ -89,7 +89,7 @@ namespace Salamandra.ViewModel
         {
             switch (this.ScheduledEvent.TrackScheduleType)
             {
-                case TrackScheduleType.FileTrack:
+                case TrackScheduleType.AudioFileTrack:
                     OpenFileDialog audioOpenFileDialog = new OpenFileDialog();
                     audioOpenFileDialog.Filter = "Arquivos de áudio (*.wav, *.mp3, *.wma, *.ogg, *.flac) | *.wav; *.mp3; *.wma; *.ogg; *.flac";
 
@@ -131,7 +131,7 @@ namespace Salamandra.ViewModel
         {
             switch (this.ScheduledEvent.TrackScheduleType)
             {
-                case TrackScheduleType.FileTrack:
+                case TrackScheduleType.AudioFileTrack:
                 case TrackScheduleType.RandomFileTrack:
                 case TrackScheduleType.OpenPlaylistTrack:
                     this.EventRequiresPath = true;
@@ -211,7 +211,7 @@ namespace Salamandra.ViewModel
         {
             switch (this.ScheduledEvent.TrackScheduleType)
             {
-                case TrackScheduleType.FileTrack:
+                case TrackScheduleType.AudioFileTrack:
                 case TrackScheduleType.OpenPlaylistTrack:
                     this.ScheduledEvent.FriendlyName = Path.GetFileNameWithoutExtension(this.ScheduledEvent.Filename);
                     break;
@@ -235,7 +235,7 @@ namespace Salamandra.ViewModel
 
         private void OpenPreListen()
         {
-            if (this.ScheduledEvent.TrackScheduleType != TrackScheduleType.FileTrack ||
+            if (this.ScheduledEvent.TrackScheduleType != TrackScheduleType.AudioFileTrack ||
                 String.IsNullOrEmpty(this.ScheduledEvent.Filename))
                 return;
 

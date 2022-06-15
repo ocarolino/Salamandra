@@ -25,26 +25,73 @@
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Arquivo">
-                <MenuItem Header="Novo" Command="{Binding NewPlaylistCommand}" />
-                <MenuItem Header="Abrir..." Command="{Binding OpenPlaylistCommand}" />
-                <MenuItem Header="Salvar" Command="{Binding SavePlaylistCommand}" />
+                <MenuItem Header="Novo" Command="{Binding NewPlaylistCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/Toolbar/new.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Abrir..." Command="{Binding OpenPlaylistCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/Toolbar/open.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Salvar" Command="{Binding SavePlaylistCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/Toolbar/save.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
                 <MenuItem Header="Salvar como..." Command="{Binding SavePlaylistAsCommand}"/>
             </MenuItem>
 
             <MenuItem Header="Playlist">
-                <MenuItem Header="Adicionar arquivos de áudio..." Command="{Binding AddFilesToPlaylistCommand}"/>
-                <MenuItem Header="Adicionar arquivo aleatório de pasta..." Command="{Binding AddRandomTrackCommand}"/>
-                <MenuItem Header="Adicionar arquivo de playlist..." Command="{Binding AddPlaylistTrackCommand}"/>
-                <MenuItem Header="Adicionar locução de horário..." Command="{Binding AddTimeAnnouncementTrackCommand}"/>
-                <MenuItem Header="Adicionar comando para parar playlist" Command="{Binding AddStopTrackCommand}"/>
+                <MenuItem Header="Adicionar arquivos de áudio..." Command="{Binding AddFilesToPlaylistCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/Playlist/audio_file.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Adicionar arquivo aleatório de pasta..." Command="{Binding AddRandomTrackCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/Playlist/music_folder.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Adicionar arquivo de playlist..." Command="{Binding AddPlaylistTrackCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/Playlist/playlist_file.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Adicionar locução de horário..." Command="{Binding AddTimeAnnouncementTrackCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/Playlist/alarm_clock.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Adicionar comando para parar playlist" Command="{Binding AddStopTrackCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/Playlist/remote_control.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                
                 <Separator/>
+                
                 <MenuItem Header="Remover selecionadas" Command="{Binding RemoveTracksFromPlaylistCommand}" CommandParameter="{Binding SelectedItems, ElementName=playlist}"/>
+                
                 <Separator/>
+                
                 <MenuItem Header="Embaralhar playlist" Command="{Binding ShufflePlaylistCommand}"/>
             </MenuItem>
 
             <MenuItem Header="Ferramentas">
-                <MenuItem Header="Configurações" Command="{Binding OpenSettingsCommand}"/>
+                <MenuItem Header="Configurações" Command="{Binding OpenSettingsCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/Toolbar/service.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
         </Menu>
 

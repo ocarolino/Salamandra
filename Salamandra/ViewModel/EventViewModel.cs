@@ -109,6 +109,13 @@ namespace Salamandra.ViewModel
                     if (playlistOpenFileDialog.ShowDialog() == true)
                         this.ScheduledEvent.Filename = playlistOpenFileDialog.FileName;
                     break;
+                case TrackScheduleType.SystemProcessTrack:
+                    OpenFileDialog allOpenFileDialog = new OpenFileDialog();
+                    allOpenFileDialog.Filter = "Todos os arquivos (*.*) | *.*";
+
+                    if (allOpenFileDialog.ShowDialog() == true)
+                        this.ScheduledEvent.Filename = allOpenFileDialog.FileName;
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -134,6 +141,7 @@ namespace Salamandra.ViewModel
                 case TrackScheduleType.AudioFileTrack:
                 case TrackScheduleType.RandomFileTrack:
                 case TrackScheduleType.OpenPlaylistTrack:
+                case TrackScheduleType.SystemProcessTrack:
                     this.EventRequiresPath = true;
                     break;
                 default:
@@ -213,6 +221,7 @@ namespace Salamandra.ViewModel
             {
                 case TrackScheduleType.AudioFileTrack:
                 case TrackScheduleType.OpenPlaylistTrack:
+                case TrackScheduleType.SystemProcessTrack:
                     this.ScheduledEvent.FriendlyName = Path.GetFileNameWithoutExtension(this.ScheduledEvent.Filename);
                     break;
                 case TrackScheduleType.RandomFileTrack:

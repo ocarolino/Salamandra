@@ -97,6 +97,12 @@ namespace Salamandra.Engine.Domain.Events
                         FriendlyName = this.FriendlyName,
                         Filename = this.Filename
                     };
+                case TrackScheduleType.SystemProcessTrack:
+                    return new SystemProcessTrack()
+                    {
+                        FriendlyName = this.FriendlyName,
+                        Filename = this.Filename
+                    };
                 default:
                     throw new NotImplementedException();
             }

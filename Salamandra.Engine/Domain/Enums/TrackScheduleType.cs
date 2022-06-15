@@ -18,5 +18,7 @@ namespace Salamandra.Engine.Domain.Enums
         StopPlaylistTrack = 4,
         [Description("Arquivo de Playlist")]
         OpenPlaylistTrack = 5,
+        [Description("Executar Processo/Arquivo do Sistema")]
+        SystemProcessTrack = 6,
     }
 }

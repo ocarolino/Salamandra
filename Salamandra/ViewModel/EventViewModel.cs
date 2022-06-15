@@ -90,32 +90,36 @@ namespace Salamandra.ViewModel
             switch (this.ScheduledEvent.TrackScheduleType)
             {
                 case TrackScheduleType.AudioFileTrack:
-                    OpenFileDialog audioOpenFileDialog = new OpenFileDialog();
-                    audioOpenFileDialog.Filter = "Arquivos de áudio (*.wav, *.mp3, *.wma, *.ogg, *.flac) | *.wav; *.mp3; *.wma; *.ogg; *.flac";
+                case TrackScheduleType.SystemProcessTrack:
+                case TrackScheduleType.OpenPlaylistTrack:
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    openFileDialog.Filter = GetFileDialogFilter(this.ScheduledEvent.TrackScheduleType);
 
-                    if (audioOpenFileDialog.ShowDialog() == true)
-                        this.ScheduledEvent.Filename = audioOpenFileDialog.FileName;
+                    if (openFileDialog.ShowDialog() == true)
+                        this.ScheduledEvent.Filename = openFileDialog.FileName;
                     break;
                 case TrackScheduleType.RandomFileTrack:
+
                     Ookii.Dialogs.Wpf.VistaFolderBrowserDialog vistaFolderBrowserDialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog();
 
                     if (vistaFolderBrowserDialog.ShowDialog() == true)
                         this.ScheduledEvent.Filename = vistaFolderBrowserDialog.SelectedPath;
                     break;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        private string GetFileDialogFilter(TrackScheduleType trackScheduleType)
+        {
+            switch (trackScheduleType)
+            {
+                case TrackScheduleType.AudioFileTrack:
+                    return "Arquivos de áudio (*.wav, *.mp3, *.wma, *.ogg, *.flac) | *.wav; *.mp3; *.wma; *.ogg; *.flac";
                 case TrackScheduleType.OpenPlaylistTrack:
-                    OpenFileDialog playlistOpenFileDialog = new OpenFileDialog();
-                    playlistOpenFileDialog.Filter = "Playlist M3U (*.m3u) | *.m3u";
-
-                    if (playlistOpenFileDialog.ShowDialog() == true)
-                        this.ScheduledEvent.Filename = playlistOpenFileDialog.FileName;
-                    break;
+                    return "Playlist M3U (*.m3u) | *.m3u";
                 case TrackScheduleType.SystemProcessTrack:
-                    OpenFileDialog allOpenFileDialog = new OpenFileDialog();
-                    allOpenFileDialog.Filter = "Todos os arquivos (*.*) | *.*";
-
-                    if (allOpenFileDialog.ShowDialog() == true)
-                        this.ScheduledEvent.Filename = allOpenFileDialog.FileName;
-                    break;
+                    return "Todos os arquivos (*.*) | *.*";
                 default:
                     throw new NotImplementedException();
             }

@@ -16,6 +16,7 @@
 	  <None Remove="Images\Icons\Player\volume.png" />
 	  <None Remove="Images\Icons\Player\volume_off.png" />
 	  <None Remove="Images\Icons\Playlist\alarm_clock.png" />
+	  <None Remove="Images\Icons\Playlist\application_terminal.png" />
 	  <None Remove="Images\Icons\Playlist\audio_file.png" />
 	  <None Remove="Images\Icons\Playlist\loop.png" />
 	  <None Remove="Images\Icons\Playlist\music_folder.png" />
@@ -63,6 +64,7 @@
 		<Resource Include="Images\Icons\Player\volume.png" />
 		<Resource Include="Images\Icons\Player\volume_off.png" />
 		<Resource Include="Images\Icons\Playlist\alarm_clock.png" />
+		<Resource Include="Images\Icons\Playlist\application_terminal.png" />
 		<Resource Include="Images\Icons\Playlist\audio_file.png" />
 		<Resource Include="Images\Icons\Playlist\playlist_file.png" />
 		<Resource Include="Images\Icons\Playlist\remote_control.png" />

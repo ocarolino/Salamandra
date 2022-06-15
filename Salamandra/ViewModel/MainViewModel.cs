@@ -623,6 +623,15 @@ namespace Salamandra.ViewModel
                         SetPlaylistLoading(false);
                     }, TaskScheduler.FromCurrentSynchronizationContext());
                     break;
+                case SystemProcessTrack systemProcessTrack:
+                    ProcessStartInfo sinfo = new ProcessStartInfo();
+                    sinfo.UseShellExecute = true;
+                    sinfo.FileName = systemProcessTrack.Filename;
+
+                    Process.Start(sinfo);
+
+                    this.PlaybackState = PlaylistState.WaitingNextTrack;
+                    break;
                 default:
                     throw new NotImplementedException();
             }

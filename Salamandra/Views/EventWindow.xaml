@@ -41,9 +41,21 @@
                                              ToolTip="Data a partir da qual o evento vai iniciar"/>
 
                         <xctk:TimePicker Value="{Binding ScheduledEvent.StartingDateTime}" 
-                                     Format="Custom" FormatString="HH:mm:ss" TimeInterval="00:15:00"
-                                     Grid.Column="1" Margin="8 0 0 0" MinWidth="150"
-                                         ToolTip="Horário em que o evento irá iniciar"/>
+                                         Format="Custom" TimeInterval="00:15:00"
+                                         Grid.Column="1" Margin="8 0 0 0" MinWidth="150"
+                                         ToolTip="Horário em que o evento irá iniciar">
+                            <xctk:TimePicker.Style>
+                                <Style TargetType="{x:Type xctk:TimePicker}">
+                                    <Setter Property="FormatString" Value="HH:mm:ss"/>
+
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ScheduledEvent.UsePlayingHours}" Value="True">
+                                            <Setter Property="FormatString" Value="__:mm:ss"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </xctk:TimePicker.Style>
+                        </xctk:TimePicker>
 
                         <CheckBox Grid.Column="2" Content="Imediato" IsChecked="{Binding ScheduledEvent.Immediate}"
                               Margin="8 0 0 0" VerticalAlignment="Center"

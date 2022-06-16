@@ -628,6 +628,8 @@ namespace Salamandra.ViewModel
                     sinfo.UseShellExecute = true;
                     sinfo.FileName = systemProcessTrack.Filename;
 
+                    this.PlayerLogManager?.Information(String.Format("Executing process ({0})", systemProcessTrack.Filename), "Playlist");
+
                     Process.Start(sinfo);
 
                     this.PlaybackState = PlaylistState.WaitingNextTrack;

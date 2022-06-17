@@ -15,23 +15,27 @@ namespace Salamandra.Engine.Services
     {
         public ILogger? Logger { get; set; }
         public string OutputFolder { get; set; }
+        public string Filename { get; set; }
+        public bool DailyInterval { get; set; }
 
-        public LogManager(string outputFolder)
+        public LogManager(string outputFolder, string filename, bool dailyInterval)
         {
             this.OutputFolder = outputFolder;
+            this.Filename = filename;
+            this.DailyInterval = dailyInterval;
         }
 
         public void InitializeLog()
         {
             var outputTemplate = "{Timestamp:HH:mm:ss}\t{Level:u3}\t{ActionContext,-15}\t\t{Message:lj}{NewLine}{Exception}";
-            var path = Path.Combine(this.OutputFolder, "Salamandra Player Log - .txt");
+            var path = Path.Combine(this.OutputFolder, this.Filename + ".txt");
 
             var logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .MinimumLevel.Verbose()
                 .WriteTo.File(path,
                     outputTemplate: outputTemplate,
-                    rollingInterval: RollingInterval.Day,
+                    rollingInterval: this.DailyInterval ? RollingInterval.Day : RollingInterval.Infinite,
                     shared: true)
                 .CreateLogger();
 

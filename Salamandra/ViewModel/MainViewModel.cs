@@ -128,6 +128,7 @@ namespace Salamandra.ViewModel
         public ICommand? FocusOnCurrentTrackCommand { get; set; }
         public ICommand? FocusOnNextTrackCommand { get; set; }
         public ICommand? OpenLogFolderCommand { get; set; }
+        public ICommand? OpenCurrentLogCommand { get; set; }
         #endregion
 
         public Action? RemovePlaylistAdorner { get; set; }
@@ -440,6 +441,7 @@ namespace Salamandra.ViewModel
             this.FocusOnNextTrackCommand = new RelayCommand(p => FocusOnTrack?.Invoke(this.PlaylistManager.NextTrack));
 
             this.OpenLogFolderCommand = new RelayCommand(p => OpenLogFolder());
+            this.OpenCurrentLogCommand = new RelayCommand(p => OpenCurrentLog());
         }
 
         private async Task AddFilesToPlaylist()
@@ -1350,6 +1352,29 @@ namespace Salamandra.ViewModel
                     MessageBox.Show(String.Format("Houve um erro ao abrir a pasta de registros.\n\nErro: {0}", ex.Message),
                         "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }
+        }
+
+        private void OpenCurrentLog()
+        {
+            var filename = this.PlayerLogManager?.CurrentFilename;
+
+            if (!String.IsNullOrEmpty(filename))
+            {
+                try
+                {
+                    StartProcess(filename);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(String.Format("Houve um erro ao abrir o registro atual.\n\nErro: {0}", ex.Message),
+                        "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("O arquivo de registro ainda não existe.\n\nVerifique se houve alguma atividade ou se a geração de registros está ativa.",
+                    "Salamandra", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

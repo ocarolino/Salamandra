@@ -107,6 +107,7 @@
 
                 <Separator/>
 
+                <MenuItem Header="Abrir Registro de Hoje" Command="{Binding OpenCurrentLogCommand}"/>
                 <MenuItem Header="Pasta de Registros" Command="{Binding OpenLogFolderCommand}"/>
             </MenuItem>
         </Menu>

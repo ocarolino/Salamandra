@@ -91,6 +91,7 @@ namespace Salamandra.ViewModel
         public bool EnableLoopMode { get; set; }
         public bool EnableDeleteMode { get; set; }
 
+        public LogManager? ApplicationLogManager { get; set; }
         public LogManager? PlayerLogManager { get; set; }
 
         #region Commands Properties
@@ -202,6 +203,9 @@ namespace Salamandra.ViewModel
 
         public async Task Loading()
         {
+            this.ApplicationLogManager = new LogManager(String.Empty, "Salamandra", false);
+            this.ApplicationLogManager.InitializeLog();
+
             LoadSettingsFile();
             ApplyRunningSettings();
             await ApplyStartupSettings();
@@ -227,9 +231,10 @@ namespace Salamandra.ViewModel
 
                 this.ApplicationSettings.DeviceSettings.CheckDevices(devices);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // ToDo: Log ou mensagem! Um log separado para o player e outro para coisas tipo essa.
+                this.ApplicationLogManager?.Fatal(String.Format("Error loading settings file. Resetting to default settings. ({0})", ex.Message),
+                    "Settings");
             }
         }
 
@@ -239,7 +244,10 @@ namespace Salamandra.ViewModel
 
             if (loggingSettings.EnableLogging && !String.IsNullOrWhiteSpace(loggingSettings.LoggingOutputPath))
             {
-                this.PlayerLogManager = new LogManager(loggingSettings.LoggingOutputPath.EnsureHasDirectorySeparatorChar());
+                this.PlayerLogManager = new LogManager(
+                    loggingSettings.LoggingOutputPath.EnsureHasDirectorySeparatorChar(),
+                    "Salamandra Player Log - ",
+                    true);
                 this.PlayerLogManager.InitializeLog();
             }
         }

@@ -100,6 +100,7 @@ namespace Salamandra.ViewModel
         public ICommand? AddTimeAnnouncementTrackCommand { get; set; }
         public ICommand? AddStopTrackCommand { get; set; }
         public ICommand? RemoveTracksFromPlaylistCommand { get; set; }
+        public ICommand? RemoveAllTracksCommand { get; set; }
         public ICommand? StartPlaybackCommand { get; set; }
         public ICommand? StopPlaybackCommand { get; set; }
         public ICommand? PlaySelectedTrackCommand { get; set; }
@@ -399,6 +400,7 @@ namespace Salamandra.ViewModel
             this.AddRandomTrackCommand = new RelayCommand(p => AddRandomTrack(), p => !this.PlaylistLoading);
             this.AddStopTrackCommand = new RelayCommand(p => AddStopTrack(), p => !this.PlaylistLoading);
             this.RemoveTracksFromPlaylistCommand = new RelayCommand(p => RemoveTracksFromPlaylist(p), p => !this.PlaylistLoading);
+            this.RemoveAllTracksCommand = new RelayCommand(p => RemoveAllTracks(), p => !this.PlaylistLoading);
 
             this.StartPlaybackCommand = new RelayCommand(p => StartPlayback(false, true), p => !this.IsPlaying);
             this.StopPlaybackCommand = new RelayCommand(p => StopPlayback(true), p => this.IsPlaying);
@@ -470,6 +472,11 @@ namespace Salamandra.ViewModel
             List<BaseTrack> tracks = ((System.Collections.IList)items).Cast<BaseTrack>().ToList();
 
             this.PlaylistManager.RemoveTracks(tracks);
+        }
+
+        private void RemoveAllTracks()
+        {
+            this.PlaylistManager.RemoveTracks(this.PlaylistManager.Tracks.ToList());
         }
 
         private void StartPlayback(bool startWithEvent = false, bool manual = false)

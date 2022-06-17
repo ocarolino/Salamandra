@@ -26,6 +26,7 @@
         <KeyBinding Modifiers="Ctrl" Key="N" Command="{Binding NewPlaylistCommand}"/>
         <KeyBinding Modifiers="Ctrl" Key="O" Command="{Binding OpenPlaylistCommand}"/>
         <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SavePlaylistCommand}"/>
+        <KeyBinding Modifiers="Ctrl" Key="Delete" Command="{Binding RemoveAllTracksCommand}"/>
         <KeyBinding Key="P" Command="{Binding StartPlaybackCommand}"/>
         <KeyBinding Key="S" Command="{Binding StopPlaybackCommand}"/>
         <KeyBinding Key="N" Command="{Binding NextTrackCommand}"/>
@@ -87,12 +88,14 @@
 
                 <Separator/>
 
-                <MenuItem Header="Remover selecionadas" InputGestureText="Del"
-                          Command="{Binding RemoveTracksFromPlaylistCommand}" CommandParameter="{Binding SelectedItems, ElementName=playlist}"/>
+                <MenuItem Header="Embaralhar playlist" Command="{Binding ShufflePlaylistCommand}"/>
 
                 <Separator/>
 
-                <MenuItem Header="Embaralhar playlist" Command="{Binding ShufflePlaylistCommand}"/>
+                <MenuItem Header="Remover selecionadas" InputGestureText="Del"
+                          Command="{Binding RemoveTracksFromPlaylistCommand}" CommandParameter="{Binding SelectedItems, ElementName=playlist}"/>
+
+                <MenuItem Header="Remover todas" InputGestureText="Ctrl+Del" Command="{Binding RemoveAllTracksCommand}"/>
             </MenuItem>
 
             <MenuItem Header="Ferramentas">

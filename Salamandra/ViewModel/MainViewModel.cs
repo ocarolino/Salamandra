@@ -203,8 +203,7 @@ namespace Salamandra.ViewModel
         public async Task Loading()
         {
             LoadSettingsFile();
-            LoadPlayerLogger(this.ApplicationSettings.LoggingSettings);
-            ApplySettings();
+            ApplyRunningSettings();
             await ApplyStartupSettings();
             LoadEventsFile();
             LoadLibraryFile();
@@ -245,9 +244,11 @@ namespace Salamandra.ViewModel
             }
         }
 
-        private void ApplySettings()
+        private void ApplyRunningSettings()
         {
             this.SoundEngine.OutputDevice = this.ApplicationSettings.DeviceSettings.MainOutputDevice;
+
+            LoadPlayerLogger(this.ApplicationSettings.LoggingSettings);
         }
 
         private async Task ApplyStartupSettings()
@@ -1028,7 +1029,7 @@ namespace Salamandra.ViewModel
             if (settingsWindow.ShowDialog() == true)
             {
                 this.ApplicationSettings = settingsViewModel.Settings!;
-                ApplySettings();
+                ApplyRunningSettings();
             }
         }
 

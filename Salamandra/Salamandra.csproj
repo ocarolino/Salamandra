@@ -27,11 +27,13 @@
 	  <None Remove="Images\Icons\Toolbar\delete.png" />
 	  <None Remove="Images\Icons\Toolbar\delete_row.png" />
 	  <None Remove="Images\Icons\Toolbar\new.png" />
+	  <None Remove="Images\Icons\Toolbar\next.png" />
 	  <None Remove="Images\Icons\Toolbar\open.png" />
 	  <None Remove="Images\Icons\Toolbar\play.png" />
 	  <None Remove="Images\Icons\Toolbar\plus.png" />
 	  <None Remove="Images\Icons\Toolbar\save.png" />
 	  <None Remove="Images\Icons\Toolbar\service.png" />
+	  <None Remove="Images\Icons\Toolbar\stop.png" />
 	  <None Remove="Images\Icons\Toolbar\trash.png" />
 	</ItemGroup>
 
@@ -75,11 +77,13 @@
 		<Resource Include="Images\Icons\Toolbar\checkmark.png" />
 		<Resource Include="Images\Icons\Toolbar\delete.png" />
 		<Resource Include="Images\Icons\Toolbar\new.png" />
+		<Resource Include="Images\Icons\Toolbar\next.png" />
 		<Resource Include="Images\Icons\Toolbar\open.png" />
 		<Resource Include="Images\Icons\Toolbar\play.png" />
 		<Resource Include="Images\Icons\Toolbar\plus.png" />
 		<Resource Include="Images\Icons\Toolbar\save.png" />
 		<Resource Include="Images\Icons\Toolbar\service.png" />
+		<Resource Include="Images\Icons\Toolbar\stop.png" />
 		<Resource Include="Images\Icons\Toolbar\trash.png" />
 	</ItemGroup>
 

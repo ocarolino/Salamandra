@@ -98,6 +98,32 @@
                 <MenuItem Header="Remover todas" InputGestureText="Ctrl+Del" Command="{Binding RemoveAllTracksCommand}"/>
             </MenuItem>
 
+            <MenuItem Header="Mídia">
+                <MenuItem Header="Reproduzir playlist" InputGestureText="P"
+                          Command="{Binding StartPlaybackCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/Toolbar/play.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Parar playlist" InputGestureText="S"
+                          Command="{Binding StopPlaybackCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/Toolbar/stop.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Próxima faixa" InputGestureText="N"
+                          Command="{Binding NextTrackCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/Toolbar/next.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Parar após faixa atual" IsCheckable="True"
+                          IsChecked="{Binding StopAfterCurrentTrack}" IsEnabled="{Binding IsPlaying}"/>
+            </MenuItem>
+
             <MenuItem Header="Ferramentas">
                 <MenuItem Header="Configurações" Command="{Binding OpenSettingsCommand}">
                     <MenuItem.Icon>

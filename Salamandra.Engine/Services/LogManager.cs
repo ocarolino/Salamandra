@@ -11,13 +11,23 @@ namespace Salamandra.Engine.Services
 
         public ILogger? Logger { get; set; }
         public string OutputFolder { get; set; }
-        public string Filename { get; set; }
+        public string DefaultFilename { get; set; }
+        public string? CurrentFilename
+        {
+            get
+            {
+                if (this.Logger != null)
+                    return this.captureFilePathHook?.Path;
+
+                return null;
+            }
+        }
         public bool DailyInterval { get; set; }
 
-        public LogManager(string outputFolder, string filename, bool dailyInterval)
+        public LogManager(string outputFolder, string defaultFilename, bool dailyInterval)
         {
             this.OutputFolder = outputFolder;
-            this.Filename = filename;
+            this.DefaultFilename = defaultFilename;
             this.DailyInterval = dailyInterval;
         }
 
@@ -27,7 +37,7 @@ namespace Salamandra.Engine.Services
                 this.captureFilePathHook = new CaptureFilePathHook();
 
             var outputTemplate = "{Timestamp:HH:mm:ss}\t{Level:u3}\t{ActionContext,-15}\t\t{Message:lj}{NewLine}{Exception}";
-            var path = Path.Combine(this.OutputFolder, this.Filename + ".txt");
+            var path = Path.Combine(this.OutputFolder, this.DefaultFilename + ".txt");
 
             var logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
@@ -58,11 +68,6 @@ namespace Salamandra.Engine.Services
         {
             using (LogContext.PushProperty("ActionContext", context))
                 this.Logger?.Fatal(message, exception);
-        }
-
-        public string? GetCurrentFilename()
-        {
-            return this.captureFilePathHook?.Path;
         }
 
         public void Dispose()

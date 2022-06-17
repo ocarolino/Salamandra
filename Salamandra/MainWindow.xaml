@@ -104,6 +104,10 @@
                         <Image Source="/Images/Icons/Toolbar/service.png" />
                     </MenuItem.Icon>
                 </MenuItem>
+
+                <Separator/>
+
+                <MenuItem Header="Pasta de Registros" Command="{Binding OpenLogFolderCommand}"/>
             </MenuItem>
         </Menu>
 

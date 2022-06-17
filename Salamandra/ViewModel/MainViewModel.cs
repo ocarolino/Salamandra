@@ -127,6 +127,7 @@ namespace Salamandra.ViewModel
         public ICommand? DiscardLateEventsCommand { get; set; }
         public ICommand? FocusOnCurrentTrackCommand { get; set; }
         public ICommand? FocusOnNextTrackCommand { get; set; }
+        public ICommand? OpenLogFolderCommand { get; set; }
         #endregion
 
         public Action? RemovePlaylistAdorner { get; set; }
@@ -437,6 +438,8 @@ namespace Salamandra.ViewModel
 
             this.FocusOnCurrentTrackCommand = new RelayCommand(p => FocusOnTrack?.Invoke(this.PlaylistManager.CurrentTrack));
             this.FocusOnNextTrackCommand = new RelayCommand(p => FocusOnTrack?.Invoke(this.PlaylistManager.NextTrack));
+
+            this.OpenLogFolderCommand = new RelayCommand(p => OpenLogFolder());
         }
 
         private async Task AddFilesToPlaylist()
@@ -666,14 +669,16 @@ namespace Salamandra.ViewModel
                     }, TaskScheduler.FromCurrentSynchronizationContext());
                     break;
                 case SystemProcessTrack systemProcessTrack:
-                    ProcessStartInfo sinfo = new ProcessStartInfo();
-                    sinfo.UseShellExecute = true;
-                    sinfo.FileName = systemProcessTrack.Filename;
-
                     this.PlayerLogManager?.Information(String.Format("Executing process ({0})", systemProcessTrack.Filename), "Playlist");
 
-                    Process.Start(sinfo);
-
+                    try
+                    {
+                        StartProcess(systemProcessTrack.Filename);
+                    }
+                    catch (Exception ex)
+                    {
+                        this.PlayerLogManager?.Error(String.Format("Error executing process {0} ({1})", systemProcessTrack.Filename, ex.Message), "Playlist");
+                    }
                     this.PlaybackState = PlaylistState.WaitingNextTrack;
                     break;
                 default:
@@ -681,6 +686,15 @@ namespace Salamandra.ViewModel
             }
 
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TrackDisplayName)));
+        }
+
+        private static void StartProcess(string filename)
+        {
+            ProcessStartInfo sinfo = new ProcessStartInfo();
+            sinfo.UseShellExecute = true;
+            sinfo.FileName = filename;
+
+            Process.Start(sinfo);
         }
 
         private void PlayEvent(UpcomingEvent upcomingEvent)
@@ -1320,6 +1334,22 @@ namespace Salamandra.ViewModel
             {
                 this.PlaylistLoading = false;
                 this.PlaylistInfoText = String.Empty;
+            }
+        }
+
+        private void OpenLogFolder()
+        {
+            if (!String.IsNullOrEmpty(this.ApplicationSettings.LoggingSettings.LoggingOutputPath))
+            {
+                try
+                {
+                    StartProcess(this.ApplicationSettings.LoggingSettings.LoggingOutputPath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(String.Format("Houve um erro ao abrir a pasta de registros.\n\nErro: {0}", ex.Message),
+                        "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 

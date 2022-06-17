@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Salamandra.Engine.Extensions;
+﻿using Salamandra.Engine.Services.Logger;
 using Serilog;
 using Serilog.Context;
-using Serilog.Core;
 
 namespace Salamandra.Engine.Services
 {
     // Based on: https://github.com/thecodrr/BreadPlayer/blob/add082d5d3ed3da472791f9a5040920a6084a937/BreadPlayer.Common/BLogger.cs (2022-06-08)
     public class LogManager : IDisposable
     {
+        private CaptureFilePathHook? captureFilePathHook;
+
         public ILogger? Logger { get; set; }
         public string OutputFolder { get; set; }
         public string Filename { get; set; }
@@ -27,6 +23,9 @@ namespace Salamandra.Engine.Services
 
         public void InitializeLog()
         {
+            if (this.captureFilePathHook == null)
+                this.captureFilePathHook = new CaptureFilePathHook();
+
             var outputTemplate = "{Timestamp:HH:mm:ss}\t{Level:u3}\t{ActionContext,-15}\t\t{Message:lj}{NewLine}{Exception}";
             var path = Path.Combine(this.OutputFolder, this.Filename + ".txt");
 
@@ -36,7 +35,8 @@ namespace Salamandra.Engine.Services
                 .WriteTo.File(path,
                     outputTemplate: outputTemplate,
                     rollingInterval: this.DailyInterval ? RollingInterval.Day : RollingInterval.Infinite,
-                    shared: true)
+                    hooks: captureFilePathHook,
+                    shared: false)
                 .CreateLogger();
 
             this.Logger = logger;
@@ -58,6 +58,11 @@ namespace Salamandra.Engine.Services
         {
             using (LogContext.PushProperty("ActionContext", context))
                 this.Logger?.Fatal(message, exception);
+        }
+
+        public string? GetCurrentFilename()
+        {
+            return this.captureFilePathHook?.Path;
         }
 
         public void Dispose()

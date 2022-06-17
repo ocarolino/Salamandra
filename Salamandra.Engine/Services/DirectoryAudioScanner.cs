@@ -254,8 +254,9 @@ namespace Salamandra.Engine.Services
             }
             catch (Exception)
             {
-                // ToDo: Log/notify exception!
                 this.directoriesLibrary = new Dictionary<string, DirectoryAudioInfo>();
+
+                throw;
             }
         }
     }

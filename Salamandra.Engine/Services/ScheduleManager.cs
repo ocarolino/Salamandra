@@ -52,7 +52,7 @@ namespace Salamandra.Engine.Services
             }
             catch (Exception)
             {
-                // ToDo: Log/Notification via Rethrow/Event...
+                throw;
             }
         }
 
@@ -67,8 +67,9 @@ namespace Salamandra.Engine.Services
             }
             catch (Exception)
             {
-                // ToDo: Log/Notification/Rethrow via Rethrow/Event...
                 this.Events = new List<ScheduledEvent>();
+
+                throw;
             }
         }
         #endregion

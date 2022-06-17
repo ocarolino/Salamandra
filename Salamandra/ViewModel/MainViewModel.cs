@@ -308,10 +308,12 @@ namespace Salamandra.ViewModel
                 if (!String.IsNullOrWhiteSpace(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename))
                     this.ScheduleManager.LoadFromFile(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 this.ScheduleManager.CleanEvents();
-                // ToDo: Log ou mensagem - Separado!
+
+                this.ApplicationLogManager?.Error(String.Format("There was an error when loading the scheduled events at {0}. ({1})",
+                    this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename, ex.Message), "Events");
             }
         }
 
@@ -320,8 +322,17 @@ namespace Salamandra.ViewModel
             string filename = Path.Combine(Environment.CurrentDirectory, "directory_library.json");
 
             if (File.Exists(filename))
-                this.DirectoryAudioScanner.LoadFromFile(filename);
-
+            {
+                try
+                {
+                    this.DirectoryAudioScanner.LoadFromFile(filename);
+                }
+                catch (Exception ex)
+                {
+                    this.ApplicationLogManager?.Error(String.Format("There was an error when loading the directory library at {0}. ({1})",
+                        filename, ex.Message), "Library");
+                }
+            }
             this.DirectoryAudioScanner.ScanLibrary();
         }
 
@@ -355,14 +366,29 @@ namespace Salamandra.ViewModel
 
             this.ApplicationSettings.PlayerSettings.EnableEvents = this.EnableEvents;
 
-            this.SettingsManager.SaveSettings(this.ApplicationSettings);
+            try
+            {
+                this.SettingsManager.SaveSettings(this.ApplicationSettings);
+            }
+            catch (Exception ex)
+            {
+                this.ApplicationLogManager?.Fatal(String.Format("Error saving settings file. ({0})", ex.Message), "Settings");
+            }
         }
 
         private void SaveLibrary()
         {
             string filename = Path.Combine(Environment.CurrentDirectory, "directory_library.json");
 
-            this.DirectoryAudioScanner.SaveToFile(filename);
+            try
+            {
+                this.DirectoryAudioScanner.SaveToFile(filename);
+            }
+            catch (Exception ex)
+            {
+                this.ApplicationLogManager?.Error(String.Format("There was an error when saving the directory library at {0}. ({1})",
+                    filename, ex.Message), "Library");
+            }
         }
 
         private void LoadCommands()
@@ -1077,6 +1103,10 @@ namespace Salamandra.ViewModel
             }
             catch (Exception ex)
             {
+                this.ApplicationLogManager?.Error(String.Format("There was an error when saving the scheduled events at {0}. ({1})",
+                    this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename,
+                    ex.Message), "Events");
+
                 MessageBox.Show(String.Format("Houve um erro ao salvar a planilha de eventos.\n\n{0}", ex.Message),
                     "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
             }

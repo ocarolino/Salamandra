@@ -681,6 +681,25 @@ namespace Salamandra.ViewModel
                     {
                         this.PlayerLogManager?.Error(String.Format("Error executing process {0} ({1})", systemProcessTrack.Filename, ex.Message), "Playlist");
                     }
+
+                    this.PlaybackState = PlaylistState.WaitingNextTrack;
+                    break;
+                case ScheduleFileTrack scheduleFileTrack:
+                    try
+                    {
+                        this.ScheduleManager.LoadFromFile(scheduleFileTrack.Filename);
+                        this.ScheduleManager.ResetAndRefreshQueue(true);
+
+                        this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename = scheduleFileTrack.Filename;
+
+                        ScanScheduledRandomFiles();
+                    }
+                    catch (Exception ex)
+                    {
+                        this.PlayerLogManager?.Error(String.Format("Error loading scheduled events file {0} ({1})", scheduleFileTrack.Filename, ex.Message), "Playlist");
+                    }
+
+
                     this.PlaybackState = PlaylistState.WaitingNextTrack;
                     break;
                 default:

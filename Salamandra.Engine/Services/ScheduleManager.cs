@@ -35,6 +35,11 @@ namespace Salamandra.Engine.Services
         {
             this.Events = new List<ScheduledEvent>(events);
 
+            ResetAndRefreshQueue(resetQueue);
+        }
+
+        public void ResetAndRefreshQueue(bool resetQueue)
+        {
             if (resetQueue)
                 this.EventsQueue.Clear();
 

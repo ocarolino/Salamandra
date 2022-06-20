@@ -693,10 +693,12 @@ namespace Salamandra.ViewModel
                         this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename = scheduleFileTrack.Filename;
 
                         ScanScheduledRandomFiles();
+
+                        this.PlayerLogManager?.Information(String.Format("{0}", scheduleFileTrack.Filename), "Events");
                     }
                     catch (Exception ex)
                     {
-                        this.PlayerLogManager?.Error(String.Format("Error loading scheduled events file {0} ({1})", scheduleFileTrack.Filename, ex.Message), "Playlist");
+                        this.PlayerLogManager?.Error(String.Format("Error loading scheduled events file {0} ({1})", scheduleFileTrack.Filename, ex.Message), "Events");
                     }
 
 

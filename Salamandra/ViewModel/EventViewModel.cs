@@ -92,6 +92,7 @@ namespace Salamandra.ViewModel
                 case TrackScheduleType.AudioFileTrack:
                 case TrackScheduleType.SystemProcessTrack:
                 case TrackScheduleType.OpenPlaylistTrack:
+                case TrackScheduleType.OpenScheduleTrack:
                     OpenFileDialog openFileDialog = new OpenFileDialog();
                     openFileDialog.Filter = GetFileDialogFilter(this.ScheduledEvent.TrackScheduleType);
 
@@ -120,6 +121,8 @@ namespace Salamandra.ViewModel
                     return "Playlist M3U (*.m3u) | *.m3u";
                 case TrackScheduleType.SystemProcessTrack:
                     return "Todos os arquivos (*.*) | *.*";
+                case TrackScheduleType.OpenScheduleTrack:
+                    return "Lista de Eventos (*.sche) | *.sche";
                 default:
                     throw new NotImplementedException();
             }
@@ -146,6 +149,7 @@ namespace Salamandra.ViewModel
                 case TrackScheduleType.RandomFileTrack:
                 case TrackScheduleType.OpenPlaylistTrack:
                 case TrackScheduleType.SystemProcessTrack:
+                case TrackScheduleType.OpenScheduleTrack:
                     this.EventRequiresPath = true;
                     break;
                 default:
@@ -226,6 +230,7 @@ namespace Salamandra.ViewModel
                 case TrackScheduleType.AudioFileTrack:
                 case TrackScheduleType.OpenPlaylistTrack:
                 case TrackScheduleType.SystemProcessTrack:
+                case TrackScheduleType.OpenScheduleTrack:
                     this.ScheduledEvent.FriendlyName = Path.GetFileNameWithoutExtension(this.ScheduledEvent.Filename);
                     break;
                 case TrackScheduleType.RandomFileTrack:

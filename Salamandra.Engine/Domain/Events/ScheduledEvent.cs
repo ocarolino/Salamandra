@@ -103,6 +103,12 @@ namespace Salamandra.Engine.Domain.Events
                         FriendlyName = this.FriendlyName,
                         Filename = this.Filename
                     };
+                case TrackScheduleType.OpenScheduleTrack:
+                    return new ScheduleFileTrack()
+                    {
+                        FriendlyName = this.FriendlyName,
+                        Filename = this.Filename
+                    };
                 default:
                     throw new NotImplementedException();
             }

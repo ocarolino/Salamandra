@@ -186,7 +186,7 @@ namespace Salamandra.ViewModel
             {
                 string json = JsonConvert.SerializeObject(events);
 
-                Clipboard.SetText(json);
+                Clipboard.SetData("SalamandraEvents", (object)json);
             }
             catch (Exception)
             {
@@ -196,13 +196,16 @@ namespace Salamandra.ViewModel
 
         private void PasteEvents()
         {
-            var text = Clipboard.GetText();
-
-            if (String.IsNullOrWhiteSpace(text))
+            if (!Clipboard.ContainsData("SalamandraEvents")) // ToDo: Set this string as a const.
                 return;
 
             try
             {
+                var text = (string)Clipboard.GetData("SalamandraEvents");
+
+                if (String.IsNullOrWhiteSpace(text))
+                    return;
+
                 var list = JsonConvert.DeserializeObject<List<ScheduledEvent>>(text);
 
                 if (list == null || list.Count == 0)

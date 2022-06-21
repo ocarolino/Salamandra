@@ -17,7 +17,23 @@ namespace Salamandra.Engine.Services.Playlists
             if (list == null)
                 return new List<ScheduledEvent>();
 
+            CheckForDuplicateIds(list);
+
             return list;
+        }
+
+        private void CheckForDuplicateIds(List<ScheduledEvent> listToCheck)
+        {
+            var groups = listToCheck.GroupBy(x => x.Id)
+                .Where(g => g.Count() > 1)
+                .Select(y => y.Key)
+                .ToList();
+
+            if (groups.Count > 0)
+            {
+                for (int i = 0; i < listToCheck.Count; i++)
+                    listToCheck[i].Id = i + 1;
+            }
         }
 
         public void Save(string filename, List<ScheduledEvent> entries)

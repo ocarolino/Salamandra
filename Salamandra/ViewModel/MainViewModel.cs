@@ -450,7 +450,7 @@ namespace Salamandra.ViewModel
 
             this.CutTracksCommand = new RelayCommand(p => CutTracks(p), p => !this.PlaylistLoading);
             this.CopyTracksCommand = new RelayCommand(p => CopyTracks(p), p => !this.PlaylistLoading);
-            this.PasteTracksCommand = new RelayCommand(p => PasteTracks(), p => !this.PlaylistLoading);
+            this.PasteTracksCommand = new RelayCommand(p => PasteTracks(), p => !this.PlaylistLoading && Clipboard.ContainsData("SalamandraTracks"));
 
         }
 

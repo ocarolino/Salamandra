@@ -206,6 +206,9 @@
                     <MenuItem Header="Excluir" InputGestureText="Del"
                               Command="{Binding DeleteEventsCommand}"
                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItems}"/>
+
+                    <MenuItem Header="Excluir todos" InputGestureText="Ctrl+Del"
+                              Command="{Binding DeleteAllEventsCommand}"/>
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>

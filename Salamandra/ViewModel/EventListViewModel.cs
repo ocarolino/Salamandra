@@ -33,6 +33,7 @@ namespace Salamandra.ViewModel
         public ICommand CreateEventCommand { get; set; }
         public ICommand EditEventCommand { get; set; }
         public ICommand DeleteEventsCommand { get; set; }
+        public ICommand DeleteAllEventsCommand { get; set; }
         public ICommand OpenEventListCommand { get; set; }
         public ICommand SaveEventListAsCommand { get; set; }
 
@@ -56,11 +57,12 @@ namespace Salamandra.ViewModel
             this.CreateEventCommand = new RelayCommand(p => CreateEvent());
             this.EditEventCommand = new RelayCommand(p => EditEvent(), p => this.SelectedScheduledEvent != null);
             this.DeleteEventsCommand = new RelayCommand(p => DeleteEvents(p), p => this.SelectedScheduledEvent != null);
+            this.DeleteAllEventsCommand = new RelayCommand(p => DeleteAllEvents());
             this.OpenEventListCommand = new RelayCommand(p => OpenEventList());
             this.SaveEventListAsCommand = new RelayCommand(p => SaveEventListAs());
 
             this.CopyEventsCommand = new RelayCommand(p => CopyEvents(p), p => this.SelectedScheduledEvent != null);
-            this.PasteEventsCommand = new RelayCommand(p => PasteEvents());
+            this.PasteEventsCommand = new RelayCommand(p => PasteEvents(), p => Clipboard.ContainsData("SalamandraEvents"));
         }
 
         public void Loading()
@@ -123,6 +125,11 @@ namespace Salamandra.ViewModel
                 foreach (var item in events)
                     this.Events.Remove(item);
             }
+        }
+
+        private void DeleteAllEvents()
+        {
+            this.Events.Clear();
         }
 
         private void OpenEventList()

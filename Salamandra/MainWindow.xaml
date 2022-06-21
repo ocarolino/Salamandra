@@ -55,6 +55,38 @@
                 <MenuItem Header="Salvar como..." Command="{Binding SavePlaylistAsCommand}"/>
             </MenuItem>
 
+            <MenuItem Header="Editar">
+                <MenuItem Header="Recortar" InputGestureText="Ctrl+X"
+                              Command="{Binding CutTracksCommand}"
+                              CommandParameter="{Binding SelectedItems, ElementName=playlist}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/Toolbar/cut.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Copiar" InputGestureText="Ctrl+C"
+                              Command="{Binding CopyTracksCommand}"
+                              CommandParameter="{Binding SelectedItems, ElementName=playlist}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/Toolbar/copy.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Colar" InputGestureText="Ctrl+V"
+                              Command="{Binding PasteTracksCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/Toolbar/paste.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <Separator/>
+
+                <MenuItem Header="Remover selecionadas" InputGestureText="Del"
+                          Command="{Binding RemoveTracksFromPlaylistCommand}" CommandParameter="{Binding SelectedItems, ElementName=playlist}"/>
+
+                <MenuItem Header="Remover todas" InputGestureText="Ctrl+Del" Command="{Binding RemoveAllTracksCommand}"/>
+            </MenuItem>
+
             <MenuItem Header="Playlist">
                 <MenuItem Header="Adicionar arquivos de áudio..." Command="{Binding AddFilesToPlaylistCommand}">
                     <MenuItem.Icon>
@@ -89,13 +121,6 @@
                 <Separator/>
 
                 <MenuItem Header="Embaralhar playlist" Command="{Binding ShufflePlaylistCommand}"/>
-
-                <Separator/>
-
-                <MenuItem Header="Remover selecionadas" InputGestureText="Del"
-                          Command="{Binding RemoveTracksFromPlaylistCommand}" CommandParameter="{Binding SelectedItems, ElementName=playlist}"/>
-
-                <MenuItem Header="Remover todas" InputGestureText="Ctrl+Del" Command="{Binding RemoveAllTracksCommand}"/>
             </MenuItem>
 
             <MenuItem Header="Mídia">

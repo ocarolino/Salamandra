@@ -25,6 +25,7 @@ using Salamandra.Engine.Comparer;
 using GongSolutions.Wpf.DragDrop;
 using System.Collections.Specialized;
 using Salamandra.Engine.Domain.Events;
+using Newtonsoft.Json;
 
 namespace Salamandra.ViewModel
 {
@@ -129,6 +130,10 @@ namespace Salamandra.ViewModel
         public ICommand? FocusOnNextTrackCommand { get; set; }
         public ICommand? OpenLogFolderCommand { get; set; }
         public ICommand? OpenCurrentLogCommand { get; set; }
+
+        public ICommand CutTracksCommand { get; set; }
+        public ICommand CopyTracksCommand { get; set; }
+        public ICommand PasteTracksCommand { get; set; }
         #endregion
 
         public Action? RemovePlaylistAdorner { get; set; }
@@ -442,6 +447,11 @@ namespace Salamandra.ViewModel
 
             this.OpenLogFolderCommand = new RelayCommand(p => OpenLogFolder());
             this.OpenCurrentLogCommand = new RelayCommand(p => OpenCurrentLog());
+
+            this.CutTracksCommand = new RelayCommand(p => CutTracks(p), p => !this.PlaylistLoading);
+            this.CopyTracksCommand = new RelayCommand(p => CopyTracks(p), p => !this.PlaylistLoading);
+            this.PasteTracksCommand = new RelayCommand(p => PasteTracks(), p => !this.PlaylistLoading);
+
         }
 
         private async Task AddFilesToPlaylist()
@@ -1396,6 +1406,68 @@ namespace Salamandra.ViewModel
             {
                 MessageBox.Show("O arquivo de registro ainda não existe.\n\nVerifique se houve alguma atividade ou se a geração de registros está ativa.",
                     "Salamandra", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void CutTracks(object? items)
+        {
+            if (items == null || !(items is System.Collections.IList))
+                return;
+
+            List<BaseTrack> tracks = ((System.Collections.IList)items).Cast<BaseTrack>().ToList();
+
+            this.PlaylistManager.RemoveTracks(tracks);
+
+            CopyTracks(tracks);
+        }
+
+        private void CopyTracks(object? items)
+        {
+            if (items == null || !(items is System.Collections.IList))
+                return;
+
+            List<BaseTrack> tracks = ((System.Collections.IList)items).Cast<BaseTrack>().ToList();
+
+            try
+            {
+                string json = JsonConvert.SerializeObject(tracks, Newtonsoft.Json.Formatting.Indented, new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.Auto
+                });
+
+                Clipboard.SetData("SalamandraTracks", (object)json);
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void PasteTracks()
+        {
+            if (!Clipboard.ContainsData("SalamandraTracks")) // ToDo: Set this string as a const.
+                return;
+
+            try
+            {
+                var text = (string)Clipboard.GetData("SalamandraTracks");
+
+                if (String.IsNullOrWhiteSpace(text))
+                    return;
+
+                var list = JsonConvert.DeserializeObject<List<BaseTrack>>(text, new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.Auto
+                });
+
+                if (list == null || list.Count == 0)
+                    return;
+
+                this.PlaylistManager.AddTracks(list,
+                    this.PlaylistManager.Tracks.IndexOf(this.SelectedTrack!));
+            }
+            catch (Exception ex)
+            {
             }
         }
 

@@ -183,6 +183,31 @@
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
+
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Copiar" InputGestureText="Ctrl+C"
+                              Command="{Binding CopyEventsCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItems}">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/Icons/Toolbar/copy.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Header="Colar" InputGestureText="Ctrl+V"
+                              Command="{Binding PasteEventsCommand}">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/Icons/Toolbar/paste.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Excluir" InputGestureText="Del"
+                              Command="{Binding DeleteEventsCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItems}"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
         </ListView>
 
         <Grid Grid.Row="1">

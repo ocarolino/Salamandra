@@ -36,6 +36,9 @@ namespace Salamandra.ViewModel
         public ICommand OpenEventListCommand { get; set; }
         public ICommand SaveEventListAsCommand { get; set; }
 
+        public ICommand CopyEventsCommand { get; set; }
+        public ICommand PasteEventsCommand { get; set; }
+
         public EventListViewModel(List<ScheduledEvent> events, ApplicationSettings applicationSettings)
         {
             this.ApplicationSettings = applicationSettings;
@@ -55,6 +58,9 @@ namespace Salamandra.ViewModel
             this.DeleteEventsCommand = new RelayCommand(p => DeleteEvents(p), p => this.SelectedScheduledEvent != null);
             this.OpenEventListCommand = new RelayCommand(p => OpenEventList());
             this.SaveEventListAsCommand = new RelayCommand(p => SaveEventListAs());
+
+            this.CopyEventsCommand = new RelayCommand(p => CopyEvents(p), p => this.SelectedScheduledEvent != null);
+            this.PasteEventsCommand = new RelayCommand(p => PasteEvents());
         }
 
         public void Loading()
@@ -165,6 +171,54 @@ namespace Salamandra.ViewModel
                 {
                     MessageBox.Show("Houve um erro ao salvar a lista.\n\n" + ex.Message, "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }
+        }
+
+        // ToDo: Refactor all of this serialization to the JsonEventsLoader class, separating between files and strings.
+        private void CopyEvents(object? items)
+        {
+            if (items == null || !(items is System.Collections.IList))
+                return;
+
+            List<ScheduledEvent> events = ((System.Collections.IList)items).Cast<ScheduledEvent>().ToList();
+
+            try
+            {
+                string json = JsonConvert.SerializeObject(events);
+
+                Clipboard.SetText(json);
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void PasteEvents()
+        {
+            var text = Clipboard.GetText();
+
+            if (String.IsNullOrWhiteSpace(text))
+                return;
+
+            try
+            {
+                var list = JsonConvert.DeserializeObject<List<ScheduledEvent>>(text);
+
+                if (list == null || list.Count == 0)
+                    return;
+
+                foreach (var item in list)
+                {
+                    // Todo: Create a get id method?
+                    this.LastEventId++;
+                    item.Id = this.LastEventId;
+
+                    this.Events.Add(item); // ToDo: AddRange.
+                }
+            }
+            catch (Exception ex)
+            {
             }
         }
 

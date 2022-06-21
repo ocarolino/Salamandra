@@ -129,7 +129,9 @@ namespace Salamandra.ViewModel
 
         private void DeleteAllEvents()
         {
-            this.Events.Clear();
+            if (MessageBox.Show("Tem certeza que deseja excluir todos os eventos?",
+                "Eventos", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                this.Events.Clear();
         }
 
         private void OpenEventList()

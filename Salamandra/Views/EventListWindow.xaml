@@ -211,6 +211,19 @@
                               Command="{Binding DeleteAllEventsCommand}"/>
                 </ContextMenu>
             </ListView.ContextMenu>
+
+            <ListView.InputBindings>
+                <KeyBinding Modifiers="Ctrl" Key="C" Command="{Binding CopyEventsCommand}"
+                            CommandParameter="{Binding SelectedItems, ElementName=EventsListView}"/>
+
+                <KeyBinding Modifiers="Ctrl" Key="V" Command="{Binding PasteEventsCommand}"/>
+
+                <KeyBinding Key="Delete" Command="{Binding DeleteEventsCommand}"
+                            CommandParameter="{Binding SelectedItems, ElementName=EventsListView}"/>
+
+                <KeyBinding Modifiers="Ctrl" Key="Delete" 
+                            Command="{Binding DeleteAllEventsCommand}"/>
+            </ListView.InputBindings>
         </ListView>
 
         <Grid Grid.Row="1">

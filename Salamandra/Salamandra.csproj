@@ -25,11 +25,14 @@
 	  <None Remove="Images\Icons\Playlist\remote_control.png" />
 	  <None Remove="Images\Icons\Toolbar\calendar.png" />
 	  <None Remove="Images\Icons\Toolbar\checkmark.png" />
+	  <None Remove="Images\Icons\Toolbar\copy.png" />
+	  <None Remove="Images\Icons\Toolbar\cut.png" />
 	  <None Remove="Images\Icons\Toolbar\delete.png" />
 	  <None Remove="Images\Icons\Toolbar\delete_row.png" />
 	  <None Remove="Images\Icons\Toolbar\new.png" />
 	  <None Remove="Images\Icons\Toolbar\next.png" />
 	  <None Remove="Images\Icons\Toolbar\open.png" />
+	  <None Remove="Images\Icons\Toolbar\paste.png" />
 	  <None Remove="Images\Icons\Toolbar\play.png" />
 	  <None Remove="Images\Icons\Toolbar\plus.png" />
 	  <None Remove="Images\Icons\Toolbar\save.png" />
@@ -72,6 +75,8 @@
 		<Resource Include="Images\Icons\Playlist\calendar.png" />
 		<Resource Include="Images\Icons\Playlist\playlist_file.png" />
 		<Resource Include="Images\Icons\Playlist\remote_control.png" />
+		<Resource Include="Images\Icons\Toolbar\copy.png" />
+		<Resource Include="Images\Icons\Toolbar\cut.png" />
 		<Resource Include="Images\Icons\Toolbar\delete_row.png" />
 		<Resource Include="Images\Icons\Toolbar\loop.png" />
 		<Resource Include="Images\Icons\Playlist\music_folder.png" />
@@ -81,6 +86,7 @@
 		<Resource Include="Images\Icons\Toolbar\new.png" />
 		<Resource Include="Images\Icons\Toolbar\next.png" />
 		<Resource Include="Images\Icons\Toolbar\open.png" />
+		<Resource Include="Images\Icons\Toolbar\paste.png" />
 		<Resource Include="Images\Icons\Toolbar\play.png" />
 		<Resource Include="Images\Icons\Toolbar\plus.png" />
 		<Resource Include="Images\Icons\Toolbar\save.png" />

@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="Eventos" Height="480" Width="800"
         WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded" WindowState="Maximized">
     <Window.Resources>
         <converters:DayOfWeekStringConverter x:Key="DayOfWeekStringConverter"/>
         <converters:StartingTimeToStringComparer x:Key="StartingTimeToStringComparer"/>
@@ -263,6 +263,13 @@
                 <Button Content="Excluir" Command="{Binding DeleteEventsCommand}"
                         CommandParameter="{Binding SelectedItems, ElementName=EventsListView}"
                         Width="80" Height="24" Margin="8 0 0 0"/>
+
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" 
+                           Margin="8 0 0 0" />
+
+                <Button Content="Excluir Expirados" Command="{Binding DeleteExpiredEventsCommand}"
+                        CommandParameter="{Binding SelectedItems, ElementName=EventsListView}"
+                        Width="120" Height="24" Margin="8 0 0 0"/>
 
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" 
                            Margin="8 0 0 0" />

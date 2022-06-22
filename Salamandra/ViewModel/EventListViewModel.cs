@@ -34,6 +34,7 @@ namespace Salamandra.ViewModel
         public ICommand EditEventCommand { get; set; }
         public ICommand DeleteEventsCommand { get; set; }
         public ICommand DeleteAllEventsCommand { get; set; }
+        public ICommand DeleteExpiredEventsCommand { get; set; }
         public ICommand OpenEventListCommand { get; set; }
         public ICommand SaveEventListAsCommand { get; set; }
 
@@ -58,6 +59,7 @@ namespace Salamandra.ViewModel
             this.EditEventCommand = new RelayCommand(p => EditEvent(), p => this.SelectedScheduledEvent != null);
             this.DeleteEventsCommand = new RelayCommand(p => DeleteEvents(p), p => this.SelectedScheduledEvent != null);
             this.DeleteAllEventsCommand = new RelayCommand(p => DeleteAllEvents());
+            this.DeleteExpiredEventsCommand = new RelayCommand(p => DeleteExpiredEvents());
             this.OpenEventListCommand = new RelayCommand(p => OpenEventList());
             this.SaveEventListAsCommand = new RelayCommand(p => SaveEventListAs());
 
@@ -132,6 +134,18 @@ namespace Salamandra.ViewModel
             if (MessageBox.Show("Tem certeza que deseja excluir todos os eventos?",
                 "Eventos", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 this.Events.Clear();
+        }
+
+        private void DeleteExpiredEvents()
+        {
+            if (MessageBox.Show("Tem certeza que deseja excluir os eventos expirados?",
+                "Eventos", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                var events = this.Events.Where(x => x.UseExpirationDateTime && x.ExpirationDateTime < DateTime.Now).ToList();
+
+                foreach (var item in events)
+                    this.Events.Remove(item); // ToDo: RemoveRange!
+            }
         }
 
         private void OpenEventList()

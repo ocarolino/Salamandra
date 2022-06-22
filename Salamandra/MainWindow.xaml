@@ -615,11 +615,6 @@
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
 
                                 <Style.Triggers>
-                                    <!-- Style for Alternation -->
-                                    <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
-                                        <Setter Property="Background" Value="#f0f0f0" />
-                                    </Trigger>
-
                                     <!-- Style for Next Track -->
                                     <DataTrigger Value="True">
                                         <DataTrigger.Binding>

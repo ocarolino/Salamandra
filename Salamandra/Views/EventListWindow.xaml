@@ -13,6 +13,7 @@
     <Window.Resources>
         <converters:DayOfWeekStringConverter x:Key="DayOfWeekStringConverter"/>
         <converters:StartingTimeToStringComparer x:Key="StartingTimeToStringComparer"/>
+        <converters:PastDateTimeToBooleanConverter x:Key="PastDateTimeToBooleanConverter"/>
     </Window.Resources>
     <Grid Margin="8">
         <Grid.RowDefinitions>
@@ -21,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <ListView Grid.Row="0" ItemsSource="{Binding Events}" SelectedItem="{Binding SelectedScheduledEvent}"
-                  Style="{StaticResource ListViewStyle}" ItemContainerStyle="{StaticResource ListViewItemStyle}"
+                  Style="{StaticResource ListViewStyle}"
                   VerticalContentAlignment="Center" Name="EventsListView" SnapsToDevicePixels="True">
             <ListView.View>
                 <GridView>
@@ -224,6 +225,27 @@
                 <KeyBinding Modifiers="Ctrl" Key="Delete" 
                             Command="{Binding DeleteAllEventsCommand}"/>
             </ListView.InputBindings>
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ListViewItemStyle}">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+
+
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding UseExpirationDateTime}" Value="True"/>
+                                <Condition Binding="{Binding ExpirationDateTime, Converter={StaticResource PastDateTimeToBooleanConverter}}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
+
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="FontStyle" Value="Italic"/>
+                                <Setter Property="Foreground" Value="DarkGray"/>
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
 
         <Grid Grid.Row="1">

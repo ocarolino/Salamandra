@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Salamandra.Views"
+        xmlns:enums="clr-namespace:Salamandra.Engine.Domain.Enums;assembly=Salamandra.Engine"
+        xmlns:converters="clr-namespace:Salamandra.Converters"
         mc:Ignorable="d"
         Title="Configurações" Height="480" Width="640"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
@@ -17,7 +19,11 @@
         <TabControl Grid.Row="0">
             <TabItem Header="Geral">
                 <StackPanel Margin="8">
-                    <CheckBox Content="Confirmar ao fechar caso player esteja tocando"
+                    <TextBlock Text="Idioma"/>
+                    <ComboBox SelectedItem="{Binding Settings.GeneralSettings.ViewLanguage}" Margin="0 4 0 0"
+                              ItemsSource="{Binding Source={converters:EnumBindingSource EnumType={x:Type enums:ViewLanguage}}}"/>
+
+                    <CheckBox Content="Confirmar ao fechar caso player esteja tocando" Margin="0 8 0 0"
                           IsChecked="{Binding Settings.PlayerSettings.AskToCloseWhenPlaying}" />
                     <CheckBox Content="Abrir última playlist quando iniciar o programa"
                           IsChecked="{Binding Settings.PlayerSettings.OpenLastPlaylistOnStartup}" Margin="0 8 0 0"/>
@@ -30,7 +36,7 @@
                     <CheckBox Content="Manter último estado do modo de exclusão ao iniciar"
                               IsChecked="{Binding Settings.PlayerSettings.KeepDeleteModeLastState}" Margin="0 8 0 0"/>
 
-                    <TextBlock Text="Caminho para arquivos de Locução de Horário" FontWeight="Bold" Margin="0 8 0 0"/>
+                    <TextBlock Text="Caminho para arquivos de Locução de Horário" Margin="0 8 0 0"/>
                     <Grid Margin="0 4 0 0">
                         <Grid.ColumnDefinitions >
                             <ColumnDefinition Width="*"/>

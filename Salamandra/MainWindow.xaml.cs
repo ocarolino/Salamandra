@@ -19,6 +19,8 @@ using System.ComponentModel;
 using Salamandra.Engine.Domain.Enums;
 using Salamandra.Engine.Comparer;
 using Salamandra.Engine.Domain;
+using Salamandra.Engine.Services;
+using Salamandra.Engine.Domain.Settings;
 
 namespace Salamandra
 {
@@ -32,11 +34,13 @@ namespace Salamandra
         private GridViewColumnHeader? listViewSortCol = null;
         private SortAdorner? listViewSortAdorner = null;
 
-        public MainWindow()
+        public MainWindow(LogManager applicationLogManager,
+            SettingsManager<ApplicationSettings> settingsManager,
+            ApplicationSettings applicationSettings)
         {
             InitializeComponent();
 
-            this.mainViewModel = new MainViewModel();
+            this.mainViewModel = new MainViewModel(applicationLogManager, settingsManager, applicationSettings);
             this.mainViewModel.RemovePlaylistAdorner += RemovePlaylistAdorner;
             this.mainViewModel.FocusOnTrack += FocusOnTrackHandler;
             this.DataContext = this.mainViewModel;

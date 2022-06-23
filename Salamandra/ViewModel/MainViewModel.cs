@@ -139,7 +139,9 @@ namespace Salamandra.ViewModel
         public Action? RemovePlaylistAdorner { get; set; }
         public Action<BaseTrack?>? FocusOnTrack { get; set; }
 
-        public MainViewModel()
+        public MainViewModel(LogManager applicationLogManager,
+            SettingsManager<ApplicationSettings> settingsManager,
+            ApplicationSettings applicationSettings)
         {
             this.SoundEngine = new SoundEngine();
             this.SoundEngine.SoundStopped += SoundEngine_SoundStopped;
@@ -163,8 +165,10 @@ namespace Salamandra.ViewModel
             this.PlaylistLoading = false;
             this.PlaylistInfoText = string.Empty;
 
-            this.SettingsManager = new SettingsManager<ApplicationSettings>("application_settings.json");
-            this.ApplicationSettings = new ApplicationSettings();
+            this.ApplicationLogManager = applicationLogManager;
+
+            this.SettingsManager = settingsManager;
+            this.ApplicationSettings = applicationSettings;
 
             this.ScheduleManager = new ScheduleManager();
             this.EnableEvents = true;
@@ -211,10 +215,7 @@ namespace Salamandra.ViewModel
 
         public async Task Loading()
         {
-            this.ApplicationLogManager = new LogManager(String.Empty, "Salamandra", false);
-            this.ApplicationLogManager.InitializeLog();
-
-            LoadSettingsFile();
+            ValidateSettings();
             ApplyRunningSettings();
             await ApplyStartupSettings();
             LoadEventsFile();
@@ -226,24 +227,11 @@ namespace Salamandra.ViewModel
                 StartPlayback();
         }
 
-        private void LoadSettingsFile()
+        private void ValidateSettings()
         {
-            try
-            {
-                var settings = this.SettingsManager.LoadSettings();
+            var devices = this.SoundEngine.EnumerateDevices();
 
-                if (settings != null)
-                    this.ApplicationSettings = settings;
-
-                var devices = this.SoundEngine.EnumerateDevices();
-
-                this.ApplicationSettings.DeviceSettings.CheckDevices(devices);
-            }
-            catch (Exception ex)
-            {
-                this.ApplicationLogManager?.Fatal(String.Format("Error loading settings file. Resetting to default settings. ({0})", ex.Message),
-                    "Settings");
-            }
+            this.ApplicationSettings.DeviceSettings.CheckDevices(devices);
         }
 
         private void LoadPlayerLogger(LoggingSettings loggingSettings)

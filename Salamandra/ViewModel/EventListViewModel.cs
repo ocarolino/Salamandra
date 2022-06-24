@@ -121,8 +121,9 @@ namespace Salamandra.ViewModel
 
             List<ScheduledEvent> events = ((System.Collections.IList)items).Cast<ScheduledEvent>().ToList();
 
-            if (MessageBox.Show("Tem certeza que deseja excluir os eventos selecionados?",
-                "Eventos", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show(Salamandra.Strings.ViewsTexts.EventListWindow_AreYouSureDelete,
+                Salamandra.Strings.ViewsTexts.EventListWindow_WindowTitle,
+                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 foreach (var item in events)
                     this.Events.Remove(item);
@@ -131,15 +132,17 @@ namespace Salamandra.ViewModel
 
         private void DeleteAllEvents()
         {
-            if (MessageBox.Show("Tem certeza que deseja excluir todos os eventos?",
-                "Eventos", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show(Salamandra.Strings.ViewsTexts.EventListWindow_AreYouSureDeleteAll,
+                Salamandra.Strings.ViewsTexts.EventListWindow_WindowTitle,
+                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 this.Events.Clear();
         }
 
         private void DeleteExpiredEvents()
         {
-            if (MessageBox.Show("Tem certeza que deseja excluir os eventos expirados?",
-                "Eventos", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show(Salamandra.Strings.ViewsTexts.EventListWindow_AreYouSureDeleteExpired,
+                Salamandra.Strings.ViewsTexts.EventListWindow_WindowTitle,
+                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 var events = this.Events.Where(x => x.UseExpirationDateTime && x.ExpirationDateTime < DateTime.Now).ToList();
 
@@ -151,7 +154,7 @@ namespace Salamandra.ViewModel
         private void OpenEventList()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Lista de Eventos (*.sche) | *.sche";
+            openFileDialog.Filter = "Lista de Eventos (*.sche) | *.sche"; // ToDo: Traduzir esses filtros.
 
             if (openFileDialog.ShowDialog() == true)
             {
@@ -171,7 +174,8 @@ namespace Salamandra.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Houve um erro ao abrir a lista.\n\n" + ex.Message, "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.EventListWindow_ErrorOpeningList, ex.Message),
+                        Salamandra.Strings.ViewsTexts.EventListWindow_WindowTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -192,7 +196,8 @@ namespace Salamandra.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Houve um erro ao salvar a lista.\n\n" + ex.Message, "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.EventListWindow_ErrorSavingList, ex.Message),
+                        Salamandra.Strings.ViewsTexts.EventListWindow_WindowTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

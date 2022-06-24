@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+<data name="EventListWindow_AreYouSureDelete" xml:space="preserve"><value>Are you sure you want to delete the selected events?</value></data>
+<data name="EventListWindow_AreYouSureDeleteAll" xml:space="preserve"><value>Are you sure you want to delete all events?</value></data>
+<data name="EventListWindow_AreYouSureDeleteExpired" xml:space="preserve"><value>Are you sure you want to delete the expired events?</value></data>
+<data name="EventListWindow_Delete" xml:space="preserve"><value>Delete</value></data>
+<data name="EventListWindow_DeleteAll" xml:space="preserve"><value>Delete all events</value></data>
+<data name="EventListWindow_DeleteExpired" xml:space="preserve"><value>Delete expired</value></data>
+<data name="EventListWindow_Edit" xml:space="preserve"><value>Edit</value></data>
+<data name="EventListWindow_ErrorOpeningList" xml:space="preserve"><value>There was an error opening the event list file</value></data>
+<data name="EventListWindow_ErrorSavingList" xml:space="preserve"><value>There was an error saving the event list file</value></data>
+<data name="EventListWindow_Expiration" xml:space="preserve"><value>Expiration</value></data>
+<data name="EventListWindow_File" xml:space="preserve"><value>File</value></data>
+<data name="EventListWindow_Hours" xml:space="preserve"><value>Hours</value></data>
+<data name="EventListWindow_Mode" xml:space="preserve"><value>Mode</value></data>
+<data name="EventListWindow_New" xml:space="preserve"><value>New</value></data>
+<data name="EventListWindow_Open" xml:space="preserve"><value>Open...</value></data>
+<data name="EventListWindow_Save" xml:space="preserve"><value>Save...</value></data>
+<data name="EventListWindow_Time" xml:space="preserve"><value>Time</value></data>
+<data name="EventListWindow_WeekDays" xml:space="preserve"><value>Week Days</value></data>
+<data name="EventListWindow_WindowTitle" xml:space="preserve"><value>Events</value></data>
+<data name="EventWindow_Cue" xml:space="preserve"><value>Cue</value></data>
+<data name="EventWindow_DateAndTime" xml:space="preserve"><value>Date and Time</value></data>
+<data name="EventWindow_EnableMaximumWait" xml:space="preserve"><value>Enable maximum wait</value></data>
+<data name="EventWindow_EventType" xml:space="preserve"><value>Event Type</value></data>
+<data name="EventWindow_ExpirationDateTime" xml:space="preserve"><value>Expiration date and time</value></data>
+<data name="EventWindow_HighPriority" xml:space="preserve"><value>High Priority</value></data>
+<data name="EventWindow_Immediate" xml:space="preserve"><value>Immediate</value></data>
+<data name="EventWindow_LowPriority" xml:space="preserve"><value>Low Priority</value></data>
+<data name="EventWindow_MaximumWait" xml:space="preserve"><value>Maximum Wait</value></data>
+<data name="EventWindow_MaximumWaitAction" xml:space="preserve"><value>Action after waiting time</value></data>
+<data name="EventWindow_MaximumWaitTime" xml:space="preserve"><value>Maximum wait time</value></data>
+<data name="EventWindow_OrderAndPriority" xml:space="preserve"><value>Order and Priority</value></data>
+<data name="EventWindow_OtherHours" xml:space="preserve"><value>Other hours</value></data>
+<data name="EventWindow_QueueOrder" xml:space="preserve"><value>Queue order</value></data>
+<data name="EventWindow_StartingDateTime" xml:space="preserve"><value>Starting date and time</value></data>
+<data name="EventWindow_TimeAndDay" xml:space="preserve"><value>Time and days</value></data>
+<data name="EventWindow_WeekDays" xml:space="preserve"><value>Week Days</value></data>
+<data name="MainWindow_AddAudioTracks" xml:space="preserve"><value>Add audio files...</value></data>
+<data name="MainWindow_AddPlaylistTrack" xml:space="preserve"><value>Add playlist file...</value></data>
+<data name="MainWindow_AddRandomTrack" xml:space="preserve"><value>Add random track...</value></data>
+<data name="MainWindow_AddStopPlaylistTrack" xml:space="preserve"><value>Add command to stop playlist...</value></data>
+<data name="MainWindow_AddTimeAnnouncement" xml:space="preserve"><value>Add time announcement track...</value></data>
+<data name="MainWindow_Delete" xml:space="preserve"><value>Delete selected tracks</value></data>
+<data name="MainWindow_DeleteAll" xml:space="preserve"><value>Delete all tracks</value></data>
+<data name="MainWindow_Edit" xml:space="preserve"><value>Edit</value></data>
+<data name="MainWindow_File" xml:space="preserve"><value>File</value></data>
+<data name="MainWindow_Media" xml:space="preserve"><value>Media</value></data>
+<data name="MainWindow_New" xml:space="preserve"><value>New</value></data>
+<data name="MainWindow_NowPlaying" xml:space="preserve"><value>Now Playing</value></data>
+<data name="MainWindow_NowPlaying_EndTime" xml:space="preserve"><value>End Time</value></data>
+<data name="MainWindow_NowPlaying_RemainingTime" xml:space="preserve"><value>Remaining Time</value></data>
+<data name="MainWindow_Open" xml:space="preserve"><value>Open...</value></data>
+<data name="MainWindow_OpenLogFolder" xml:space="preserve"><value>Open logs folder</value></data>
+<data name="MainWindow_OpenTodayLog" xml:space="preserve"><value>Open today's log</value></data>
+<data name="MainWindow_PlayingNext" xml:space="preserve"><value>Next Track</value></data>
+<data name="MainWindow_Playlist" xml:space="preserve"><value>Playlist</value></data>
+<data name="MainWindow_Playlist" xml:space="preserve"><value>Playlist</value></data>
+<data name="MainWindow_PlayNextTrack" xml:space="preserve"><value>Play next track</value></data>
+<data name="MainWindow_Save" xml:space="preserve"><value>Save</value></data>
+<data name="MainWindow_SaveAs" xml:space="preserve"><value>Save as...</value></data>
+<data name="MainWindow_Settings" xml:space="preserve"><value>Settings</value></data>
+<data name="MainWindow_ShufflePlaylist" xml:space="preserve"><value>Shuffle playlist</value></data>
+<data name="MainWindow_StartPlayback" xml:space="preserve"><value>Start playback</value></data>
+<data name="MainWindow_StopAfterCurrentTrack" xml:space="preserve"><value>Stop after current track</value></data>
+<data name="MainWindow_StopPlayback" xml:space="preserve"><value>Stop playback</value></data>
+<data name="MainWindow_Tags_Album" xml:space="preserve"><value>Album</value></data>
+<data name="MainWindow_Tags_Artist" xml:space="preserve"><value>Artist</value></data>
+<data name="MainWindow_Tags_Comment" xml:space="preserve"><value>Comment</value></data>
+<data name="MainWindow_Tags_Genre" xml:space="preserve"><value>Genre</value></data>
+<data name="MainWindow_Tags_Title" xml:space="preserve"><value>Title</value></data>
+<data name="MainWindow_Tags_Year" xml:space="preserve"><value>Year</value></data>
+<data name="MainWindow_Tools" xml:space="preserve"><value>Tools</value></data>
+<data name="MainWindow_UpcomingEvents" xml:space="preserve"><value>Upcoming Events</value></data>
+<data name="MainWindow_UpcomingEvents_Mode" xml:space="preserve"><value>Mode</value></data>
+<data name="MainWindow_UpcomingEvents_Name" xml:space="preserve"><value>Name</value></data>
+<data name="MainWindow_UpcomingEvents_Time" xml:space="preserve"><value>Time</value></data>
+<data name="Misc_Cancel" xml:space="preserve"><value>Cancel</value></data>
+<data name="Misc_Copy" xml:space="preserve"><value>Copy</value></data>
+<data name="Misc_Cut" xml:space="preserve"><value>Cut</value></data>
+<data name="Misc_Events_Immediate" xml:space="preserve"><value>Immediate</value></data>
+<data name="Misc_Events_NotImmediate" xml:space="preserve"><value>Delayed</value></data>
+<data name="Misc_Ok" xml:space="preserve"><value>Ok</value></data>
+<data name="Misc_Paste" xml:space="preserve"><value>Paste</value></data>
+<data name="SettingsWindow_AskWhenCloseWhilePlaying" xml:space="preserve"><value>Ask when close while player is still active</value></data>
+<data name="SettingsWindow_CueOutputDevice" xml:space="preserve"><value>Cue Sound Output Device</value></data>
+<data name="SettingsWindow_EnableLogs" xml:space="preserve"><value>Enable Logs</value></data>
+<data name="SettingsWindow_General" xml:space="preserve"><value>General</value></data>
+<data name="SettingsWindow_KeepDeleteModeLastState" xml:space="preserve"><value>Keep last state of 'Delete Mode' on startup</value></data>
+<data name="SettingsWindow_KeepEventsEnabledOnStartup" xml:space="preserve"><value>Always keep events enabled on startup</value></data>
+<data name="SettingsWindow_Language" xml:space="preserve"><value>Language</value></data>
+<data name="SettingsWindow_LogOutputPath" xml:space="preserve"><value>Logs folder</value></data>
+<data name="SettingsWindow_Logs" xml:space="preserve"><value>Logs</value></data>
+<data name="SettingsWindow_LogsExplanation" xml:space="preserve"><value>Logs are text files that report on playback activity on a daily basis, as well as errors like invalid files or output devices.</value></data>
+<data name="SettingsWindow_MainOutputDevice" xml:space="preserve"><value>Main Sound Output Device</value></data>
+<data name="SettingsWindow_OpenLastPlaylistOnStartup" xml:space="preserve"><value>Open last playlist at startup</value></data>
+<data name="SettingsWindow_Outputs" xml:space="preserve"><value>Outputs</value></data>
+<data name="SettingsWindow_ShufflePlaylistOnStartup" xml:space="preserve"><value>Shuffle playlist at startup</value></data>
+<data name="SettingsWindow_StartPlaybackOnStartup" xml:space="preserve"><value>Start playback at startup</value></data>
+<data name="SettingsWindow_TimeAnnouncementFilesPath" xml:space="preserve"><value>Time Announcement files path</value></data>
+
+
+  
+</root>

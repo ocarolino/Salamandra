@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:Salamandra.Views"
         xmlns:enums="clr-namespace:Salamandra.Engine.Domain.Enums;assembly=Salamandra.Engine"
         xmlns:converters="clr-namespace:Salamandra.Converters"
+        xmlns:strings="clr-namespace:Salamandra.Strings"
         mc:Ignorable="d"
-        Title="Eventos" Height="480" Width="800"
+        Title="{x:Static strings:ViewsTexts.EventListWindow_WindowTitle}" Height="480" Width="800"
         WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
         Loaded="Window_Loaded" WindowState="Maximized">
     <Window.Resources>
@@ -26,9 +27,10 @@
                   VerticalContentAlignment="Center" Name="EventsListView" SnapsToDevicePixels="True">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn  Width="80">
+                    <GridViewColumn Width="80">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="StartingDateTime" Click="GridViewColumnHeader_Click">Hora</GridViewColumnHeader>
+                            <GridViewColumnHeader Content="{x:Static strings:ViewsTexts.EventListWindow_Time}"
+                                                  Tag="StartingDateTime" Click="GridViewColumnHeader_Click"/>
                         </GridViewColumn.Header>
 
                         <GridViewColumn.CellTemplate>
@@ -49,16 +51,37 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn DisplayMemberBinding="{converters:SwitchBinding Immediate, Imediato, Espera}"
-                                    Width="100">
+                    <GridViewColumn Width="100">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Immediate" Click="GridViewColumnHeader_Click">Modo</GridViewColumnHeader>
+                            <GridViewColumnHeader Content="{x:Static strings:ViewsTexts.EventListWindow_Mode}" 
+                                                  Tag="Immediate" Click="GridViewColumnHeader_Click"/>
                         </GridViewColumn.Header>
+
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Immediate}" Value="False">
+                                                    <Setter Property="Text" Value="{x:Static strings:ViewsTexts.Misc_Events_NotImmediate}"/>
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding Immediate}" Value="True">
+                                                    <Setter Property="Text" Value="{x:Static strings:ViewsTexts.Misc_Events_Immediate}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
                     <GridViewColumn Width="200">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="FriendlyName" Click="GridViewColumnHeader_Click">Arquivo</GridViewColumnHeader>
+                            <GridViewColumnHeader Content="{x:Static strings:ViewsTexts.EventListWindow_File}"
+                                Tag="FriendlyName" Click="GridViewColumnHeader_Click"/>
                         </GridViewColumn.Header>
 
                         <GridViewColumn.CellTemplate>
@@ -112,7 +135,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Dias da Semana" Width="120">
+                    <GridViewColumn Header="{x:Static strings:ViewsTexts.EventListWindow_WeekDays}" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Expander x:Name="DaysOfWeekListbox">
@@ -140,7 +163,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Horas" Width="120">
+                    <GridViewColumn Header="{x:Static strings:ViewsTexts.EventListWindow_Hours}" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Expander x:Name="HoursListbox">
@@ -168,7 +191,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Expiração" Width="120">
+                    <GridViewColumn Header="{x:Static strings:ViewsTexts.EventListWindow_Expiration}" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding ExpirationDateTime, StringFormat='dd/MM/yyyy HH:mm:ss'}"
@@ -187,7 +210,7 @@
 
             <ListView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Copiar" InputGestureText="Ctrl+C"
+                    <MenuItem Header="{x:Static strings:ViewsTexts.Misc_Copy}" InputGestureText="Ctrl+C"
                               Command="{Binding CopyEventsCommand}"
                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItems}">
                         <MenuItem.Icon>
@@ -195,7 +218,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <MenuItem Header="Colar" InputGestureText="Ctrl+V"
+                    <MenuItem Header="{x:Static strings:ViewsTexts.Misc_Paste}" InputGestureText="Ctrl+V"
                               Command="{Binding PasteEventsCommand}">
                         <MenuItem.Icon>
                             <Image Source="/Images/Icons/Toolbar/paste.png" />
@@ -204,11 +227,11 @@
 
                     <Separator/>
 
-                    <MenuItem Header="Excluir" InputGestureText="Del"
+                    <MenuItem Header="{x:Static strings:ViewsTexts.EventListWindow_Delete}" InputGestureText="Del"
                               Command="{Binding DeleteEventsCommand}"
                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItems}"/>
 
-                    <MenuItem Header="Excluir todos" InputGestureText="Ctrl+Del"
+                    <MenuItem Header="{x:Static strings:ViewsTexts.EventListWindow_DeleteAll}" InputGestureText="Ctrl+Del"
                               Command="{Binding DeleteAllEventsCommand}"/>
                 </ContextMenu>
             </ListView.ContextMenu>
@@ -256,27 +279,27 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0 8 0 0" HorizontalAlignment="Right">
-                <Button Content="Novo" Command="{Binding CreateEventCommand}"
+                <Button Content="{x:Static strings:ViewsTexts.EventListWindow_New}" Command="{Binding CreateEventCommand}"
                     Width="80" Height="24"/>
-                <Button Content="Editar" Command="{Binding EditEventCommand}"
+                <Button Content="{x:Static strings:ViewsTexts.EventListWindow_Edit}" Command="{Binding EditEventCommand}"
                     Width="80" Height="24" Margin="8 0 0 0"/>
-                <Button Content="Excluir" Command="{Binding DeleteEventsCommand}"
+                <Button Content="{x:Static strings:ViewsTexts.EventListWindow_Delete}" Command="{Binding DeleteEventsCommand}"
                         CommandParameter="{Binding SelectedItems, ElementName=EventsListView}"
                         Width="80" Height="24" Margin="8 0 0 0"/>
 
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" 
                            Margin="8 0 0 0" />
 
-                <Button Content="Excluir Expirados" Command="{Binding DeleteExpiredEventsCommand}"
+                <Button Content="{x:Static strings:ViewsTexts.EventListWindow_DeleteExpired}" Command="{Binding DeleteExpiredEventsCommand}"
                         CommandParameter="{Binding SelectedItems, ElementName=EventsListView}"
                         Width="120" Height="24" Margin="8 0 0 0"/>
 
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" 
                            Margin="8 0 0 0" />
 
-                <Button Content="Abrir..." Command="{Binding OpenEventListCommand}"
+                <Button Content="{x:Static strings:ViewsTexts.EventListWindow_Open}" Command="{Binding OpenEventListCommand}"
                     Width="80" Height="24" Margin="8 0 0 0"/>
-                <Button Content="Salvar..." Command="{Binding SaveEventListAsCommand}"
+                <Button Content="{x:Static strings:ViewsTexts.EventListWindow_Save}" Command="{Binding SaveEventListAsCommand}"
                     Width="80" Height="24" Margin="8 0 0 0"/>
 
             </StackPanel>
@@ -284,12 +307,11 @@
             <Separator Grid.Row="1" Margin="0 8 0 0"/>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 8 0 0" HorizontalAlignment="Right">
-                <Button Content="Confirmar" IsDefault="True" Name="ConfirmButton" Click="ConfirmButton_Click"
+                <Button Content="{x:Static strings:ViewsTexts.Misc_Ok}" IsDefault="True" Name="ConfirmButton" Click="ConfirmButton_Click"
                     Width="80" Height="24"/>
-                <Button Content="Cancelar" 
+                <Button Content="{x:Static strings:ViewsTexts.Misc_Cancel}" 
                     Width="80" Height="24" Margin="8 0 0 0" IsCancel="True"/>
             </StackPanel>
-
         </Grid>
     </Grid>
 </Window>

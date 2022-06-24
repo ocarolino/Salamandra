@@ -95,4 +95,19 @@
 		<Resource Include="Images\Icons\Toolbar\trash.png" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="Strings\ViewsTexts.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>ViewsTexts.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Strings\ViewsTexts.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>ViewsTexts.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+
 </Project>

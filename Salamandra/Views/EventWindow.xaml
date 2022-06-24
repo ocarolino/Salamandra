@@ -4,12 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:enums="clr-namespace:Salamandra.Engine.Domain.Enums;assembly=Salamandra.Engine"
         xmlns:local="clr-namespace:Salamandra.Views"
+        xmlns:enums="clr-namespace:Salamandra.Engine.Domain.Enums;assembly=Salamandra.Engine"
         xmlns:converters="clr-namespace:Salamandra.Converters"
+        xmlns:strings="clr-namespace:Salamandra.Strings"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         mc:Ignorable="d"
-        Title="Evento" Width="480" SizeToContent="Height"
+        Title="{x:Static strings:ViewsTexts.EventWindow_WindowTitle}" Width="480" SizeToContent="Height"
         ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
         Loaded="Window_Loaded">
     <Window.Resources>
@@ -24,9 +25,9 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
-            <GroupBox Header="Início e Término">
+            <GroupBox Header="{x:Static strings:ViewsTexts.EventWindow_DateAndTime}">
                 <StackPanel Margin="4">
-                    <TextBlock Text="Data e Hora de Início"/>
+                    <TextBlock Text="{x:Static strings:ViewsTexts.EventWindow_StartingDateTime}"/>
 
                     <Grid Margin="0 4 0 0">
                         <Grid.ColumnDefinitions>
@@ -57,7 +58,7 @@
                             </xctk:TimePicker.Style>
                         </xctk:TimePicker>
 
-                        <CheckBox Grid.Column="2" Content="Imediato" IsChecked="{Binding ScheduledEvent.Immediate}"
+                        <CheckBox Grid.Column="2" Content="{x:Static strings:ViewsTexts.EventWindow_Immediate}" IsChecked="{Binding ScheduledEvent.Immediate}"
                               Margin="8 0 0 0" VerticalAlignment="Center"
                                   ToolTip="Define se o evento tocará imediatamente no horário selecionado, ou se ele irá esperar a faixa atual terminar">
                             <i:Interaction.Triggers>
@@ -73,7 +74,7 @@
                     </Grid>
 
                     <CheckBox IsChecked="{Binding ScheduledEvent.UseExpirationDateTime}"
-                          Content="Data e Hora de Expiração" Margin="0 8 0 0"
+                              Content="{x:Static strings:ViewsTexts.EventWindow_ExpirationDateTime}" Margin="0 8 0 0"
                               ToolTip="Define se o evento não será mais considerado como ativo a partir de certa data"/>
 
                     <Grid Margin="0 4 0 0" IsEnabled="{Binding ScheduledEvent.UseExpirationDateTime}">
@@ -95,14 +96,14 @@
                 </StackPanel>
             </GroupBox>
 
-            <GroupBox Header="Horários e Dias" Margin="0 8 0 0">
+            <GroupBox Header="{x:Static strings:ViewsTexts.EventWindow_TimeAndDay}" Margin="0 8 0 0">
                 <StackPanel Margin="4">
-                    <CheckBox IsChecked="{Binding ScheduledEvent.UsePlayingHours}" Content="Outros Horários"
+                    <CheckBox IsChecked="{Binding ScheduledEvent.UsePlayingHours}" Content="{x:Static strings:ViewsTexts.EventWindow_OtherHours}"
                               ToolTip="Define se o evento tocará em várias horas. Se ativo, serão consideradas apenas as horas selecionadas"/>
 
                     <xctk:CheckListBox ItemsSource="{Binding Hours}" SelectedItemsOverride="{Binding ScheduledEvent.PlayingHours}"
                                    IsEnabled="{Binding ScheduledEvent.UsePlayingHours}" Margin="0 4 0 0"
-                                   IsSelectAllActive="True" SelectAllContent="Selecionar Todos">
+                                   IsSelectAllActive="True" SelectAllContent="{x:Static strings:ViewsTexts.Misc_SelectAll}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid Columns="4" />
@@ -116,12 +117,12 @@
                         </xctk:CheckListBox.ItemTemplate>
                     </xctk:CheckListBox>
 
-                    <CheckBox IsChecked="{Binding ScheduledEvent.UseDaysOfWeek}" Content="Dias da Semana" Margin="0 8 0 0"
+                    <CheckBox IsChecked="{Binding ScheduledEvent.UseDaysOfWeek}" Content="{x:Static strings:ViewsTexts.EventListWindow_WeekDays}" Margin="0 8 0 0"
                               ToolTip="Se ativo, o evento tocará nos dias da semana selecionados, em vez de somente na data programada"/>
 
                     <xctk:CheckListBox ItemsSource="{Binding Days}" SelectedItemsOverride="{Binding ScheduledEvent.DaysOfWeek}"
                                    IsEnabled="{Binding ScheduledEvent.UseDaysOfWeek}" Margin="0 4 0 0"
-                                   IsSelectAllActive="True" SelectAllContent="Selecionar Todos">
+                                   IsSelectAllActive="True" SelectAllContent="{x:Static strings:ViewsTexts.Misc_SelectAll}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid Columns="7" />
@@ -137,7 +138,7 @@
                 </StackPanel>
             </GroupBox>
 
-            <GroupBox Header="Tipo do Evento" Margin="0 8 0 0">
+            <GroupBox Header="{x:Static strings:ViewsTexts.EventWindow_EventType}" Margin="0 8 0 0">
                 <StackPanel Margin="4">
                     <ComboBox SelectedItem="{Binding ScheduledEvent.TrackScheduleType}"
                               ItemsSource="{Binding Source={converters:EnumBindingSource EnumType={x:Type enums:TrackScheduleType}}}"
@@ -165,9 +166,9 @@
                 </StackPanel>
             </GroupBox>
 
-            <GroupBox Header="Ordenação e Prioridade" Margin="0 8 0 0">
+            <GroupBox Header="{x:Static strings:ViewsTexts.EventWindow_OrderAndPriority}" Margin="0 8 0 0">
                 <StackPanel Margin="4">
-                    <TextBlock Text="Ordem do Evento na Fila"/>
+                    <TextBlock Text="{x:Static strings:ViewsTexts.EventWindow_QueueOrder}"/>
 
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -177,16 +178,16 @@
                         </Grid.ColumnDefinitions>
 
                         <xctk:IntegerUpDown Value="{Binding ScheduledEvent.QueueOrder}"
-                                        Increment="1" Minimum="1" Maximum="99"
+                                        Increment="1" Minimum="0" Maximum="99"
                                         Margin="0 4 0 0" MinWidth="148"
                                             ToolTip="Define a ordem na fila para eventos que tem o mesmo horário"/>
 
-                        <RadioButton Content="Prioridade Alta" Grid.Column="1" 
+                        <RadioButton Content="{x:Static strings:ViewsTexts.EventWindow_HighPriority}" Grid.Column="1" 
                                      VerticalAlignment="Center" Margin="8 0 0 0"
                                      IsChecked="{Binding ScheduledEvent.EventPriority, Converter={StaticResource EnumToBool}, ConverterParameter={x:Static enums:EventPriority.High}}"
                                      ToolTip="A prioridade dos eventos define se um evento continuará ou não na fila caso um evento já esteja tocando, eventos de mesma ou maior prioridade continuam na fila, enquanto eventos de prioridade menor são descartados"/>
 
-                        <RadioButton Content="Prioridade Baixa" Grid.Column="2" 
+                        <RadioButton Content="{x:Static strings:ViewsTexts.EventWindow_LowPriority}" Grid.Column="2" 
                                      VerticalAlignment="Center" Margin="8 0 0 0"
                                      IsChecked="{Binding ScheduledEvent.EventPriority, Converter={StaticResource EnumToBool}, ConverterParameter={x:Static enums:EventPriority.Low}}"
                                      ToolTip="A prioridade dos eventos define se um evento continuará ou não na fila caso um evento já esteja tocando, eventos de mesma ou maior prioridade continuam na fila, enquanto eventos de prioridade menor são descartados"/>
@@ -194,9 +195,9 @@
                 </StackPanel>
             </GroupBox>
 
-            <GroupBox Header="Espera Máxima" Margin="0 8 0 0">
+            <GroupBox Header="{x:Static strings:ViewsTexts.EventWindow_MaximumWait}" Margin="0 8 0 0">
                 <StackPanel Margin="4" IsEnabled="{Binding ScheduledEvent.Immediate, Converter={StaticResource InverseBooleanConverter}}">
-                    <CheckBox IsChecked="{Binding ScheduledEvent.UseMaximumWait}" Content="Utilizar Espera Máxima"
+                    <CheckBox IsChecked="{Binding ScheduledEvent.UseMaximumWait}" Content="{x:Static strings:ViewsTexts.EventWindow_EnableMaximumWait}"
                               ToolTip="A espera máxima, se ativa, define o que acontecerá para eventos que ficam enfileirados na fila após um tempo determinado"/>
 
                     <Grid Margin="0 8 0 0">
@@ -206,7 +207,7 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="0" IsEnabled="{Binding ScheduledEvent.UseMaximumWait}">
-                            <TextBlock Text="Tempo máximo de espera"/>
+                            <TextBlock Text="{x:Static strings:ViewsTexts.EventWindow_MaximumWaitTime}"/>
                             <xctk:TimeSpanUpDown Value="{Binding ScheduledEvent.MaximumWaitTime}"
                                                  Minimum="00:00:00" Maximum="00:59:59" Margin="0 4 0 0"
                                                  ToolTip="O tempo máximo, em minutos e segundos, que o evento esperará na fila antes de executar a ação selecionada"/>
@@ -214,7 +215,7 @@
 
                         <StackPanel Grid.Column="1" IsEnabled="{Binding ScheduledEvent.UseMaximumWait}"
                                     Margin="8 0 0 0">
-                            <TextBlock Text="Ação após espera"/>
+                            <TextBlock Text="{x:Static strings:ViewsTexts.EventWindow_MaximumWaitAction}"/>
 
                             <ComboBox SelectedItem="{Binding ScheduledEvent.MaximumWaitAction}" Margin="0 4 0 0"
                                       ItemsSource="{Binding Source={converters:EnumBindingSource EnumType={x:Type enums:MaximumWaitAction}}}"
@@ -231,13 +232,13 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="Pré-Escuta" Command="{Binding OpenPreListenCommand}"
+            <Button Content="{x:Static strings:ViewsTexts.EventWindow_Cue}" Command="{Binding OpenPreListenCommand}"
                     Width="80" Height="24"/>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="Confirmar" IsDefault="True" Name="ConfirmButton" Command="{Binding ValidateAndCloseCommand}"
+                <Button Content="{x:Static strings:ViewsTexts.Misc_Ok}" IsDefault="True" Name="ConfirmButton" Command="{Binding ValidateAndCloseCommand}"
                     Width="80" Height="24"/>
-                <Button Content="Cancelar" 
+                <Button Content="{x:Static strings:ViewsTexts.Misc_Cancel}" 
                     Width="80" Height="24" Margin="8 0 0 0" IsCancel="True"/>
             </StackPanel>
         </Grid>

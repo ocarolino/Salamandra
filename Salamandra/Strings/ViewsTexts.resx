@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-
+  
 <data name="EventListWindow_AreYouSureDelete" xml:space="preserve"><value>Are you sure you want to delete the selected events?</value></data>
 <data name="EventListWindow_AreYouSureDeleteAll" xml:space="preserve"><value>Are you sure you want to delete all events?</value></data>
 <data name="EventListWindow_AreYouSureDeleteExpired" xml:space="preserve"><value>Are you sure you want to delete the expired events?</value></data>
@@ -216,7 +216,13 @@
 <data name="SettingsWindow_ShufflePlaylistOnStartup" xml:space="preserve"><value>Shuffle playlist at startup</value></data>
 <data name="SettingsWindow_StartPlaybackOnStartup" xml:space="preserve"><value>Start playback at startup</value></data>
 <data name="SettingsWindow_TimeAnnouncementFilesPath" xml:space="preserve"><value>Time Announcement files path</value></data>
+<data name="EventWindow_WindowTitle" xml:space="preserve"><value>Event</value></data>
+<data name="Misc_SelectAll" xml:space="preserve"><value>Select all</value></data>
+<data name="EventWindow_Validation_ExpirationAfterStarting" xml:space="preserve"><value>The expiration date must be later than the start date.</value></data>
+<data name="EventWindow_Validation_MustSelectHours" xml:space="preserve"><value>The hours that the event will play must be selected.</value></data>
+<data name="EventWindow_Validation_MustSelectDays" xml:space="preserve"><value>The days that the event will play must be selected.</value></data>
+<data name="EventWindow_Validation_MustSelectFile" xml:space="preserve"><value>The file must be selected.</value></data>
+<data name="EventWindow_Validation_WaitingTimeGreaterThanZero" xml:space="preserve"><value>The maximum wait time must be greater than zero.</value></data>
+<data name="EventWindow_Validation_DelayedStartPlayback" xml:space="preserve"><value>A delayed start playback event may not have the desired effect.</value></data>
 
-
-  
 </root>

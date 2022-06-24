@@ -113,6 +113,7 @@ namespace Salamandra.ViewModel
 
         private string GetFileDialogFilter(TrackScheduleType trackScheduleType)
         {
+            // ToDo: Traduções desses filtros
             switch (trackScheduleType)
             {
                 case TrackScheduleType.AudioFileTrack:
@@ -160,49 +161,49 @@ namespace Salamandra.ViewModel
 
         private void ValidateAndClose()
         {
+            // ToDo: Considerar somente o dia em casos de eventos que usam mais de um horário
             if (this.ScheduledEvent.UseExpirationDateTime &&
                 this.ScheduledEvent.StartingDateTime >= this.ScheduledEvent.ExpirationDateTime)
             {
-                MessageBox.Show("A data de expiração do evento deve ser posterior a data de início.", "Eventos",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Salamandra.Strings.ViewsTexts.EventWindow_Validation_ExpirationAfterStarting,
+                    Salamandra.Strings.ViewsTexts.EventWindow_WindowTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (this.ScheduledEvent.UsePlayingHours && this.ScheduledEvent.PlayingHours.Count == 0)
             {
-                MessageBox.Show("Os horários que o evento tocará devem ser selecionados.", "Eventos",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Salamandra.Strings.ViewsTexts.EventWindow_Validation_MustSelectHours,
+                    Salamandra.Strings.ViewsTexts.EventWindow_WindowTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (this.ScheduledEvent.UseDaysOfWeek && this.ScheduledEvent.DaysOfWeek.Count == 0)
             {
-                MessageBox.Show("Os dias que o evento tocará devem ser selecionados.", "Eventos",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Salamandra.Strings.ViewsTexts.EventWindow_Validation_MustSelectDays,
+                    Salamandra.Strings.ViewsTexts.EventWindow_WindowTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (this.EventRequiresPath && String.IsNullOrWhiteSpace(this.ScheduledEvent.Filename))
             {
-                MessageBox.Show("O arquivo do evento deve ser selecionado.", "Eventos",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Salamandra.Strings.ViewsTexts.EventWindow_Validation_MustSelectFile,
+                    Salamandra.Strings.ViewsTexts.EventWindow_WindowTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (this.ScheduledEvent.UseMaximumWait && this.ScheduledEvent.MaximumWaitTime <= TimeSpan.Zero)
             {
-                MessageBox.Show("Um evento com espera máxima deve ter o tempo de espera maior que zero.", "Eventos",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Salamandra.Strings.ViewsTexts.EventWindow_Validation_WaitingTimeGreaterThanZero,
+                    Salamandra.Strings.ViewsTexts.EventWindow_WindowTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (this.ScheduledEvent.TrackScheduleType == TrackScheduleType.StartPlaylistTrack &&
-    !this.ScheduledEvent.Immediate)
+                !this.ScheduledEvent.Immediate)
             {
-                MessageBox.Show("Um evento de iniciar a playlist que não seja imediato pode não ter o efeito desejado.", "Eventos",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(Salamandra.Strings.ViewsTexts.EventWindow_Validation_DelayedStartPlayback,
+                    Salamandra.Strings.ViewsTexts.EventWindow_WindowTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             }
-
 
             PrepareFriendlyName();
             UpdateTimestamps();
@@ -225,6 +226,7 @@ namespace Salamandra.ViewModel
 
         private void PrepareFriendlyName()
         {
+            // ToDo: Traduções desses tipos de strings!
             switch (this.ScheduledEvent.TrackScheduleType)
             {
                 case TrackScheduleType.AudioFileTrack:

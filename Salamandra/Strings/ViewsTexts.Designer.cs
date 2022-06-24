@@ -376,11 +376,74 @@ namespace Salamandra.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A delayed start playback event may not have the desired effect..
+        /// </summary>
+        public static string EventWindow_Validation_DelayedStartPlayback {
+            get {
+                return ResourceManager.GetString("EventWindow_Validation_DelayedStartPlayback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The expiration date must be later than the start date..
+        /// </summary>
+        public static string EventWindow_Validation_ExpirationAfterStarting {
+            get {
+                return ResourceManager.GetString("EventWindow_Validation_ExpirationAfterStarting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The days that the event will play must be selected..
+        /// </summary>
+        public static string EventWindow_Validation_MustSelectDays {
+            get {
+                return ResourceManager.GetString("EventWindow_Validation_MustSelectDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file must be selected..
+        /// </summary>
+        public static string EventWindow_Validation_MustSelectFile {
+            get {
+                return ResourceManager.GetString("EventWindow_Validation_MustSelectFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The hours that the event will play must be selected..
+        /// </summary>
+        public static string EventWindow_Validation_MustSelectHours {
+            get {
+                return ResourceManager.GetString("EventWindow_Validation_MustSelectHours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum wait time must be greater than zero..
+        /// </summary>
+        public static string EventWindow_Validation_WaitingTimeGreaterThanZero {
+            get {
+                return ResourceManager.GetString("EventWindow_Validation_WaitingTimeGreaterThanZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Week Days.
         /// </summary>
         public static string EventWindow_WeekDays {
             get {
                 return ResourceManager.GetString("EventWindow_WeekDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Event.
+        /// </summary>
+        public static string EventWindow_WindowTitle {
+            get {
+                return ResourceManager.GetString("EventWindow_WindowTitle", resourceCulture);
             }
         }
         
@@ -786,6 +849,15 @@ namespace Salamandra.Strings {
         public static string Misc_Paste {
             get {
                 return ResourceManager.GetString("Misc_Paste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select all.
+        /// </summary>
+        public static string Misc_SelectAll {
+            get {
+                return ResourceManager.GetString("Misc_SelectAll", resourceCulture);
             }
         }
         

@@ -6,8 +6,9 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:Salamandra.Views"
         xmlns:controls="clr-namespace:Salamandra.Controls"
+        xmlns:strings="clr-namespace:Salamandra.Strings"
         mc:Ignorable="d"
-        Title="Pré-Escuta" Width="300" SizeToContent="Height" 
+        Title="{x:Static strings:ViewsTexts.PreListenWindow_WindowTitle}" Width="300" SizeToContent="Height" 
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
         Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid Margin="8">

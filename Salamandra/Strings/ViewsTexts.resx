@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  
-<data name="EventListWindow_AreYouSureDelete" xml:space="preserve"><value>Are you sure you want to delete the selected events?</value></data>
+ 
+ <data name="EventListWindow_AreYouSureDelete" xml:space="preserve"><value>Are you sure you want to delete the selected events?</value></data>
 <data name="EventListWindow_AreYouSureDeleteAll" xml:space="preserve"><value>Are you sure you want to delete all events?</value></data>
 <data name="EventListWindow_AreYouSureDeleteExpired" xml:space="preserve"><value>Are you sure you want to delete the expired events?</value></data>
 <data name="EventListWindow_Delete" xml:space="preserve"><value>Delete</value></data>
@@ -231,6 +231,7 @@
 <data name="SettingsWindow_TimeAnnouncementFilesPath" xml:space="preserve"><value>Time Announcement files path</value></data>
 <data name="SettingsWindow_Validation_ValidLogFolder" xml:space="preserve"><value>It is necessary to choose a valid directory to generate the logs.</value></data>
 <data name="SettingsWindow_WindowTitle" xml:space="preserve"><value>Settings</value></data>
+<data name="PreListenWindow_WindowTitle" xml:space="preserve"><value>Cue</value></data>
 
 
 </root>

@@ -916,6 +916,15 @@ namespace Salamandra.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cue.
+        /// </summary>
+        public static string PreListenWindow_WindowTitle {
+            get {
+                return ResourceManager.GetString("PreListenWindow_WindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ask when close while player is still active.
         /// </summary>
         public static string SettingsWindow_AskWhenCloseWhilePlaying {

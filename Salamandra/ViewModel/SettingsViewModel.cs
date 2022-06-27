@@ -61,7 +61,8 @@ namespace Salamandra.ViewModel
                 if (String.IsNullOrWhiteSpace(this.Settings.LoggingSettings.LoggingOutputPath) ||
                     !Directory.Exists(this.Settings.LoggingSettings.LoggingOutputPath))
                 {
-                    MessageBox.Show("Para gerar os registros é necessário escolher um diretório válido.", "Eventos",
+                    MessageBox.Show(Salamandra.Strings.ViewsTexts.SettingsWindow_Validation_ValidLogFolder,
+                        Salamandra.Strings.ViewsTexts.SettingsWindow_WindowTitle,
                         MessageBoxButton.OK, MessageBoxImage.Warning);
 
                     return false;

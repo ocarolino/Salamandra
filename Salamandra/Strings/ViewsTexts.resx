@@ -224,5 +224,8 @@
 <data name="EventWindow_Validation_MustSelectFile" xml:space="preserve"><value>The file must be selected.</value></data>
 <data name="EventWindow_Validation_WaitingTimeGreaterThanZero" xml:space="preserve"><value>The maximum wait time must be greater than zero.</value></data>
 <data name="EventWindow_Validation_DelayedStartPlayback" xml:space="preserve"><value>A delayed start playback event may not have the desired effect.</value></data>
+<data name="SettingsWindow_WindowTitle" xml:space="preserve"><value>Settings</value></data>
+<data name="SettingsWindow_Validation_ValidLogFolder" xml:space="preserve"><value>It is necessary to choose a valid directory to generate the logs.</value></data>
+
 
 </root>

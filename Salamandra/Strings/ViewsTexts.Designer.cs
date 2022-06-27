@@ -1004,5 +1004,23 @@ namespace Salamandra.Strings {
                 return ResourceManager.GetString("SettingsWindow_TimeAnnouncementFilesPath", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It is necessary to choose a valid directory to generate the logs..
+        /// </summary>
+        public static string SettingsWindow_Validation_ValidLogFolder {
+            get {
+                return ResourceManager.GetString("SettingsWindow_Validation_ValidLogFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string SettingsWindow_WindowTitle {
+            get {
+                return ResourceManager.GetString("SettingsWindow_WindowTitle", resourceCulture);
+            }
+        }
     }
 }

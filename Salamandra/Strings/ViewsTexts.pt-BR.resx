@@ -205,6 +205,7 @@
 <data name="EventWindow_Validation_MustSelectFile" xml:space="preserve"><value>O arquivo do evento deve ser selecionado.</value></data>
 <data name="EventWindow_Validation_WaitingTimeGreaterThanZero" xml:space="preserve"><value>Um evento com espera máxima deve ter o tempo de espera maior que zero.</value></data>
 <data name="EventWindow_Validation_DelayedStartPlayback" xml:space="preserve"><value>Um evento de iniciar a playlist que não seja imediato pode não ter o efeito desejado.</value></data>
-
+<data name="SettingsWindow_WindowTitle" xml:space="preserve"><value>Configurações</value></data>
+<data name="SettingsWindow_Validation_ValidLogFolder" xml:space="preserve"><value>Para gerar os registros é necessário escolher um diretório válido.</value></data>
 
 </root>

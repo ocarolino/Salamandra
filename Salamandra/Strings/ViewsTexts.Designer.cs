@@ -493,6 +493,15 @@ namespace Salamandra.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cue.
+        /// </summary>
+        public static string MainWindow_Cue {
+            get {
+                return ResourceManager.GetString("MainWindow_Cue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete selected tracks.
         /// </summary>
         public static string MainWindow_Delete {
@@ -525,6 +534,15 @@ namespace Salamandra.Strings {
         public static string MainWindow_File {
             get {
                 return ResourceManager.GetString("MainWindow_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mark as next track.
+        /// </summary>
+        public static string MainWindow_MarkAsNext {
+            get {
+                return ResourceManager.GetString("MainWindow_MarkAsNext", resourceCulture);
             }
         }
         
@@ -619,11 +637,38 @@ namespace Salamandra.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duration.
+        /// </summary>
+        public static string MainWindow_Playlist_Duration {
+            get {
+                return ResourceManager.GetString("MainWindow_Playlist_Duration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        public static string MainWindow_Playlist_File {
+            get {
+                return ResourceManager.GetString("MainWindow_Playlist_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Play next track.
         /// </summary>
         public static string MainWindow_PlayNextTrack {
             get {
                 return ResourceManager.GetString("MainWindow_PlayNextTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play selected track.
+        /// </summary>
+        public static string MainWindow_PlaySelectedTrack {
+            get {
+                return ResourceManager.GetString("MainWindow_PlaySelectedTrack", resourceCulture);
             }
         }
         
@@ -786,6 +831,15 @@ namespace Salamandra.Strings {
         public static string MainWindow_UpcomingEvents_Time {
             get {
                 return ResourceManager.GetString("MainWindow_UpcomingEvents_Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Salamandra.
+        /// </summary>
+        public static string Misc_ApplicationTitle {
+            get {
+                return ResourceManager.GetString("Misc_ApplicationTitle", resourceCulture);
             }
         }
         

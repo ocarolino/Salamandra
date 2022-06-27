@@ -153,16 +153,25 @@
 <data name="EventWindow_QueueOrder" xml:space="preserve"><value>Queue order</value></data>
 <data name="EventWindow_StartingDateTime" xml:space="preserve"><value>Starting date and time</value></data>
 <data name="EventWindow_TimeAndDay" xml:space="preserve"><value>Time and days</value></data>
+<data name="EventWindow_Validation_DelayedStartPlayback" xml:space="preserve"><value>A delayed start playback event may not have the desired effect.</value></data>
+<data name="EventWindow_Validation_ExpirationAfterStarting" xml:space="preserve"><value>The expiration date must be later than the start date.</value></data>
+<data name="EventWindow_Validation_MustSelectDays" xml:space="preserve"><value>The days that the event will play must be selected.</value></data>
+<data name="EventWindow_Validation_MustSelectFile" xml:space="preserve"><value>The file must be selected.</value></data>
+<data name="EventWindow_Validation_MustSelectHours" xml:space="preserve"><value>The hours that the event will play must be selected.</value></data>
+<data name="EventWindow_Validation_WaitingTimeGreaterThanZero" xml:space="preserve"><value>The maximum wait time must be greater than zero.</value></data>
 <data name="EventWindow_WeekDays" xml:space="preserve"><value>Week Days</value></data>
+<data name="EventWindow_WindowTitle" xml:space="preserve"><value>Event</value></data>
 <data name="MainWindow_AddAudioTracks" xml:space="preserve"><value>Add audio files...</value></data>
 <data name="MainWindow_AddPlaylistTrack" xml:space="preserve"><value>Add playlist file...</value></data>
 <data name="MainWindow_AddRandomTrack" xml:space="preserve"><value>Add random track...</value></data>
 <data name="MainWindow_AddStopPlaylistTrack" xml:space="preserve"><value>Add command to stop playlist...</value></data>
 <data name="MainWindow_AddTimeAnnouncement" xml:space="preserve"><value>Add time announcement track...</value></data>
+<data name="MainWindow_Cue" xml:space="preserve"><value>Cue</value></data>
 <data name="MainWindow_Delete" xml:space="preserve"><value>Delete selected tracks</value></data>
 <data name="MainWindow_DeleteAll" xml:space="preserve"><value>Delete all tracks</value></data>
 <data name="MainWindow_Edit" xml:space="preserve"><value>Edit</value></data>
 <data name="MainWindow_File" xml:space="preserve"><value>File</value></data>
+<data name="MainWindow_MarkAsNext" xml:space="preserve"><value>Mark as next track</value></data>
 <data name="MainWindow_Media" xml:space="preserve"><value>Media</value></data>
 <data name="MainWindow_New" xml:space="preserve"><value>New</value></data>
 <data name="MainWindow_NowPlaying" xml:space="preserve"><value>Now Playing</value></data>
@@ -173,8 +182,10 @@
 <data name="MainWindow_OpenTodayLog" xml:space="preserve"><value>Open today's log</value></data>
 <data name="MainWindow_PlayingNext" xml:space="preserve"><value>Next Track</value></data>
 <data name="MainWindow_Playlist" xml:space="preserve"><value>Playlist</value></data>
-<data name="MainWindow_Playlist" xml:space="preserve"><value>Playlist</value></data>
+<data name="MainWindow_Playlist_Duration" xml:space="preserve"><value>Duration</value></data>
+<data name="MainWindow_Playlist_File" xml:space="preserve"><value>File</value></data>
 <data name="MainWindow_PlayNextTrack" xml:space="preserve"><value>Play next track</value></data>
+<data name="MainWindow_PlaySelectedTrack" xml:space="preserve"><value>Play selected track</value></data>
 <data name="MainWindow_Save" xml:space="preserve"><value>Save</value></data>
 <data name="MainWindow_SaveAs" xml:space="preserve"><value>Save as...</value></data>
 <data name="MainWindow_Settings" xml:space="preserve"><value>Settings</value></data>
@@ -193,6 +204,7 @@
 <data name="MainWindow_UpcomingEvents_Mode" xml:space="preserve"><value>Mode</value></data>
 <data name="MainWindow_UpcomingEvents_Name" xml:space="preserve"><value>Name</value></data>
 <data name="MainWindow_UpcomingEvents_Time" xml:space="preserve"><value>Time</value></data>
+<data name="Misc_ApplicationTitle" xml:space="preserve"><value>Salamandra</value></data>
 <data name="Misc_Cancel" xml:space="preserve"><value>Cancel</value></data>
 <data name="Misc_Copy" xml:space="preserve"><value>Copy</value></data>
 <data name="Misc_Cut" xml:space="preserve"><value>Cut</value></data>
@@ -200,6 +212,7 @@
 <data name="Misc_Events_NotImmediate" xml:space="preserve"><value>Delayed</value></data>
 <data name="Misc_Ok" xml:space="preserve"><value>Ok</value></data>
 <data name="Misc_Paste" xml:space="preserve"><value>Paste</value></data>
+<data name="Misc_SelectAll" xml:space="preserve"><value>Select all</value></data>
 <data name="SettingsWindow_AskWhenCloseWhilePlaying" xml:space="preserve"><value>Ask when close while player is still active</value></data>
 <data name="SettingsWindow_CueOutputDevice" xml:space="preserve"><value>Cue Sound Output Device</value></data>
 <data name="SettingsWindow_EnableLogs" xml:space="preserve"><value>Enable Logs</value></data>
@@ -216,16 +229,8 @@
 <data name="SettingsWindow_ShufflePlaylistOnStartup" xml:space="preserve"><value>Shuffle playlist at startup</value></data>
 <data name="SettingsWindow_StartPlaybackOnStartup" xml:space="preserve"><value>Start playback at startup</value></data>
 <data name="SettingsWindow_TimeAnnouncementFilesPath" xml:space="preserve"><value>Time Announcement files path</value></data>
-<data name="EventWindow_WindowTitle" xml:space="preserve"><value>Event</value></data>
-<data name="Misc_SelectAll" xml:space="preserve"><value>Select all</value></data>
-<data name="EventWindow_Validation_ExpirationAfterStarting" xml:space="preserve"><value>The expiration date must be later than the start date.</value></data>
-<data name="EventWindow_Validation_MustSelectHours" xml:space="preserve"><value>The hours that the event will play must be selected.</value></data>
-<data name="EventWindow_Validation_MustSelectDays" xml:space="preserve"><value>The days that the event will play must be selected.</value></data>
-<data name="EventWindow_Validation_MustSelectFile" xml:space="preserve"><value>The file must be selected.</value></data>
-<data name="EventWindow_Validation_WaitingTimeGreaterThanZero" xml:space="preserve"><value>The maximum wait time must be greater than zero.</value></data>
-<data name="EventWindow_Validation_DelayedStartPlayback" xml:space="preserve"><value>A delayed start playback event may not have the desired effect.</value></data>
-<data name="SettingsWindow_WindowTitle" xml:space="preserve"><value>Settings</value></data>
 <data name="SettingsWindow_Validation_ValidLogFolder" xml:space="preserve"><value>It is necessary to choose a valid directory to generate the logs.</value></data>
+<data name="SettingsWindow_WindowTitle" xml:space="preserve"><value>Settings</value></data>
 
 
 </root>

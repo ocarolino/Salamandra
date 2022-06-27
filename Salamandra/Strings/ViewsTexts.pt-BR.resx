@@ -134,16 +134,25 @@
 <data name="EventWindow_QueueOrder" xml:space="preserve"><value>Ordem do Evento na Fila</value></data>
 <data name="EventWindow_StartingDateTime" xml:space="preserve"><value>Data e Hora de Início</value></data>
 <data name="EventWindow_TimeAndDay" xml:space="preserve"><value>Horários e Dias</value></data>
+<data name="EventWindow_Validation_DelayedStartPlayback" xml:space="preserve"><value>Um evento de iniciar a playlist que não seja imediato pode não ter o efeito desejado.</value></data>
+<data name="EventWindow_Validation_ExpirationAfterStarting" xml:space="preserve"><value>A data de expiração do evento deve ser posterior a data de início.</value></data>
+<data name="EventWindow_Validation_MustSelectDays" xml:space="preserve"><value>Os dias que o evento tocará devem ser selecionados.</value></data>
+<data name="EventWindow_Validation_MustSelectFile" xml:space="preserve"><value>O arquivo do evento deve ser selecionado.</value></data>
+<data name="EventWindow_Validation_MustSelectHours" xml:space="preserve"><value>Os horários que o evento tocará devem ser selecionados.</value></data>
+<data name="EventWindow_Validation_WaitingTimeGreaterThanZero" xml:space="preserve"><value>Um evento com espera máxima deve ter o tempo de espera maior que zero.</value></data>
 <data name="EventWindow_WeekDays" xml:space="preserve"><value>Dias da Semana</value></data>
+<data name="EventWindow_WindowTitle" xml:space="preserve"><value>Evento</value></data>
 <data name="MainWindow_AddAudioTracks" xml:space="preserve"><value>Adicionar arquivos de áudio...</value></data>
 <data name="MainWindow_AddPlaylistTrack" xml:space="preserve"><value>Adicionar arquivo de playlist....</value></data>
 <data name="MainWindow_AddRandomTrack" xml:space="preserve"><value>Adicionar arquivo aleatório de pasta...</value></data>
 <data name="MainWindow_AddStopPlaylistTrack" xml:space="preserve"><value>Adicionar comando para Parar Playlist</value></data>
 <data name="MainWindow_AddTimeAnnouncement" xml:space="preserve"><value>Adicionar locução de horário...</value></data>
+<data name="MainWindow_Cue" xml:space="preserve"><value>Pré-Escuta</value></data>
 <data name="MainWindow_Delete" xml:space="preserve"><value>Remover faixas selecionadas</value></data>
 <data name="MainWindow_DeleteAll" xml:space="preserve"><value>Remover todas as faixas</value></data>
 <data name="MainWindow_Edit" xml:space="preserve"><value>Editar</value></data>
 <data name="MainWindow_File" xml:space="preserve"><value>Arquivo</value></data>
+<data name="MainWindow_MarkAsNext" xml:space="preserve"><value>Marcar como próxima</value></data>
 <data name="MainWindow_Media" xml:space="preserve"><value>Mídia</value></data>
 <data name="MainWindow_New" xml:space="preserve"><value>Novo</value></data>
 <data name="MainWindow_NowPlaying" xml:space="preserve"><value>Reproduzindo agora</value></data>
@@ -154,8 +163,10 @@
 <data name="MainWindow_OpenTodayLog" xml:space="preserve"><value>Abrir registro de hoje</value></data>
 <data name="MainWindow_PlayingNext" xml:space="preserve"><value>Próxima faixa</value></data>
 <data name="MainWindow_Playlist" xml:space="preserve"><value>Playlist</value></data>
-<data name="MainWindow_Playlist" xml:space="preserve"><value>Playlist</value></data>
+<data name="MainWindow_Playlist_Duration" xml:space="preserve"><value>Duração</value></data>
+<data name="MainWindow_Playlist_File" xml:space="preserve"><value>Arquivo</value></data>
 <data name="MainWindow_PlayNextTrack" xml:space="preserve"><value>Próxima faixa</value></data>
+<data name="MainWindow_PlaySelectedTrack" xml:space="preserve"><value>Tocar faixa selecionada</value></data>
 <data name="MainWindow_Save" xml:space="preserve"><value>Salvar</value></data>
 <data name="MainWindow_SaveAs" xml:space="preserve"><value>Salvar como...</value></data>
 <data name="MainWindow_Settings" xml:space="preserve"><value>Configurações</value></data>
@@ -174,6 +185,7 @@
 <data name="MainWindow_UpcomingEvents_Mode" xml:space="preserve"><value>Início</value></data>
 <data name="MainWindow_UpcomingEvents_Name" xml:space="preserve"><value>Evento</value></data>
 <data name="MainWindow_UpcomingEvents_Time" xml:space="preserve"><value>Hora</value></data>
+<data name="Misc_ApplicationTitle" xml:space="preserve"><value>Salamandra</value></data>
 <data name="Misc_Cancel" xml:space="preserve"><value>Cancelar</value></data>
 <data name="Misc_Copy" xml:space="preserve"><value>Copiar</value></data>
 <data name="Misc_Cut" xml:space="preserve"><value>Recortar</value></data>
@@ -181,6 +193,7 @@
 <data name="Misc_Events_NotImmediate" xml:space="preserve"><value>Atrasado</value></data>
 <data name="Misc_Ok" xml:space="preserve"><value>Confirmar</value></data>
 <data name="Misc_Paste" xml:space="preserve"><value>Colar</value></data>
+<data name="Misc_SelectAll" xml:space="preserve"><value>Selecionar todos</value></data>
 <data name="SettingsWindow_AskWhenCloseWhilePlaying" xml:space="preserve"><value>Confirmar ao fechar caso player esteja tocando</value></data>
 <data name="SettingsWindow_CueOutputDevice" xml:space="preserve"><value>Dispositivo de Saída de Pré Escuta</value></data>
 <data name="SettingsWindow_EnableLogs" xml:space="preserve"><value>Ativar registros</value></data>
@@ -197,15 +210,8 @@
 <data name="SettingsWindow_ShufflePlaylistOnStartup" xml:space="preserve"><value>Embaralhar playlist quando iniciar o programa</value></data>
 <data name="SettingsWindow_StartPlaybackOnStartup" xml:space="preserve"><value>Reproduzir playlist quando iniciar o programa</value></data>
 <data name="SettingsWindow_TimeAnnouncementFilesPath" xml:space="preserve"><value>Caminho para arquivos de Locução de Horário</value></data>
-<data name="EventWindow_WindowTitle" xml:space="preserve"><value>Evento</value></data>
-<data name="Misc_SelectAll" xml:space="preserve"><value>Selecionar todos</value></data>
-<data name="EventWindow_Validation_ExpirationAfterStarting" xml:space="preserve"><value>A data de expiração do evento deve ser posterior a data de início.</value></data>
-<data name="EventWindow_Validation_MustSelectHours" xml:space="preserve"><value>Os horários que o evento tocará devem ser selecionados.</value></data>
-<data name="EventWindow_Validation_MustSelectDays" xml:space="preserve"><value>Os dias que o evento tocará devem ser selecionados.</value></data>
-<data name="EventWindow_Validation_MustSelectFile" xml:space="preserve"><value>O arquivo do evento deve ser selecionado.</value></data>
-<data name="EventWindow_Validation_WaitingTimeGreaterThanZero" xml:space="preserve"><value>Um evento com espera máxima deve ter o tempo de espera maior que zero.</value></data>
-<data name="EventWindow_Validation_DelayedStartPlayback" xml:space="preserve"><value>Um evento de iniciar a playlist que não seja imediato pode não ter o efeito desejado.</value></data>
-<data name="SettingsWindow_WindowTitle" xml:space="preserve"><value>Configurações</value></data>
 <data name="SettingsWindow_Validation_ValidLogFolder" xml:space="preserve"><value>Para gerar os registros é necessário escolher um diretório válido.</value></data>
-
-</root>
+<data name="SettingsWindow_WindowTitle" xml:space="preserve"><value>Configurações</value></data>
+	
+	
+	</root>

@@ -25,9 +25,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Strings\EnumResources.pt-BR.resx">
+      <CustomToolNamespace></CustomToolNamespace>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Strings\EnumResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EnumResources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace></CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
 

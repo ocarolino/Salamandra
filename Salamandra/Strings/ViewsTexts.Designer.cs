@@ -376,6 +376,141 @@ namespace Salamandra.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expiration date for the event.
+        /// </summary>
+        public static string EventWindow_Tooltip_ExpirationDate {
+            get {
+                return ResourceManager.GetString("EventWindow_Tooltip_ExpirationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expiration time for the event.
+        /// </summary>
+        public static string EventWindow_Tooltip_ExpirationTime {
+            get {
+                return ResourceManager.GetString("EventWindow_Tooltip_ExpirationTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File/folder that will be used for the event.
+        /// </summary>
+        public static string EventWindow_Tooltip_Filename {
+            get {
+                return ResourceManager.GetString("EventWindow_Tooltip_Filename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets that this is a event that will start at the selected time, if not checked, it will wait the current track to end.
+        /// </summary>
+        public static string EventWindow_Tooltip_Immediate {
+            get {
+                return ResourceManager.GetString("EventWindow_Tooltip_Immediate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The action that will be executed after the maximum wait time.
+        /// </summary>
+        public static string EventWindow_Tooltip_MaximumWaitAction {
+            get {
+                return ResourceManager.GetString("EventWindow_Tooltip_MaximumWaitAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum time, in minutes and seconds, that the event will wait before executing the selected action.
+        /// </summary>
+        public static string EventWindow_Tooltip_MaximumWaitTime {
+            get {
+                return ResourceManager.GetString("EventWindow_Tooltip_MaximumWaitTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Event priority defines whether or not an event will continue in the queue when there&apos;s an event is already playing. Events of the same or higher priority remain in the queue, while lower priority events are discarded.
+        /// </summary>
+        public static string EventWindow_Tooltip_Priority {
+            get {
+                return ResourceManager.GetString("EventWindow_Tooltip_Priority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets the order on the queue for events that share the exact same time.
+        /// </summary>
+        public static string EventWindow_Tooltip_QueueOrder {
+            get {
+                return ResourceManager.GetString("EventWindow_Tooltip_QueueOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starting date for the event.
+        /// </summary>
+        public static string EventWindow_Tooltip_StartingDate {
+            get {
+                return ResourceManager.GetString("EventWindow_Tooltip_StartingDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starting time for the event.
+        /// </summary>
+        public static string EventWindow_Tooltip_StartingTime {
+            get {
+                return ResourceManager.GetString("EventWindow_Tooltip_StartingTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Event track type.
+        /// </summary>
+        public static string EventWindow_Tooltip_TrackType {
+            get {
+                return ResourceManager.GetString("EventWindow_Tooltip_TrackType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set that this event will play in multiple days. If not checked, the event will play only in the selected date.
+        /// </summary>
+        public static string EventWindow_Tooltip_UseDaysOfWeek {
+            get {
+                return ResourceManager.GetString("EventWindow_Tooltip_UseDaysOfWeek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets that this is an event that will be no longer active after the expiration date.
+        /// </summary>
+        public static string EventWindow_Tooltip_UseExpirationDate {
+            get {
+                return ResourceManager.GetString("EventWindow_Tooltip_UseExpirationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum wait defines what will happen for events that are still in the queue after their starting time.
+        /// </summary>
+        public static string EventWindow_Tooltip_UseMaximumWait {
+            get {
+                return ResourceManager.GetString("EventWindow_Tooltip_UseMaximumWait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets that this event will play in multiple hours.
+        /// </summary>
+        public static string EventWindow_Tooltip_UsePlayingHours {
+            get {
+                return ResourceManager.GetString("EventWindow_Tooltip_UsePlayingHours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A delayed start playback event may not have the desired effect..
         /// </summary>
         public static string EventWindow_Validation_DelayedStartPlayback {

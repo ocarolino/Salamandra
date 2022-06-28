@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-
-<data name="EventListWindow_AreYouSureDelete" xml:space="preserve"><value>Are you sure you want to delete the selected events?</value></data>
+  
+  <data name="EventListWindow_AreYouSureDelete" xml:space="preserve"><value>Are you sure you want to delete the selected events?</value></data>
 <data name="EventListWindow_AreYouSureDeleteAll" xml:space="preserve"><value>Are you sure you want to delete all events?</value></data>
 <data name="EventListWindow_AreYouSureDeleteExpired" xml:space="preserve"><value>Are you sure you want to delete the expired events?</value></data>
 <data name="EventListWindow_Delete" xml:space="preserve"><value>Delete</value></data>
@@ -271,5 +271,20 @@
 <data name="MainWindow_Tooltip_OpenEventList" xml:space="preserve"><value>Open scheduled events list</value></data>
 <data name="MainWindow_Tooltip_DeleteMode" xml:space="preserve"><value>Delete track after playing</value></data>
 <data name="MainWindow_Tooltip_LoopMode" xml:space="preserve"><value>Loop track</value></data>
+<data name="EventWindow_Tooltip_StartingDate" xml:space="preserve"><value>Starting date for the event</value></data>
+<data name="EventWindow_Tooltip_StartingTime" xml:space="preserve"><value>Starting time for the event</value></data>
+<data name="EventWindow_Tooltip_Immediate" xml:space="preserve"><value>Sets that this is a event that will start at the selected time, if not checked, it will wait the current track to end</value></data>
+<data name="EventWindow_Tooltip_UseExpirationDate" xml:space="preserve"><value>Sets that this is an event that will be no longer active after the expiration date</value></data>
+<data name="EventWindow_Tooltip_ExpirationDate" xml:space="preserve"><value>Expiration date for the event</value></data>
+<data name="EventWindow_Tooltip_ExpirationTime" xml:space="preserve"><value>Expiration time for the event</value></data>
+<data name="EventWindow_Tooltip_UsePlayingHours" xml:space="preserve"><value>Sets that this event will play in multiple hours</value></data>
+<data name="EventWindow_Tooltip_UseDaysOfWeek" xml:space="preserve"><value>Set that this event will play in multiple days. If not checked, the event will play only in the selected date</value></data>
+<data name="EventWindow_Tooltip_TrackType" xml:space="preserve"><value>Event track type</value></data>
+<data name="EventWindow_Tooltip_Filename" xml:space="preserve"><value>File/folder that will be used for the event</value></data>
+<data name="EventWindow_Tooltip_QueueOrder" xml:space="preserve"><value>Sets the order on the queue for events that share the exact same time</value></data>
+<data name="EventWindow_Tooltip_Priority" xml:space="preserve"><value>Event priority defines whether or not an event will continue in the queue when there's an event is already playing. Events of the same or higher priority remain in the queue, while lower priority events are discarded</value></data>
+<data name="EventWindow_Tooltip_UseMaximumWait" xml:space="preserve"><value>Maximum wait defines what will happen for events that are still in the queue after their starting time</value></data>
+<data name="EventWindow_Tooltip_MaximumWaitTime" xml:space="preserve"><value>The maximum time, in minutes and seconds, that the event will wait before executing the selected action</value></data>
+<data name="EventWindow_Tooltip_MaximumWaitAction" xml:space="preserve"><value>The action that will be executed after the maximum wait time</value></data>
 
 </root>

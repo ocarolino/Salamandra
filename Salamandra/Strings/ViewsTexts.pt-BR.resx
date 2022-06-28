@@ -252,5 +252,20 @@
 <data name="MainWindow_Tooltip_OpenEventList" xml:space="preserve"><value>Abrir edição da grade de eventos</value></data>
 <data name="MainWindow_Tooltip_DeleteMode" xml:space="preserve"><value>Deletar faixa após reproduzir</value></data>
 <data name="MainWindow_Tooltip_LoopMode" xml:space="preserve"><value>Repetir faixa</value></data>
+<data name="EventWindow_Tooltip_StartingDate" xml:space="preserve"><value>Data a partir da qual o evento vai iniciar</value></data>
+<data name="EventWindow_Tooltip_StartingTime" xml:space="preserve"><value>Horário em que o evento irá iniciar</value></data>
+<data name="EventWindow_Tooltip_Immediate" xml:space="preserve"><value>Define se o evento tocará imediatamente no horário selecionado, ou se ele irá esperar a faixa atual terminar</value></data>
+<data name="EventWindow_Tooltip_UseExpirationDate" xml:space="preserve"><value>Define se o evento não será mais considerado como ativo a partir de certa data</value></data>
+<data name="EventWindow_Tooltip_ExpirationDate" xml:space="preserve"><value>Data de quando o evento não irá mais tocar</value></data>
+<data name="EventWindow_Tooltip_ExpirationTime" xml:space="preserve"><value>Hora de quando o evento não irá mais tocar</value></data>
+<data name="EventWindow_Tooltip_UsePlayingHours" xml:space="preserve"><value>Define se o evento tocará em várias horas. Se ativo, serão consideradas apenas as horas selecionadas</value></data>
+<data name="EventWindow_Tooltip_UseDaysOfWeek" xml:space="preserve"><value>Se ativo, o evento tocará nos dias da semana selecionados, em vez de somente na data programada</value></data>
+<data name="EventWindow_Tooltip_TrackType" xml:space="preserve"><value>Tipo de faixa que será gerada pelo evento</value></data>
+<data name="EventWindow_Tooltip_Filename" xml:space="preserve"><value>Caminho do arquivo/diretório que será considerado para o evento</value></data>
+<data name="EventWindow_Tooltip_QueueOrder" xml:space="preserve"><value>Define a ordem na fila para eventos que tem o mesmo horário</value></data>
+<data name="EventWindow_Tooltip_Priority" xml:space="preserve"><value>A prioridade dos eventos define se um evento continuará ou não na fila caso um evento já esteja tocando, eventos de mesma ou maior prioridade continuam na fila, enquanto eventos de prioridade menor são descartados</value></data>
+<data name="EventWindow_Tooltip_UseMaximumWait" xml:space="preserve"><value>A espera máxima, se ativa, define o que acontecerá para eventos que ficam enfileirados na fila após um tempo determinado</value></data>
+<data name="EventWindow_Tooltip_MaximumWaitTime" xml:space="preserve"><value>O tempo máximo, em minutos e segundos, que o evento esperará na fila antes de executar a ação selecionada</value></data>
+<data name="EventWindow_Tooltip_MaximumWaitAction" xml:space="preserve"><value>A ação que será executada após o tempo de espera máxima</value></data>
 
 </root>

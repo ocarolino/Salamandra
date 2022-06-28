@@ -646,7 +646,8 @@ namespace Salamandra.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The log file doesn&apos;t exist yet.\n\nCheck to see if there has been any player activity or if logging is active..
+        ///   Looks up a localized string similar to The log file doesn&apos;t exist yet.
+        ///Check to see if there has been any player activity or if logging is active..
         /// </summary>
         public static string MainWindow_Error_TodayLogDoesntExist {
             get {

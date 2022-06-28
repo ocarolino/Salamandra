@@ -98,7 +98,7 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-
+	
 <data name="EventListWindow_AreYouSureDelete" xml:space="preserve"><value>Tem certeza que deseja excluir os eventos selecionados?</value></data>
 <data name="EventListWindow_AreYouSureDeleteAll" xml:space="preserve"><value>Tem certeza que deseja excluir todos os eventos?</value></data>
 <data name="EventListWindow_AreYouSureDeleteExpired" xml:space="preserve"><value>Tem certeza que deseja excluir os eventos expirados?</value></data>
@@ -231,6 +231,7 @@
 <data name="MainWindow_AddingFilesToPlaylist" xml:space="preserve"><value>Adicionando arquivos a playlist...</value></data>
 <data name="MainWindow_Error_OpeningLogFolder" xml:space="preserve"><value>Houve um erro ao abrir a pasta de registros.</value></data>
 <data name="MainWindow_Error_OpeningTodayLog" xml:space="preserve"><value>Houve um erro ao abrir o registro atual.</value></data>
-<data name="MainWindow_Error_TodayLogDoesntExist" xml:space="preserve"><value>O arquivo de registro ainda não existe.\n\nVerifique se houve alguma atividade ou se a geração de registros está ativa.</value></data>
+<data name="MainWindow_Error_TodayLogDoesntExist" xml:space="preserve"><value>O arquivo de registro ainda não existe.
+Verifique se houve alguma atividade ou se a geração de registros está ativa.</value></data>
 
 </root>

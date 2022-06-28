@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
- 
- <data name="EventListWindow_AreYouSureDelete" xml:space="preserve"><value>Are you sure you want to delete the selected events?</value></data>
+
+<data name="EventListWindow_AreYouSureDelete" xml:space="preserve"><value>Are you sure you want to delete the selected events?</value></data>
 <data name="EventListWindow_AreYouSureDeleteAll" xml:space="preserve"><value>Are you sure you want to delete all events?</value></data>
 <data name="EventListWindow_AreYouSureDeleteExpired" xml:space="preserve"><value>Are you sure you want to delete the expired events?</value></data>
 <data name="EventListWindow_Delete" xml:space="preserve"><value>Delete</value></data>
@@ -252,5 +252,24 @@
 <data name="MainWindow_Error_OpeningTodayLog" xml:space="preserve"><value>There was an error opening today's log.</value></data>
 <data name="MainWindow_Error_TodayLogDoesntExist" xml:space="preserve"><value>The log file doesn't exist yet. Check to see if there has been any player activity or if logging is active.</value></data>
 <data name="PreListenWindow_Error_PlaybackError" xml:space="preserve"><value>There was an error while trying to play the audio file.</value></data>
+<data name="MainWindow_Tooltip_NewPlaylist" xml:space="preserve"><value>New playlist</value></data>
+<data name="MainWindow_Tooltip_OpenPlaylist" xml:space="preserve"><value>Open playlist</value></data>
+<data name="MainWindow_Tooltip_SavePlaylist" xml:space="preserve"><value>Save playlist</value></data>
+<data name="MainWindow_Tooltip_AddAudioFiles" xml:space="preserve"><value>Add audio files...</value></data>
+<data name="MainWindow_Tooltip_DeleteSelectedFiles" xml:space="preserve"><value>Delete selected tracks...</value></data>
+<data name="MainWindow_Tooltip_Settings" xml:space="preserve"><value>Settings</value></data>
+<data name="MainWindow_Tooltip_StartPlayback" xml:space="preserve"><value>Start playback</value></data>
+<data name="MainWindow_Tooltip_StopPlayback" xml:space="preserve"><value>Stop playback</value></data>
+<data name="MainWindow_Tooltip_Pause" xml:space="preserve"><value>Pause current track</value></data>
+<data name="MainWindow_Tooltip_NextTrack" xml:space="preserve"><value>Play next track</value></data>
+<data name="MainWindow_Tooltip_StopAfterCurrentTrack" xml:space="preserve"><value>Stop after current track</value></data>
+<data name="MainWindow_Tooltip_PlaylistMode" xml:space="preserve"><value>Playlist next track mode</value></data>
+<data name="MainWindow_Tooltip_MuteUnmuteVolume" xml:space="preserve"><value>Mute/unmute volume</value></data>
+<data name="MainWindow_Tooltip_PlayLateEvents" xml:space="preserve"><value>Play events</value></data>
+<data name="MainWindow_Tooltip_DiscardLateEvents" xml:space="preserve"><value>Discard late events</value></data>
+<data name="MainWindow_Tooltip_EnableDisableEvents" xml:space="preserve"><value>Enable/disable events</value></data>
+<data name="MainWindow_Tooltip_OpenEventList" xml:space="preserve"><value>Open scheduled events list</value></data>
+<data name="MainWindow_Tooltip_DeleteMode" xml:space="preserve"><value>Delete track after playing</value></data>
+<data name="MainWindow_Tooltip_LoopMode" xml:space="preserve"><value>Loop track</value></data>
 
 </root>

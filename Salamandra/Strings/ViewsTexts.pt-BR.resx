@@ -233,5 +233,24 @@
 <data name="MainWindow_Error_OpeningTodayLog" xml:space="preserve"><value>Houve um erro ao abrir o registro atual.</value></data>
 <data name="MainWindow_Error_TodayLogDoesntExist" xml:space="preserve"><value>O arquivo de registro ainda não existe. Verifique se houve alguma atividade ou se a geração de registros está ativa.</value></data>
 <data name="PreListenWindow_Error_PlaybackError" xml:space="preserve"><value>Houve um erro na reprodução da pré-escuta.</value></data>
+<data name="MainWindow_Tooltip_NewPlaylist" xml:space="preserve"><value>Nova playlist</value></data>
+<data name="MainWindow_Tooltip_OpenPlaylist" xml:space="preserve"><value>Abrir playlist</value></data>
+<data name="MainWindow_Tooltip_SavePlaylist" xml:space="preserve"><value>Salvar playlist</value></data>
+<data name="MainWindow_Tooltip_AddAudioFiles" xml:space="preserve"><value>Adicionar arquivos de áudio...</value></data>
+<data name="MainWindow_Tooltip_DeleteSelectedFiles" xml:space="preserve"><value>Excluir faixas selecionadas...</value></data>
+<data name="MainWindow_Tooltip_Settings" xml:space="preserve"><value>Configurações</value></data>
+<data name="MainWindow_Tooltip_StartPlayback" xml:space="preserve"><value>Reproduzir playlist</value></data>
+<data name="MainWindow_Tooltip_StopPlayback" xml:space="preserve"><value>Parar reprodução da playlist</value></data>
+<data name="MainWindow_Tooltip_Pause" xml:space="preserve"><value>Pausar faixa atual</value></data>
+<data name="MainWindow_Tooltip_NextTrack" xml:space="preserve"><value>Reproduzir próxima faixa</value></data>
+<data name="MainWindow_Tooltip_StopAfterCurrentTrack" xml:space="preserve"><value>Parar após faixa atual</value></data>
+<data name="MainWindow_Tooltip_PlaylistMode" xml:space="preserve"><value>Modo de definição da próxima faixa na playlist</value></data>
+<data name="MainWindow_Tooltip_MuteUnmuteVolume" xml:space="preserve"><value>Silenciar/reativar volume</value></data>
+<data name="MainWindow_Tooltip_PlayLateEvents" xml:space="preserve"><value>Reproduzir eventos atrasados</value></data>
+<data name="MainWindow_Tooltip_DiscardLateEvents" xml:space="preserve"><value>Descartar eventos atrasados</value></data>
+<data name="MainWindow_Tooltip_EnableDisableEvents" xml:space="preserve"><value>Ativar/desativar eventos</value></data>
+<data name="MainWindow_Tooltip_OpenEventList" xml:space="preserve"><value>Abrir edição da grade de eventos</value></data>
+<data name="MainWindow_Tooltip_DeleteMode" xml:space="preserve"><value>Deletar faixa após reproduzir</value></data>
+<data name="MainWindow_Tooltip_LoopMode" xml:space="preserve"><value>Repetir faixa</value></data>
 
 </root>

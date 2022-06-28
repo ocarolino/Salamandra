@@ -961,6 +961,177 @@ namespace Salamandra.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add audio files....
+        /// </summary>
+        public static string MainWindow_Tooltip_AddAudioFiles {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_AddAudioFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete track after playing.
+        /// </summary>
+        public static string MainWindow_Tooltip_DeleteMode {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_DeleteMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete selected tracks....
+        /// </summary>
+        public static string MainWindow_Tooltip_DeleteSelectedFiles {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_DeleteSelectedFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discard late events.
+        /// </summary>
+        public static string MainWindow_Tooltip_DiscardLateEvents {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_DiscardLateEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable/disable events.
+        /// </summary>
+        public static string MainWindow_Tooltip_EnableDisableEvents {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_EnableDisableEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop track.
+        /// </summary>
+        public static string MainWindow_Tooltip_LoopMode {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_LoopMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mute/unmute volume.
+        /// </summary>
+        public static string MainWindow_Tooltip_MuteUnmuteVolume {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_MuteUnmuteVolume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New playlist.
+        /// </summary>
+        public static string MainWindow_Tooltip_NewPlaylist {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_NewPlaylist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play next track.
+        /// </summary>
+        public static string MainWindow_Tooltip_NextTrack {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_NextTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open scheduled events list.
+        /// </summary>
+        public static string MainWindow_Tooltip_OpenEventList {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_OpenEventList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open playlist.
+        /// </summary>
+        public static string MainWindow_Tooltip_OpenPlaylist {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_OpenPlaylist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pause current track.
+        /// </summary>
+        public static string MainWindow_Tooltip_Pause {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_Pause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play events.
+        /// </summary>
+        public static string MainWindow_Tooltip_PlayLateEvents {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_PlayLateEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Playlist next track mode.
+        /// </summary>
+        public static string MainWindow_Tooltip_PlaylistMode {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_PlaylistMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save playlist.
+        /// </summary>
+        public static string MainWindow_Tooltip_SavePlaylist {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_SavePlaylist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string MainWindow_Tooltip_Settings {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start playback.
+        /// </summary>
+        public static string MainWindow_Tooltip_StartPlayback {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_StartPlayback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop after current track.
+        /// </summary>
+        public static string MainWindow_Tooltip_StopAfterCurrentTrack {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_StopAfterCurrentTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop playback.
+        /// </summary>
+        public static string MainWindow_Tooltip_StopPlayback {
+            get {
+                return ResourceManager.GetString("MainWindow_Tooltip_StopPlayback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upcoming Events.
         /// </summary>
         public static string MainWindow_UpcomingEvents {

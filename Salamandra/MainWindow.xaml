@@ -166,37 +166,37 @@
 
         <ToolBarTray DockPanel.Dock="Top" Background="{StaticResource ContainerBackground}">
             <ToolBar>
-                <Button Command="{Binding NewPlaylistCommand}" ToolTip="Nova playlist">
+                <Button Command="{Binding NewPlaylistCommand}" ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_NewPlaylist}">
                     <controls:AutoDisableImage Source="/Images/Icons/Toolbar/new.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                 </Button>
 
-                <Button Command="{Binding OpenPlaylistCommand}" ToolTip="Abrir playlist...">
+                <Button Command="{Binding OpenPlaylistCommand}" ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_OpenPlaylist}">
                     <controls:AutoDisableImage Source="/Images/Icons/Toolbar/open.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                 </Button>
 
-                <Button Command="{Binding SavePlaylistCommand}" ToolTip="Salvar playlist">
+                <Button Command="{Binding SavePlaylistCommand}" ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_SavePlaylist}">
                     <controls:AutoDisableImage Source="/Images/Icons/Toolbar/save.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                 </Button>
 
                 <Separator/>
 
-                <Button Command="{Binding AddFilesToPlaylistCommand}" ToolTip="Adicionar arquivos de áudio...">
+                <Button Command="{Binding AddFilesToPlaylistCommand}" ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_AddAudioFiles}">
                     <controls:AutoDisableImage Source="/Images/Icons/Toolbar/plus.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                 </Button>
 
                 <Button Command="{Binding RemoveTracksFromPlaylistCommand}" CommandParameter="{Binding SelectedItems, ElementName=playlist}"
-                        ToolTip="Excluir faixas selecionadas...">
+                        ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_DeleteSelectedFiles}">
                     <controls:AutoDisableImage Source="/Images/Icons/Toolbar/delete.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                 </Button>
 
                 <Separator/>
 
-                <Button Command="{Binding OpenSettingsCommand}" ToolTip="Configurações">
+                <Button Command="{Binding OpenSettingsCommand}" ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_Settings}">
                     <controls:AutoDisableImage Source="/Images/Icons/Toolbar/service.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                 </Button>
@@ -320,32 +320,32 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" Width="30" Height="30" Command="{Binding StartPlaybackCommand}"
-                    ToolTip="Reproduzir playlist">
+                    ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_StartPlayback}">
                 <Image Source="/Images/Icons/Player/play.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                        RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
             </Button>
 
             <Button Grid.Column="1" Margin="8 0 0 0" Width="30" Height="30" Command="{Binding StopPlaybackCommand}"
-                    ToolTip="Parar reprodução da playlist">
+                    ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_StopPlayback}">
                 <Image Source="/Images/Icons/Player/stop.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                        RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
             </Button>
 
             <ToggleButton Grid.Column="2" Margin="8 0 0 0" Width="30" Height="30" Command="{Binding TogglePlayPauseCommand}" IsChecked="{Binding IsPaused}"
-                          ToolTip="Pausar faixa atual">
+                          ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_Pause}">
                 <Image Source="/Images/Icons/Player/pause.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                        RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
             </ToggleButton>
 
             <Button Grid.Column="3" Margin="8 0 0 0" Width="30" Height="30" Command="{Binding NextTrackCommand}"
-                    ToolTip="Reproduzir próxima faixa">
+                    ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_NextTrack}">
                 <Image Source="/Images/Icons/Player/next.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                        RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
             </Button>
 
             <ToggleButton Grid.Column="4" Margin="8 0 0 0" Width="30" Height="30" 
                           IsChecked="{Binding StopAfterCurrentTrack}" IsEnabled="{Binding IsPlaying}"
-                          ToolTip="Parar após faixa atual">
+                          ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_StopAfterCurrentTrack}">
                 <Image Source="/Images/Icons/Player/stop-next.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                        RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
             </ToggleButton>
@@ -353,7 +353,7 @@
             <ComboBox Grid.Column="5" SelectedItem="{Binding PlaylistManager.PlaylistMode}"
                       ItemsSource="{Binding Source={extensions:EnumBindingSource {x:Type enums:PlaylistMode}}}"
                       HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Margin="8 0 0 0"
-                      ToolTip="Modo de definição da próxima faixa na playlist">
+                      ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_PlaylistMode}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <i:InvokeCommandAction Command="{Binding UpdateNextTrackCommand}"></i:InvokeCommandAction>
@@ -364,7 +364,7 @@
             <StackPanel Orientation="Horizontal" Grid.Column="6" Margin="8 0 0 0">
                 <ToggleButton Padding="4" Margin="4 0 0 0" IsChecked="{Binding VolumeMuted}"
                               Style="{StaticResource FlatToggleButtonStyle}"
-                              ToolTip="Silenciar/reativar volume">
+                              ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_MuteUnmuteVolume}">
                     <Image VerticalAlignment="Center" HorizontalAlignment="Center"
                            RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24">
                         <Image.Style>
@@ -435,14 +435,14 @@
                     <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
                         <Button Command="{Binding PlayLateEventsCommand}" Padding="4"
                                 Style="{StaticResource FlatButtonStyle}"
-                                ToolTip="Reproduzir eventos atrasados">
+                                ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_PlayLateEvents}">
                             <controls:AutoDisableImage Source="/Images/Icons/Toolbar/play.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                         </Button>
 
                         <Button Command="{Binding DiscardLateEventsCommand}" Padding="4" Margin="4 0 0 0"
                                 Style="{StaticResource FlatButtonStyle}"
-                                ToolTip="Descartar eventos atrasados">
+                                ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_DiscardLateEvents}">
                             <controls:AutoDisableImage Source="/Images/Icons/Toolbar/trash.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                         </Button>
@@ -451,14 +451,14 @@
 
                         <ToggleButton Padding="4" Margin="4 0 0 0" IsChecked="{Binding EnableEvents}"
                                       Style="{StaticResource FlatToggleButtonStyle}"
-                                      ToolTip="Ativar/desativar eventos">
+                                      ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_EnableDisableEvents}">
                             <Image Source="/Images/Icons/Toolbar/checkmark.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                         </ToggleButton>
 
                         <Button Command="{Binding OpenEventListCommand}" Padding="4" Margin="4 0 0 0"
                                 Style="{StaticResource FlatButtonStyle}"
-                                ToolTip="Abrir edição da grade de eventos">
+                                ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_OpenEventList}">
                             <Image Source="/Images/Icons/Toolbar/calendar.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                         </Button>
@@ -553,14 +553,14 @@
                         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
                             <ToggleButton Padding="4" Margin="4 0 0 0" IsChecked="{Binding EnableDeleteMode}"
                                           Style="{StaticResource FlatToggleButtonStyle}"
-                                          ToolTip="Deletar faixa após reproduzir">
+                                          ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_DeleteMode}">
                                 <Image Source="/Images/Icons/Toolbar/delete_row.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                             </ToggleButton>
 
                             <ToggleButton Padding="4" Margin="4 0 0 0" IsChecked="{Binding EnableLoopMode}"
                                           Style="{StaticResource FlatToggleButtonStyle}"
-                                          ToolTip="Repetir faixa">
+                                          ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_LoopMode}">
                                 <Image Source="/Images/Icons/Toolbar/loop.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                             </ToggleButton>

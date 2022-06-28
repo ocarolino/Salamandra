@@ -14,7 +14,7 @@ namespace Salamandra.Engine.Domain.Tracks
         public TimeAnnouncementTrack() : base()
         {
             this.Filename = "specialtrack.time";
-            this.FriendlyName = "Locução de Horário";
+            this.FriendlyName = Salamandra.Engine.Strings.TracksTexts.Track_TimeAnnouncement;
         }
 
         public override void ResetSequence()

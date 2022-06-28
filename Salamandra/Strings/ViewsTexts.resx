@@ -237,5 +237,19 @@
 <data name="SettingsWindow_TimeAnnouncementFilesPath" xml:space="preserve"><value>Time Announcement files path</value></data>
 <data name="SettingsWindow_Validation_ValidLogFolder" xml:space="preserve"><value>It is necessary to choose a valid directory to generate the logs.</value></data>
 <data name="SettingsWindow_WindowTitle" xml:space="preserve"><value>Settings</value></data>
+<data name="MainWindow_PlaylistStillPlaying" xml:space="preserve"><value>The player is still running. Are you sure that you want to close?</value></data>
+<data name="MainWindow_LoadingPlaylist" xml:space="preserve"><value>Loading playlist...</value></data>
+<data name="MainWindow_Error_SoundDevice" xml:space="preserve"><value>There was an error in the audio device that forced playback to stop.</value></data>
+<data name="MainWindow_Error_PlaylistParsing" xml:space="preserve"><value>There was an error when parsing the playlist file.</value></data>
+<data name="MainWindow_Error_PlaylistFile" xml:space="preserve"><value>There was an error acessing the playlist file.</value></data>
+<data name="MainWindow_Error_PlaylistOpenGeneric" xml:space="preserve"><value>There was an error while opening the playlist.</value></data>
+<data name="MainWindow_Error_PlaylistSaveGeneric" xml:space="preserve"><value>There was an error saving the playlist.</value></data>
+<data name="MainWindow_PlaylistUnsavedChanges" xml:space="preserve"><value>There are unsaved changes to the playlist. Do you want to save them?</value></data>
+<data name="MainWindow_Error_UnhandledPlaylistError" xml:space="preserve"><value>There was an unhandled error on playlist.</value></data>
+<data name="MainWindow_Error_ScheduleSaveGeneric" xml:space="preserve"><value>There was an error saving the scheduled events.</value></data>
+<data name="MainWindow_AddingFilesToPlaylist" xml:space="preserve"><value>Adding files to the playlist...</value></data>
+<data name="MainWindow_Error_OpeningLogFolder" xml:space="preserve"><value>There was an error opening the log folder.</value></data>
+<data name="MainWindow_Error_OpeningTodayLog" xml:space="preserve"><value>There was an error opening today's log.</value></data>
+<data name="MainWindow_Error_TodayLogDoesntExist" xml:space="preserve"><value>The log file doesn't exist yet.\n\nCheck to see if there has been any player activity or if logging is active.</value></data>
 
 </root>

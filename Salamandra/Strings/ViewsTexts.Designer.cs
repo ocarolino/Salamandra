@@ -493,6 +493,15 @@ namespace Salamandra.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adding files to the playlist....
+        /// </summary>
+        public static string MainWindow_AddingFilesToPlaylist {
+            get {
+                return ResourceManager.GetString("MainWindow_AddingFilesToPlaylist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add playlist file....
         /// </summary>
         public static string MainWindow_AddPlaylistTrack {
@@ -565,11 +574,110 @@ namespace Salamandra.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error opening the log folder..
+        /// </summary>
+        public static string MainWindow_Error_OpeningLogFolder {
+            get {
+                return ResourceManager.GetString("MainWindow_Error_OpeningLogFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error opening today&apos;s log..
+        /// </summary>
+        public static string MainWindow_Error_OpeningTodayLog {
+            get {
+                return ResourceManager.GetString("MainWindow_Error_OpeningTodayLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error acessing the playlist file..
+        /// </summary>
+        public static string MainWindow_Error_PlaylistFile {
+            get {
+                return ResourceManager.GetString("MainWindow_Error_PlaylistFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error while opening the playlist..
+        /// </summary>
+        public static string MainWindow_Error_PlaylistOpenGeneric {
+            get {
+                return ResourceManager.GetString("MainWindow_Error_PlaylistOpenGeneric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error when parsing the playlist file..
+        /// </summary>
+        public static string MainWindow_Error_PlaylistParsing {
+            get {
+                return ResourceManager.GetString("MainWindow_Error_PlaylistParsing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error saving the playlist..
+        /// </summary>
+        public static string MainWindow_Error_PlaylistSaveGeneric {
+            get {
+                return ResourceManager.GetString("MainWindow_Error_PlaylistSaveGeneric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error saving the scheduled events..
+        /// </summary>
+        public static string MainWindow_Error_ScheduleSaveGeneric {
+            get {
+                return ResourceManager.GetString("MainWindow_Error_ScheduleSaveGeneric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error in the audio device that forced playback to stop..
+        /// </summary>
+        public static string MainWindow_Error_SoundDevice {
+            get {
+                return ResourceManager.GetString("MainWindow_Error_SoundDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The log file doesn&apos;t exist yet.\n\nCheck to see if there has been any player activity or if logging is active..
+        /// </summary>
+        public static string MainWindow_Error_TodayLogDoesntExist {
+            get {
+                return ResourceManager.GetString("MainWindow_Error_TodayLogDoesntExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an unhandled error on playlist..
+        /// </summary>
+        public static string MainWindow_Error_UnhandledPlaylistError {
+            get {
+                return ResourceManager.GetString("MainWindow_Error_UnhandledPlaylistError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
         public static string MainWindow_File {
             get {
                 return ResourceManager.GetString("MainWindow_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading playlist....
+        /// </summary>
+        public static string MainWindow_LoadingPlaylist {
+            get {
+                return ResourceManager.GetString("MainWindow_LoadingPlaylist", resourceCulture);
             }
         }
         
@@ -687,6 +795,24 @@ namespace Salamandra.Strings {
         public static string MainWindow_Playlist_File {
             get {
                 return ResourceManager.GetString("MainWindow_Playlist_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The player is still running. Are you sure that you want to close?.
+        /// </summary>
+        public static string MainWindow_PlaylistStillPlaying {
+            get {
+                return ResourceManager.GetString("MainWindow_PlaylistStillPlaying", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are unsaved changes to the playlist. Do you want to save them?.
+        /// </summary>
+        public static string MainWindow_PlaylistUnsavedChanges {
+            get {
+                return ResourceManager.GetString("MainWindow_PlaylistUnsavedChanges", resourceCulture);
             }
         }
         

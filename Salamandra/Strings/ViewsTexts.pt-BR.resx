@@ -98,7 +98,7 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	
+
 <data name="EventListWindow_AreYouSureDelete" xml:space="preserve"><value>Tem certeza que deseja excluir os eventos selecionados?</value></data>
 <data name="EventListWindow_AreYouSureDeleteAll" xml:space="preserve"><value>Tem certeza que deseja excluir todos os eventos?</value></data>
 <data name="EventListWindow_AreYouSureDeleteExpired" xml:space="preserve"><value>Tem certeza que deseja excluir os eventos expirados?</value></data>
@@ -213,6 +213,24 @@
 <data name="SettingsWindow_MainOutputDevice" xml:space="preserve"><value>Dispositivo de Saída Principal</value></data>
 <data name="SettingsWindow_OpenLastPlaylistOnStartup" xml:space="preserve"><value>Abrir última playlist quando iniciar o programa</value></data>
 <data name="SettingsWindow_Outputs" xml:space="preserve"><value>Saídas</value></data>
+<data name="SettingsWindow_ShufflePlaylistOnStartup" xml:space="preserve"><value>Embaralhar playlist quando iniciar o programa</value></data>
+<data name="SettingsWindow_StartPlaybackOnStartup" xml:space="preserve"><value>Reproduzir playlist quando iniciar o programa</value></data>
+<data name="SettingsWindow_TimeAnnouncementFilesPath" xml:space="preserve"><value>Caminho para arquivos de Locução de Horário</value></data>
+<data name="SettingsWindow_Validation_ValidLogFolder" xml:space="preserve"><value>Para gerar os registros é necessário escolher um diretório válido.</value></data>
+<data name="SettingsWindow_WindowTitle" xml:space="preserve"><value>Configurações</value></data>
+<data name="MainWindow_PlaylistStillPlaying" xml:space="preserve"><value>A playlist ainda está tocando. Tem certeza que deseja fechar?</value></data>
+<data name="MainWindow_LoadingPlaylist" xml:space="preserve"><value>Carregando playlist...</value></data>
+<data name="MainWindow_Error_SoundDevice" xml:space="preserve"><value>Houve um erro no dispositivo de áudio que forçou a parada da reprodução.</value></data>
+<data name="MainWindow_Error_PlaylistParsing" xml:space="preserve"><value>Houve um erro ao processar a playlist.</value></data>
+<data name="MainWindow_Error_PlaylistFile" xml:space="preserve"><value>Houve um erro de acesso ao arquivo.</value></data>
+<data name="MainWindow_Error_PlaylistOpenGeneric" xml:space="preserve"><value>Houve um erro ao abrir a playlist.</value></data>
+<data name="MainWindow_Error_PlaylistSaveGeneric" xml:space="preserve"><value>Houve um erro ao salvar o arquivo.</value></data>
+<data name="MainWindow_PlaylistUnsavedChanges" xml:space="preserve"><value>Há modificações não salvas na playlist. Deseja salvá-las?</value></data>
+<data name="MainWindow_Error_UnhandledPlaylistError" xml:space="preserve"><value>Houve um erro ao manipular a playlist.</value></data>
+<data name="MainWindow_Error_ScheduleSaveGeneric" xml:space="preserve"><value>Houve um erro ao salvar a planilha de eventos.</value></data>
+<data name="MainWindow_AddingFilesToPlaylist" xml:space="preserve"><value>Adicionando arquivos a playlist...</value></data>
+<data name="MainWindow_Error_OpeningLogFolder" xml:space="preserve"><value>Houve um erro ao abrir a pasta de registros.</value></data>
+<data name="MainWindow_Error_OpeningTodayLog" xml:space="preserve"><value>Houve um erro ao abrir o registro atual.</value></data>
+<data name="MainWindow_Error_TodayLogDoesntExist" xml:space="preserve"><value>O arquivo de registro ainda não existe.\n\nVerifique se houve alguma atividade ou se a geração de registros está ativa.</value></data>
 
-
-	</root>
+</root>

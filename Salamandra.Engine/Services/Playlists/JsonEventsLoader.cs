@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Salamandra.Engine.Extensions;
 
 namespace Salamandra.Engine.Services.Playlists
 {
@@ -18,8 +19,15 @@ namespace Salamandra.Engine.Services.Playlists
                 return new List<ScheduledEvent>();
 
             CheckForDuplicateIds(list);
+            UpdateFriendlyNames(list);
 
             return list;
+        }
+
+        private static void UpdateFriendlyNames(List<ScheduledEvent>? list)
+        {
+            foreach (ScheduledEvent item in list.Where(x => x.IsFriendlyNameLocalizable()))
+                item.UpdateFriendlyName();
         }
 
         private void CheckForDuplicateIds(List<ScheduledEvent> listToCheck)

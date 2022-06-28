@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  
-<data name="EventListWindow_AreYouSureDelete" xml:space="preserve"><value>Are you sure you want to delete the selected events?</value></data>
+ 
+ <data name="EventListWindow_AreYouSureDelete" xml:space="preserve"><value>Are you sure you want to delete the selected events?</value></data>
 <data name="EventListWindow_AreYouSureDeleteAll" xml:space="preserve"><value>Are you sure you want to delete all events?</value></data>
 <data name="EventListWindow_AreYouSureDeleteExpired" xml:space="preserve"><value>Are you sure you want to delete the expired events?</value></data>
 <data name="EventListWindow_Delete" xml:space="preserve"><value>Delete</value></data>
@@ -250,7 +250,7 @@
 <data name="MainWindow_AddingFilesToPlaylist" xml:space="preserve"><value>Adding files to the playlist...</value></data>
 <data name="MainWindow_Error_OpeningLogFolder" xml:space="preserve"><value>There was an error opening the log folder.</value></data>
 <data name="MainWindow_Error_OpeningTodayLog" xml:space="preserve"><value>There was an error opening today's log.</value></data>
-<data name="MainWindow_Error_TodayLogDoesntExist" xml:space="preserve"><value>The log file doesn't exist yet.
-Check to see if there has been any player activity or if logging is active.</value></data>
+<data name="MainWindow_Error_TodayLogDoesntExist" xml:space="preserve"><value>The log file doesn't exist yet. Check to see if there has been any player activity or if logging is active.</value></data>
+<data name="PreListenWindow_Error_PlaybackError" xml:space="preserve"><value>There was an error while trying to play the audio file.</value></data>
 
 </root>

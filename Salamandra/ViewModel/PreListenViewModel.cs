@@ -157,7 +157,7 @@ namespace Salamandra.ViewModel
 
         private void DisplayError(string message)
         {
-            MessageBox.Show(String.Format("Houve um erro na reprodução da pré-escuta.\n\nErro: {0}", message),
+            MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.PreListenWindow_Error_PlaybackError, message),
                 "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 

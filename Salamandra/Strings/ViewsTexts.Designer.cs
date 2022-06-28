@@ -646,8 +646,7 @@ namespace Salamandra.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The log file doesn&apos;t exist yet.
-        ///Check to see if there has been any player activity or if logging is active..
+        ///   Looks up a localized string similar to The log file doesn&apos;t exist yet. Check to see if there has been any player activity or if logging is active..
         /// </summary>
         public static string MainWindow_Error_TodayLogDoesntExist {
             get {
@@ -1084,6 +1083,15 @@ namespace Salamandra.Strings {
         public static string Misc_Track_TimeAnnouncement {
             get {
                 return ResourceManager.GetString("Misc_Track_TimeAnnouncement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error while trying to play the audio file..
+        /// </summary>
+        public static string PreListenWindow_Error_PlaybackError {
+            get {
+                return ResourceManager.GetString("PreListenWindow_Error_PlaybackError", resourceCulture);
             }
         }
         

@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
- 
- <data name="EventListWindow_AreYouSureDelete" xml:space="preserve"><value>Are you sure you want to delete the selected events?</value></data>
+
+<data name="EventListWindow_AreYouSureDelete" xml:space="preserve"><value>Are you sure you want to delete the selected events?</value></data>
 <data name="EventListWindow_AreYouSureDeleteAll" xml:space="preserve"><value>Are you sure you want to delete all events?</value></data>
 <data name="EventListWindow_AreYouSureDeleteExpired" xml:space="preserve"><value>Are you sure you want to delete the expired events?</value></data>
 <data name="EventListWindow_Delete" xml:space="preserve"><value>Delete</value></data>
@@ -161,6 +161,10 @@
 <data name="EventWindow_Validation_WaitingTimeGreaterThanZero" xml:space="preserve"><value>The maximum wait time must be greater than zero.</value></data>
 <data name="EventWindow_WeekDays" xml:space="preserve"><value>Week Days</value></data>
 <data name="EventWindow_WindowTitle" xml:space="preserve"><value>Event</value></data>
+<data name="FileFormats_All" xml:space="preserve"><value>All files</value></data>
+<data name="FileFormats_Audio" xml:space="preserve"><value>Audio files</value></data>
+<data name="FileFormats_Playlist" xml:space="preserve"><value>Playlists</value></data>
+<data name="FileFormats_ScheduleEvents" xml:space="preserve"><value>Scheduled events file</value></data>
 <data name="MainWindow_AddAudioTracks" xml:space="preserve"><value>Add audio files...</value></data>
 <data name="MainWindow_AddPlaylistTrack" xml:space="preserve"><value>Add playlist file...</value></data>
 <data name="MainWindow_AddRandomTrack" xml:space="preserve"><value>Add random track...</value></data>
@@ -213,6 +217,8 @@
 <data name="Misc_Ok" xml:space="preserve"><value>Ok</value></data>
 <data name="Misc_Paste" xml:space="preserve"><value>Paste</value></data>
 <data name="Misc_SelectAll" xml:space="preserve"><value>Select all</value></data>
+<data name="Misc_Track_TimeAnnouncement" xml:space="preserve"><value>Time Announcement</value></data>
+<data name="PreListenWindow_WindowTitle" xml:space="preserve"><value>Cue</value></data>
 <data name="SettingsWindow_AskWhenCloseWhilePlaying" xml:space="preserve"><value>Ask when close while player is still active</value></data>
 <data name="SettingsWindow_CueOutputDevice" xml:space="preserve"><value>Cue Sound Output Device</value></data>
 <data name="SettingsWindow_EnableLogs" xml:space="preserve"><value>Enable Logs</value></data>
@@ -231,7 +237,5 @@
 <data name="SettingsWindow_TimeAnnouncementFilesPath" xml:space="preserve"><value>Time Announcement files path</value></data>
 <data name="SettingsWindow_Validation_ValidLogFolder" xml:space="preserve"><value>It is necessary to choose a valid directory to generate the logs.</value></data>
 <data name="SettingsWindow_WindowTitle" xml:space="preserve"><value>Settings</value></data>
-<data name="PreListenWindow_WindowTitle" xml:space="preserve"><value>Cue</value></data>
-
 
 </root>

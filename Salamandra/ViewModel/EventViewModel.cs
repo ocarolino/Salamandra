@@ -5,6 +5,7 @@ using Salamandra.Engine.Domain.Enums;
 using Salamandra.Engine.Domain.Events;
 using Salamandra.Engine.Domain.Settings;
 using Salamandra.Engine.Extensions;
+using Salamandra.Engine.Services;
 using Salamandra.Views;
 using System;
 using System.Collections.Generic;
@@ -117,13 +118,13 @@ namespace Salamandra.ViewModel
             switch (trackScheduleType)
             {
                 case TrackScheduleType.AudioFileTrack:
-                    return "Arquivos de áudio (*.wav, *.mp3, *.wma, *.ogg, *.flac) | *.wav; *.mp3; *.wma; *.ogg; *.flac";
+                    return SoundEngine.SupportedAudioFormats.GetDialogFilterFromArray(Salamandra.Strings.ViewsTexts.FileFormats_Audio);
                 case TrackScheduleType.OpenPlaylistTrack:
-                    return "Playlist M3U (*.m3u) | *.m3u";
+                    return PlaylistManager.SupportedPlaylistFormats.GetDialogFilterFromArray(Salamandra.Strings.ViewsTexts.FileFormats_Playlist);
                 case TrackScheduleType.SystemProcessTrack:
-                    return "Todos os arquivos (*.*) | *.*";
+                    return Salamandra.Strings.ViewsTexts.FileFormats_All + " (*.*) | *.*";
                 case TrackScheduleType.OpenScheduleTrack:
-                    return "Lista de Eventos (*.sche) | *.sche";
+                    return ScheduleManager.SupportedScheduleFormats.GetDialogFilterFromArray(Salamandra.Strings.ViewsTexts.FileFormats_ScheduleEvents);
                 default:
                     throw new NotImplementedException();
             }

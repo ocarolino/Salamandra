@@ -448,6 +448,42 @@ namespace Salamandra.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All files.
+        /// </summary>
+        public static string FileFormats_All {
+            get {
+                return ResourceManager.GetString("FileFormats_All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Audio files.
+        /// </summary>
+        public static string FileFormats_Audio {
+            get {
+                return ResourceManager.GetString("FileFormats_Audio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Playlists.
+        /// </summary>
+        public static string FileFormats_Playlist {
+            get {
+                return ResourceManager.GetString("FileFormats_Playlist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scheduled events file.
+        /// </summary>
+        public static string FileFormats_ScheduleEvents {
+            get {
+                return ResourceManager.GetString("FileFormats_ScheduleEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add audio files....
         /// </summary>
         public static string MainWindow_AddAudioTracks {
@@ -912,6 +948,15 @@ namespace Salamandra.Strings {
         public static string Misc_SelectAll {
             get {
                 return ResourceManager.GetString("Misc_SelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time Announcement.
+        /// </summary>
+        public static string Misc_Track_TimeAnnouncement {
+            get {
+                return ResourceManager.GetString("Misc_Track_TimeAnnouncement", resourceCulture);
             }
         }
         

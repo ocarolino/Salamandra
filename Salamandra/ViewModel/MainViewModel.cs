@@ -447,7 +447,7 @@ namespace Salamandra.ViewModel
             SetPlaylistLoading(true, "Adicionando arquivos a playlist...");
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Arquivos de áudio (*.wav, *.mp3, *.wma, *.ogg, *.flac) | *.wav; *.mp3; *.wma; *.ogg; *.flac";
+            openFileDialog.Filter = SoundEngine.SupportedAudioFormats.GetDialogFilterFromArray(Salamandra.Strings.ViewsTexts.FileFormats_Audio);
             openFileDialog.Multiselect = true;
 
             if (openFileDialog.ShowDialog() == true)
@@ -461,7 +461,7 @@ namespace Salamandra.ViewModel
         {
             // ToDo: Alguma forma de tornar essas questões de formatos e filtros genéricos!
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Playlist M3U (*.m3u) | *.m3u";
+            openFileDialog.Filter = PlaylistManager.SupportedPlaylistFormats.GetDialogFilterFromArray(Salamandra.Strings.ViewsTexts.FileFormats_Playlist);
 
             if (openFileDialog.ShowDialog() == true)
                 this.PlaylistManager.AddPlaylistTrack(openFileDialog.FileName, this.PlaylistManager.Tracks.IndexOf(this.SelectedTrack!));
@@ -944,7 +944,7 @@ namespace Salamandra.ViewModel
                 return;
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Playlist M3U (*.m3u) | *.m3u";
+            openFileDialog.Filter = PlaylistManager.SupportedPlaylistFormats.GetDialogFilterFromArray(Salamandra.Strings.ViewsTexts.FileFormats_Playlist);
 
             if (openFileDialog.ShowDialog() == true)
             {
@@ -995,7 +995,7 @@ namespace Salamandra.ViewModel
             if (saveDialog || String.IsNullOrEmpty(filename))
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.Filter = "Playlist M3U (*.m3u) | *.m3u";
+                saveFileDialog.Filter = PlaylistManager.SupportedPlaylistFormats.GetDialogFilterFromArray(Salamandra.Strings.ViewsTexts.FileFormats_Playlist);
 
                 if (saveFileDialog.ShowDialog() == true)
                     filename = saveFileDialog.FileName;
@@ -1131,7 +1131,7 @@ namespace Salamandra.ViewModel
             if (String.IsNullOrWhiteSpace(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename))
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.Filter = "Playlist de Eventos (*.sche) | *.sche";
+                saveFileDialog.Filter = ScheduleManager.SupportedScheduleFormats.GetDialogFilterFromArray(Strings.ViewsTexts.FileFormats_ScheduleEvents);
 
                 if (!saveFileDialog.ShowDialog() == true)
                     this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename = saveFileDialog.FileName;

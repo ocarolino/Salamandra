@@ -22,6 +22,7 @@ namespace Salamandra.Engine.Services
         public bool HasLateImmediateEvent { get; set; }
         public bool HasLateWaitingEvent { get; set; }
         public bool HasLateEvent { get => this.HasLateImmediateEvent || this.HasLateWaitingEvent; }
+        public static string[] SupportedScheduleFormats = { ".sche" };
 
         public ScheduleManager()
         {

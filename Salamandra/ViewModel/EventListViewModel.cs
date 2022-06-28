@@ -3,6 +3,8 @@ using Newtonsoft.Json;
 using Salamandra.Commands;
 using Salamandra.Engine.Domain.Events;
 using Salamandra.Engine.Domain.Settings;
+using Salamandra.Engine.Extensions;
+using Salamandra.Engine.Services;
 using Salamandra.Engine.Services.Playlists;
 using Salamandra.Views;
 using System;
@@ -154,7 +156,7 @@ namespace Salamandra.ViewModel
         private void OpenEventList()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Lista de Eventos (*.sche) | *.sche"; // ToDo: Traduzir esses filtros.
+            openFileDialog.Filter = ScheduleManager.SupportedScheduleFormats.GetDialogFilterFromArray(Salamandra.Strings.ViewsTexts.FileFormats_ScheduleEvents);
 
             if (openFileDialog.ShowDialog() == true)
             {
@@ -183,7 +185,7 @@ namespace Salamandra.ViewModel
         private void SaveEventListAs()
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Lista de Eventos (*.sche) | *.sche";
+            saveFileDialog.Filter = ScheduleManager.SupportedScheduleFormats.GetDialogFilterFromArray(Salamandra.Strings.ViewsTexts.FileFormats_ScheduleEvents);
 
             if (saveFileDialog.ShowDialog() == true)
             {

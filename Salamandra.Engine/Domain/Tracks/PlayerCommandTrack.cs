@@ -24,11 +24,11 @@ namespace Salamandra.Engine.Domain.Tracks
             switch (this.Command)
             {
                 case PlayerCommandType.Play:
-                    this.FriendlyName = "Iniciar Playlist";
+                    this.FriendlyName = Salamandra.Engine.Strings.TracksTexts.Track_StartPlayback;
                     this.Filename = "commandtrack.start";
                     break;
                 case PlayerCommandType.Stop:
-                    this.FriendlyName = "Parar Playlist";
+                    this.FriendlyName = Salamandra.Engine.Strings.TracksTexts.Track_StopPlayback;
                     this.Filename = "commandtrack.stop";
                     break;
                 default:

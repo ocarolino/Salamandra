@@ -578,7 +578,8 @@
                             <GridView>
                                 <GridViewColumn x:Name="PlaylistFriendlyNameColumn" Width="360">
                                     <GridViewColumn.Header>
-                                        <GridViewColumnHeader Tag="0" Click="PlaylistColumnHeader_Click">Arquivo</GridViewColumnHeader>
+                                        <GridViewColumnHeader Tag="0" Click="PlaylistColumnHeader_Click"
+                                                              Content="{x:Static strings:ViewsTexts.MainWindow_Playlist_File}"/>
                                     </GridViewColumn.Header>
 
                                     <GridViewColumn.CellTemplate>
@@ -621,7 +622,8 @@
 
                                 <GridViewColumn Width="120" x:Name="PlaylistDurationColumn">
                                     <GridViewColumn.Header>
-                                        <GridViewColumnHeader Tag="1" Click="PlaylistColumnHeader_Click">Duração</GridViewColumnHeader>
+                                        <GridViewColumnHeader Tag="1" Click="PlaylistColumnHeader_Click"
+                                                              Content="{x:Static strings:ViewsTexts.MainWindow_Playlist_Duration}"/>
                                     </GridViewColumn.Header>
 
                                     <GridViewColumn.CellTemplate>

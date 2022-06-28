@@ -60,7 +60,7 @@ namespace Salamandra.Engine.Domain.Events
             this.Filename = String.Empty;
             this.FriendlyName = String.Empty;
 
-            this.QueueOrder = 1;
+            this.QueueOrder = 50;
             this.EventPriority = EventPriority.Low;
 
             this.MaximumWaitTime = TimeSpan.Zero;

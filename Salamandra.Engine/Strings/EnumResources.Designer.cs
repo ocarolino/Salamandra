@@ -61,6 +61,24 @@ namespace Salamandra.Engine.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Discard.
+        /// </summary>
+        public static string MaximumWaitAction_Discard {
+            get {
+                return ResourceManager.GetString("MaximumWaitAction_Discard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play.
+        /// </summary>
+        public static string MaximumWaitAction_Play {
+            get {
+                return ResourceManager.GetString("MaximumWaitAction_Play", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default.
         /// </summary>
         public static string PlaylistMode_Default {

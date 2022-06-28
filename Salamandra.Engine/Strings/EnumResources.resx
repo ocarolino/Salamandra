@@ -133,5 +133,8 @@
 <data name="TrackScheduleType_OpenScheduleTrack" xml:space="preserve"><value>Event Schedule List</value></data>
 <data name="ViewLanguage_Portuguese" xml:space="preserve"><value>Portuguese</value></data>
 <data name="ViewLanguage_English" xml:space="preserve"><value>English</value></data>
+<data name="MaximumWaitAction_Discard" xml:space="preserve"><value>Discard</value></data>
+<data name="MaximumWaitAction_Play" xml:space="preserve"><value>Play</value></data>
+
 
 </root>

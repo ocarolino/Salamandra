@@ -133,5 +133,7 @@
 <data name="TrackScheduleType_OpenScheduleTrack" xml:space="preserve"><value>Planilha de Eventos</value></data>
 <data name="ViewLanguage_Portuguese" xml:space="preserve"><value>Português</value></data>
 <data name="ViewLanguage_English" xml:space="preserve"><value>Inglês</value></data>
+<data name="MaximumWaitAction_Discard" xml:space="preserve"><value>Descartar</value></data>
+<data name="MaximumWaitAction_Play" xml:space="preserve"><value>Reproduzir</value></data>
 
 </root>

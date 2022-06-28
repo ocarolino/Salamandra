@@ -205,7 +205,7 @@ namespace Salamandra.ViewModel
                     Salamandra.Strings.ViewsTexts.EventWindow_WindowTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
-            PrepareFriendlyName();
+            this.ScheduledEvent.UpdateFriendlyName();
             UpdateTimestamps();
 
             this.CloseWindow?.Invoke(true);
@@ -221,35 +221,6 @@ namespace Salamandra.ViewModel
             else
             {
                 this.ScheduledEvent.UpdatedAt = DateTime.Now;
-            }
-        }
-
-        private void PrepareFriendlyName()
-        {
-            // ToDo: Traduções desses tipos de strings!
-            switch (this.ScheduledEvent.TrackScheduleType)
-            {
-                case TrackScheduleType.AudioFileTrack:
-                case TrackScheduleType.OpenPlaylistTrack:
-                case TrackScheduleType.SystemProcessTrack:
-                case TrackScheduleType.OpenScheduleTrack:
-                    this.ScheduledEvent.FriendlyName = Path.GetFileNameWithoutExtension(this.ScheduledEvent.Filename);
-                    break;
-                case TrackScheduleType.RandomFileTrack:
-                    this.ScheduledEvent.Filename = this.ScheduledEvent.Filename.EnsureHasDirectorySeparatorChar();
-                    this.ScheduledEvent.FriendlyName = Path.GetFileName(this.ScheduledEvent.Filename.TrimEnd(Path.DirectorySeparatorChar));
-                    break;
-                case TrackScheduleType.TimeAnnouncementTrack:
-                    this.ScheduledEvent.FriendlyName = "Locução de Hora";
-                    break;
-                case TrackScheduleType.StartPlaylistTrack:
-                    this.ScheduledEvent.FriendlyName = "Iniciar Playlist";
-                    break;
-                case TrackScheduleType.StopPlaylistTrack:
-                    this.ScheduledEvent.FriendlyName = "Parar Playlist";
-                    break;
-                default:
-                    break;
             }
         }
 

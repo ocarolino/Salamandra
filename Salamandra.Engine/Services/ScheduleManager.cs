@@ -11,13 +11,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace Salamandra.Engine.Services
 {
     public class ScheduleManager : INotifyPropertyChanged
     {
         public List<ScheduledEvent> Events { get; set; }
-        public ObservableCollection<UpcomingEvent> EventsQueue { get; set; }
+        public WpfObservableRangeCollection<UpcomingEvent> EventsQueue { get; set; }
         public int LastHourChecked { get; set; }
         public bool HasLateImmediateEvent { get; set; }
         public bool HasLateWaitingEvent { get; set; }
@@ -27,7 +28,7 @@ namespace Salamandra.Engine.Services
         public ScheduleManager()
         {
             this.Events = new List<ScheduledEvent>();
-            this.EventsQueue = new ObservableCollection<UpcomingEvent>();
+            this.EventsQueue = new WpfObservableRangeCollection<UpcomingEvent>();
 
             this.LastHourChecked = -1;
         }
@@ -172,8 +173,7 @@ namespace Salamandra.Engine.Services
         {
             var lateEvents = this.EventsQueue.Where(x => x.StartDateTime < DateTime.Now && x.EventPriority < eventPriority).ToList();
 
-            for (int i = 0; i < lateEvents.Count; i++)
-                this.EventsQueue.Remove(lateEvents[i]);
+            this.EventsQueue.RemoveRange(lateEvents);
         }
 
         private void DiscardMaximumWaitEvents()
@@ -194,25 +194,29 @@ namespace Salamandra.Engine.Services
 
         private void CreateUpcomingEvents(DateTime startFromDate)
         {
+            var eventsToQueue = new List<UpcomingEvent>();
+
             foreach (var item in this.Events)
             {
                 if (CheckEventSchedule(item, startFromDate))
-                    QueueEvent(item, startFromDate);
+                {
+                    Debug.WriteLine(String.Format("Queueing event: {0}", item.FriendlyName));
+                    eventsToQueue.Add(CreateUpcomingEvent(item, startFromDate));
+                }
             }
 
-            this.EventsQueue = new ObservableCollection<UpcomingEvent>(
-                this.EventsQueue
-                .OrderBy(x => x.StartDateTime)
+            eventsToQueue.AddRange(this.EventsQueue);
+
+            this.EventsQueue = new WpfObservableRangeCollection<UpcomingEvent>(
+                eventsToQueue.OrderBy(x => x.StartDateTime)
                 .ThenByDescending(x => x.Immediate)
                 .ThenBy(x => x.QueueOrder)
                 .ThenBy(x => x.EventId)
                 );
         }
 
-        private void QueueEvent(ScheduledEvent scheduledEvent, DateTime startFromDate)
+        private UpcomingEvent CreateUpcomingEvent(ScheduledEvent scheduledEvent, DateTime startFromDate)
         {
-            Debug.WriteLine(String.Format("Queueing event: {0}", scheduledEvent.FriendlyName));
-
             UpcomingEvent upcomingEvent = new UpcomingEvent();
             upcomingEvent.EventId = scheduledEvent.Id;
             upcomingEvent.Immediate = scheduledEvent.Immediate;
@@ -224,7 +228,7 @@ namespace Salamandra.Engine.Services
             upcomingEvent.EventPriority = scheduledEvent.EventPriority;
             upcomingEvent.Track = scheduledEvent.GetTrack();
 
-            this.EventsQueue.Add(upcomingEvent);
+            return upcomingEvent;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -307,16 +311,9 @@ namespace Salamandra.Engine.Services
 
         public void DiscardLateEvents()
         {
-            var lateEvents = this.EventsQueue.Where(x => x.StartDateTime < DateTime.Now);
+            var lateEvents = this.EventsQueue.Where(x => x.StartDateTime < DateTime.Now).ToList();
 
-            // ToDo: RemoveRange
-            for (int i = this.EventsQueue.Count - 1; i >= 0; i--)
-            {
-                var temp = this.EventsQueue[i];
-
-                if (lateEvents.Contains(temp))
-                    this.EventsQueue.Remove(temp);
-            }
+            this.EventsQueue.RemoveRange(lateEvents);
         }
     }
 }

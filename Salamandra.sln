@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salamandra", "Salamandra\Sa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salamandra.Engine", "Salamandra.Engine\Salamandra.Engine.csproj", "{EF6072DD-2FE3-4F6C-A04D-102D72AEA74D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salamandra.Windows", "Salamandra.Windows\Salamandra.Windows.csproj", "{2CE9C544-DD72-44C2-BE9F-0E5A42EA96E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{EF6072DD-2FE3-4F6C-A04D-102D72AEA74D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF6072DD-2FE3-4F6C-A04D-102D72AEA74D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF6072DD-2FE3-4F6C-A04D-102D72AEA74D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CE9C544-DD72-44C2-BE9F-0E5A42EA96E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CE9C544-DD72-44C2-BE9F-0E5A42EA96E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CE9C544-DD72-44C2-BE9F-0E5A42EA96E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CE9C544-DD72-44C2-BE9F-0E5A42EA96E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

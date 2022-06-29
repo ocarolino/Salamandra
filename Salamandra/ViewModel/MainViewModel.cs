@@ -604,7 +604,6 @@ namespace Salamandra.ViewModel
                     string? file = rotationTrack.GetFile();
                     this.CurrentTrackFilename = Path.GetFileNameWithoutExtension(file);
 
-
                     if (rotationTrack is TimeAnnouncementTrack && !resetSequence)
                         shouldLog = false;
 
@@ -612,8 +611,17 @@ namespace Salamandra.ViewModel
                         PlayAudioFile(file, shouldLog, rotationTrack.FriendlyName, onlyFriendlyName);
                     else
                     {
-                        // Try to avoid looping an invalid track.
-                        // ToDo: Actually, I don't know if this is really necessary.
+                        /*
+                         * This is a case meant not for invalid files, but a invalid/null string. 
+                         * So we force an update to avoid looping an invalid track. Maybe this is
+                         * not really necessary, as the program itself will set a next track when
+                         * passing through the entire list. But let this be here, just for peace of
+                         * mind.
+                         */
+
+                        this.PlayerLogManager?.Error(String.Format("{0} {1} contains an invalid file list.",
+                            rotationTrack.GetType().Name, rotationTrack.Filename), "Player");
+
                         if (this.PlaylistManager.NextTrack == track)
                             this.PlaylistManager.UpdateNextTrack();
 

@@ -1,4 +1,5 @@
 ﻿using Salamandra.Engine.Converter;
+using Salamandra.Engine.Strings;
 using System.ComponentModel;
 
 namespace Salamandra.Engine.Domain.Enums
@@ -6,15 +7,15 @@ namespace Salamandra.Engine.Domain.Enums
     [TypeConverter(typeof(EnumDescriptionTypeConverter))]
     public enum PlaylistMode
     {
-        [Description("Padrão")]
+        [LocalizedDescription("PlaylistMode_Default", typeof(EnumResources))]
         Default = 0,
-        [Description("Repetir")]
+        [LocalizedDescription("PlaylistMode_Repeat", typeof(EnumResources))]
         Repeat = 1,
-        [Description("Aleatório")]
+        [LocalizedDescription("PlaylistMode_Random", typeof(EnumResources))]
         Random = 2,
-        [Description("Manual")]
+        [LocalizedDescription("PlaylistMode_Manual", typeof(EnumResources))]
         Manual = 3,
-        [Description("Embaralhar")]
+        [LocalizedDescription("PlaylistMode_Shuffle", typeof(EnumResources))]
         Shuffle = 4,
     }
 }

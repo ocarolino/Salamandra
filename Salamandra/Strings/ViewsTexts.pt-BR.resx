@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+	
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>1.3</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+
+<data name="EventListWindow_AreYouSureDelete" xml:space="preserve"><value>Tem certeza que deseja excluir os eventos selecionados?</value></data>
+<data name="EventListWindow_AreYouSureDeleteAll" xml:space="preserve"><value>Tem certeza que deseja excluir todos os eventos?</value></data>
+<data name="EventListWindow_AreYouSureDeleteExpired" xml:space="preserve"><value>Tem certeza que deseja excluir os eventos expirados?</value></data>
+<data name="EventListWindow_Delete" xml:space="preserve"><value>Excluir</value></data>
+<data name="EventListWindow_DeleteAll" xml:space="preserve"><value>Deletar todos os eventos</value></data>
+<data name="EventListWindow_DeleteExpired" xml:space="preserve"><value>Excluir expirados</value></data>
+<data name="EventListWindow_Edit" xml:space="preserve"><value>Editar</value></data>
+<data name="EventListWindow_ErrorOpeningList" xml:space="preserve"><value>Houve um erro ao abrir a lista de eventos</value></data>
+<data name="EventListWindow_ErrorSavingList" xml:space="preserve"><value>Houve um erro ao salvar a lista de eventos</value></data>
+<data name="EventListWindow_Expiration" xml:space="preserve"><value>Expiração</value></data>
+<data name="EventListWindow_File" xml:space="preserve"><value>Arquivo</value></data>
+<data name="EventListWindow_Hours" xml:space="preserve"><value>Horas</value></data>
+<data name="EventListWindow_Mode" xml:space="preserve"><value>Modo</value></data>
+<data name="EventListWindow_New" xml:space="preserve"><value>Novo</value></data>
+<data name="EventListWindow_Open" xml:space="preserve"><value>Abrir...</value></data>
+<data name="EventListWindow_Save" xml:space="preserve"><value>Salvar</value></data>
+<data name="EventListWindow_Time" xml:space="preserve"><value>Hora</value></data>
+<data name="EventListWindow_WeekDays" xml:space="preserve"><value>Dias da Semana</value></data>
+<data name="EventListWindow_WindowTitle" xml:space="preserve"><value>Eventos</value></data>
+<data name="EventWindow_Cue" xml:space="preserve"><value>Pré-Escuta</value></data>
+<data name="EventWindow_DateAndTime" xml:space="preserve"><value>Data e Hora</value></data>
+<data name="EventWindow_EnableMaximumWait" xml:space="preserve"><value>Utilizar Espera Máxima</value></data>
+<data name="EventWindow_EventType" xml:space="preserve"><value>Tipo do Evento</value></data>
+<data name="EventWindow_ExpirationDateTime" xml:space="preserve"><value>Data e Hora de Expiração</value></data>
+<data name="EventWindow_HighPriority" xml:space="preserve"><value>Prioridade Alta</value></data>
+<data name="EventWindow_Immediate" xml:space="preserve"><value>Imediato</value></data>
+<data name="EventWindow_LowPriority" xml:space="preserve"><value>Prioridade Baixa</value></data>
+<data name="EventWindow_MaximumWait" xml:space="preserve"><value>Espera Máxima</value></data>
+<data name="EventWindow_MaximumWaitAction" xml:space="preserve"><value>Ação após espera</value></data>
+<data name="EventWindow_MaximumWaitTime" xml:space="preserve"><value>Tempo máximo de espera</value></data>
+<data name="EventWindow_OrderAndPriority" xml:space="preserve"><value>Ordenação e Prioridade</value></data>
+<data name="EventWindow_OtherHours" xml:space="preserve"><value>Outros Horários</value></data>
+<data name="EventWindow_QueueOrder" xml:space="preserve"><value>Ordem do Evento na Fila</value></data>
+<data name="EventWindow_StartingDateTime" xml:space="preserve"><value>Data e Hora de Início</value></data>
+<data name="EventWindow_TimeAndDay" xml:space="preserve"><value>Horários e Dias</value></data>
+<data name="EventWindow_Validation_DelayedStartPlayback" xml:space="preserve"><value>Um evento de iniciar a playlist que não seja imediato pode não ter o efeito desejado.</value></data>
+<data name="EventWindow_Validation_ExpirationAfterStarting" xml:space="preserve"><value>A data de expiração do evento deve ser posterior a data de início.</value></data>
+<data name="EventWindow_Validation_MustSelectDays" xml:space="preserve"><value>Os dias que o evento tocará devem ser selecionados.</value></data>
+<data name="EventWindow_Validation_MustSelectFile" xml:space="preserve"><value>O arquivo do evento deve ser selecionado.</value></data>
+<data name="EventWindow_Validation_MustSelectHours" xml:space="preserve"><value>Os horários que o evento tocará devem ser selecionados.</value></data>
+<data name="EventWindow_Validation_WaitingTimeGreaterThanZero" xml:space="preserve"><value>Um evento com espera máxima deve ter o tempo de espera maior que zero.</value></data>
+<data name="EventWindow_WeekDays" xml:space="preserve"><value>Dias da Semana</value></data>
+<data name="EventWindow_WindowTitle" xml:space="preserve"><value>Evento</value></data>
+<data name="FileFormats_All" xml:space="preserve"><value>Todos os arquivos</value></data>
+<data name="FileFormats_Audio" xml:space="preserve"><value>Arquivos de áudio</value></data>
+<data name="FileFormats_Playlist" xml:space="preserve"><value>Playlists</value></data>
+<data name="FileFormats_ScheduleEvents" xml:space="preserve"><value>Planilha de Eventos</value></data>
+<data name="MainWindow_AddAudioTracks" xml:space="preserve"><value>Adicionar arquivos de áudio...</value></data>
+<data name="MainWindow_AddPlaylistTrack" xml:space="preserve"><value>Adicionar arquivo de playlist....</value></data>
+<data name="MainWindow_AddRandomTrack" xml:space="preserve"><value>Adicionar arquivo aleatório de pasta...</value></data>
+<data name="MainWindow_AddStopPlaylistTrack" xml:space="preserve"><value>Adicionar comando para Parar Playlist</value></data>
+<data name="MainWindow_AddTimeAnnouncement" xml:space="preserve"><value>Adicionar locução de horário...</value></data>
+<data name="MainWindow_Cue" xml:space="preserve"><value>Pré-Escuta</value></data>
+<data name="MainWindow_Delete" xml:space="preserve"><value>Remover faixas selecionadas</value></data>
+<data name="MainWindow_DeleteAll" xml:space="preserve"><value>Remover todas as faixas</value></data>
+<data name="MainWindow_Edit" xml:space="preserve"><value>Editar</value></data>
+<data name="MainWindow_File" xml:space="preserve"><value>Arquivo</value></data>
+<data name="MainWindow_MarkAsNext" xml:space="preserve"><value>Marcar como próxima</value></data>
+<data name="MainWindow_Media" xml:space="preserve"><value>Mídia</value></data>
+<data name="MainWindow_New" xml:space="preserve"><value>Novo</value></data>
+<data name="MainWindow_NowPlaying" xml:space="preserve"><value>Reproduzindo agora</value></data>
+<data name="MainWindow_NowPlaying_EndTime" xml:space="preserve"><value>Horário de Término</value></data>
+<data name="MainWindow_NowPlaying_RemainingTime" xml:space="preserve"><value>Tempo Restante</value></data>
+<data name="MainWindow_Open" xml:space="preserve"><value>Abrir...</value></data>
+<data name="MainWindow_OpenLogFolder" xml:space="preserve"><value>Abrir pasta de registros</value></data>
+<data name="MainWindow_OpenTodayLog" xml:space="preserve"><value>Abrir registro de hoje</value></data>
+<data name="MainWindow_PlayingNext" xml:space="preserve"><value>Próxima faixa</value></data>
+<data name="MainWindow_Playlist" xml:space="preserve"><value>Playlist</value></data>
+<data name="MainWindow_Playlist_Duration" xml:space="preserve"><value>Duração</value></data>
+<data name="MainWindow_Playlist_File" xml:space="preserve"><value>Arquivo</value></data>
+<data name="MainWindow_PlayNextTrack" xml:space="preserve"><value>Próxima faixa</value></data>
+<data name="MainWindow_PlaySelectedTrack" xml:space="preserve"><value>Tocar faixa selecionada</value></data>
+<data name="MainWindow_Save" xml:space="preserve"><value>Salvar</value></data>
+<data name="MainWindow_SaveAs" xml:space="preserve"><value>Salvar como...</value></data>
+<data name="MainWindow_Settings" xml:space="preserve"><value>Configurações</value></data>
+<data name="MainWindow_ShufflePlaylist" xml:space="preserve"><value>Embaralhar playlist</value></data>
+<data name="MainWindow_StartPlayback" xml:space="preserve"><value>Reproduzir playlist</value></data>
+<data name="MainWindow_StopAfterCurrentTrack" xml:space="preserve"><value>Parar após faixa atual</value></data>
+<data name="MainWindow_StopPlayback" xml:space="preserve"><value>Parar playlist</value></data>
+<data name="MainWindow_Tags_Album" xml:space="preserve"><value>Álbum</value></data>
+<data name="MainWindow_Tags_Artist" xml:space="preserve"><value>Artista</value></data>
+<data name="MainWindow_Tags_Comment" xml:space="preserve"><value>Comentário</value></data>
+<data name="MainWindow_Tags_Genre" xml:space="preserve"><value>Gênero</value></data>
+<data name="MainWindow_Tags_Title" xml:space="preserve"><value>Título</value></data>
+<data name="MainWindow_Tags_Year" xml:space="preserve"><value>Ano</value></data>
+<data name="MainWindow_Tools" xml:space="preserve"><value>Ferramentas</value></data>
+<data name="MainWindow_UpcomingEvents" xml:space="preserve"><value>Próximos Eventos</value></data>
+<data name="MainWindow_UpcomingEvents_Mode" xml:space="preserve"><value>Início</value></data>
+<data name="MainWindow_UpcomingEvents_Name" xml:space="preserve"><value>Evento</value></data>
+<data name="MainWindow_UpcomingEvents_Time" xml:space="preserve"><value>Hora</value></data>
+<data name="Misc_ApplicationTitle" xml:space="preserve"><value>Salamandra</value></data>
+<data name="Misc_Cancel" xml:space="preserve"><value>Cancelar</value></data>
+<data name="Misc_Copy" xml:space="preserve"><value>Copiar</value></data>
+<data name="Misc_Cut" xml:space="preserve"><value>Recortar</value></data>
+<data name="Misc_Events_Immediate" xml:space="preserve"><value>Imediato</value></data>
+<data name="Misc_Events_NotImmediate" xml:space="preserve"><value>Atrasado</value></data>
+<data name="Misc_Ok" xml:space="preserve"><value>Confirmar</value></data>
+<data name="Misc_Paste" xml:space="preserve"><value>Colar</value></data>
+<data name="Misc_SelectAll" xml:space="preserve"><value>Selecionar todos</value></data>
+<data name="Misc_Track_TimeAnnouncement" xml:space="preserve"><value>Locução de Horário</value></data>
+<data name="PreListenWindow_WindowTitle" xml:space="preserve"><value>Pré-Escute</value></data>
+<data name="SettingsWindow_AskWhenCloseWhilePlaying" xml:space="preserve"><value>Confirmar ao fechar caso player esteja tocando</value></data>
+<data name="SettingsWindow_CueOutputDevice" xml:space="preserve"><value>Dispositivo de Saída de Pré Escuta</value></data>
+<data name="SettingsWindow_EnableLogs" xml:space="preserve"><value>Ativar registros</value></data>
+<data name="SettingsWindow_General" xml:space="preserve"><value>Geral</value></data>
+<data name="SettingsWindow_KeepDeleteModeLastState" xml:space="preserve"><value>Manter último estado do modo de exclusão ao iniciar</value></data>
+<data name="SettingsWindow_KeepEventsEnabledOnStartup" xml:space="preserve"><value>Sempre manter eventos ativados ao iniciar</value></data>
+<data name="SettingsWindow_Language" xml:space="preserve"><value>Idioma</value></data>
+<data name="SettingsWindow_LogOutputPath" xml:space="preserve"><value>Caminho para armazenar arquivos de registro</value></data>
+<data name="SettingsWindow_Logs" xml:space="preserve"><value>Registro</value></data>
+<data name="SettingsWindow_LogsExplanation" xml:space="preserve"><value>Os registros são arquivos de texto que informam sobre a atividade do player diariamente, além de erros de arquivos ou dispositivos.</value></data>
+<data name="SettingsWindow_MainOutputDevice" xml:space="preserve"><value>Dispositivo de Saída Principal</value></data>
+<data name="SettingsWindow_OpenLastPlaylistOnStartup" xml:space="preserve"><value>Abrir última playlist quando iniciar o programa</value></data>
+<data name="SettingsWindow_Outputs" xml:space="preserve"><value>Saídas</value></data>
+<data name="SettingsWindow_ShufflePlaylistOnStartup" xml:space="preserve"><value>Embaralhar playlist quando iniciar o programa</value></data>
+<data name="SettingsWindow_StartPlaybackOnStartup" xml:space="preserve"><value>Reproduzir playlist quando iniciar o programa</value></data>
+<data name="SettingsWindow_TimeAnnouncementFilesPath" xml:space="preserve"><value>Caminho para arquivos de Locução de Horário</value></data>
+<data name="SettingsWindow_Validation_ValidLogFolder" xml:space="preserve"><value>Para gerar os registros é necessário escolher um diretório válido.</value></data>
+<data name="SettingsWindow_WindowTitle" xml:space="preserve"><value>Configurações</value></data>
+<data name="MainWindow_PlaylistStillPlaying" xml:space="preserve"><value>A playlist ainda está tocando. Tem certeza que deseja fechar?</value></data>
+<data name="MainWindow_LoadingPlaylist" xml:space="preserve"><value>Carregando playlist...</value></data>
+<data name="MainWindow_Error_SoundDevice" xml:space="preserve"><value>Houve um erro no dispositivo de áudio que forçou a parada da reprodução.</value></data>
+<data name="MainWindow_Error_PlaylistParsing" xml:space="preserve"><value>Houve um erro ao processar a playlist.</value></data>
+<data name="MainWindow_Error_PlaylistFile" xml:space="preserve"><value>Houve um erro de acesso ao arquivo.</value></data>
+<data name="MainWindow_Error_PlaylistOpenGeneric" xml:space="preserve"><value>Houve um erro ao abrir a playlist.</value></data>
+<data name="MainWindow_Error_PlaylistSaveGeneric" xml:space="preserve"><value>Houve um erro ao salvar o arquivo.</value></data>
+<data name="MainWindow_PlaylistUnsavedChanges" xml:space="preserve"><value>Há modificações não salvas na playlist. Deseja salvá-las?</value></data>
+<data name="MainWindow_Error_UnhandledPlaylistError" xml:space="preserve"><value>Houve um erro ao manipular a playlist.</value></data>
+<data name="MainWindow_Error_ScheduleSaveGeneric" xml:space="preserve"><value>Houve um erro ao salvar a planilha de eventos.</value></data>
+<data name="MainWindow_AddingFilesToPlaylist" xml:space="preserve"><value>Adicionando arquivos a playlist...</value></data>
+<data name="MainWindow_Error_OpeningLogFolder" xml:space="preserve"><value>Houve um erro ao abrir a pasta de registros.</value></data>
+<data name="MainWindow_Error_OpeningTodayLog" xml:space="preserve"><value>Houve um erro ao abrir o registro atual.</value></data>
+<data name="MainWindow_Error_TodayLogDoesntExist" xml:space="preserve"><value>O arquivo de registro ainda não existe. Verifique se houve alguma atividade ou se a geração de registros está ativa.</value></data>
+<data name="PreListenWindow_Error_PlaybackError" xml:space="preserve"><value>Houve um erro na reprodução da pré-escuta.</value></data>
+<data name="MainWindow_Tooltip_NewPlaylist" xml:space="preserve"><value>Nova playlist</value></data>
+<data name="MainWindow_Tooltip_OpenPlaylist" xml:space="preserve"><value>Abrir playlist</value></data>
+<data name="MainWindow_Tooltip_SavePlaylist" xml:space="preserve"><value>Salvar playlist</value></data>
+<data name="MainWindow_Tooltip_AddAudioFiles" xml:space="preserve"><value>Adicionar arquivos de áudio...</value></data>
+<data name="MainWindow_Tooltip_DeleteSelectedFiles" xml:space="preserve"><value>Excluir faixas selecionadas...</value></data>
+<data name="MainWindow_Tooltip_Settings" xml:space="preserve"><value>Configurações</value></data>
+<data name="MainWindow_Tooltip_StartPlayback" xml:space="preserve"><value>Reproduzir playlist</value></data>
+<data name="MainWindow_Tooltip_StopPlayback" xml:space="preserve"><value>Parar reprodução da playlist</value></data>
+<data name="MainWindow_Tooltip_Pause" xml:space="preserve"><value>Pausar faixa atual</value></data>
+<data name="MainWindow_Tooltip_NextTrack" xml:space="preserve"><value>Reproduzir próxima faixa</value></data>
+<data name="MainWindow_Tooltip_StopAfterCurrentTrack" xml:space="preserve"><value>Parar após faixa atual</value></data>
+<data name="MainWindow_Tooltip_PlaylistMode" xml:space="preserve"><value>Modo de definição da próxima faixa na playlist</value></data>
+<data name="MainWindow_Tooltip_MuteUnmuteVolume" xml:space="preserve"><value>Silenciar/reativar volume</value></data>
+<data name="MainWindow_Tooltip_PlayLateEvents" xml:space="preserve"><value>Reproduzir eventos atrasados</value></data>
+<data name="MainWindow_Tooltip_DiscardLateEvents" xml:space="preserve"><value>Descartar eventos atrasados</value></data>
+<data name="MainWindow_Tooltip_EnableDisableEvents" xml:space="preserve"><value>Ativar/desativar eventos</value></data>
+<data name="MainWindow_Tooltip_OpenEventList" xml:space="preserve"><value>Abrir edição da grade de eventos</value></data>
+<data name="MainWindow_Tooltip_DeleteMode" xml:space="preserve"><value>Deletar faixa após reproduzir</value></data>
+<data name="MainWindow_Tooltip_LoopMode" xml:space="preserve"><value>Repetir faixa</value></data>
+<data name="EventWindow_Tooltip_StartingDate" xml:space="preserve"><value>Data a partir da qual o evento vai iniciar</value></data>
+<data name="EventWindow_Tooltip_StartingTime" xml:space="preserve"><value>Horário em que o evento irá iniciar</value></data>
+<data name="EventWindow_Tooltip_Immediate" xml:space="preserve"><value>Define se o evento tocará imediatamente no horário selecionado, ou se ele irá esperar a faixa atual terminar</value></data>
+<data name="EventWindow_Tooltip_UseExpirationDate" xml:space="preserve"><value>Define se o evento não será mais considerado como ativo a partir de certa data</value></data>
+<data name="EventWindow_Tooltip_ExpirationDate" xml:space="preserve"><value>Data de quando o evento não irá mais tocar</value></data>
+<data name="EventWindow_Tooltip_ExpirationTime" xml:space="preserve"><value>Hora de quando o evento não irá mais tocar</value></data>
+<data name="EventWindow_Tooltip_UsePlayingHours" xml:space="preserve"><value>Define se o evento tocará em várias horas. Se ativo, serão consideradas apenas as horas selecionadas</value></data>
+<data name="EventWindow_Tooltip_UseDaysOfWeek" xml:space="preserve"><value>Se ativo, o evento tocará nos dias da semana selecionados, em vez de somente na data programada</value></data>
+<data name="EventWindow_Tooltip_TrackType" xml:space="preserve"><value>Tipo de faixa que será gerada pelo evento</value></data>
+<data name="EventWindow_Tooltip_Filename" xml:space="preserve"><value>Caminho do arquivo/diretório que será considerado para o evento</value></data>
+<data name="EventWindow_Tooltip_QueueOrder" xml:space="preserve"><value>Define a ordem na fila para eventos que tem o mesmo horário</value></data>
+<data name="EventWindow_Tooltip_Priority" xml:space="preserve"><value>A prioridade dos eventos define se um evento continuará ou não na fila caso um evento já esteja tocando, eventos de mesma ou maior prioridade continuam na fila, enquanto eventos de prioridade menor são descartados</value></data>
+<data name="EventWindow_Tooltip_UseMaximumWait" xml:space="preserve"><value>A espera máxima, se ativa, define o que acontecerá para eventos que ficam enfileirados na fila após um tempo determinado</value></data>
+<data name="EventWindow_Tooltip_MaximumWaitTime" xml:space="preserve"><value>O tempo máximo, em minutos e segundos, que o evento esperará na fila antes de executar a ação selecionada</value></data>
+<data name="EventWindow_Tooltip_MaximumWaitAction" xml:space="preserve"><value>A ação que será executada após o tempo de espera máxima</value></data>
+
+</root>

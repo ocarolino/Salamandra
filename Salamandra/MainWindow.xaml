@@ -11,6 +11,7 @@
         xmlns:enums="clr-namespace:Salamandra.Engine.Domain.Enums;assembly=Salamandra.Engine"
         xmlns:tracks="clr-namespace:Salamandra.Engine.Domain.Tracks;assembly=Salamandra.Engine"
         xmlns:usercontrols="clr-namespace:Salamandra.UserControls"
+        xmlns:strings="clr-namespace:Salamandra.Strings"
         xmlns:dd="urn:gong-wpf-dragdrop"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Height="540" Width="960"
@@ -33,30 +34,30 @@
     </Window.InputBindings>
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Arquivo">
-                <MenuItem Header="Novo" Command="{Binding NewPlaylistCommand}" InputGestureText="Ctrl+N">
+            <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_File}">
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_New}" Command="{Binding NewPlaylistCommand}" InputGestureText="Ctrl+N">
                     <MenuItem.Icon>
                         <Image Source="/Images/Icons/Toolbar/new.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Abrir..." Command="{Binding OpenPlaylistCommand}" InputGestureText="Ctrl+O">
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_Open}" Command="{Binding OpenPlaylistCommand}" InputGestureText="Ctrl+O">
                     <MenuItem.Icon>
                         <Image Source="/Images/Icons/Toolbar/open.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Salvar" Command="{Binding SavePlaylistCommand}" InputGestureText="Ctrl+S">
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_Save}" Command="{Binding SavePlaylistCommand}" InputGestureText="Ctrl+S">
                     <MenuItem.Icon>
                         <Image Source="/Images/Icons/Toolbar/save.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Salvar como..." Command="{Binding SavePlaylistAsCommand}"/>
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_SaveAs}" Command="{Binding SavePlaylistAsCommand}"/>
             </MenuItem>
 
-            <MenuItem Header="Editar">
-                <MenuItem Header="Recortar" InputGestureText="Ctrl+X"
+            <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_Edit}">
+                <MenuItem Header="{x:Static strings:ViewsTexts.Misc_Cut}" InputGestureText="Ctrl+X"
                               Command="{Binding CutTracksCommand}"
                               CommandParameter="{Binding SelectedItems, ElementName=playlist}">
                     <MenuItem.Icon>
@@ -64,7 +65,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Copiar" InputGestureText="Ctrl+C"
+                <MenuItem Header="{x:Static strings:ViewsTexts.Misc_Copy}" InputGestureText="Ctrl+C"
                               Command="{Binding CopyTracksCommand}"
                               CommandParameter="{Binding SelectedItems, ElementName=playlist}">
                     <MenuItem.Icon>
@@ -72,7 +73,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Colar" InputGestureText="Ctrl+V"
+                <MenuItem Header="{x:Static strings:ViewsTexts.Misc_Paste}" InputGestureText="Ctrl+V"
                               Command="{Binding PasteTracksCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Images/Icons/Toolbar/paste.png" />
@@ -81,38 +82,38 @@
 
                 <Separator/>
 
-                <MenuItem Header="Remover selecionadas" InputGestureText="Del"
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_Delete}" InputGestureText="Del"
                           Command="{Binding RemoveTracksFromPlaylistCommand}" CommandParameter="{Binding SelectedItems, ElementName=playlist}"/>
 
-                <MenuItem Header="Remover todas" InputGestureText="Ctrl+Del" Command="{Binding RemoveAllTracksCommand}"/>
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_DeleteAll}" InputGestureText="Ctrl+Del" Command="{Binding RemoveAllTracksCommand}"/>
             </MenuItem>
 
-            <MenuItem Header="Playlist">
-                <MenuItem Header="Adicionar arquivos de áudio..." Command="{Binding AddFilesToPlaylistCommand}">
+            <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_Playlist}">
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_AddAudioTracks}" Command="{Binding AddFilesToPlaylistCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Images/Icons/Playlist/audio_file.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Adicionar arquivo aleatório de pasta..." Command="{Binding AddRandomTrackCommand}">
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_AddRandomTrack}" Command="{Binding AddRandomTrackCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Images/Icons/Playlist/music_folder.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Adicionar arquivo de playlist..." Command="{Binding AddPlaylistTrackCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/Icons/Playlist/playlist_file.png" />
-                    </MenuItem.Icon>
-                </MenuItem>
-
-                <MenuItem Header="Adicionar locução de horário..." Command="{Binding AddTimeAnnouncementTrackCommand}">
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_AddTimeAnnouncement}" Command="{Binding AddTimeAnnouncementTrackCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Images/Icons/Playlist/alarm_clock.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Adicionar comando para parar playlist" Command="{Binding AddStopTrackCommand}">
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_AddPlaylistTrack}" Command="{Binding AddPlaylistTrackCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/Playlist/playlist_file.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_AddStopPlaylistTrack}" Command="{Binding AddStopTrackCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Images/Icons/Playlist/remote_control.png" />
                     </MenuItem.Icon>
@@ -120,37 +121,37 @@
 
                 <Separator/>
 
-                <MenuItem Header="Embaralhar playlist" Command="{Binding ShufflePlaylistCommand}"/>
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_ShufflePlaylist}" Command="{Binding ShufflePlaylistCommand}"/>
             </MenuItem>
 
-            <MenuItem Header="Mídia">
-                <MenuItem Header="Reproduzir playlist" InputGestureText="P"
+            <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_Media}">
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_StartPlayback}" InputGestureText="P"
                           Command="{Binding StartPlaybackCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Images/Icons/Toolbar/play.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Parar playlist" InputGestureText="S"
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_StopPlayback}" InputGestureText="S"
                           Command="{Binding StopPlaybackCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Images/Icons/Toolbar/stop.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Próxima faixa" InputGestureText="N"
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_PlayNextTrack}" InputGestureText="N"
                           Command="{Binding NextTrackCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Images/Icons/Toolbar/next.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Parar após faixa atual" IsCheckable="True"
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_StopAfterCurrentTrack}" IsCheckable="True"
                           IsChecked="{Binding StopAfterCurrentTrack}" IsEnabled="{Binding IsPlaying}"/>
             </MenuItem>
 
-            <MenuItem Header="Ferramentas">
-                <MenuItem Header="Configurações" Command="{Binding OpenSettingsCommand}">
+            <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_Tools}">
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_Settings}" Command="{Binding OpenSettingsCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Images/Icons/Toolbar/service.png" />
                     </MenuItem.Icon>
@@ -158,44 +159,44 @@
 
                 <Separator/>
 
-                <MenuItem Header="Abrir Registro de Hoje" Command="{Binding OpenCurrentLogCommand}"/>
-                <MenuItem Header="Pasta de Registros" Command="{Binding OpenLogFolderCommand}"/>
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_OpenTodayLog}" Command="{Binding OpenCurrentLogCommand}"/>
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_OpenLogFolder}" Command="{Binding OpenLogFolderCommand}"/>
             </MenuItem>
         </Menu>
 
         <ToolBarTray DockPanel.Dock="Top" Background="{StaticResource ContainerBackground}">
             <ToolBar>
-                <Button Command="{Binding NewPlaylistCommand}" ToolTip="Nova playlist">
+                <Button Command="{Binding NewPlaylistCommand}" ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_NewPlaylist}">
                     <controls:AutoDisableImage Source="/Images/Icons/Toolbar/new.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                 </Button>
 
-                <Button Command="{Binding OpenPlaylistCommand}" ToolTip="Abrir playlist...">
+                <Button Command="{Binding OpenPlaylistCommand}" ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_OpenPlaylist}">
                     <controls:AutoDisableImage Source="/Images/Icons/Toolbar/open.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                 </Button>
 
-                <Button Command="{Binding SavePlaylistCommand}" ToolTip="Salvar playlist">
+                <Button Command="{Binding SavePlaylistCommand}" ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_SavePlaylist}">
                     <controls:AutoDisableImage Source="/Images/Icons/Toolbar/save.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                 </Button>
 
                 <Separator/>
 
-                <Button Command="{Binding AddFilesToPlaylistCommand}" ToolTip="Adicionar arquivos de áudio...">
+                <Button Command="{Binding AddFilesToPlaylistCommand}" ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_AddAudioFiles}">
                     <controls:AutoDisableImage Source="/Images/Icons/Toolbar/plus.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                 </Button>
 
                 <Button Command="{Binding RemoveTracksFromPlaylistCommand}" CommandParameter="{Binding SelectedItems, ElementName=playlist}"
-                        ToolTip="Excluir faixas selecionadas...">
+                        ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_DeleteSelectedFiles}">
                     <controls:AutoDisableImage Source="/Images/Icons/Toolbar/delete.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                 </Button>
 
                 <Separator/>
 
-                <Button Command="{Binding OpenSettingsCommand}" ToolTip="Configurações">
+                <Button Command="{Binding OpenSettingsCommand}" ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_Settings}">
                     <controls:AutoDisableImage Source="/Images/Icons/Toolbar/service.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                 </Button>
@@ -223,7 +224,7 @@
 
             <!-- Faixa Atual -->
             <StackPanel Grid.Column="1" Margin="8 0 0 0">
-                <TextBlock Text="Reproduzindo agora" HorizontalAlignment="Left"
+                <TextBlock Text="{x:Static strings:ViewsTexts.MainWindow_NowPlaying}" HorizontalAlignment="Left"
                            FontWeight="DemiBold" FontSize="14">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
@@ -266,13 +267,13 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Tempo Restante" Grid.Column="0" VerticalAlignment="Center"
+                    <TextBlock Text="{x:Static strings:ViewsTexts.MainWindow_NowPlaying_RemainingTime}" Grid.Column="0" VerticalAlignment="Center"
                                Foreground="{StaticResource ControlDisabledGlythColour}"/>
 
                     <TextBlock Text="{Binding RemainingTime, StringFormat='mm\\:ss', TargetNullValue='--:--', FallbackValue='00:00'}"
                                Grid.Column="1" VerticalAlignment="Center" FontWeight="Bold" Margin="8 0 0 0"/>
 
-                    <TextBlock Text="Horário de Término" Grid.Column="3" VerticalAlignment="Center"
+                    <TextBlock Text="{x:Static strings:ViewsTexts.MainWindow_NowPlaying_EndTime}" Grid.Column="3" VerticalAlignment="Center"
                                Foreground="{StaticResource ControlDisabledGlythColour}"/>
 
                     <TextBlock Text="{Binding EndingTimeOfDay, StringFormat='hh\\:mm\\:ss', TargetNullValue='--:--:--', FallbackValue='00:00:00'}"
@@ -283,7 +284,7 @@
 
             <!-- Próxima Faixa -->
             <StackPanel Grid.Column="2" Margin="8 0 0 0">
-                <TextBlock Text="Próxima faixa"
+                <TextBlock Text="{x:Static strings:ViewsTexts.MainWindow_PlayingNext}"
                            FontWeight="DemiBold" FontSize="14"/>
                 <Border Height="48" Margin="0 4 0 0" Background="Transparent" Cursor="Hand"
                     BorderBrush="Black" BorderThickness="1">
@@ -319,32 +320,32 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" Width="30" Height="30" Command="{Binding StartPlaybackCommand}"
-                    ToolTip="Reproduzir playlist">
+                    ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_StartPlayback}">
                 <Image Source="/Images/Icons/Player/play.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                        RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
             </Button>
 
             <Button Grid.Column="1" Margin="8 0 0 0" Width="30" Height="30" Command="{Binding StopPlaybackCommand}"
-                    ToolTip="Parar reprodução da playlist">
+                    ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_StopPlayback}">
                 <Image Source="/Images/Icons/Player/stop.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                        RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
             </Button>
 
             <ToggleButton Grid.Column="2" Margin="8 0 0 0" Width="30" Height="30" Command="{Binding TogglePlayPauseCommand}" IsChecked="{Binding IsPaused}"
-                          ToolTip="Pausar faixa atual">
+                          ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_Pause}">
                 <Image Source="/Images/Icons/Player/pause.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                        RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
             </ToggleButton>
 
             <Button Grid.Column="3" Margin="8 0 0 0" Width="30" Height="30" Command="{Binding NextTrackCommand}"
-                    ToolTip="Reproduzir próxima faixa">
+                    ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_NextTrack}">
                 <Image Source="/Images/Icons/Player/next.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                        RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
             </Button>
 
             <ToggleButton Grid.Column="4" Margin="8 0 0 0" Width="30" Height="30" 
                           IsChecked="{Binding StopAfterCurrentTrack}" IsEnabled="{Binding IsPlaying}"
-                          ToolTip="Parar após faixa atual">
+                          ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_StopAfterCurrentTrack}">
                 <Image Source="/Images/Icons/Player/stop-next.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                        RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24"/>
             </ToggleButton>
@@ -352,7 +353,7 @@
             <ComboBox Grid.Column="5" SelectedItem="{Binding PlaylistManager.PlaylistMode}"
                       ItemsSource="{Binding Source={extensions:EnumBindingSource {x:Type enums:PlaylistMode}}}"
                       HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Margin="8 0 0 0"
-                      ToolTip="Modo de definição da próxima faixa na playlist">
+                      ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_PlaylistMode}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <i:InvokeCommandAction Command="{Binding UpdateNextTrackCommand}"></i:InvokeCommandAction>
@@ -363,7 +364,7 @@
             <StackPanel Orientation="Horizontal" Grid.Column="6" Margin="8 0 0 0">
                 <ToggleButton Padding="4" Margin="4 0 0 0" IsChecked="{Binding VolumeMuted}"
                               Style="{StaticResource FlatToggleButtonStyle}"
-                              ToolTip="Silenciar/reativar volume">
+                              ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_MuteUnmuteVolume}">
                     <Image VerticalAlignment="Center" HorizontalAlignment="Center"
                            RenderOptions.BitmapScalingMode="NearestNeighbor" Height="24" Width="24">
                         <Image.Style>
@@ -429,19 +430,19 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Próximos Eventos" Grid.Column="0" VerticalAlignment="Bottom"/>
+                    <TextBlock Text="{x:Static strings:ViewsTexts.MainWindow_UpcomingEvents}" Grid.Column="0" VerticalAlignment="Bottom"/>
 
                     <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
                         <Button Command="{Binding PlayLateEventsCommand}" Padding="4"
                                 Style="{StaticResource FlatButtonStyle}"
-                                ToolTip="Reproduzir eventos atrasados">
+                                ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_PlayLateEvents}">
                             <controls:AutoDisableImage Source="/Images/Icons/Toolbar/play.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                         </Button>
 
                         <Button Command="{Binding DiscardLateEventsCommand}" Padding="4" Margin="4 0 0 0"
                                 Style="{StaticResource FlatButtonStyle}"
-                                ToolTip="Descartar eventos atrasados">
+                                ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_DiscardLateEvents}">
                             <controls:AutoDisableImage Source="/Images/Icons/Toolbar/trash.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                         </Button>
@@ -450,14 +451,14 @@
 
                         <ToggleButton Padding="4" Margin="4 0 0 0" IsChecked="{Binding EnableEvents}"
                                       Style="{StaticResource FlatToggleButtonStyle}"
-                                      ToolTip="Ativar/desativar eventos">
+                                      ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_EnableDisableEvents}">
                             <Image Source="/Images/Icons/Toolbar/checkmark.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                         </ToggleButton>
 
                         <Button Command="{Binding OpenEventListCommand}" Padding="4" Margin="4 0 0 0"
                                 Style="{StaticResource FlatButtonStyle}"
-                                ToolTip="Abrir edição da grade de eventos">
+                                ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_OpenEventList}">
                             <Image Source="/Images/Icons/Toolbar/calendar.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                         </Button>
@@ -471,7 +472,7 @@
                     <ListView.View>
                         <GridView>
                             <!-- Icon -->
-                            <GridViewColumn Header="Hora"
+                            <GridViewColumn Header="{x:Static strings:ViewsTexts.MainWindow_UpcomingEvents_Time}"
                                             Width="72">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
@@ -497,9 +498,32 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="Início" DisplayMemberBinding="{converters:SwitchBinding Immediate, Imediato, Espera}"
-                                            Width="60"/>
-                            <GridViewColumn Header="Evento" DisplayMemberBinding="{Binding Track.FriendlyName}"
+
+                            <GridViewColumn Header="{x:Static strings:ViewsTexts.MainWindow_UpcomingEvents_Mode}"                                             
+                                            Width="60">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Immediate}" Value="False">
+                                                            <Setter Property="Text" Value="{x:Static strings:ViewsTexts.Misc_Events_NotImmediate}"/>
+                                                        </DataTrigger>
+
+                                                        <DataTrigger Binding="{Binding Immediate}" Value="True">
+                                                            <Setter Property="Text" Value="{x:Static strings:ViewsTexts.Misc_Events_Immediate}"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="{x:Static strings:ViewsTexts.MainWindow_UpcomingEvents_Name}" 
+                                            DisplayMemberBinding="{Binding Track.FriendlyName}"
                                             Width="268"/>
                         </GridView>
                     </ListView.View>
@@ -524,19 +548,19 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="Playlist" Grid.Column="0" VerticalAlignment="Bottom"/>
+                        <TextBlock Text="{x:Static strings:ViewsTexts.MainWindow_Playlist}" Grid.Column="0" VerticalAlignment="Bottom"/>
 
                         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
                             <ToggleButton Padding="4" Margin="4 0 0 0" IsChecked="{Binding EnableDeleteMode}"
                                           Style="{StaticResource FlatToggleButtonStyle}"
-                                          ToolTip="Deletar faixa após reproduzir">
+                                          ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_DeleteMode}">
                                 <Image Source="/Images/Icons/Toolbar/delete_row.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                             </ToggleButton>
 
                             <ToggleButton Padding="4" Margin="4 0 0 0" IsChecked="{Binding EnableLoopMode}"
                                           Style="{StaticResource FlatToggleButtonStyle}"
-                                          ToolTip="Repetir faixa">
+                                          ToolTip="{x:Static strings:ViewsTexts.MainWindow_Tooltip_LoopMode}">
                                 <Image Source="/Images/Icons/Toolbar/loop.png" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Height="16" Width="16"/>
                             </ToggleButton>
@@ -554,7 +578,8 @@
                             <GridView>
                                 <GridViewColumn x:Name="PlaylistFriendlyNameColumn" Width="360">
                                     <GridViewColumn.Header>
-                                        <GridViewColumnHeader Tag="0" Click="PlaylistColumnHeader_Click">Arquivo</GridViewColumnHeader>
+                                        <GridViewColumnHeader Tag="0" Click="PlaylistColumnHeader_Click"
+                                                              Content="{x:Static strings:ViewsTexts.MainWindow_Playlist_File}"/>
                                     </GridViewColumn.Header>
 
                                     <GridViewColumn.CellTemplate>
@@ -597,7 +622,8 @@
 
                                 <GridViewColumn Width="120" x:Name="PlaylistDurationColumn">
                                     <GridViewColumn.Header>
-                                        <GridViewColumnHeader Tag="1" Click="PlaylistColumnHeader_Click">Duração</GridViewColumnHeader>
+                                        <GridViewColumnHeader Tag="1" Click="PlaylistColumnHeader_Click"
+                                                              Content="{x:Static strings:ViewsTexts.MainWindow_Playlist_Duration}"/>
                                     </GridViewColumn.Header>
 
                                     <GridViewColumn.CellTemplate>
@@ -686,16 +712,16 @@
 
                         <ListView.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Tocar faixa selecionada" Command="{Binding PlaySelectedTrackCommand}"/>
-                                <MenuItem Header="Marcar como próxima" Command="{Binding SelectedAsNextTrackCommand}"/>
+                                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_PlaySelectedTrack}" Command="{Binding PlaySelectedTrackCommand}"/>
+                                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_MarkAsNext}" Command="{Binding SelectedAsNextTrackCommand}"/>
 
                                 <Separator/>
 
-                                <MenuItem Header="Pré-Escuta" Command="{Binding OpenPreListenCommand}"/>
+                                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_Cue}" Command="{Binding OpenPreListenCommand}"/>
 
                                 <Separator/>
 
-                                <MenuItem Header="Recortar" InputGestureText="Ctrl+X"
+                                <MenuItem Header="{x:Static strings:ViewsTexts.Misc_Cut}" InputGestureText="Ctrl+X"
                                           Command="{Binding CutTracksCommand}"
                                           CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItems}">
                                     <MenuItem.Icon>
@@ -703,7 +729,7 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem Header="Copiar" InputGestureText="Ctrl+C"
+                                <MenuItem Header="{x:Static strings:ViewsTexts.Misc_Copy}" InputGestureText="Ctrl+C"
                                           Command="{Binding CopyTracksCommand}"
                                           CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItems}">
                                     <MenuItem.Icon>
@@ -711,7 +737,7 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem Header="Colar" InputGestureText="Ctrl+V"
+                                <MenuItem Header="{x:Static strings:ViewsTexts.Misc_Paste}" InputGestureText="Ctrl+V"
                                           Command="{Binding PasteTracksCommand}">
                                     <MenuItem.Icon>
                                         <Image Source="/Images/Icons/Toolbar/paste.png" />
@@ -720,7 +746,7 @@
 
                                 <Separator/>
 
-                                <MenuItem Header="Remover selecionadas" InputGestureText="Del"
+                                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_Delete}" InputGestureText="Del"
                                           Command="{Binding RemoveTracksFromPlaylistCommand}"
                                           CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItems}"/>
                             </ContextMenu>
@@ -774,42 +800,42 @@
                             </Grid.RowDefinitions>
 
                             <!-- Artista -->
-                            <TextBlock Text="Artista" Grid.Column="0" Grid.Row="0" Foreground="{StaticResource ControlDisabledGlythColour}"
+                            <TextBlock Text="{x:Static strings:ViewsTexts.MainWindow_Tags_Artist}" Grid.Column="0" Grid.Row="0" Foreground="{StaticResource ControlDisabledGlythColour}"
                                        HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                             <TextBlock Text="{Binding SelectedTrackTags.Artist}" Grid.Column="1" Grid.Row="0" Margin="8 0 0 0"
                                        FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                             <!-- Título -->
-                            <TextBlock Text="Título" Grid.Column="0" Grid.Row="1" Foreground="{StaticResource ControlDisabledGlythColour}"
+                            <TextBlock Text="{x:Static strings:ViewsTexts.MainWindow_Tags_Title}" Grid.Column="0" Grid.Row="1" Foreground="{StaticResource ControlDisabledGlythColour}"
                                        HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                             <TextBlock Text="{Binding SelectedTrackTags.Title}" Grid.Column="1" Grid.Row="1" Margin="8 0 0 0"
                                        FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                             <!-- Álbum -->
-                            <TextBlock Text="Álbum" Grid.Column="0" Grid.Row="2" Foreground="{StaticResource ControlDisabledGlythColour}"
+                            <TextBlock Text="{x:Static strings:ViewsTexts.MainWindow_Tags_Album}" Grid.Column="0" Grid.Row="2" Foreground="{StaticResource ControlDisabledGlythColour}"
                                        HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                             <TextBlock Text="{Binding SelectedTrackTags.Album}" Grid.Column="1" Grid.Row="2" Margin="8 0 0 0"
                                        FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                             <!-- Ano -->
-                            <TextBlock Text="Ano" Grid.Column="2" Grid.Row="0" Foreground="{StaticResource ControlDisabledGlythColour}"
+                            <TextBlock Text="{x:Static strings:ViewsTexts.MainWindow_Tags_Year}" Grid.Column="2" Grid.Row="0" Foreground="{StaticResource ControlDisabledGlythColour}"
                                        HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                             <TextBlock Text="{Binding SelectedTrackTags.Year}" Grid.Column="3" Grid.Row="0" Margin="8 0 0 0"
                                        FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                             <!-- Gênero -->
-                            <TextBlock Text="Gênero" Grid.Column="2" Grid.Row="1" Foreground="{StaticResource ControlDisabledGlythColour}"
+                            <TextBlock Text="{x:Static strings:ViewsTexts.MainWindow_Tags_Genre}" Grid.Column="2" Grid.Row="1" Foreground="{StaticResource ControlDisabledGlythColour}"
                                        HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                             <TextBlock Text="{Binding SelectedTrackTags.Genre}" Grid.Column="3" Grid.Row="1" Margin="8 0 0 0"
                                        FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                             <!-- Comentário -->
-                            <TextBlock Text="Comentário" Grid.Column="2" Grid.Row="2" Foreground="{StaticResource ControlDisabledGlythColour}"
+                            <TextBlock Text="{x:Static strings:ViewsTexts.MainWindow_Tags_Comment}" Grid.Column="2" Grid.Row="2" Foreground="{StaticResource ControlDisabledGlythColour}"
                                        HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                             <TextBlock Text="{Binding SelectedTrackTags.Comment}" Grid.Column="3" Grid.Row="2" Margin="8 0 0 0"

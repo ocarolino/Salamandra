@@ -5,6 +5,7 @@ using Salamandra.Engine.Domain.Enums;
 using Salamandra.Engine.Domain.Events;
 using Salamandra.Engine.Domain.Settings;
 using Salamandra.Engine.Extensions;
+using Salamandra.Engine.Services;
 using Salamandra.Views;
 using System;
 using System.Collections.Generic;
@@ -113,16 +114,17 @@ namespace Salamandra.ViewModel
 
         private string GetFileDialogFilter(TrackScheduleType trackScheduleType)
         {
+            // ToDo: Traduções desses filtros
             switch (trackScheduleType)
             {
                 case TrackScheduleType.AudioFileTrack:
-                    return "Arquivos de áudio (*.wav, *.mp3, *.wma, *.ogg, *.flac) | *.wav; *.mp3; *.wma; *.ogg; *.flac";
+                    return SoundEngine.SupportedAudioFormats.GetDialogFilterFromArray(Salamandra.Strings.ViewsTexts.FileFormats_Audio);
                 case TrackScheduleType.OpenPlaylistTrack:
-                    return "Playlist M3U (*.m3u) | *.m3u";
+                    return PlaylistManager.SupportedPlaylistFormats.GetDialogFilterFromArray(Salamandra.Strings.ViewsTexts.FileFormats_Playlist);
                 case TrackScheduleType.SystemProcessTrack:
-                    return "Todos os arquivos (*.*) | *.*";
+                    return Salamandra.Strings.ViewsTexts.FileFormats_All + " (*.*) | *.*";
                 case TrackScheduleType.OpenScheduleTrack:
-                    return "Lista de Eventos (*.sche) | *.sche";
+                    return ScheduleManager.SupportedScheduleFormats.GetDialogFilterFromArray(Salamandra.Strings.ViewsTexts.FileFormats_ScheduleEvents);
                 default:
                     throw new NotImplementedException();
             }
@@ -160,51 +162,51 @@ namespace Salamandra.ViewModel
 
         private void ValidateAndClose()
         {
+            // ToDo: Considerar somente o dia em casos de eventos que usam mais de um horário
             if (this.ScheduledEvent.UseExpirationDateTime &&
                 this.ScheduledEvent.StartingDateTime >= this.ScheduledEvent.ExpirationDateTime)
             {
-                MessageBox.Show("A data de expiração do evento deve ser posterior a data de início.", "Eventos",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Salamandra.Strings.ViewsTexts.EventWindow_Validation_ExpirationAfterStarting,
+                    Salamandra.Strings.ViewsTexts.EventWindow_WindowTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (this.ScheduledEvent.UsePlayingHours && this.ScheduledEvent.PlayingHours.Count == 0)
             {
-                MessageBox.Show("Os horários que o evento tocará devem ser selecionados.", "Eventos",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Salamandra.Strings.ViewsTexts.EventWindow_Validation_MustSelectHours,
+                    Salamandra.Strings.ViewsTexts.EventWindow_WindowTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (this.ScheduledEvent.UseDaysOfWeek && this.ScheduledEvent.DaysOfWeek.Count == 0)
             {
-                MessageBox.Show("Os dias que o evento tocará devem ser selecionados.", "Eventos",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Salamandra.Strings.ViewsTexts.EventWindow_Validation_MustSelectDays,
+                    Salamandra.Strings.ViewsTexts.EventWindow_WindowTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (this.EventRequiresPath && String.IsNullOrWhiteSpace(this.ScheduledEvent.Filename))
             {
-                MessageBox.Show("O arquivo do evento deve ser selecionado.", "Eventos",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Salamandra.Strings.ViewsTexts.EventWindow_Validation_MustSelectFile,
+                    Salamandra.Strings.ViewsTexts.EventWindow_WindowTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (this.ScheduledEvent.UseMaximumWait && this.ScheduledEvent.MaximumWaitTime <= TimeSpan.Zero)
             {
-                MessageBox.Show("Um evento com espera máxima deve ter o tempo de espera maior que zero.", "Eventos",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Salamandra.Strings.ViewsTexts.EventWindow_Validation_WaitingTimeGreaterThanZero,
+                    Salamandra.Strings.ViewsTexts.EventWindow_WindowTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (this.ScheduledEvent.TrackScheduleType == TrackScheduleType.StartPlaylistTrack &&
-    !this.ScheduledEvent.Immediate)
+                !this.ScheduledEvent.Immediate)
             {
-                MessageBox.Show("Um evento de iniciar a playlist que não seja imediato pode não ter o efeito desejado.", "Eventos",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(Salamandra.Strings.ViewsTexts.EventWindow_Validation_DelayedStartPlayback,
+                    Salamandra.Strings.ViewsTexts.EventWindow_WindowTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
-
-            PrepareFriendlyName();
+            this.ScheduledEvent.UpdateFriendlyName();
             UpdateTimestamps();
 
             this.CloseWindow?.Invoke(true);
@@ -220,34 +222,6 @@ namespace Salamandra.ViewModel
             else
             {
                 this.ScheduledEvent.UpdatedAt = DateTime.Now;
-            }
-        }
-
-        private void PrepareFriendlyName()
-        {
-            switch (this.ScheduledEvent.TrackScheduleType)
-            {
-                case TrackScheduleType.AudioFileTrack:
-                case TrackScheduleType.OpenPlaylistTrack:
-                case TrackScheduleType.SystemProcessTrack:
-                case TrackScheduleType.OpenScheduleTrack:
-                    this.ScheduledEvent.FriendlyName = Path.GetFileNameWithoutExtension(this.ScheduledEvent.Filename);
-                    break;
-                case TrackScheduleType.RandomFileTrack:
-                    this.ScheduledEvent.Filename = this.ScheduledEvent.Filename.EnsureHasDirectorySeparatorChar();
-                    this.ScheduledEvent.FriendlyName = Path.GetFileName(this.ScheduledEvent.Filename.TrimEnd(Path.DirectorySeparatorChar));
-                    break;
-                case TrackScheduleType.TimeAnnouncementTrack:
-                    this.ScheduledEvent.FriendlyName = "Locução de Hora";
-                    break;
-                case TrackScheduleType.StartPlaylistTrack:
-                    this.ScheduledEvent.FriendlyName = "Iniciar Playlist";
-                    break;
-                case TrackScheduleType.StopPlaylistTrack:
-                    this.ScheduledEvent.FriendlyName = "Parar Playlist";
-                    break;
-                default:
-                    break;
             }
         }
 

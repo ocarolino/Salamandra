@@ -336,7 +336,8 @@ namespace Salamandra.ViewModel
         {
             if (this.IsPlaying && this.ApplicationSettings.PlayerSettings.AskToCloseWhenPlaying)
             {
-                if (MessageBox.Show("A playlist ainda está tocando. Tem certeza que deseja fechar?", "Salamandra", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+                if (MessageBox.Show(Salamandra.Strings.ViewsTexts.MainWindow_PlaylistStillPlaying,
+                    "Salamandra", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                     return false;
             }
 
@@ -444,10 +445,10 @@ namespace Salamandra.ViewModel
 
         private async Task AddFilesToPlaylist()
         {
-            SetPlaylistLoading(true, "Adicionando arquivos a playlist...");
+            SetPlaylistLoading(true, Salamandra.Strings.ViewsTexts.MainWindow_AddingFilesToPlaylist);
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Arquivos de áudio (*.wav, *.mp3, *.wma, *.ogg, *.flac) | *.wav; *.mp3; *.wma; *.ogg; *.flac";
+            openFileDialog.Filter = SoundEngine.SupportedAudioFormats.GetDialogFilterFromArray(Salamandra.Strings.ViewsTexts.FileFormats_Audio);
             openFileDialog.Multiselect = true;
 
             if (openFileDialog.ShowDialog() == true)
@@ -459,9 +460,8 @@ namespace Salamandra.ViewModel
 
         private void AddPlaylistTrack()
         {
-            // ToDo: Alguma forma de tornar essas questões de formatos e filtros genéricos!
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Playlist M3U (*.m3u) | *.m3u";
+            openFileDialog.Filter = PlaylistManager.SupportedPlaylistFormats.GetDialogFilterFromArray(Salamandra.Strings.ViewsTexts.FileFormats_Playlist);
 
             if (openFileDialog.ShowDialog() == true)
                 this.PlaylistManager.AddPlaylistTrack(openFileDialog.FileName, this.PlaylistManager.Tracks.IndexOf(this.SelectedTrack!));
@@ -604,7 +604,6 @@ namespace Salamandra.ViewModel
                     string? file = rotationTrack.GetFile();
                     this.CurrentTrackFilename = Path.GetFileNameWithoutExtension(file);
 
-
                     if (rotationTrack is TimeAnnouncementTrack && !resetSequence)
                         shouldLog = false;
 
@@ -612,8 +611,17 @@ namespace Salamandra.ViewModel
                         PlayAudioFile(file, shouldLog, rotationTrack.FriendlyName, onlyFriendlyName);
                     else
                     {
-                        // Try to avoid looping an invalid track.
-                        // ToDo: Actually, I don't know if this is really necessary.
+                        /*
+                         * This is a case meant not for invalid files, but a invalid/null string. 
+                         * So we force an update to avoid looping an invalid track. Maybe this is
+                         * not really necessary, as the program itself will set a next track when
+                         * passing through the entire list. But let this be here, just for peace of
+                         * mind.
+                         */
+
+                        this.PlayerLogManager?.Error(String.Format("{0} {1} contains an invalid file list.",
+                            rotationTrack.GetType().Name, rotationTrack.Filename), "Player");
+
                         if (this.PlaylistManager.NextTrack == track)
                             this.PlaylistManager.UpdateNextTrack();
 
@@ -645,7 +653,7 @@ namespace Salamandra.ViewModel
                     }
                     break;
                 case PlaylistFileTrack playlistFileTrack:
-                    SetPlaylistLoading(true, "Carregando playlist...");
+                    SetPlaylistLoading(true, Salamandra.Strings.ViewsTexts.MainWindow_LoadingPlaylist);
 
                     this.PlayerLogManager?.Information(playlistFileTrack.Filename, "Playlist");
 
@@ -824,8 +832,7 @@ namespace Salamandra.ViewModel
 
             this.StopPlayback();
 
-            MessageBox.Show(
-                String.Format("Houve um erro no dispositivo de áudio que forçou a parada da reprodução.\n\nErro: {0}", ex.Message),
+            MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_SoundDevice, ex.Message),
                 "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
@@ -901,8 +908,6 @@ namespace Salamandra.ViewModel
 
         private void SeekBarDragCompleted()
         {
-            Debug.WriteLine("SeekBarDragCompleted - Value: " + this.TrackPositionInSeconds.ToString());
-
             this.SoundEngine.PositionInSeconds = this.TrackPositionInSeconds;
 
             if (!this.IsPaused)
@@ -916,8 +921,6 @@ namespace Salamandra.ViewModel
 
         private void SeekBarDragStarted()
         {
-            Debug.WriteLine("SeekBarDragStarted - Value: " + this.TrackPositionInSeconds.ToString());
-
             this.isDraggingTrackPosition = true;
         }
 
@@ -944,11 +947,11 @@ namespace Salamandra.ViewModel
                 return;
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Playlist M3U (*.m3u) | *.m3u";
+            openFileDialog.Filter = PlaylistManager.SupportedPlaylistFormats.GetDialogFilterFromArray(Salamandra.Strings.ViewsTexts.FileFormats_Playlist);
 
             if (openFileDialog.ShowDialog() == true)
             {
-                SetPlaylistLoading(true, "Carregando playlist...");
+                SetPlaylistLoading(true, Salamandra.Strings.ViewsTexts.MainWindow_LoadingPlaylist);
 
                 try
                 {
@@ -958,21 +961,21 @@ namespace Salamandra.ViewModel
                 }
                 catch (PlaylistLoaderException ex)
                 {
-                    MessageBox.Show(String.Format("Houve um erro ao processar a playlist.\n\n{0}", ex.Message),
+                    MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_PlaylistParsing, ex.Message),
                         "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
 
                     this.PlayerLogManager?.Error(String.Format("{0} ({1})", ex.Message, openFileDialog.FileName), "Playlist");
                 }
                 catch (IOException ex)
                 {
-                    MessageBox.Show(String.Format("Houve um erro de acesso ao arquivo.\n\n{0}", ex.Message),
+                    MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_PlaylistFile, ex.Message),
                         "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
 
                     this.PlayerLogManager?.Error(String.Format("{0} ({1})", ex.Message, openFileDialog.FileName), "Playlist");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(String.Format("Houve um erro ao abrir a playlist.\n\n{0}", ex.Message),
+                    MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_PlaylistOpenGeneric, ex.Message),
                         "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
 
                     this.PlayerLogManager?.Error(String.Format("{0} ({1})", ex.Message, openFileDialog.FileName), "Playlist");
@@ -995,7 +998,7 @@ namespace Salamandra.ViewModel
             if (saveDialog || String.IsNullOrEmpty(filename))
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.Filter = "Playlist M3U (*.m3u) | *.m3u";
+                saveFileDialog.Filter = PlaylistManager.SupportedPlaylistFormats.GetDialogFilterFromArray(Salamandra.Strings.ViewsTexts.FileFormats_Playlist);
 
                 if (saveFileDialog.ShowDialog() == true)
                     filename = saveFileDialog.FileName;
@@ -1009,12 +1012,12 @@ namespace Salamandra.ViewModel
             }
             catch (IOException ex)
             {
-                MessageBox.Show(String.Format("Houve um erro de acesso ao arquivo.\n\n{0}", ex.Message),
+                MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_PlaylistFile, ex.Message),
                     "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Houve um erro ao salvar o arquivo.\n\n{0}", ex.Message),
+                MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_PlaylistSaveGeneric, ex.Message),
                     "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
@@ -1040,7 +1043,7 @@ namespace Salamandra.ViewModel
         {
             if (this.PlaylistManager.Modified)
             {
-                var result = MessageBox.Show("Há modificações não salvas na playlist. Deseja salvá-las?", "Salamandra", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                var result = MessageBox.Show(Salamandra.Strings.ViewsTexts.MainWindow_PlaylistUnsavedChanges, "Salamandra", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                     SavePlaylist();
@@ -1068,7 +1071,9 @@ namespace Salamandra.ViewModel
 
         private void HandlePlaylistException(Exception ex)
         {
-            MessageBox.Show("Houve um erro ao manipular a playlist.\n\n" + ex.Message, "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_UnhandledPlaylistError, ex.Message),
+                "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+
             this.PlaylistLoading = false;
         }
 
@@ -1131,7 +1136,7 @@ namespace Salamandra.ViewModel
             if (String.IsNullOrWhiteSpace(this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename))
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.Filter = "Playlist de Eventos (*.sche) | *.sche";
+                saveFileDialog.Filter = ScheduleManager.SupportedScheduleFormats.GetDialogFilterFromArray(Strings.ViewsTexts.FileFormats_ScheduleEvents);
 
                 if (!saveFileDialog.ShowDialog() == true)
                     this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename = saveFileDialog.FileName;
@@ -1149,7 +1154,7 @@ namespace Salamandra.ViewModel
                     this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename,
                     ex.Message), "Events");
 
-                MessageBox.Show(String.Format("Houve um erro ao salvar a planilha de eventos.\n\n{0}", ex.Message),
+                MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_ScheduleSaveGeneric, ex.Message),
                     "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -1311,7 +1316,7 @@ namespace Salamandra.ViewModel
             if (dataObject != null && dataObject.ContainsFileDropList())
             {
                 // ToDo: Tornar esses textos genéricos.
-                SetPlaylistLoading(true, "Adicionando arquivos a playlist...");
+                SetPlaylistLoading(true, Salamandra.Strings.ViewsTexts.MainWindow_AddingFilesToPlaylist);
 
                 var task = this.HandleDropActionAsync(dropInfo, dataObject.GetFileDropList());
 
@@ -1368,7 +1373,7 @@ namespace Salamandra.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(String.Format("Houve um erro ao abrir a pasta de registros.\n\nErro: {0}", ex.Message),
+                    MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_OpeningLogFolder, ex.Message),
                         "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
@@ -1386,13 +1391,13 @@ namespace Salamandra.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(String.Format("Houve um erro ao abrir o registro atual.\n\nErro: {0}", ex.Message),
+                    MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_OpeningTodayLog, ex.Message),
                         "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                MessageBox.Show("O arquivo de registro ainda não existe.\n\nVerifique se houve alguma atividade ou se a geração de registros está ativa.",
+                MessageBox.Show(Salamandra.Strings.ViewsTexts.MainWindow_Error_TodayLogDoesntExist,
                     "Salamandra", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }

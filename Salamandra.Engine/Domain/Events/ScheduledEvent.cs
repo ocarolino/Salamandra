@@ -1,5 +1,6 @@
 ﻿using Salamandra.Engine.Domain.Enums;
 using Salamandra.Engine.Domain.Tracks;
+using Salamandra.Engine.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -59,7 +60,7 @@ namespace Salamandra.Engine.Domain.Events
             this.Filename = String.Empty;
             this.FriendlyName = String.Empty;
 
-            this.QueueOrder = 1;
+            this.QueueOrder = 50;
             this.EventPriority = EventPriority.Low;
 
             this.MaximumWaitTime = TimeSpan.Zero;
@@ -67,6 +68,34 @@ namespace Salamandra.Engine.Domain.Events
 
             this.CreatedAt = DateTime.Now;
             this.UpdatedAt = DateTime.Now;
+        }
+
+        public void UpdateFriendlyName()
+        {
+            switch (this.TrackScheduleType)
+            {
+                case TrackScheduleType.AudioFileTrack:
+                case TrackScheduleType.OpenPlaylistTrack:
+                case TrackScheduleType.SystemProcessTrack:
+                case TrackScheduleType.OpenScheduleTrack:
+                    this.FriendlyName = Path.GetFileNameWithoutExtension(this.Filename);
+                    break;
+                case TrackScheduleType.RandomFileTrack:
+                    this.Filename = this.Filename.EnsureHasDirectorySeparatorChar();
+                    this.FriendlyName = Path.GetFileName(this.Filename.TrimEnd(Path.DirectorySeparatorChar));
+                    break;
+                case TrackScheduleType.TimeAnnouncementTrack:
+                    this.FriendlyName = Salamandra.Engine.Strings.TracksTexts.Track_TimeAnnouncement;
+                    break;
+                case TrackScheduleType.StartPlaylistTrack:
+                    this.FriendlyName = Salamandra.Engine.Strings.TracksTexts.Track_StartPlayback;
+                    break;
+                case TrackScheduleType.StopPlaylistTrack:
+                    this.FriendlyName = Salamandra.Engine.Strings.TracksTexts.Track_StopPlayback;
+                    break;
+                default:
+                    break;
+            }
         }
 
         public BaseTrack GetTrack()

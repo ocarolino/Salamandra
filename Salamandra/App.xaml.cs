@@ -48,9 +48,9 @@ namespace Salamandra
             return settings;
         }
 
-        private static void SetCultureFromSystem()
+        private static void SetCultureFromSystem(string cultureName)
         {
-            var vCulture = System.Globalization.CultureInfo.CurrentCulture;
+            var vCulture = new CultureInfo(cultureName);
 
             Thread.CurrentThread.CurrentCulture = vCulture;
             Thread.CurrentThread.CurrentUICulture = vCulture;
@@ -67,7 +67,7 @@ namespace Salamandra
             var settingsManager = new SettingsManager<ApplicationSettings>("application_settings.json");
             var settings = LoadSettingsFile(settingsManager, appLogManager);
 
-            SetCultureFromSystem(); // ToDo: Settings.Language!
+            SetCultureFromSystem(settings.GeneralSettings.ViewLanguageToCultureName(settings.GeneralSettings.ViewLanguage));
 
             MainWindow mainWindow = new MainWindow(appLogManager, settingsManager, settings);
             mainWindow.Show();

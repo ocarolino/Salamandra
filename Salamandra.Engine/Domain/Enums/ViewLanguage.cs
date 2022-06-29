@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 namespace Salamandra.Engine.Domain.Enums
 {
     [TypeConverter(typeof(EnumDescriptionTypeConverter))]
-    public enum MaximumWaitAction
+    public enum ViewLanguage
     {
-        [LocalizedDescription("MaximumWaitAction_Discard", typeof(EnumResources))]
-        Discard = 0,
-        [LocalizedDescription("MaximumWaitAction_Play", typeof(EnumResources))]
-        Play = 1,
+        [LocalizedDescription("ViewLanguage_Portuguese", typeof(EnumResources))]
+        Portuguese = 0,
+        [LocalizedDescription("ViewLanguage_English", typeof(EnumResources))]
+        English = 1,
     }
 }

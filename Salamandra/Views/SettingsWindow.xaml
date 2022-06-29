@@ -4,8 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Salamandra.Views"
+        xmlns:enums="clr-namespace:Salamandra.Engine.Domain.Enums;assembly=Salamandra.Engine"
+        xmlns:converters="clr-namespace:Salamandra.Converters"
+        xmlns:strings="clr-namespace:Salamandra.Strings"
         mc:Ignorable="d"
-        Title="Configurações" Height="480" Width="640"
+        Title="{x:Static strings:ViewsTexts.SettingsWindow_WindowTitle}" Height="480" Width="640"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
         Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid Margin="8">
@@ -15,22 +18,26 @@
         </Grid.RowDefinitions>
 
         <TabControl Grid.Row="0">
-            <TabItem Header="Geral">
+            <TabItem Header="{x:Static strings:ViewsTexts.SettingsWindow_General}">
                 <StackPanel Margin="8">
-                    <CheckBox Content="Confirmar ao fechar caso player esteja tocando"
+                    <TextBlock Text="{x:Static strings:ViewsTexts.SettingsWindow_Language}"/>
+                    <ComboBox SelectedItem="{Binding Settings.GeneralSettings.ViewLanguage}" Margin="0 4 0 0"
+                              ItemsSource="{Binding Source={converters:EnumBindingSource EnumType={x:Type enums:ViewLanguage}}}"/>
+
+                    <CheckBox Content="{x:Static strings:ViewsTexts.SettingsWindow_AskWhenCloseWhilePlaying}" Margin="0 8 0 0"
                           IsChecked="{Binding Settings.PlayerSettings.AskToCloseWhenPlaying}" />
-                    <CheckBox Content="Abrir última playlist quando iniciar o programa"
+                    <CheckBox Content="{x:Static strings:ViewsTexts.SettingsWindow_OpenLastPlaylistOnStartup}"
                           IsChecked="{Binding Settings.PlayerSettings.OpenLastPlaylistOnStartup}" Margin="0 8 0 0"/>
-                    <CheckBox Content="Embaralhar playlist quando iniciar o programa"
+                    <CheckBox Content="{x:Static strings:ViewsTexts.SettingsWindow_ShufflePlaylistOnStartup}"
                           IsChecked="{Binding Settings.PlayerSettings.ShufflePlaylistOnStartup}" Margin="0 8 0 0"/>
-                    <CheckBox Content="Reproduzir playlist quando iniciar o programa"
+                    <CheckBox Content="{x:Static strings:ViewsTexts.SettingsWindow_StartPlaybackOnStartup}"
                           IsChecked="{Binding Settings.PlayerSettings.PlayOnStartup}" Margin="0 8 0 0"/>
-                    <CheckBox Content="Sempre manter eventos ativados ao iniciar"
+                    <CheckBox Content="{x:Static strings:ViewsTexts.SettingsWindow_KeepEventsEnabledOnStartup}"
                               IsChecked="{Binding Settings.PlayerSettings.AlwaysEnableEventsOnStartup}" Margin="0 8 0 0"/>
-                    <CheckBox Content="Manter último estado do modo de exclusão ao iniciar"
+                    <CheckBox Content="{x:Static strings:ViewsTexts.SettingsWindow_KeepDeleteModeLastState}"
                               IsChecked="{Binding Settings.PlayerSettings.KeepDeleteModeLastState}" Margin="0 8 0 0"/>
 
-                    <TextBlock Text="Caminho para arquivos de Locução de Horário" FontWeight="Bold" Margin="0 8 0 0"/>
+                    <TextBlock Text="{x:Static strings:ViewsTexts.SettingsWindow_TimeAnnouncementFilesPath}" Margin="0 8 0 0"/>
                     <Grid Margin="0 4 0 0">
                         <Grid.ColumnDefinitions >
                             <ColumnDefinition Width="*"/>
@@ -46,27 +53,28 @@
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="Saídas">
+            <TabItem Header="{x:Static strings:ViewsTexts.SettingsWindow_Outputs}">
                 <StackPanel Margin="8">
-                    <TextBlock Text="Dispositivo de Saída Principal"/>
+                    <TextBlock Text="{x:Static strings:ViewsTexts.SettingsWindow_MainOutputDevice}"/>
                     <ComboBox Margin="0 4 0 0" ItemsSource="{Binding OutputDevices}" SelectedValuePath="DeviceIndex" DisplayMemberPath="Name"
                           SelectedValue="{Binding Settings.DeviceSettings.MainOutputDevice}" />
 
-                    <TextBlock Text="Dispositivo de Saída de Pré Escuta" Margin="0 8 0 0"/>
+                    <TextBlock Text="{x:Static strings:ViewsTexts.SettingsWindow_CueOutputDevice}" Margin="0 8 0 0"/>
                     <ComboBox Margin="0 4 0 0" ItemsSource="{Binding OutputDevices}" SelectedValuePath="DeviceIndex" DisplayMemberPath="Name"
                           SelectedValue="{Binding Settings.DeviceSettings.PreListenOutputDevice}" />
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="Registro">
+            <TabItem Header="{x:Static strings:ViewsTexts.SettingsWindow_Logs}">
                 <StackPanel Margin="8">
-                    <TextBlock Text="Os registros são arquivos de texto que informam sobre a atividade do player diariamente, além de erros de arquivos ou dispositivos."
+                    <TextBlock Text="{x:Static strings:ViewsTexts.SettingsWindow_LogsExplanation}"
                                TextWrapping="Wrap"/>
 
-                    <CheckBox Content="Ativar registros" Margin="0 8 0 0"
+                    <CheckBox Content="{x:Static strings:ViewsTexts.SettingsWindow_EnableLogs}" Margin="0 8 0 0"
                           IsChecked="{Binding Settings.LoggingSettings.EnableLogging}" />
 
-                    <TextBlock Text="Caminho para armazenar arquivos de registro" FontWeight="Bold" Margin="0 8 0 0"/>
+                    <TextBlock Text="{x:Static strings:ViewsTexts.SettingsWindow_LogOutputPath}" 
+                               Margin="0 8 0 0"/>
 
                     <Grid Margin="0 4 0 0" IsEnabled="{Binding Settings.LoggingSettings.EnableLogging}">
                         <Grid.ColumnDefinitions >
@@ -85,9 +93,9 @@
         </TabControl>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 8 0 0" HorizontalAlignment="Right">
-            <Button Content="Confirmar" IsDefault="True" Name="ConfirmButton" Click="ConfirmButton_Click"
+            <Button Content="{x:Static strings:ViewsTexts.Misc_Ok}" IsDefault="True" Name="ConfirmButton" Click="ConfirmButton_Click"
                     Width="80" Height="24"/>
-            <Button Content="Cancelar" 
+            <Button Content="{x:Static strings:ViewsTexts.Misc_Cancel}" 
                     Width="80" Height="24" Margin="8 0 0 0" IsCancel="True"/>
         </StackPanel>
     </Grid>

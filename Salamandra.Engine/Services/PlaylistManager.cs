@@ -13,13 +13,14 @@ using Salamandra.Engine.Domain.Tracks;
 using Salamandra.Engine.Extensions;
 using System.Drawing;
 using Salamandra.Engine.Comparer;
+using System.Windows.Data;
 
 namespace Salamandra.Engine.Services
 {
     public class PlaylistManager : INotifyPropertyChanged
     {
         public PlaylistMode PlaylistMode { get; set; }
-        public ObservableCollection<BaseTrack> Tracks { get; set; }
+        public WpfObservableRangeCollection<BaseTrack> Tracks { get; set; }
         public List<BaseTrack> RandomBlacklist { get; set; }
 
         public BaseTrack? LastTrack { get; set; }
@@ -35,7 +36,7 @@ namespace Salamandra.Engine.Services
         {
             this.PlaylistMode = PlaylistMode.Default;
 
-            this.Tracks = new ObservableCollection<BaseTrack>();
+            this.Tracks = new WpfObservableRangeCollection<BaseTrack>();
             this.RandomBlacklist = new List<BaseTrack>();
 
             this.CurrentTrack = null;
@@ -126,16 +127,10 @@ namespace Salamandra.Engine.Services
             if (index >= this.Tracks.Count)
                 index = -1;
 
-            foreach (var item in tracks)
-            {
-                if (index != -1)
-                {
-                    this.Tracks.Insert(index, item);
-                    index++;
-                }
-                else
-                    this.Tracks.Add(item);
-            }
+            if (index != -1)
+                this.Tracks.InsertRange(index, tracks);
+            else
+                this.Tracks.AddRange(tracks);
 
             if (this.NextTrack == null || oldTrackCount == 1)
                 UpdateNextTrack();
@@ -236,8 +231,7 @@ namespace Salamandra.Engine.Services
 
         public void RemoveTracks(List<BaseTrack> tracks, bool modified = true)
         {
-            foreach (var item in tracks)
-                this.Tracks.Remove(item);
+            this.Tracks.RemoveRange(tracks);
 
             if (!this.Tracks.Contains(this.NextTrack!))
                 UpdateNextTrack();
@@ -286,7 +280,7 @@ namespace Salamandra.Engine.Services
 
         public void ClearPlaylist()
         {
-            this.Tracks = new ObservableCollection<BaseTrack>();
+            this.Tracks = new WpfObservableRangeCollection<BaseTrack>();
             this.NextTrack = null;
 
             this.Filename = string.Empty;
@@ -348,7 +342,7 @@ namespace Salamandra.Engine.Services
                 tracks.Add(track);
             }
 
-            this.Tracks = new ObservableCollection<BaseTrack>(tracks);
+            this.Tracks = new WpfObservableRangeCollection<BaseTrack>(tracks);
 
             this.UpdateNextTrack();
 
@@ -425,15 +419,15 @@ namespace Salamandra.Engine.Services
             {
                 case PlaylistSortCriteria.FriendlyName:
                     if (sortDirection == SortDirection.Ascending)
-                        this.Tracks = new ObservableCollection<BaseTrack>(this.Tracks.OrderBy(x => x.FriendlyName));
+                        this.Tracks = new WpfObservableRangeCollection<BaseTrack>(this.Tracks.OrderBy(x => x.FriendlyName));
                     else
-                        this.Tracks = new ObservableCollection<BaseTrack>(this.Tracks.OrderByDescending(x => x.FriendlyName));
+                        this.Tracks = new WpfObservableRangeCollection<BaseTrack>(this.Tracks.OrderByDescending(x => x.FriendlyName));
                     break;
                 case PlaylistSortCriteria.Duration:
                     if (sortDirection == SortDirection.Ascending)
-                        this.Tracks = new ObservableCollection<BaseTrack>(this.Tracks.OrderBy(x => x.Duration));
+                        this.Tracks = new WpfObservableRangeCollection<BaseTrack>(this.Tracks.OrderBy(x => x.Duration));
                     else
-                        this.Tracks = new ObservableCollection<BaseTrack>(this.Tracks.OrderByDescending(x => x.Duration));
+                        this.Tracks = new WpfObservableRangeCollection<BaseTrack>(this.Tracks.OrderByDescending(x => x.Duration));
                     break;
                 default:
                     throw new NotImplementedException();

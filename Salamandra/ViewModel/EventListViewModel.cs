@@ -250,7 +250,7 @@ namespace Salamandra.ViewModel
                     this.Events.Add(item); // ToDo: AddRange.
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }

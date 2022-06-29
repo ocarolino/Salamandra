@@ -131,9 +131,9 @@ namespace Salamandra.ViewModel
         public ICommand? OpenLogFolderCommand { get; set; }
         public ICommand? OpenCurrentLogCommand { get; set; }
 
-        public ICommand CutTracksCommand { get; set; }
-        public ICommand CopyTracksCommand { get; set; }
-        public ICommand PasteTracksCommand { get; set; }
+        public ICommand? CutTracksCommand { get; set; }
+        public ICommand? CopyTracksCommand { get; set; }
+        public ICommand? PasteTracksCommand { get; set; }
         #endregion
 
         public Action? RemovePlaylistAdorner { get; set; }
@@ -1459,7 +1459,7 @@ namespace Salamandra.ViewModel
                 this.PlaylistManager.AddTracks(list,
                     this.PlaylistManager.Tracks.IndexOf(this.SelectedTrack!));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }

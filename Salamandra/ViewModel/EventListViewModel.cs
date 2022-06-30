@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using Newtonsoft.Json;
 using Salamandra.Commands;
+using Salamandra.Engine.Domain.Enums;
 using Salamandra.Engine.Domain.Events;
 using Salamandra.Engine.Domain.Settings;
 using Salamandra.Engine.Extensions;
@@ -33,6 +34,8 @@ namespace Salamandra.ViewModel
 
         public ScheduledEvent? SelectedScheduledEvent { get; set; }
 
+        public ClipboardService<ScheduledEvent> ScheduledEventClipboard { get; set; }
+
         public ICommand CreateEventCommand { get; set; }
         public ICommand EditEventCommand { get; set; }
         public ICommand DeleteEventsCommand { get; set; }
@@ -55,6 +58,8 @@ namespace Salamandra.ViewModel
             this.Filename = this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename;
             this.HasFileChanged = false;
 
+            this.ScheduledEventClipboard = new ClipboardService<ScheduledEvent>(ClipboardDataType.SalamandraEvents);
+
             if (events.Count > 0)
                 this.LastEventId = events.Last().Id;
 
@@ -67,12 +72,13 @@ namespace Salamandra.ViewModel
             this.SaveEventListAsCommand = new RelayCommand(p => SaveEventListAs());
 
             this.CopyEventsCommand = new RelayCommand(p => CopyEvents(p), p => this.SelectedScheduledEvent != null);
-            this.PasteEventsCommand = new RelayCommand(p => PasteEvents(), p => Clipboard.ContainsData("SalamandraEvents"));
+            this.PasteEventsCommand = new RelayCommand(p => PasteEvents(), p => this.ScheduledEventClipboard.HasData);
+
         }
 
         public void Loading()
         {
-            // Todo: Extension method?
+            // Todo: Extension method to clone?
             var serialized = JsonConvert.SerializeObject(this.originalScheduledEvents);
             var events = JsonConvert.DeserializeObject<List<ScheduledEvent>>(serialized);
 
@@ -199,7 +205,6 @@ namespace Salamandra.ViewModel
             }
         }
 
-        // ToDo: Refactor all of this serialization to the JsonEventsLoader class, separating between files and strings.
         private void CopyEvents(object? items)
         {
             if (items == null || !(items is System.Collections.IList))
@@ -207,42 +212,22 @@ namespace Salamandra.ViewModel
 
             List<ScheduledEvent> events = ((System.Collections.IList)items).Cast<ScheduledEvent>().ToList();
 
-            try
-            {
-                string json = JsonConvert.SerializeObject(events);
-
-                Clipboard.SetData("SalamandraEvents", (object)json);
-            }
-            catch (Exception)
-            {
-
-            }
+            this.ScheduledEventClipboard.Copy(events);
         }
 
         private void PasteEvents()
         {
-            if (!Clipboard.ContainsData("SalamandraEvents")) // ToDo: Set this string as a const.
+            if (!this.ScheduledEventClipboard.HasData)
                 return;
 
-            try
+            var list = this.ScheduledEventClipboard.Paste();
+
+            if (list.Count > 0)
             {
-                var text = (string)Clipboard.GetData("SalamandraEvents");
-
-                if (String.IsNullOrWhiteSpace(text))
-                    return;
-
-                var list = JsonConvert.DeserializeObject<List<ScheduledEvent>>(text);
-
-                if (list == null || list.Count == 0)
-                    return;
-
                 foreach (var item in list)
                     item.Id = GetNextEventId();
 
                 this.Events.AddRange(list);
-            }
-            catch (Exception)
-            {
             }
         }
 

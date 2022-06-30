@@ -392,9 +392,11 @@
 
                 <controls:ExtendedSlider Value="{Binding CurrentVolume}" x:Name="VolumeControl" 
                                          Width="128" VerticalAlignment="Center" Margin="8 0 0 0"
-                                         Minimum="0" Maximum="1" LargeChange="0.2" SmallChange="0.05" 
-                                         TickFrequency="0.1" AutoToolTipPlacement="TopLeft"
-                                         Style="{StaticResource SliderStyle}"
+                                         Minimum="{Binding SoundEngine.VolumeMin}" Maximum="{Binding SoundEngine.VolumeMax}" 
+                                         TickFrequency="{Binding SoundEngine.VolumeStep}" 
+                                         LargeChange="{Binding SoundEngine.VolumeLargeStep}" 
+                                         SmallChange="{Binding SoundEngine.VolumeSmallStep}" 
+                                         AutoToolTipPlacement="TopLeft" Style="{StaticResource SliderStyle}"
                                          CustomToolTipContent="{Binding CurrentVolume, Mode=OneWay, StringFormat={}{0:P0}, UpdateSourceTrigger=PropertyChanged}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">

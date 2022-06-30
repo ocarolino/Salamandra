@@ -288,7 +288,6 @@ namespace Salamandra.ViewModel
                     this.PlayerLogManager?.Error(String.Format("{0} ({1})", ex.Message, filename), "Playlist");
                 }
 
-                // ToDo: Tornar genérico esse loadplaylist para sempre atualizar o título
                 RefreshWindowTitle();
             }
 
@@ -1315,7 +1314,6 @@ namespace Salamandra.ViewModel
 
             if (dataObject != null && dataObject.ContainsFileDropList())
             {
-                // ToDo: Tornar esses textos genéricos.
                 SetPlaylistLoading(true, Salamandra.Strings.ViewsTexts.MainWindow_AddingFilesToPlaylist);
 
                 var task = this.HandleDropActionAsync(dropInfo, dataObject.GetFileDropList());

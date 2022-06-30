@@ -212,9 +212,7 @@ namespace System.Collections.ObjectModel
             if (Count == 0)
                 OnCollectionReset();
             else
-                foreach (KeyValuePair<int, List<T>> cluster in clusters)
-                    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, cluster.Value, cluster.Key));
-
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
         /// <summary>

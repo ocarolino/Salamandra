@@ -17,6 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Salamandra.Windows\Salamandra.Windows.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Strings\EnumResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

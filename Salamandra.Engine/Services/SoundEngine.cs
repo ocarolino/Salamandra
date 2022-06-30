@@ -55,6 +55,14 @@ namespace Salamandra.Engine.Services
 
         public static string[] SupportedAudioFormats = { ".wav", ".mp3", ".wma", ".ogg", ".flac" };
 
+        #region Volume
+        public float VolumeMin { get; set; } = 0;
+        public float VolumeMax { get; set; } = 1;
+        public float VolumeStep { get; set; } = 0.1f;
+        public float VolumeLargeStep { get; set; } = 0.2f;
+        public float VolumeSmallStep { get; set; } = 0.05f;
+        #endregion
+
         public SoundEngine()
         {
             this.OutputDevice = 0;

@@ -152,7 +152,7 @@ namespace Salamandra.ViewModel
             this.IsPlaying = false;
             this.PlaybackState = PlaylistState.Stopped;
 
-            this.CurrentVolume = 1; // ToDo: Min e Max via SoundEngine
+            this.CurrentVolume = this.SoundEngine.VolumeMax;
 
             this.isDraggingTrackPosition = false;
             this.TrackLengthInSeconds = 0;
@@ -257,7 +257,7 @@ namespace Salamandra.ViewModel
 
         private async Task ApplyStartupSettings()
         {
-            this.CurrentVolume = this.ApplicationSettings.PlayerSettings.Volume;
+            this.CurrentVolume = Math.Clamp(this.ApplicationSettings.PlayerSettings.Volume, this.SoundEngine.VolumeMin, this.SoundEngine.VolumeMax);
             this.PlaylistManager.PlaylistMode = this.ApplicationSettings.PlayerSettings.PlaylistMode;
 
             if (!this.ApplicationSettings.PlayerSettings.AlwaysEnableEventsOnStartup)
@@ -288,7 +288,6 @@ namespace Salamandra.ViewModel
                     this.PlayerLogManager?.Error(String.Format("{0} ({1})", ex.Message, filename), "Playlist");
                 }
 
-                // ToDo: Tornar genérico esse loadplaylist para sempre atualizar o título
                 RefreshWindowTitle();
             }
 
@@ -858,14 +857,14 @@ namespace Salamandra.ViewModel
         private void VolumeControlValueChanged(bool userChanged = true)
         {
             if (this.IsPlaying)
-                this.SoundEngine.Volume = this.CurrentVolume;
+                this.SoundEngine.Volume = Math.Clamp(this.CurrentVolume, this.SoundEngine.VolumeMin, this.SoundEngine.VolumeMax);
 
             if (!userChanged)
                 return;
 
             this.isChangingVolumeMutedProgramatically = true;
 
-            if (this.CurrentVolume > 0)
+            if (this.CurrentVolume > this.SoundEngine.VolumeMin)
                 this.VolumeMuted = false;
             else
                 this.VolumeMuted = true;
@@ -881,14 +880,14 @@ namespace Salamandra.ViewModel
             if (this.VolumeMuted)
             {
                 this.PreviousVolume = this.CurrentVolume;
-                this.CurrentVolume = 0;
+                this.CurrentVolume = this.SoundEngine.VolumeMin;
             }
             else
             {
                 this.CurrentVolume = this.PreviousVolume;
 
                 if (this.CurrentVolume <= 0)
-                    this.CurrentVolume = 1; // ToDo: Max e Min volume
+                    this.CurrentVolume = this.SoundEngine.VolumeMax;
             }
 
             this.VolumeControlValueChanged(false);
@@ -1315,7 +1314,6 @@ namespace Salamandra.ViewModel
 
             if (dataObject != null && dataObject.ContainsFileDropList())
             {
-                // ToDo: Tornar esses textos genéricos.
                 SetPlaylistLoading(true, Salamandra.Strings.ViewsTexts.MainWindow_AddingFilesToPlaylist);
 
                 var task = this.HandleDropActionAsync(dropInfo, dataObject.GetFileDropList());

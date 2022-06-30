@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Salamandra.ViewModel
@@ -24,7 +25,7 @@ namespace Salamandra.ViewModel
         public ApplicationSettings ApplicationSettings { get; set; }
 
         private List<ScheduledEvent> originalScheduledEvents;
-        public ObservableCollection<ScheduledEvent> Events { get; set; }
+        public WpfObservableRangeCollection<ScheduledEvent> Events { get; set; }
         public int LastEventId { get; set; }
 
         public string Filename { get; set; }
@@ -49,7 +50,7 @@ namespace Salamandra.ViewModel
 
             this.originalScheduledEvents = new List<ScheduledEvent>(events);
 
-            this.Events = new ObservableCollection<ScheduledEvent>();
+            this.Events = new WpfObservableRangeCollection<ScheduledEvent>();
 
             this.Filename = this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename;
             this.HasFileChanged = false;
@@ -76,7 +77,7 @@ namespace Salamandra.ViewModel
             var events = JsonConvert.DeserializeObject<List<ScheduledEvent>>(serialized);
 
             if (events != null)
-                this.Events = new ObservableCollection<ScheduledEvent>(events);
+                this.Events = new WpfObservableRangeCollection<ScheduledEvent>(events);
         }
 
         private void CreateEvent()
@@ -126,10 +127,7 @@ namespace Salamandra.ViewModel
             if (MessageBox.Show(Salamandra.Strings.ViewsTexts.EventListWindow_AreYouSureDelete,
                 Salamandra.Strings.ViewsTexts.EventListWindow_WindowTitle,
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                foreach (var item in events)
-                    this.Events.Remove(item);
-            }
+                this.Events.RemoveRange(events);
         }
 
         private void DeleteAllEvents()
@@ -148,8 +146,7 @@ namespace Salamandra.ViewModel
             {
                 var events = this.Events.Where(x => x.UseExpirationDateTime && x.ExpirationDateTime < DateTime.Now).ToList();
 
-                foreach (var item in events)
-                    this.Events.Remove(item); // ToDo: RemoveRange!
+                this.Events.RemoveRange(events);
             }
         }
 
@@ -165,7 +162,7 @@ namespace Salamandra.ViewModel
                 try
                 {
                     var list = jsonEventsLoader.Load(openFileDialog.FileName);
-                    this.Events = new ObservableCollection<ScheduledEvent>(list);
+                    this.Events = new WpfObservableRangeCollection<ScheduledEvent>(list);
 
                     this.Filename = openFileDialog.FileName;
 
@@ -246,9 +243,9 @@ namespace Salamandra.ViewModel
                     // Todo: Create a get id method?
                     this.LastEventId++;
                     item.Id = this.LastEventId;
-
-                    this.Events.Add(item); // ToDo: AddRange.
                 }
+
+                this.Events.AddRange(list);
             }
             catch (Exception)
             {

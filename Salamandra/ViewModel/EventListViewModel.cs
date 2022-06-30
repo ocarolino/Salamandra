@@ -89,10 +89,8 @@ namespace Salamandra.ViewModel
 
             if (eventWindow.ShowDialog() == true)
             {
-                this.LastEventId++;
-
                 ScheduledEvent scheduledEvent = eventViewModel.ScheduledEvent;
-                scheduledEvent.Id = this.LastEventId;
+                scheduledEvent.Id = GetNextEventId();
 
                 this.Events.Add(scheduledEvent);
             }
@@ -239,17 +237,20 @@ namespace Salamandra.ViewModel
                     return;
 
                 foreach (var item in list)
-                {
-                    // Todo: Create a get id method?
-                    this.LastEventId++;
-                    item.Id = this.LastEventId;
-                }
+                    item.Id = GetNextEventId();
 
                 this.Events.AddRange(list);
             }
             catch (Exception)
             {
             }
+        }
+
+        private int GetNextEventId()
+        {
+            this.LastEventId++;
+
+            return this.LastEventId;
         }
 
 #pragma warning disable 67

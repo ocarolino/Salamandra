@@ -78,12 +78,7 @@ namespace Salamandra.ViewModel
 
         public void Loading()
         {
-            // Todo: Extension method to clone?
-            var serialized = JsonConvert.SerializeObject(this.originalScheduledEvents);
-            var events = JsonConvert.DeserializeObject<List<ScheduledEvent>>(serialized);
-
-            if (events != null)
-                this.Events = new WpfObservableRangeCollection<ScheduledEvent>(events);
+            this.Events = new WpfObservableRangeCollection<ScheduledEvent>(this.originalScheduledEvents.DeepCopy());
         }
 
         public void Closing()

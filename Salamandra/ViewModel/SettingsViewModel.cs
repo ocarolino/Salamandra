@@ -41,16 +41,7 @@ namespace Salamandra.ViewModel
 
         public void Loading()
         {
-            try
-            {
-                var serialized = JsonConvert.SerializeObject(this.originalApplicationSettings);
-                this.Settings = JsonConvert.DeserializeObject<ApplicationSettings>(serialized);
-            }
-            catch (Exception)
-            {
-                this.Settings = new ApplicationSettings();
-            }
-
+            this.Settings = this.originalApplicationSettings.DeepCopy();
             this.OutputDevices = new ObservableCollection<SoundOutputDevice>(this.soundEngine.EnumerateDevices());
         }
 

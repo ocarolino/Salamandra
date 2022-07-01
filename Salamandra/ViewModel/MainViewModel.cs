@@ -1034,7 +1034,7 @@ namespace Salamandra.ViewModel
             if (CheckPlaylistModified())
                 ResetPlaylist();
 
-            RefreshWindowTitle(); // ToDo: Criar um evento PlaylistChanged, que chamará sempre esse método.
+            RefreshWindowTitle(); // ToDo: Create a PlaylistChanged event, which handler will call this method. As PlaylistManager uses async manager, we have to handle SyncContext.
         }
 
         private void ResetPlaylist()
@@ -1106,7 +1106,6 @@ namespace Salamandra.ViewModel
 
         private void OpenSettings()
         {
-            // ToDo: WindowService?
             SettingsViewModel settingsViewModel = new SettingsViewModel(this.ApplicationSettings, this.SoundEngine);
 
             SettingsWindow settingsWindow = new SettingsWindow(settingsViewModel);

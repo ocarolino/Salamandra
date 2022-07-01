@@ -19,20 +19,6 @@ namespace Salamandra.Engine.Domain.Settings
             this.TimeAnnouncementFilesPath = String.Empty;
         }
 
-        // ToDo: Maybe put this in a utils class or extension method?
-        public string ViewLanguageToCultureName(ViewLanguage viewLanguage)
-        {
-            switch (viewLanguage)
-            {
-                case ViewLanguage.Portuguese:
-                    return "pt-BR";
-                case ViewLanguage.English:
-                    return "en-US";
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-
 #pragma warning disable 67
         public event PropertyChangedEventHandler? PropertyChanged;
 #pragma warning restore 67

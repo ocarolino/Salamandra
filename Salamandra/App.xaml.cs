@@ -1,4 +1,5 @@
 ﻿using Salamandra.Engine.Domain.Settings;
+using Salamandra.Engine.Extensions;
 using Salamandra.Engine.Services;
 using System;
 using System.Collections.Generic;
@@ -67,7 +68,7 @@ namespace Salamandra
             var settingsManager = new SettingsManager<ApplicationSettings>("application_settings.json");
             var settings = LoadSettingsFile(settingsManager, appLogManager);
 
-            SetCultureFromSystem(settings.GeneralSettings.ViewLanguageToCultureName(settings.GeneralSettings.ViewLanguage));
+            SetCultureFromSystem(settings.GeneralSettings.ViewLanguage.ViewLanguageToCultureName());
 
             MainWindow mainWindow = new MainWindow(appLogManager, settingsManager, settings);
             mainWindow.Show();

@@ -162,9 +162,7 @@ namespace Salamandra.ViewModel
 
         private void ValidateAndClose()
         {
-            // ToDo: Considerar somente o dia em casos de eventos que usam mais de um horário
-            if (this.ScheduledEvent.UseExpirationDateTime &&
-                this.ScheduledEvent.StartingDateTime >= this.ScheduledEvent.ExpirationDateTime)
+            if (ValidateExpirationDate(this.ScheduledEvent))
             {
                 MessageBox.Show(Salamandra.Strings.ViewsTexts.EventWindow_Validation_ExpirationAfterStarting,
                     Salamandra.Strings.ViewsTexts.EventWindow_WindowTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -210,6 +208,19 @@ namespace Salamandra.ViewModel
             UpdateTimestamps();
 
             this.CloseWindow?.Invoke(true);
+        }
+
+        private bool ValidateExpirationDate(ScheduledEvent scheduledEvent)
+        {
+            if (scheduledEvent.UseExpirationDateTime)
+            {
+                if (!this.ScheduledEvent.UsePlayingHours)
+                    return scheduledEvent.StartingDateTime >= scheduledEvent.ExpirationDateTime;
+                else
+                    return scheduledEvent.StartingDateTime.Date > scheduledEvent.ExpirationDateTime.Date;
+            }
+
+            return false;
         }
 
         private void UpdateTimestamps()

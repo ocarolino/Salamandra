@@ -13,7 +13,7 @@ namespace Salamandra.Engine.Services.Playlists
     {
         public List<ScheduledEvent> Load(string filename)
         {
-            var list = JsonConvert.DeserializeObject<List<ScheduledEvent>>(File.ReadAllText(filename));
+            var list = JsonConvert.DeserializeObject<List<ScheduledEvent>>(File.ReadAllText(filename, Encoding.Default));
 
             if (list == null)
                 return new List<ScheduledEvent>();
@@ -23,8 +23,13 @@ namespace Salamandra.Engine.Services.Playlists
 
             return list;
         }
+        public void Save(string filename, List<ScheduledEvent> entries)
+        {
+            string json = JsonConvert.SerializeObject(entries);
+            File.WriteAllText(filename, json, Encoding.Default);
+        }
 
-        private static void UpdateFriendlyNames(List<ScheduledEvent>? list)
+        private static void UpdateFriendlyNames(List<ScheduledEvent> list)
         {
             foreach (ScheduledEvent item in list.Where(x => x.IsFriendlyNameLocalizable()))
                 item.UpdateFriendlyName();
@@ -42,12 +47,6 @@ namespace Salamandra.Engine.Services.Playlists
                 for (int i = 0; i < listToCheck.Count; i++)
                     listToCheck[i].Id = i + 1;
             }
-        }
-
-        public void Save(string filename, List<ScheduledEvent> entries)
-        {
-            string json = JsonConvert.SerializeObject(entries);
-            File.WriteAllText(filename, json);
         }
     }
 }

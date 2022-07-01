@@ -16,10 +16,8 @@ namespace Salamandra.Engine.Services.Playlists
         {
             List<PlaylistEntryInfo> entries = new List<PlaylistEntryInfo>();
 
-            // ToDo: Encoding provisória...
-            using (StreamReader reader = new StreamReader(filename, Encoding.GetEncoding("iso-8859-1"), true))
+            using (StreamReader reader = new StreamReader(filename, Encoding.Default, true))
             {
-                // ToDo: Extension method para adicionar o separador
                 var workingUri = new Uri(Path.GetDirectoryName(filename)!.EnsureHasDirectorySeparatorChar());
 
                 string? line;
@@ -81,7 +79,7 @@ namespace Salamandra.Engine.Services.Playlists
 
         public void Save(string filename, List<PlaylistEntryInfo> entries)
         {
-            using (var writer = new StreamWriter(filename, false, Encoding.GetEncoding("iso-8859-1")))
+            using (var writer = new StreamWriter(filename, false, Encoding.Default))
             {
                 writer.WriteLine("#EXTM3U");
 

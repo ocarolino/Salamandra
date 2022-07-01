@@ -86,6 +86,11 @@ namespace Salamandra.ViewModel
                 this.Events = new WpfObservableRangeCollection<ScheduledEvent>(events);
         }
 
+        public void Closing()
+        {
+            this.ScheduledEventClipboard.Clear();
+        }
+
         private void CreateEvent()
         {
             EventViewModel eventViewModel = new EventViewModel(this.ApplicationSettings);

@@ -95,6 +95,8 @@ namespace Salamandra.ViewModel
         public LogManager? ApplicationLogManager { get; set; }
         public LogManager? PlayerLogManager { get; set; }
 
+        public ClipboardService<BaseTrack> TracksClipboard { get; set; }
+
         #region Commands Properties
         public ICommand? AddFilesToPlaylistCommand { get; set; }
         public ICommand? AddPlaylistTrackCommand { get; set; }
@@ -174,6 +176,8 @@ namespace Salamandra.ViewModel
             this.EnableEvents = true;
 
             this.DirectoryAudioScanner = new DirectoryAudioScanner();
+
+            this.TracksClipboard = new ClipboardService<BaseTrack>(ClipboardDataType.SalamandraTracks);
 
             RefreshWindowTitle();
             LoadCommands();
@@ -347,6 +351,8 @@ namespace Salamandra.ViewModel
             this.StopPlayback();
             this.MainTimer.Stop();
 
+            this.TracksClipboard.Clear();
+
             SaveSettings();
             SaveLibrary();
 
@@ -436,9 +442,9 @@ namespace Salamandra.ViewModel
             this.OpenLogFolderCommand = new RelayCommand(p => OpenLogFolder());
             this.OpenCurrentLogCommand = new RelayCommand(p => OpenCurrentLog());
 
-            this.CutTracksCommand = new RelayCommand(p => CutTracks(p), p => !this.PlaylistLoading);
+            this.CutTracksCommand = new RelayCommand(p => CopyTracks(p, true), p => !this.PlaylistLoading);
             this.CopyTracksCommand = new RelayCommand(p => CopyTracks(p), p => !this.PlaylistLoading);
-            this.PasteTracksCommand = new RelayCommand(p => PasteTracks(), p => !this.PlaylistLoading && Clipboard.ContainsData("SalamandraTracks"));
+            this.PasteTracksCommand = new RelayCommand(p => PasteTracks(), p => !this.PlaylistLoading && this.TracksClipboard.HasData);
 
         }
 
@@ -1400,66 +1406,25 @@ namespace Salamandra.ViewModel
             }
         }
 
-        private void CutTracks(object? items)
+        private void CopyTracks(object? items, bool remove = false)
         {
             if (items == null || !(items is System.Collections.IList))
                 return;
 
             List<BaseTrack> tracks = ((System.Collections.IList)items).Cast<BaseTrack>().ToList();
 
-            this.PlaylistManager.RemoveTracks(tracks);
+            if (remove)
+                this.PlaylistManager.RemoveTracks(tracks);
 
-            CopyTracks(tracks);
-        }
-
-        private void CopyTracks(object? items)
-        {
-            if (items == null || !(items is System.Collections.IList))
-                return;
-
-            List<BaseTrack> tracks = ((System.Collections.IList)items).Cast<BaseTrack>().ToList();
-
-            try
-            {
-                string json = JsonConvert.SerializeObject(tracks, Newtonsoft.Json.Formatting.Indented, new JsonSerializerSettings
-                {
-                    TypeNameHandling = TypeNameHandling.Auto
-                });
-
-                Clipboard.SetData("SalamandraTracks", (object)json);
-            }
-            catch (Exception)
-            {
-
-            }
+            this.TracksClipboard.Copy(tracks);
         }
 
         private void PasteTracks()
         {
-            if (!Clipboard.ContainsData("SalamandraTracks")) // ToDo: Set this string as a const.
-                return;
+            var list = this.TracksClipboard.Paste();
 
-            try
-            {
-                var text = (string)Clipboard.GetData("SalamandraTracks");
-
-                if (String.IsNullOrWhiteSpace(text))
-                    return;
-
-                var list = JsonConvert.DeserializeObject<List<BaseTrack>>(text, new JsonSerializerSettings
-                {
-                    TypeNameHandling = TypeNameHandling.Auto
-                });
-
-                if (list == null || list.Count == 0)
-                    return;
-
-                this.PlaylistManager.AddTracks(list,
-                    this.PlaylistManager.Tracks.IndexOf(this.SelectedTrack!));
-            }
-            catch (Exception)
-            {
-            }
+            if (list.Count > 0)
+                this.PlaylistManager.AddTracks(list, this.PlaylistManager.Tracks.IndexOf(this.SelectedTrack!));
         }
 
 #pragma warning disable 67

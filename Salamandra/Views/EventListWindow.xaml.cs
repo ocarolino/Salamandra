@@ -79,5 +79,10 @@ namespace Salamandra.Views
             else
                 EventsListView.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
         }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            this.eventListViewModel.Closing();
+        }
     }
 }

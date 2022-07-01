@@ -9,8 +9,8 @@
         xmlns:strings="clr-namespace:Salamandra.Strings"
         mc:Ignorable="d"
         Title="{x:Static strings:ViewsTexts.EventListWindow_WindowTitle}" Height="480" Width="800"
-        WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
-        Loaded="Window_Loaded" WindowState="Maximized">
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False" WindowState="Maximized"
+        Loaded="Window_Loaded" Closing="Window_Closing">
     <Window.Resources>
         <converters:DayOfWeekStringConverter x:Key="DayOfWeekStringConverter"/>
         <converters:StartingTimeToStringComparer x:Key="StartingTimeToStringComparer"/>

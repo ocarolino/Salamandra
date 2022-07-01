@@ -114,7 +114,6 @@ namespace Salamandra.ViewModel
 
         private string GetFileDialogFilter(TrackScheduleType trackScheduleType)
         {
-            // ToDo: Traduções desses filtros
             switch (trackScheduleType)
             {
                 case TrackScheduleType.AudioFileTrack:

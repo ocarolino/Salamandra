@@ -17,6 +17,5 @@ namespace Salamandra.Engine.Domain.Events
         public MaximumWaitAction MaximumWaitAction { get; set; }
         public EventPriority EventPriority { get; set; }
         public BaseTrack? Track { get; set; }
-        // ToDo: Just use AutoMapper instead. -- Maybe we could insert original event here, to avoid duplicating of properties!
     }
 }

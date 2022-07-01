@@ -51,7 +51,11 @@ namespace Salamandra.Engine.Services
                 if (String.IsNullOrWhiteSpace(json))
                     return list;
 
-                var jsonList = JsonConvert.DeserializeObject<List<T>>(json);
+                var jsonList = JsonConvert.DeserializeObject<List<T>>(json,
+                    new JsonSerializerSettings
+                    {
+                        TypeNameHandling = TypeNameHandling.Auto
+                    });
 
                 if (jsonList != null && jsonList.Count > 0)
                     list.AddRange(jsonList);
@@ -62,6 +66,11 @@ namespace Salamandra.Engine.Services
             }
 
             return list;
+        }
+
+        public void Clear()
+        {
+            Clipboard.Clear();
         }
     }
 }

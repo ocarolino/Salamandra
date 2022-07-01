@@ -264,8 +264,8 @@ namespace Salamandra.ViewModel
             this.CurrentVolume = Math.Clamp(this.ApplicationSettings.PlayerSettings.Volume, this.SoundEngine.VolumeMin, this.SoundEngine.VolumeMax);
             this.PlaylistManager.PlaylistMode = this.ApplicationSettings.PlayerSettings.PlaylistMode;
 
-            if (!this.ApplicationSettings.PlayerSettings.AlwaysEnableEventsOnStartup)
-                this.EnableEvents = this.ApplicationSettings.PlayerSettings.EnableEvents;
+            if (!this.ApplicationSettings.ScheduledEventSettings.AlwaysEnableEventsOnStartup)
+                this.EnableEvents = this.ApplicationSettings.ScheduledEventSettings.EnableEvents;
             else
                 this.EnableEvents = true;
 
@@ -366,7 +366,7 @@ namespace Salamandra.ViewModel
             this.ApplicationSettings.PlayerSettings.LastPlaylist = this.PlaylistManager.Filename;
             this.ApplicationSettings.PlayerSettings.EnableDeleteMode = this.EnableDeleteMode;
 
-            this.ApplicationSettings.PlayerSettings.EnableEvents = this.EnableEvents;
+            this.ApplicationSettings.ScheduledEventSettings.EnableEvents = this.EnableEvents;
 
             try
             {

@@ -14,9 +14,6 @@ namespace Salamandra.Engine.Domain.Settings
         public float PreListenVolume { get; set; }
         public PlaylistMode PlaylistMode { get; set; }
         public bool AskToCloseWhenPlaying { get; set; }
-        // ToDo: Move events settings to ScheduledEventSettings!
-        public bool AlwaysEnableEventsOnStartup { get; set; }
-        public bool EnableEvents { get; set; }
         public bool OpenLastPlaylistOnStartup { get; set; }
         public string? LastPlaylist { get; set; }
         public bool ShufflePlaylistOnStartup { get; set; }
@@ -32,9 +29,6 @@ namespace Salamandra.Engine.Domain.Settings
             this.PlaylistMode = PlaylistMode.Default;
 
             this.AskToCloseWhenPlaying = true;
-
-            this.AlwaysEnableEventsOnStartup = false;
-            this.EnableEvents = true;
 
             this.LastPlaylist = String.Empty;
             this.ShufflePlaylistOnStartup = false;

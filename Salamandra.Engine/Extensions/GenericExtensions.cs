@@ -18,5 +18,20 @@ namespace Salamandra.Engine.Extensions
             return JsonConvert.DeserializeObject<T>(serialized);
 #pragma warning restore CS8603 // Possible null reference return.
         }
+
+        public static T GetRandomWithBlacklist<T>(this ICollection<T> self, ICollection<T> blacklist)
+        {
+            Random random = new Random();
+
+            var availableItems = self.Except(blacklist).ToList();
+
+            if (availableItems.Count == 0)
+            {
+                availableItems.AddRange(self);
+                blacklist.Clear();
+            }
+
+            return availableItems[random.Next(availableItems.Count)];
+        }
     }
 }

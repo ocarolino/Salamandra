@@ -75,11 +75,9 @@ namespace Salamandra
 
             if (scrollViewer == null)
                 return;
-            //GetChildOfType<ScrollViewer>(playlist);
 
             double width = scrollViewer.ActualWidth - (SystemParameters.VerticalScrollBarWidth * 2);
 
-            // ToDo: Magic numbers!
             PlaylistFriendlyNameColumn.Width = Math.Max(360, width - 160);
             PlaylistDurationColumn.Width = 160;
         }

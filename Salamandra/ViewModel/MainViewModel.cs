@@ -1061,7 +1061,7 @@ namespace Salamandra.ViewModel
 
         private void RefreshWindowTitle()
         {
-            string title = "Sem título";
+            string title = "Sem título"; // ToDo: Traduzir
 
             if (!String.IsNullOrEmpty(this.PlaylistManager.Filename))
                 title = Path.GetFileName(this.PlaylistManager.Filename);
@@ -1077,7 +1077,7 @@ namespace Salamandra.ViewModel
         private void HandlePlaylistException(Exception ex)
         {
             MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_UnhandledPlaylistError, ex.Message),
-                "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error); // ToDo: Misc_AppTitle
 
             this.PlaylistLoading = false;
         }

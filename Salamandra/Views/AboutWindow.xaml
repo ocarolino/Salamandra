@@ -1,0 +1,123 @@
+﻿<Window x:Class="Salamandra.Views.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Salamandra.Views"
+        mc:Ignorable="d"
+        Title="Sobre o Salamandra" Height="324" Width="337"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False">
+    <Grid Margin="8">
+        <TabControl>
+            <TabItem Header="Sobre">
+                <StackPanel Margin="8">
+                    <TextBlock Text="O Salamandra é um software de código aberto para a automação de rádios."
+                               TextWrapping="Wrap" TextAlignment="Center"/>
+
+                    <TextBlock Text="Desenvolvido por Matheus Carolino" Margin="0 8 0 0"
+                               TextWrapping="Wrap" TextAlignment="Center"/>
+
+                    <TextBlock Margin="0 4 0 0"
+                               TextWrapping="Wrap" TextAlignment="Center">
+                        <Hyperlink RequestNavigate="Hyperlink_RequestNavigate"
+                                   NavigateUri="mailto:mscarolino@hotmail.com">
+                            mscarolino@hotmail.com
+                        </Hyperlink>
+                    </TextBlock>
+
+                    <TextBlock Text="Testado na Rádio NovaBR" Margin="0 8 0 0"
+                               TextWrapping="Wrap" TextAlignment="Center"/>
+
+                    <TextBlock Margin="0 4 0 0"                               
+                               TextWrapping="Wrap" TextAlignment="Center">
+                        <Hyperlink NavigateUri="https://www.novabrweb.com.br"
+                                   RequestNavigate="Hyperlink_RequestNavigate">
+                            https://www.novabrweb.com.br
+                        </Hyperlink>
+                    </TextBlock>
+
+                    <TextBlock Text="Este software é licenciado nos termos da Licença MIT." Margin="0 8 0 0"
+                               TextWrapping="Wrap" TextAlignment="Center"/>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Recursos">
+                <ScrollViewer CanContentScroll="True"
+                    VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <StackPanel Margin="8">
+                        <TextBlock>
+                        <Hyperlink NavigateUri="https://github.com/naudio/NAudio"
+                                   RequestNavigate="Hyperlink_RequestNavigate">
+                            NAudio
+                        </Hyperlink>
+                        </TextBlock>
+
+                        <TextBlock Margin="0 8 0 0">
+                        <Hyperlink NavigateUri="https://github.com/mono/taglib-sharp"
+                                   RequestNavigate="Hyperlink_RequestNavigate">
+                            TagLib#
+                        </Hyperlink>
+                        </TextBlock>
+
+                        <TextBlock Margin="0 8 0 0">
+                        <Hyperlink NavigateUri="https://github.com/serilog/serilog"
+                                   RequestNavigate="Hyperlink_RequestNavigate">
+                            Serilog
+                        </Hyperlink>
+                        </TextBlock>
+
+                        <TextBlock Margin="0 8 0 0">
+                        <Hyperlink NavigateUri="https://github.com/Fody/PropertyChanged"
+                                   RequestNavigate="Hyperlink_RequestNavigate">
+                            PropertyChanged.Fody
+                        </Hyperlink>
+                        </TextBlock>
+
+                        <TextBlock Margin="0 8 0 0">
+                        <Hyperlink NavigateUri="https://github.com/ookii-dialogs/ookii-dialogs-wpf"
+                                   RequestNavigate="Hyperlink_RequestNavigate">
+                            Ookii.Dialogs.Wpf
+                        </Hyperlink>
+                        </TextBlock>
+
+                        <TextBlock Margin="0 8 0 0">
+                        <Hyperlink NavigateUri="https://www.newtonsoft.com/json"
+                                   RequestNavigate="Hyperlink_RequestNavigate">
+                            Newtonsoft.Json
+                        </Hyperlink>
+                        </TextBlock>
+
+                        <TextBlock Margin="0 8 0 0">
+                        <Hyperlink NavigateUri="https://github.com/punker76/gong-wpf-dragdrop"
+                                   RequestNavigate="Hyperlink_RequestNavigate">
+                            GongSolutions.WPF.DragDrop
+                        </Hyperlink>
+                        </TextBlock>
+
+                        <TextBlock Margin="0 8 0 0">
+                        <Hyperlink NavigateUri="https://icons8.com"
+                                   RequestNavigate="Hyperlink_RequestNavigate">
+                            Icons8
+                        </Hyperlink>
+                        </TextBlock>
+
+                        <TextBlock Margin="0 8 0 0">
+                        <Hyperlink NavigateUri="http://www.famfamfam.com/lab/icons/silk/"
+                                   RequestNavigate="Hyperlink_RequestNavigate">
+                            famfamfam Silk Icons
+                        </Hyperlink>
+                        </TextBlock>
+
+                        <TextBlock Margin="0 8 0 0">
+                        <Hyperlink NavigateUri="https://www.flaticon.com/free-icons/lizard"
+                                   RequestNavigate="Hyperlink_RequestNavigate">
+                            Lizard icons created by Kiranshastry - Flaticon
+                        </Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

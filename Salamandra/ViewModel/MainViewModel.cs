@@ -136,6 +136,8 @@ namespace Salamandra.ViewModel
         public ICommand? CutTracksCommand { get; set; }
         public ICommand? CopyTracksCommand { get; set; }
         public ICommand? PasteTracksCommand { get; set; }
+
+        public ICommand? OpenAboutCommand { get; set; }
         #endregion
 
         public Action? RemovePlaylistAdorner { get; set; }
@@ -446,6 +448,7 @@ namespace Salamandra.ViewModel
             this.CopyTracksCommand = new RelayCommand(p => CopyTracks(p), p => !this.PlaylistLoading);
             this.PasteTracksCommand = new RelayCommand(p => PasteTracks(), p => !this.PlaylistLoading && this.TracksClipboard.HasData);
 
+            this.OpenAboutCommand = new RelayCommand(p => OpenAbout());
         }
 
         private async Task AddFilesToPlaylist()
@@ -1116,6 +1119,14 @@ namespace Salamandra.ViewModel
                 this.ApplicationSettings = settingsViewModel.Settings!;
                 ApplyRunningSettings();
             }
+        }
+
+        private void OpenAbout()
+        {
+            AboutWindow aboutWindow = new AboutWindow();
+            aboutWindow.Owner = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+            aboutWindow.ShowDialog();
         }
 
         private void OpenEventList()

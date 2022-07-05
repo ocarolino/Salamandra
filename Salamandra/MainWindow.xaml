@@ -162,6 +162,10 @@
                 <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_OpenTodayLog}" Command="{Binding OpenCurrentLogCommand}"/>
                 <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_OpenLogFolder}" Command="{Binding OpenLogFolderCommand}"/>
             </MenuItem>
+
+            <MenuItem Header="Ajuda">
+                <MenuItem Header="Sobre o Salamandra" Command="{Binding OpenAboutCommand}" />
+            </MenuItem>
         </Menu>
 
         <ToolBarTray DockPanel.Dock="Top" Background="{StaticResource ContainerBackground}">

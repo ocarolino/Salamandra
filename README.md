@@ -1,5 +1,11 @@
 # Salamandra
-**Salamandra** is an open source radio automation software for **Windows**. Designed for radio stations that need a **simple**, **easy** and **stable** software for automated broadcasting.
+<p align="center">
+**Salamandra** is an open source radio automation software for **Windows**.
+</p> 
+
+<p align="center">
+Designed for radio stations that need a **simple**, **easy** and **stable** software for automated broadcasting.
+</p>
 
 # Features
 * Player with support for major audio files (wav, mp3, wma, ogg and flac)
@@ -16,14 +22,20 @@ We don't have a tutorial yet, but Salamandra is designed to be intuitive, with a
 
 # Screenshots
 
-## Main Player
+### Main Player
+<p align="center">
 ![alt text](Readme/sc01.png "Main Player")
+</p>
 
-## Event Scheduler
+### Event Scheduler
+<p align="center">
 ![alt text](Readme/sc02.png "Event Scheduler")
+</p>
 
-## Pre-Listen Player
+### Pre-Listen Player
+<p align="center">
 ![alt text](Readme/sc03.png "Pre-Listen")
+</p>
 
 # Libraries and Resources
 

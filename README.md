@@ -2,8 +2,6 @@
 	<img alt="Horse" height="150" src="Readme/lizard.png"/>
 </p>
 
-<br>
-
 <p align="center">
 	<b>Salamandra</b> is an open source radio automation software for <b>Windows</b>.
 </p> 
@@ -14,7 +12,7 @@
 
 # Features
 * Player with support for major audio files (wav, mp3, wma, ogg and flac)
-* Multiple player modes, like random, shuffle or manual for playback control.
+* Multiple track selection modes, like random, shuffle or manual for playback control.
 * Special tracks, like time anouncements and random audio files from a folder.
 * A versatile events scheduler, for audio files or starting/stopping playback, at an scheduled day and time or periodically, like days of weeks or hours.
 * A simplified player to pre-listen audio files in another sound output.

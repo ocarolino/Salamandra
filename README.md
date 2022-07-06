@@ -16,6 +16,15 @@ We don't have a tutorial yet, but Salamandra is designed to be intuitive, with a
 
 # Screenshots
 
+## Main Player
+![alt text](Readme/sc01.png "Main Player")
+
+## Event Scheduler
+![alt text](Readme/sc02.png "Event Scheduler")
+
+## Pre-Listen Player
+![alt text](Readme/sc03.png "Pre-Listen")
+
 # Libraries and Resources
 
 * [NAudio](https://github.com/naudio/NAudio)

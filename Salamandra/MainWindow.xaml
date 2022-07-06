@@ -14,7 +14,7 @@
         xmlns:strings="clr-namespace:Salamandra.Strings"
         xmlns:dd="urn:gong-wpf-dragdrop"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="540" Width="960"
+        Title="{Binding WindowTitle}" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing"
         UseLayoutRounding="True" Loaded="Window_Loaded" WindowState="Maximized"
         SizeChanged="Window_SizeChanged">

@@ -9,16 +9,30 @@
 * A simplified player to pre-listen audio files in another sound output.
 * Auto-generated log files to register any player activity or errors.
 
-# Usage
+# Getting Started
 You can download the latest release, unzip and open Salamandra.exe. There's no need for installation or extra configurations.
 
-There isn't an tutorial for the program yet, but Salamandra is designed to be intuitive, with all relevant functions written in a clear manner. You can also put the cursor on top of any option and read an explanation of what it does.
+We don't have a tutorial yet, but Salamandra is designed to be intuitive, with all relevant functions written in a clear manner. You can also put the cursor on top of any option and read an explanation of what it does.
 
 # Screenshots
 
-# Libraries used
+# Libraries and Resources
+
+* [NAudio](https://github.com/naudio/NAudio)
+* [TagLib#](https://github.com/mono/taglib-sharp)
+* [Serilog](https://github.com/serilog/serilog)
+* [PropertyChanged.Fody](https://github.com/Fody/PropertyChanged)
+* [Ookii.Dialogs.Wpf](https://github.com/ookii-dialogs/ookii-dialogs-wpf)
+* [Newtonsoft.Json](https://www.newtonsoft.com/json)
+* [GongSolutions.WPF.DragDrop](https://github.com/punker76/gong-wpf-dragdrop)
+
+Visual Resources
+
+* [Icons8](https://icons8.com)
+* [famfamfam Silk Icons](http://www.famfamfam.com/lab/icons/silk/)
+* [Lizard icons created by Kiranshastry - Flaticon](https://www.flaticon.com/free-icons/lizard)
 
 # Contribution
 First of all, thanks for thinking in contributing to this project! Salamandra is an open source software, so any contributions are welcome.
 
-Right now, what we really need is for Salamandra to be tested. It's meant to be stable, but bugs and unexpected behaviors can happen, even more in these initial releases.
+Right now, what we really need is testing. All functionalities are stable in our testing enviroments, but bugs and unexpected behaviors can happen in differents setups, even more in these initial releases.

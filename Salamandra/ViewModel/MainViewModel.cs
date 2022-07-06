@@ -342,7 +342,7 @@ namespace Salamandra.ViewModel
             if (this.IsPlaying && this.ApplicationSettings.PlayerSettings.AskToCloseWhenPlaying)
             {
                 if (MessageBox.Show(Salamandra.Strings.ViewsTexts.MainWindow_PlaylistStillPlaying,
-                    "Salamandra", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+                    Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                     return false;
             }
 
@@ -841,7 +841,7 @@ namespace Salamandra.ViewModel
             this.StopPlayback();
 
             MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_SoundDevice, ex.Message),
-                "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private void PlaySelectedTrack()
@@ -970,21 +970,21 @@ namespace Salamandra.ViewModel
                 catch (PlaylistLoaderException ex)
                 {
                     MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_PlaylistParsing, ex.Message),
-                        "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Error);
 
                     this.PlayerLogManager?.Error(String.Format("{0} ({1})", ex.Message, openFileDialog.FileName), "Playlist");
                 }
                 catch (IOException ex)
                 {
                     MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_PlaylistFile, ex.Message),
-                        "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Error);
 
                     this.PlayerLogManager?.Error(String.Format("{0} ({1})", ex.Message, openFileDialog.FileName), "Playlist");
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_PlaylistOpenGeneric, ex.Message),
-                        "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Error);
 
                     this.PlayerLogManager?.Error(String.Format("{0} ({1})", ex.Message, openFileDialog.FileName), "Playlist");
                 }
@@ -1021,12 +1021,12 @@ namespace Salamandra.ViewModel
             catch (IOException ex)
             {
                 MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_PlaylistFile, ex.Message),
-                    "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_PlaylistSaveGeneric, ex.Message),
-                    "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             RefreshWindowTitle();
@@ -1051,7 +1051,8 @@ namespace Salamandra.ViewModel
         {
             if (this.PlaylistManager.Modified)
             {
-                var result = MessageBox.Show(Salamandra.Strings.ViewsTexts.MainWindow_PlaylistUnsavedChanges, "Salamandra", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                var result = MessageBox.Show(Salamandra.Strings.ViewsTexts.MainWindow_PlaylistUnsavedChanges,
+                    Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                     SavePlaylist();
@@ -1064,7 +1065,7 @@ namespace Salamandra.ViewModel
 
         private void RefreshWindowTitle()
         {
-            string title = "Sem título"; // ToDo: Traduzir
+            string title = Salamandra.Strings.ViewsTexts.Misc_Untitled;
 
             if (!String.IsNullOrEmpty(this.PlaylistManager.Filename))
                 title = Path.GetFileName(this.PlaylistManager.Filename);
@@ -1072,7 +1073,7 @@ namespace Salamandra.ViewModel
             if (!String.IsNullOrEmpty(title))
                 title = title + " - ";
 
-            title = title + "Salamandra";
+            title = title + Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle;
 
             this.WindowTitle = title;
         }
@@ -1080,7 +1081,7 @@ namespace Salamandra.ViewModel
         private void HandlePlaylistException(Exception ex)
         {
             MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_UnhandledPlaylistError, ex.Message),
-                "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error); // ToDo: Misc_AppTitle
+                Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Error);
 
             this.PlaylistLoading = false;
         }
@@ -1170,7 +1171,7 @@ namespace Salamandra.ViewModel
                     ex.Message), "Events");
 
                 MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_ScheduleSaveGeneric, ex.Message),
-                    "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -1388,7 +1389,7 @@ namespace Salamandra.ViewModel
                 catch (Exception ex)
                 {
                     MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_OpeningLogFolder, ex.Message),
-                        "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -1406,13 +1407,13 @@ namespace Salamandra.ViewModel
                 catch (Exception ex)
                 {
                     MessageBox.Show(String.Format("{0}\n\n{1}", Salamandra.Strings.ViewsTexts.MainWindow_Error_OpeningTodayLog, ex.Message),
-                        "Salamandra", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
                 MessageBox.Show(Salamandra.Strings.ViewsTexts.MainWindow_Error_TodayLogDoesntExist,
-                    "Salamandra", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

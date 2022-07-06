@@ -21,7 +21,7 @@ namespace Salamandra
     {
         private LogManager InitializeAppLogManager()
         {
-            LogManager logManager = new LogManager(String.Empty, "Salamandra", false);
+            LogManager logManager = new LogManager(String.Empty, Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle, false);
             logManager.InitializeLog();
 
             return logManager;

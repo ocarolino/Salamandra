@@ -1,10 +1,10 @@
 # Salamandra
 <p align="center">
-**Salamandra** is an open source radio automation software for **Windows**.
+	<b>Salamandra</b> is an open source radio automation software for <b>Windows</b>.
 </p> 
 
 <p align="center">
-Designed for radio stations that need a **simple**, **easy** and **stable** software for automated broadcasting.
+	Designed for radio stations that need a <b>simple</b>, <b>easy</b> and <b>stable</b> software for automated broadcasting.
 </p>
 
 # Features
@@ -24,17 +24,17 @@ We don't have a tutorial yet, but Salamandra is designed to be intuitive, with a
 
 ### Main Player
 <p align="center">
-![alt text](Readme/sc01.png "Main Player")
+	<img src="Readme/sc01.png" alt="Main Player"/>
 </p>
 
 ### Event Scheduler
 <p align="center">
-![alt text](Readme/sc02.png "Event Scheduler")
+	<img src="Readme/sc02.png" alt="Event Scheduler"/>
 </p>
 
 ### Pre-Listen Player
 <p align="center">
-![alt text](Readme/sc03.png "Pre-Listen")
+	<img src="Readme/sc03.png" alt="Pre-Listen"/>
 </p>
 
 # Libraries and Resources

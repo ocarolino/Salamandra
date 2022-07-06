@@ -1,4 +1,9 @@
-# Salamandra
+<p align="center">
+	<img alt="Horse" height="150" src="Readme/lizard.png"/>
+</p>
+
+<br>
+
 <p align="center">
 	<b>Salamandra</b> is an open source radio automation software for <b>Windows</b>.
 </p> 

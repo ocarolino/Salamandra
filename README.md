@@ -1,5 +1,5 @@
 <p align="center">
-	<img alt="Horse" height="150" src="Readme/lizard.png"/>
+	<img alt="Salamandra" height="150" src="Readme/lizard.png"/>
 </p>
 
 <p align="center">
@@ -40,6 +40,11 @@ We don't have a tutorial yet, but Salamandra is designed to be intuitive, with a
 	<img src="Readme/sc03.png" alt="Pre-Listen"/>
 </p>
 
+### Generated Daily Log
+<p align="center">
+	<img src="Readme/sc04.png" alt="Pre-Listen"/>
+</p>
+
 # Libraries and Resources
 
 * [NAudio](https://github.com/naudio/NAudio)
@@ -50,7 +55,7 @@ We don't have a tutorial yet, but Salamandra is designed to be intuitive, with a
 * [Newtonsoft.Json](https://www.newtonsoft.com/json)
 * [GongSolutions.WPF.DragDrop](https://github.com/punker76/gong-wpf-dragdrop)
 
-Visual Resources
+### Visual Resources
 
 * [Icons8](https://icons8.com)
 * [famfamfam Silk Icons](http://www.famfamfam.com/lab/icons/silk/)

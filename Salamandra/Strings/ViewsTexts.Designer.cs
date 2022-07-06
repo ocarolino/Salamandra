@@ -61,6 +61,78 @@ namespace Salamandra.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string AboutWindow_About {
+            get {
+                return ResourceManager.GetString("AboutWindow_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About Salamandra.
+        /// </summary>
+        public static string AboutWindow_AboutSalamandra {
+            get {
+                return ResourceManager.GetString("AboutWindow_AboutSalamandra", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Salamandra is an open source software for automated radio broadcasting..
+        /// </summary>
+        public static string AboutWindow_Description {
+            get {
+                return ResourceManager.GetString("AboutWindow_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Developed by Matheus Carolino.
+        /// </summary>
+        public static string AboutWindow_Developer {
+            get {
+                return ResourceManager.GetString("AboutWindow_Developer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This software is licensed on MIT License terms..
+        /// </summary>
+        public static string AboutWindow_License {
+            get {
+                return ResourceManager.GetString("AboutWindow_License", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open License.
+        /// </summary>
+        public static string AboutWindow_OpenLicense {
+            get {
+                return ResourceManager.GetString("AboutWindow_OpenLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resources.
+        /// </summary>
+        public static string AboutWindow_Resources {
+            get {
+                return ResourceManager.GetString("AboutWindow_Resources", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tested on Rádio NovaBR.
+        /// </summary>
+        public static string AboutWindow_TestedOnNovaBR {
+            get {
+                return ResourceManager.GetString("AboutWindow_TestedOnNovaBR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete the selected events?.
         /// </summary>
         public static string EventListWindow_AreYouSureDelete {
@@ -619,6 +691,15 @@ namespace Salamandra.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About Salamandra.
+        /// </summary>
+        public static string MainWindow_About {
+            get {
+                return ResourceManager.GetString("MainWindow_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add audio files....
         /// </summary>
         public static string MainWindow_AddAudioTracks {
@@ -804,6 +885,15 @@ namespace Salamandra.Strings {
         public static string MainWindow_File {
             get {
                 return ResourceManager.GetString("MainWindow_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help.
+        /// </summary>
+        public static string MainWindow_Help {
+            get {
+                return ResourceManager.GetString("MainWindow_Help", resourceCulture);
             }
         }
         
@@ -1389,6 +1479,15 @@ namespace Salamandra.Strings {
         public static string Misc_Track_TimeAnnouncement {
             get {
                 return ResourceManager.GetString("Misc_Track_TimeAnnouncement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Untitled.
+        /// </summary>
+        public static string Misc_Untitled {
+            get {
+                return ResourceManager.GetString("Misc_Untitled", resourceCulture);
             }
         }
         

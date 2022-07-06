@@ -163,8 +163,8 @@
                 <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_OpenLogFolder}" Command="{Binding OpenLogFolderCommand}"/>
             </MenuItem>
 
-            <MenuItem Header="Ajuda">
-                <MenuItem Header="Sobre o Salamandra" Command="{Binding OpenAboutCommand}" />
+            <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_Help}">
+                <MenuItem Header="{x:Static strings:ViewsTexts.MainWindow_About}" Command="{Binding OpenAboutCommand}" />
             </MenuItem>
         </Menu>
 

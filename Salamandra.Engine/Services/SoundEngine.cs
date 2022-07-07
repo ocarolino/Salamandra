@@ -17,7 +17,7 @@ namespace Salamandra.Engine.Services
     public class SoundEngine
     {
         private WaveOutEvent? outputDevice;
-        private AudioFileReader? audioFileReader;
+        private AudioFileReaderExtended? audioFileReader;
 
         private PlaybackStopType playbackStopType;
 
@@ -99,7 +99,7 @@ namespace Salamandra.Engine.Services
             {
                 if (this.audioFileReader == null)
                 {
-                    this.audioFileReader = new AudioFileReader(filename) { Volume = volume };
+                    this.audioFileReader = new AudioFileReaderExtended(filename) { Volume = volume };
                     this.outputDevice.Init(this.audioFileReader);
                 }
 

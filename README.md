@@ -53,6 +53,7 @@ We don't have a tutorial yet, but Salamandra is designed to be intuitive, with a
 * [PropertyChanged.Fody](https://github.com/Fody/PropertyChanged)
 * [Ookii.Dialogs.Wpf](https://github.com/ookii-dialogs/ookii-dialogs-wpf)
 * [Newtonsoft.Json](https://www.newtonsoft.com/json)
+* [WpfExtendedToolkit](https://github.com/dotnetprojects/WpfExtendedToolkit)
 * [GongSolutions.WPF.DragDrop](https://github.com/punker76/gong-wpf-dragdrop)
 
 ### Visual Resources

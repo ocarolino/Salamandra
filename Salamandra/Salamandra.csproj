@@ -10,36 +10,41 @@
 		<RuntimeIdentifier>win-x86</RuntimeIdentifier>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<Deterministic>false</Deterministic>
+	</PropertyGroup>
+
 	<ItemGroup>
-	  <None Remove="Images\Icons\Events\bullet_green.png" />
-	  <None Remove="Images\Icons\Events\bullet_red.png" />
-	  <None Remove="Images\Icons\Player\stop-next.png" />
-	  <None Remove="Images\Icons\Player\volume.png" />
-	  <None Remove="Images\Icons\Player\volume_off.png" />
-	  <None Remove="Images\Icons\Playlist\alarm_clock.png" />
-	  <None Remove="Images\Icons\Playlist\application_terminal.png" />
-	  <None Remove="Images\Icons\Playlist\audio_file.png" />
-	  <None Remove="Images\Icons\Playlist\calendar.png" />
-	  <None Remove="Images\Icons\Playlist\loop.png" />
-	  <None Remove="Images\Icons\Playlist\music_folder.png" />
-	  <None Remove="Images\Icons\Playlist\playlist_file.png" />
-	  <None Remove="Images\Icons\Playlist\remote_control.png" />
-	  <None Remove="Images\Icons\Toolbar\calendar.png" />
-	  <None Remove="Images\Icons\Toolbar\checkmark.png" />
-	  <None Remove="Images\Icons\Toolbar\copy.png" />
-	  <None Remove="Images\Icons\Toolbar\cut.png" />
-	  <None Remove="Images\Icons\Toolbar\delete.png" />
-	  <None Remove="Images\Icons\Toolbar\delete_row.png" />
-	  <None Remove="Images\Icons\Toolbar\new.png" />
-	  <None Remove="Images\Icons\Toolbar\next.png" />
-	  <None Remove="Images\Icons\Toolbar\open.png" />
-	  <None Remove="Images\Icons\Toolbar\paste.png" />
-	  <None Remove="Images\Icons\Toolbar\play.png" />
-	  <None Remove="Images\Icons\Toolbar\plus.png" />
-	  <None Remove="Images\Icons\Toolbar\save.png" />
-	  <None Remove="Images\Icons\Toolbar\service.png" />
-	  <None Remove="Images\Icons\Toolbar\stop.png" />
-	  <None Remove="Images\Icons\Toolbar\trash.png" />
+		<None Remove="Images\Icons\Events\bullet_green.png" />
+		<None Remove="Images\Icons\Events\bullet_red.png" />
+		<None Remove="Images\Icons\Player\stop-next.png" />
+		<None Remove="Images\Icons\Player\volume.png" />
+		<None Remove="Images\Icons\Player\volume_off.png" />
+		<None Remove="Images\Icons\Playlist\alarm_clock.png" />
+		<None Remove="Images\Icons\Playlist\application_terminal.png" />
+		<None Remove="Images\Icons\Playlist\audio_file.png" />
+		<None Remove="Images\Icons\Playlist\calendar.png" />
+		<None Remove="Images\Icons\Playlist\loop.png" />
+		<None Remove="Images\Icons\Playlist\music_folder.png" />
+		<None Remove="Images\Icons\Playlist\playlist_file.png" />
+		<None Remove="Images\Icons\Playlist\remote_control.png" />
+		<None Remove="Images\Icons\Toolbar\calendar.png" />
+		<None Remove="Images\Icons\Toolbar\checkmark.png" />
+		<None Remove="Images\Icons\Toolbar\copy.png" />
+		<None Remove="Images\Icons\Toolbar\cut.png" />
+		<None Remove="Images\Icons\Toolbar\delete.png" />
+		<None Remove="Images\Icons\Toolbar\delete_row.png" />
+		<None Remove="Images\Icons\Toolbar\new.png" />
+		<None Remove="Images\Icons\Toolbar\next.png" />
+		<None Remove="Images\Icons\Toolbar\open.png" />
+		<None Remove="Images\Icons\Toolbar\paste.png" />
+		<None Remove="Images\Icons\Toolbar\play.png" />
+		<None Remove="Images\Icons\Toolbar\plus.png" />
+		<None Remove="Images\Icons\Toolbar\save.png" />
+		<None Remove="Images\Icons\Toolbar\service.png" />
+		<None Remove="Images\Icons\Toolbar\stop.png" />
+		<None Remove="Images\Icons\Toolbar\trash.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -97,18 +102,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Strings\ViewsTexts.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>ViewsTexts.resx</DependentUpon>
-	  </Compile>
+		<Compile Update="Strings\ViewsTexts.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ViewsTexts.resx</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Strings\ViewsTexts.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	    <LastGenOutput>ViewsTexts.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
+		<EmbeddedResource Update="Strings\ViewsTexts.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ViewsTexts.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 	</ItemGroup>
 
 </Project>

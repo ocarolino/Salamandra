@@ -301,6 +301,24 @@
             </StackPanel>
         </Grid>
 
+        <!-- Status Bar -->
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+
+            <StatusBarItem Grid.Column="1">
+                <TextBlock Text="{Binding BuildVersionText}"/>
+            </StatusBarItem>
+        </StatusBar>
+
         <!-- Seek Bar -->
         <controls:ExtendedSlider DockPanel.Dock="Bottom" Minimum="0" x:Name="SeekBar" VerticalAlignment="Center" IsEnabled="{Binding AllowSeekDrag}"                            
                                  Maximum="{Binding TrackLengthInSeconds, Mode=OneWay}" Value="{Binding TrackPositionInSeconds}"                                     

@@ -26,6 +26,8 @@ using GongSolutions.Wpf.DragDrop;
 using System.Collections.Specialized;
 using Salamandra.Engine.Domain.Events;
 using Newtonsoft.Json;
+using System.Runtime.InteropServices;
+using System.Reflection;
 
 namespace Salamandra.ViewModel
 {
@@ -88,6 +90,8 @@ namespace Salamandra.ViewModel
         public TimeSpan? RemainingTime { get; set; }
         public TimeSpan? EndingTimeOfDay { get; set; }
         public DateTime CurrentDateTime { get; set; }
+
+        public string? BuildVersionText { get; set; }
 
         public bool EnableLoopMode { get; set; }
         public bool EnableDeleteMode { get; set; }
@@ -221,6 +225,8 @@ namespace Salamandra.ViewModel
 
         public async Task Loading()
         {
+            this.BuildVersionText = @GetType().Assembly.GetName().Version.ToString();
+
             ValidateSettings();
             ApplyRunningSettings();
             await ApplyStartupSettings();

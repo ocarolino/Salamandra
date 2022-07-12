@@ -55,6 +55,7 @@ We don't have a tutorial yet, but Salamandra is designed to be intuitive, with a
 * [Newtonsoft.Json](https://www.newtonsoft.com/json)
 * [WpfExtendedToolkit](https://github.com/dotnetprojects/WpfExtendedToolkit)
 * [GongSolutions.WPF.DragDrop](https://github.com/punker76/gong-wpf-dragdrop)
+* [WPFDarkTheme](https://github.com/AngryCarrot789/WPFDarkTheme)
 
 ### Visual Resources
 

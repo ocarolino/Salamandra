@@ -27,8 +27,8 @@
     <SolidColorBrush x:Key="ControlDisabledBorderBrush" Color="#FF8C8C8C" />
     <SolidColorBrush x:Key="ControlMouseOverBackground" Color="#FFD2D2D2" />
     <SolidColorBrush x:Key="ControlMouseOverBorderBrush" Color="#FFBEBEBE" />
-    <SolidColorBrush x:Key="ControlSelectedBackground" Color="#FFE0E0E0" />
-    <SolidColorBrush x:Key="ControlSelectedBorderBrush" Color="#FFCCCCCC" />
+    <SolidColorBrush x:Key="ControlSelectedBackground" Color="#c0ddeb" />
+    <SolidColorBrush x:Key="ControlSelectedBorderBrush" Color="#26a0da" />
     <SolidColorBrush x:Key="ControlSelectedMouseOverBackground" Color="Gainsboro" />
     <SolidColorBrush x:Key="ControlSelectedMouseOverBorderBrush" Color="#FFB9B9B9" />
     <SolidColorBrush x:Key="ControlGlythColour" Color="#FF0A0A0A" />

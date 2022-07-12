@@ -1160,7 +1160,7 @@ namespace Salamandra.ViewModel
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.Filter = ScheduleManager.SupportedScheduleFormats.GetDialogFilterFromArray(Strings.ViewsTexts.FileFormats_ScheduleEvents);
 
-                if (!saveFileDialog.ShowDialog() == true)
+                if (saveFileDialog.ShowDialog() == true)
                     this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename = saveFileDialog.FileName;
                 else
                     return;

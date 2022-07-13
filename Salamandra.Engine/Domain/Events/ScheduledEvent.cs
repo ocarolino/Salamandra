@@ -98,6 +98,12 @@ namespace Salamandra.Engine.Domain.Events
             }
         }
 
+        public void SortLists()
+        {
+            this.PlayingHours = new ObservableCollection<int>(this.PlayingHours.OrderBy(x => x));
+            this.DaysOfWeek = new ObservableCollection<DayOfWeek>(this.DaysOfWeek.OrderBy(x => x));
+        }
+
         public BaseTrack GetTrack()
         {
             switch (this.TrackScheduleType)

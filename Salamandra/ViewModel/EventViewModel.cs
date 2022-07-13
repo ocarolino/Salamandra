@@ -204,6 +204,7 @@ namespace Salamandra.ViewModel
             }
 
             this.ScheduledEvent.UpdateFriendlyName();
+            this.ScheduledEvent.SortLists();
             UpdateTimestamps();
 
             this.CloseWindow?.Invoke(true);

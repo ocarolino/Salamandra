@@ -651,7 +651,11 @@ namespace Salamandra.ViewModel
                     if (!String.IsNullOrEmpty(randomFile))
                         PlayAudioFile(randomFile, true, randomTrack.FriendlyName);
                     else
+                    {
+                        this.PlayerLogManager?.Error(String.Format("Folder is empty or not scanned yet. ({0})", randomTrack.Filename), "Player");
+
                         this.PlaybackState = PlaylistState.WaitingNextTrack;
+                    }
                     break;
                 case PlayerCommandTrack playerCommandTrack:
                     switch (playerCommandTrack.Command)

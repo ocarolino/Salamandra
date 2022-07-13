@@ -78,6 +78,33 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
+                    <GridViewColumn Width="100">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Content="{x:Static strings:ViewsTexts.EventListWindow_Priority}" 
+                                                  Tag="EventPriority" Click="GridViewColumnHeader_Click"/>
+                        </GridViewColumn.Header>
+
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding EventPriority}" Value="{x:Static enums:EventPriority.High}">
+                                                    <Setter Property="Text" Value="{x:Static strings:ViewsTexts.Misc_Events_HighPriority}"/>
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding EventPriority}" Value="{x:Static enums:EventPriority.Low}">
+                                                    <Setter Property="Text" Value="{x:Static strings:ViewsTexts.Misc_Events_LowPriority}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
                     <GridViewColumn Width="200">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Content="{x:Static strings:ViewsTexts.EventListWindow_File}"

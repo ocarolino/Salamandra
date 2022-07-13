@@ -48,6 +48,7 @@ We don't have a tutorial yet, but Salamandra is designed to be intuitive, with a
 # Libraries and Resources
 
 * [NAudio](https://github.com/naudio/NAudio)
+* [NAudio.Vorbis](https://github.com/naudio/Vorbis)
 * [TagLib#](https://github.com/mono/taglib-sharp)
 * [Serilog](https://github.com/serilog/serilog)
 * [PropertyChanged.Fody](https://github.com/Fody/PropertyChanged)

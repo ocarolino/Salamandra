@@ -268,6 +268,15 @@ namespace Salamandra.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Priority.
+        /// </summary>
+        public static string EventListWindow_Priority {
+            get {
+                return ResourceManager.GetString("EventListWindow_Priority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save....
         /// </summary>
         public static string EventListWindow_Save {
@@ -1429,11 +1438,29 @@ namespace Salamandra.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to High.
+        /// </summary>
+        public static string Misc_Events_HighPriority {
+            get {
+                return ResourceManager.GetString("Misc_Events_HighPriority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Immediate.
         /// </summary>
         public static string Misc_Events_Immediate {
             get {
                 return ResourceManager.GetString("Misc_Events_Immediate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Low.
+        /// </summary>
+        public static string Misc_Events_LowPriority {
+            get {
+                return ResourceManager.GetString("Misc_Events_LowPriority", resourceCulture);
             }
         }
         

@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  
+
 <data name="AboutWindow_About" xml:space="preserve"><value>Sobre</value></data>
 <data name="AboutWindow_AboutSalamandra" xml:space="preserve"><value>Sobre o Salamandra</value></data>
 <data name="AboutWindow_Description" xml:space="preserve"><value>O Salamandra é um software de código aberto para a automação de rádios.</value></data>
@@ -300,5 +300,6 @@
 <data name="SettingsWindow_Validation_ValidLogFolder" xml:space="preserve"><value>Para gerar os registros é necessário escolher um diretório válido.</value></data>
 <data name="SettingsWindow_WindowTitle" xml:space="preserve"><value>Configurações</value></data>
 <data name="EventListWindow_Priority" xml:space="preserve"><value>Prioridade</value></data>
+<data name="MainWindow_NoWritePermission" xml:space="preserve"><value>O Salamandra não tem permissões de escrita no diretório atual. Não será possível persistir as configurações no momento.</value></data>
 
 </root>

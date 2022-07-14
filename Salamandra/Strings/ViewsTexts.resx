@@ -118,7 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   
-
 <data name="AboutWindow_About" xml:space="preserve"><value>About</value></data>
 <data name="AboutWindow_AboutSalamandra" xml:space="preserve"><value>About Salamandra</value></data>
 <data name="AboutWindow_Description" xml:space="preserve"><value>Salamandra is an open source software for automated radio broadcasting.</value></data>
@@ -301,5 +300,6 @@
 <data name="SettingsWindow_Validation_ValidLogFolder" xml:space="preserve"><value>It is necessary to choose a valid directory to generate the logs.</value></data>
 <data name="SettingsWindow_WindowTitle" xml:space="preserve"><value>Settings</value></data>
 <data name="EventListWindow_Priority" xml:space="preserve"><value>Priority</value></data>
+<data name="MainWindow_NoWritePermission" xml:space="preserve"><value>Salamandra has no write permissions in the current directory. It will not be possible to save the settings at this moment.</value></data>
 
 </root>

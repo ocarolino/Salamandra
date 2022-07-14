@@ -28,6 +28,7 @@ using Salamandra.Engine.Domain.Events;
 using Newtonsoft.Json;
 using System.Runtime.InteropServices;
 using System.Reflection;
+using Salamandra.Engine.Utils;
 
 namespace Salamandra.ViewModel
 {
@@ -226,6 +227,14 @@ namespace Salamandra.ViewModel
         public async Task Loading()
         {
             this.BuildVersionText = @GetType().Assembly.GetName().Version.ToString();
+
+            var checkWrite = FilesystemUtils.CheckWriteAndReadPermissions(Environment.CurrentDirectory);
+
+            if (!checkWrite)
+            {
+                MessageBox.Show(Salamandra.Strings.ViewsTexts.MainWindow_NoWritePermission,
+                    Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
             ValidateSettings();
             ApplyRunningSettings();

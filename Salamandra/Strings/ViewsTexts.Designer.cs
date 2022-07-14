@@ -970,6 +970,15 @@ namespace Salamandra.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Salamandra has no write permissions in the current directory. It will not be possible to save the settings at this moment..
+        /// </summary>
+        public static string MainWindow_NoWritePermission {
+            get {
+                return ResourceManager.GetString("MainWindow_NoWritePermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open....
         /// </summary>
         public static string MainWindow_Open {

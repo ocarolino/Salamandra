@@ -36,7 +36,9 @@ namespace Salamandra.Engine.Services
             if (this.captureFilePathHook == null)
                 this.captureFilePathHook = new CaptureFilePathHook();
 
-            var outputTemplate = "{Timestamp:HH:mm:ss}\t{Level:u3}\t{ActionContext,-15}\t\t{Message:lj}{NewLine}{Exception}";
+            var outputTemplate = this.DailyInterval ? "{Timestamp:HH:mm:ss}" : "{Timestamp:dd/MM/yyyy HH:mm:ss}";
+
+            outputTemplate += "\t{Level:u3}\t{ActionContext,-15}\t\t{Message:lj}{NewLine}{Exception}";
             var path = Path.Combine(this.OutputFolder, this.DefaultFilename + ".txt");
 
             var logger = new LoggerConfiguration()

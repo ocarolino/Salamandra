@@ -21,4 +21,4 @@ using System.Windows;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: AssemblyVersion("1.0.*")] 
+[assembly: AssemblyVersion("1.0.0.*")] 

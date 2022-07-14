@@ -228,13 +228,13 @@ namespace Salamandra.ViewModel
         {
             this.BuildVersionText = @GetType().Assembly.GetName().Version.ToString();
 
-            var checkWrite = FilesystemUtils.CheckWritePermissions(Environment.CurrentDirectory);
+            /*var checkWrite = FilesystemUtils.CheckWritePermissions(@"C:\Program Files (x86)");
 
             if (!checkWrite)
             {
                 MessageBox.Show(Salamandra.Strings.ViewsTexts.MainWindow_NoWritePermission,
                     Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            }*/
 
             ValidateSettings();
             ApplyRunningSettings();

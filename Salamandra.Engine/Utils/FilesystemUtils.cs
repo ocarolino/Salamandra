@@ -12,7 +12,7 @@ namespace Salamandra.Engine.Utils
     public static class FilesystemUtils
     {
         // Based on: https://stackoverflow.com/questions/60703387/check-file-permission-in-c-sharp-net-core (2022-07-14)
-        public static bool CheckWriteAndReadPermissions(string directory)
+        public static bool CheckWritePermissions(string directory)
         {
             try
             {
@@ -21,7 +21,7 @@ namespace Salamandra.Engine.Utils
                 DirectorySecurity dSecurity = dInfo.GetAccessControl();
 
                 SecurityIdentifier usersSid = new SecurityIdentifier(WellKnownSidType.BuiltinUsersSid, null);
-                FileSystemRights fileRights = FileSystemRights.FullControl | FileSystemRights.Read | FileSystemRights.Write; // All read only file usually have Synchronize added automatically when allowing access, refer the msdn doc link below
+                FileSystemRights fileRights = FileSystemRights.FullControl | FileSystemRights.Write | FileSystemRights.Modify;
 
                 var rules = dSecurity.GetAccessRules(true, true, usersSid.GetType()).OfType<FileSystemAccessRule>().ToList();
                 var hasRights = rules.Where(r => r.FileSystemRights == fileRights).Any();

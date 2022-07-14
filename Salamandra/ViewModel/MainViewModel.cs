@@ -228,7 +228,7 @@ namespace Salamandra.ViewModel
         {
             this.BuildVersionText = @GetType().Assembly.GetName().Version.ToString();
 
-            var checkWrite = FilesystemUtils.CheckWriteAndReadPermissions(Environment.CurrentDirectory);
+            var checkWrite = FilesystemUtils.CheckWritePermissions(Environment.CurrentDirectory);
 
             if (!checkWrite)
             {

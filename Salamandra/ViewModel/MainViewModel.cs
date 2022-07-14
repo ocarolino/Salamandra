@@ -226,7 +226,7 @@ namespace Salamandra.ViewModel
 
         public async Task Loading()
         {
-            this.BuildVersionText = @GetType().Assembly.GetName().Version.ToString();
+            this.BuildVersionText = @GetType().Assembly.GetName().Version!.ToString();
 
             /*var checkWrite = FilesystemUtils.CheckWritePermissions(@"C:\Program Files (x86)");
 

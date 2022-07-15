@@ -688,6 +688,7 @@ namespace Salamandra.ViewModel
                         this.ApplicationSettings.ScheduledEventSettings.ScheduledEventFilename = scheduleFileTrack.Filename;
 
                         ScanScheduledRandomFiles();
+                        SaveSettings();
 
                         this.PlayerLogManager?.Information(String.Format("{0}", scheduleFileTrack.Filename), "Events");
                     }
@@ -1100,6 +1101,8 @@ namespace Salamandra.ViewModel
             {
                 this.ApplicationSettings = settingsViewModel.Settings!;
                 ApplyRunningSettings();
+
+                SaveSettings();
             }
         }
 
@@ -1125,6 +1128,8 @@ namespace Salamandra.ViewModel
 
                 PersistEvents();
                 ScanScheduledRandomFiles();
+
+                SaveSettings();
             }
         }
 

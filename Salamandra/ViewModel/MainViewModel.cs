@@ -222,6 +222,8 @@ namespace Salamandra.ViewModel
                 this.TrackPositionInSeconds = this.SoundEngine.PositionInSeconds;
                 this.RemainingTime = TimeSpan.FromSeconds(this.TrackLengthInSeconds - this.TrackPositionInSeconds);
             }
+
+            this.DirectoryAudioScanner.SavePeriodically();
         }
 
         public async Task Loading()

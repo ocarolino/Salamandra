@@ -21,6 +21,9 @@ namespace Salamandra.Engine.Services
 
         private List<string> filesBlackList;
 
+        public DateTime LastDateTimeSaved { get; set; }
+        public bool IsSaving { get; set; }
+
         public DirectoryAudioScanner()
         {
             this.directoriesLibrary = new Dictionary<string, DirectoryAudioInfo>();
@@ -34,6 +37,8 @@ namespace Salamandra.Engine.Services
 
             this.scrapQueue = new Queue<string>();
             this.filesBlackList = new List<string>();
+
+            this.LastDateTimeSaved = DateTime.Now;
         }
 
         #region Background Worker Events
@@ -240,6 +245,14 @@ namespace Salamandra.Engine.Services
             File.WriteAllText(filename, json);
         }
 
+        private async Task SaveToFileAsync(string filename)
+        {
+            ArgumentNullException.ThrowIfNull(nameof(filename));
+
+            string json = JsonConvert.SerializeObject(this.directoriesLibrary);
+            await File.WriteAllTextAsync(filename, json);
+        }
+
         private void LoadFromFile(string filename)
         {
             ArgumentNullException.ThrowIfNull(nameof(filename));
@@ -263,16 +276,51 @@ namespace Salamandra.Engine.Services
 
         public void Save(LogManager? logManager = null)
         {
+            this.IsSaving = true;
+
             string filename = Path.Combine(FileSystemUtils.GetApplicationCurrentDirectory(), "directory_library.json");
 
             try
             {
                 SaveToFile(filename);
+
+                this.LastDateTimeSaved = DateTime.Now;
             }
             catch (Exception ex)
             {
                 logManager?.Error(String.Format("There was an error when saving the directory library at {0}. ({1})",
                     filename, ex.Message), "Library");
+            }
+
+            this.IsSaving = false;
+        }
+
+        public void SavePeriodically(LogManager? logManager = null)
+        {
+            if (this.IsSaving)
+                return;
+
+            if (DateTime.Now.Subtract(this.LastDateTimeSaved).TotalMinutes >= 15) // ToDo: Const files.
+            {
+                this.IsSaving = true;
+
+                string filename = Path.Combine(FileSystemUtils.GetApplicationCurrentDirectory(), "directory_library.json");
+
+                var task = Task.Run(async () =>
+                {
+                    await SaveToFileAsync(filename);
+
+                    this.LastDateTimeSaved = DateTime.Now;
+                });
+
+                task.ContinueWith(t =>
+                {
+                    if (t.IsFaulted)
+                        logManager?.Error(String.Format("There was an error when saving the directory library at {0}. ({1})",
+                            filename, t.Exception!.Message), "Library");
+
+                    this.IsSaving = false;
+                });
             }
         }
 
@@ -285,6 +333,7 @@ namespace Salamandra.Engine.Services
                 try
                 {
                     LoadFromFile(filename);
+                    this.LastDateTimeSaved = DateTime.Now;
                 }
                 catch (Exception ex)
                 {

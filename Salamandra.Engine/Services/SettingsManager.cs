@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Salamandra.Engine.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +21,7 @@ namespace Salamandra.Engine.Services
 
         private string GetLocalFilePath(string fileName)
         {
-            string appData = Environment.CurrentDirectory;
+            string appData = FileSystemUtils.GetApplicationCurrentDirectory();
             return Path.Combine(appData, fileName);
         }
 

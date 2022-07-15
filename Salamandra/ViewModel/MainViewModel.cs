@@ -28,6 +28,7 @@ using Salamandra.Engine.Domain.Events;
 using Newtonsoft.Json;
 using System.Runtime.InteropServices;
 using System.Reflection;
+using Salamandra.Engine.Utils;
 
 namespace Salamandra.ViewModel
 {
@@ -328,7 +329,7 @@ namespace Salamandra.ViewModel
 
         private void LoadLibraryFile()
         {
-            string filename = Path.Combine(Environment.CurrentDirectory, "directory_library.json");
+            string filename = Path.Combine(FileSystemUtils.GetApplicationCurrentDirectory(), "directory_library.json");
 
             if (File.Exists(filename))
             {
@@ -390,7 +391,7 @@ namespace Salamandra.ViewModel
 
         private void SaveLibrary()
         {
-            string filename = Path.Combine(Environment.CurrentDirectory, "directory_library.json");
+            string filename = Path.Combine(FileSystemUtils.GetApplicationCurrentDirectory(), "directory_library.json");
 
             try
             {

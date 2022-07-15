@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Salamandra.Engine.Domain;
 using Salamandra.Engine.Extensions;
+using Salamandra.Engine.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -231,7 +232,7 @@ namespace Salamandra.Engine.Services
             return file;
         }
 
-        public void SaveToFile(string filename)
+        private void SaveToFile(string filename)
         {
             ArgumentNullException.ThrowIfNull(nameof(filename));
 
@@ -239,7 +240,7 @@ namespace Salamandra.Engine.Services
             File.WriteAllText(filename, json);
         }
 
-        public void LoadFromFile(string filename)
+        private void LoadFromFile(string filename)
         {
             ArgumentNullException.ThrowIfNull(nameof(filename));
 
@@ -258,6 +259,41 @@ namespace Salamandra.Engine.Services
 
                 throw;
             }
+        }
+
+        public void Save(LogManager? logManager = null)
+        {
+            string filename = Path.Combine(FileSystemUtils.GetApplicationCurrentDirectory(), "directory_library.json");
+
+            try
+            {
+                SaveToFile(filename);
+            }
+            catch (Exception ex)
+            {
+                logManager?.Error(String.Format("There was an error when saving the directory library at {0}. ({1})",
+                    filename, ex.Message), "Library");
+            }
+        }
+
+        public void Load(LogManager? logManager = null)
+        {
+            string filename = Path.Combine(FileSystemUtils.GetApplicationCurrentDirectory(), "directory_library.json");
+
+            if (File.Exists(filename))
+            {
+                try
+                {
+                    LoadFromFile(filename);
+                }
+                catch (Exception ex)
+                {
+                    logManager?.Error(String.Format("There was an error when loading the directory library at {0}. ({1})",
+                        filename, ex.Message), "Library");
+                }
+            }
+
+            ScanLibrary();
         }
     }
 }

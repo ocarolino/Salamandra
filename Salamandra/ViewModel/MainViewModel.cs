@@ -234,7 +234,7 @@ namespace Salamandra.ViewModel
             ApplyRunningSettings();
             await ApplyStartupSettings();
             LoadEventsFile();
-            LoadLibraryFile();
+            this.DirectoryAudioScanner.Load(this.ApplicationLogManager);
 
             this.MainTimer.Start();
 
@@ -327,25 +327,6 @@ namespace Salamandra.ViewModel
             }
         }
 
-        private void LoadLibraryFile()
-        {
-            string filename = Path.Combine(FileSystemUtils.GetApplicationCurrentDirectory(), "directory_library.json");
-
-            if (File.Exists(filename))
-            {
-                try
-                {
-                    this.DirectoryAudioScanner.LoadFromFile(filename);
-                }
-                catch (Exception ex)
-                {
-                    this.ApplicationLogManager?.Error(String.Format("There was an error when loading the directory library at {0}. ({1})",
-                        filename, ex.Message), "Library");
-                }
-            }
-            this.DirectoryAudioScanner.ScanLibrary();
-        }
-
         public bool Closing()
         {
             if (this.IsPlaying && this.ApplicationSettings.PlayerSettings.AskToCloseWhenPlaying)
@@ -365,7 +346,7 @@ namespace Salamandra.ViewModel
             this.TracksClipboard.Clear();
 
             SaveSettings();
-            SaveLibrary();
+            this.DirectoryAudioScanner.Save(this.ApplicationLogManager);
 
             return true;
         }
@@ -386,21 +367,6 @@ namespace Salamandra.ViewModel
             catch (Exception ex)
             {
                 this.ApplicationLogManager?.Fatal(String.Format("Error saving settings file. ({0})", ex.Message), "Settings");
-            }
-        }
-
-        private void SaveLibrary()
-        {
-            string filename = Path.Combine(FileSystemUtils.GetApplicationCurrentDirectory(), "directory_library.json");
-
-            try
-            {
-                this.DirectoryAudioScanner.SaveToFile(filename);
-            }
-            catch (Exception ex)
-            {
-                this.ApplicationLogManager?.Error(String.Format("There was an error when saving the directory library at {0}. ({1})",
-                    filename, ex.Message), "Library");
             }
         }
 

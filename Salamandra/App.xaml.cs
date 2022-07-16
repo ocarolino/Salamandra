@@ -19,6 +19,8 @@ namespace Salamandra
     /// </summary>
     public partial class App : Application
     {
+        private LogManager? applicationLogManager;
+
         private LogManager InitializeAppLogManager()
         {
             LogManager logManager = new LogManager(String.Empty, Salamandra.Strings.ViewsTexts.Misc_ApplicationTitle, false);
@@ -70,8 +72,20 @@ namespace Salamandra
 
             SetCultureFromSystem(settings.GeneralSettings.ViewLanguage.ViewLanguageToCultureName());
 
+            this.applicationLogManager = appLogManager;
+
+            Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+
             MainWindow mainWindow = new MainWindow(appLogManager, settingsManager, settings);
             mainWindow.Show();
+        }
+
+        private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            this.applicationLogManager?.Error("Unhandled exception.", "Application", e.Exception);
+
+            if (e.Exception.InnerException != null)
+                this.applicationLogManager?.Error("Unhandled inner exception.", "Application", e.Exception);
         }
     }
 }

@@ -54,6 +54,12 @@ namespace Salamandra.Engine.Services
             this.Logger = logger;
         }
 
+        public void Verbose(string message, string context)
+        {
+            using (LogContext.PushProperty("ActionContext", context))
+                this.Logger?.Verbose(message);
+        }
+
         public void Information(string message, string context)
         {
             using (LogContext.PushProperty("ActionContext", context))

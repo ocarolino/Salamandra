@@ -238,6 +238,8 @@ namespace Salamandra.ViewModel
             LoadEventsFile();
             this.DirectoryAudioScanner.Load(this.ApplicationLogManager);
 
+            this.PlayerLogManager?.Verbose("Main player opened", "Application");
+
             this.MainTimer.Start();
 
             if (this.ApplicationSettings.PlayerSettings.PlayOnStartup)
@@ -349,6 +351,8 @@ namespace Salamandra.ViewModel
 
             SaveSettings();
             this.DirectoryAudioScanner.Save(this.ApplicationLogManager);
+
+            this.PlayerLogManager?.Verbose("Main player closed", "Application");
 
             return true;
         }

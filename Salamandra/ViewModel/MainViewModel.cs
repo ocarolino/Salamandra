@@ -234,11 +234,12 @@ namespace Salamandra.ViewModel
 
             ValidateSettings();
             ApplyRunningSettings();
+
+            this.PlayerLogManager?.Verbose("Main player opened", "Application");
+
             await ApplyStartupSettings();
             LoadEventsFile();
             this.DirectoryAudioScanner.Load(this.ApplicationLogManager);
-
-            this.PlayerLogManager?.Verbose("Main player opened", "Application");
 
             this.MainTimer.Start();
 
@@ -292,7 +293,7 @@ namespace Salamandra.ViewModel
 
                 try
                 {
-                    this.PlayerLogManager?.Information(filename, "Playlist");
+                    this.PlayerLogManager?.Information(String.Format("Opening last playlist ({0})", filename), "Playlist");
 
                     await this.PlaylistManager.LoadPlaylist(filename);
 
@@ -648,7 +649,7 @@ namespace Salamandra.ViewModel
                 case PlaylistFileTrack playlistFileTrack:
                     SetPlaylistLoading(true, Salamandra.Strings.ViewsTexts.MainWindow_LoadingPlaylist);
 
-                    this.PlayerLogManager?.Information(playlistFileTrack.Filename, "Playlist");
+                    this.PlayerLogManager?.Information(String.Format("Playlist track ({0})", playlistFileTrack.Filename), "Playlist");
 
                     var task = this.PlaylistManager.LoadPlaylist(playlistFileTrack.Filename);
 

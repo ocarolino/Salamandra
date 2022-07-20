@@ -74,18 +74,45 @@ namespace Salamandra
 
             this.applicationLogManager = appLogManager;
 
-            Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            {
+                LogUnhandledException((Exception)e.ExceptionObject, "AppDomain.CurrentDomain.UnhandledException");
+            };
+
+            DispatcherUnhandledException += (s, e) =>
+            {
+                LogUnhandledException(e.Exception, "Application.Current.DispatcherUnhandledException");
+                e.Handled = true;
+            };
+
+            TaskScheduler.UnobservedTaskException += (s, e) =>
+            {
+                LogUnhandledException(e.Exception, "TaskScheduler.UnobservedTaskException");
+                e.SetObserved();
+            };
 
             MainWindow mainWindow = new MainWindow(appLogManager, settingsManager, settings);
             mainWindow.Show();
         }
 
-        private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        private void LogUnhandledException(Exception exception, string source)
         {
-            this.applicationLogManager?.Error("Unhandled exception.", "Application", e.Exception);
+            string message = $"Unhandled exception ({source})";
 
-            if (e.Exception.InnerException != null)
-                this.applicationLogManager?.Error("Unhandled inner exception.", "Application", e.Exception);
+            try
+            {
+                System.Reflection.AssemblyName assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName();
+
+                message = string.Format("Unhandled exception in {0} v{1}", assemblyName.Name, assemblyName.Version);
+            }
+            catch (Exception ex)
+            {
+                this.applicationLogManager?.Fatal("Exception in LogUnhandledException", "Application", ex);
+            }
+            finally
+            {
+                this.applicationLogManager?.Fatal(message, "Application", exception);
+            }
         }
     }
 }

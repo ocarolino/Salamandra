@@ -163,9 +163,9 @@ namespace Salamandra.Engine.Services
                     tracks.Add(CreateRandomTrackFromPath(item));
                 else
                 {
-                    if (SoundEngine.SupportedAudioFormats.Any(x => item.EndsWith(x)))
+                    if (SoundEngine.SupportedAudioFormats.Any(x => item.EndsWith(x, StringComparison.OrdinalIgnoreCase)))
                         tracks.Add(await CreateAudioFileTrackFromFilename(item));
-                    else if (PlaylistManager.SupportedPlaylistFormats.Any(x => item.EndsWith(x)))
+                    else if (PlaylistManager.SupportedPlaylistFormats.Any(x => item.EndsWith(x, StringComparison.OrdinalIgnoreCase)))
                         tracks.Add(CreatePlaylistTrackFromFilename(item));
                 }
             }
@@ -287,11 +287,11 @@ namespace Salamandra.Engine.Services
             {
                 BaseTrack? track = null;
 
-                if (item.Filename!.EndsWith(".time"))
+                if (item.Filename!.EndsWith(".time", StringComparison.OrdinalIgnoreCase))
                     track = new TimeAnnouncementTrack();
-                else if (item.Filename.EndsWith(".stop"))
+                else if (item.Filename.EndsWith(".stop", StringComparison.OrdinalIgnoreCase))
                     track = new PlayerCommandTrack(PlayerCommandType.Stop);
-                else if (item.Filename.EndsWith(".dir"))
+                else if (item.Filename.EndsWith(".dir", StringComparison.OrdinalIgnoreCase))
                 {
                     string dir = item.Filename.Substring(0, item.Filename.Length - 4);
 
@@ -301,7 +301,7 @@ namespace Salamandra.Engine.Services
                         FriendlyName = Path.GetFileName(dir.TrimEnd('\\'))
                     };
                 }
-                else if (PlaylistManager.SupportedPlaylistFormats.Any(x => item.Filename.EndsWith(x)))
+                else if (PlaylistManager.SupportedPlaylistFormats.Any(x => item.Filename.EndsWith(x, StringComparison.OrdinalIgnoreCase)))
                 {
                     track = new PlaylistFileTrack()
                     {

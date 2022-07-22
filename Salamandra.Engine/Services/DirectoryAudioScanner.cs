@@ -109,12 +109,12 @@ namespace Salamandra.Engine.Services
 
                 if (Directory.Exists(directory))
                 {
-                    string[] supportedFiles = { ".wav", ".mp3", ".wma", ".ogg", ".flac" };
+                    //string[] supportedFiles = { ".wav", ".mp3", ".wma", ".ogg", ".flac" };
 
                     Debug.WriteLine(String.Format("Scanning {0}...", directory));
 
                     var files = Directory.EnumerateFiles(directory, "*.*", SearchOption.TopDirectoryOnly)
-                        .Where(f => supportedFiles.Any(f.ToLower().EndsWith)).ToList();
+                        .Where(f => SoundEngine.SupportedAudioFormats.Any(f.ToLower().EndsWith)).ToList();
 
                     var subDirs = Directory.EnumerateDirectories(directory);
 

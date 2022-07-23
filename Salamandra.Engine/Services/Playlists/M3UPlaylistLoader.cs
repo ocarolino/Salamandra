@@ -13,6 +13,9 @@ namespace Salamandra.Engine.Services.Playlists
     // Based on: https://github.com/NateShoffner/M3U.NET/blob/master/M3U.NET/M3UFile.cs (2022-04-12)
     public class M3UPlaylistLoader
     {
+        public static string? LastPlaylist { get; set; }
+        public static Encoding? LastEncoding { get; set; }
+
         public List<PlaylistEntryInfo> Load(string filename)
         {
             List<PlaylistEntryInfo> entries = new List<PlaylistEntryInfo>();
@@ -20,7 +23,6 @@ namespace Salamandra.Engine.Services.Playlists
             using (Stream stream = File.OpenRead(filename))
             {
                 var detectedEncoding = FileSystemUtils.DetectFileEncoding(stream);
-
 
                 using (StreamReader reader = new StreamReader(stream, detectedEncoding))
                 {
@@ -79,14 +81,23 @@ namespace Salamandra.Engine.Services.Playlists
                         lineCount++;
                     }
                 }
+
+                M3UPlaylistLoader.LastPlaylist = filename;
+                M3UPlaylistLoader.LastEncoding = detectedEncoding;
             }
+
 
             return entries;
         }
 
         public void Save(string filename, List<PlaylistEntryInfo> entries)
         {
-            using (var writer = new StreamWriter(filename, false, Encoding.Default))
+            Encoding encoding = Encoding.Default;
+
+            if (filename == M3UPlaylistLoader.LastPlaylist && M3UPlaylistLoader.LastEncoding != null)
+                encoding = M3UPlaylistLoader.LastEncoding;
+
+            using (var writer = new StreamWriter(filename, false, encoding))
             {
                 writer.WriteLine("#EXTM3U");
 

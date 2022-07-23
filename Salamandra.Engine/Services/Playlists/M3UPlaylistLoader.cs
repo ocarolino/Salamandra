@@ -1,6 +1,7 @@
 ﻿using Salamandra.Engine.Domain;
 using Salamandra.Engine.Exceptions;
 using Salamandra.Engine.Extensions;
+using Salamandra.Engine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,61 +17,67 @@ namespace Salamandra.Engine.Services.Playlists
         {
             List<PlaylistEntryInfo> entries = new List<PlaylistEntryInfo>();
 
-            using (StreamReader reader = new StreamReader(filename, Encoding.Default, true))
+            using (Stream stream = File.OpenRead(filename))
             {
-                var workingUri = new Uri(Path.GetDirectoryName(filename)!.EnsureHasDirectorySeparatorChar());
+                var detectedEncoding = FileSystemUtils.DetectFileEncoding(stream);
 
-                string? line;
-                var lineCount = 0;
 
-                PlaylistEntryInfo? entry = null;
-
-                while ((line = reader.ReadLine()) != null)
+                using (StreamReader reader = new StreamReader(stream, detectedEncoding))
                 {
-                    if (lineCount == 0 && line != "#EXTM3U")
-                        throw new PlaylistLoaderException("M3U header not found.");
+                    var workingUri = new Uri(Path.GetDirectoryName(filename)!.EnsureHasDirectorySeparatorChar());
 
-                    if (line.StartsWith("#EXTINF:"))
+                    string? line;
+                    var lineCount = 0;
+
+                    PlaylistEntryInfo? entry = null;
+
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        if (entry != null)
-                            throw new PlaylistLoaderException("Unexpected entry detected.");
+                        if (lineCount == 0 && line != "#EXTM3U")
+                            throw new PlaylistLoaderException("M3U header not found.");
 
-                        var split = line.Substring(8, line.Length - 8).Split(new[] { ',' }, 2);
+                        if (line.StartsWith("#EXTINF:"))
+                        {
+                            if (entry != null)
+                                throw new PlaylistLoaderException("Unexpected entry detected.");
 
-                        if (split.Length != 2)
-                            throw new PlaylistLoaderException("Invalid track information.");
+                            var split = line.Substring(8, line.Length - 8).Split(new[] { ',' }, 2);
 
-                        int seconds;
-                        if (!int.TryParse(split[0], out seconds))
-                            throw new PlaylistLoaderException("Invalid track duration.");
+                            if (split.Length != 2)
+                                throw new PlaylistLoaderException("Invalid track information.");
 
-                        var title = split[1];
+                            int seconds;
+                            if (!int.TryParse(split[0], out seconds))
+                                throw new PlaylistLoaderException("Invalid track duration.");
 
-                        TimeSpan? duration = null;
+                            var title = split[1];
 
-                        if (seconds > 0)
-                            duration = TimeSpan.FromSeconds(seconds);
+                            TimeSpan? duration = null;
 
-                        entry = new PlaylistEntryInfo() { Duration = duration, FriendlyName = title };
+                            if (seconds > 0)
+                                duration = TimeSpan.FromSeconds(seconds);
+
+                            entry = new PlaylistEntryInfo() { Duration = duration, FriendlyName = title };
+                        }
+                        else if (entry != null && !line.StartsWith("#")) // ignore comments
+                        {
+                            Uri path;
+
+                            if (!Uri.TryCreate(line, UriKind.RelativeOrAbsolute, out path!))
+                                throw new PlaylistLoaderException("Invalid entry path.");
+
+                            if (!path.IsAbsoluteUri)
+                                path = workingUri.MakeAbsoluteUri(path);
+
+                            entry.Filename = path.LocalPath;
+
+                            entries.Add(entry);
+
+                            entry = null;
+                        }
+
+                        lineCount++;
                     }
-                    else if (entry != null && !line.StartsWith("#")) // ignore comments
-                    {
-                        Uri path;
-
-                        if (!Uri.TryCreate(line, UriKind.RelativeOrAbsolute, out path!))
-                            throw new PlaylistLoaderException("Invalid entry path.");
-
-                        if (!path.IsAbsoluteUri)
-                            path = workingUri.MakeAbsoluteUri(path);
-
-                        entry.Filename = path.LocalPath;
-
-                        entries.Add(entry);
-
-                        entry = null;
-                    }
-
-                    lineCount++;
                 }
             }
 
